@@ -1,0 +1,5 @@
+id: 487
+name: stik_ss_email_text
+value: 'The product <a href="[[+link]]">[[+product]]</a> in the size [[+size]] you are subscribed to are back <br> in stock in our online store'
+topic: site
+namespace: polylang

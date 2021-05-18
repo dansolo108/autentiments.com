@@ -1,0 +1,4 @@
+key: msync_alias_with_id
+xtype: combo-boolean
+namespace: msync
+area: msync_main

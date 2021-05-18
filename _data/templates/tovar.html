@@ -1,0 +1,192 @@
+id: 3
+source: 1
+templatename: Товар
+description: ''
+properties: 'a:0:{}'
+
+-----
+
+{extends 'template:1'}
+
+{block 'main'}
+    <main id="msProduct" class="au-product" itemtype="http://schema.org/Product" itemscope>
+        <meta itemprop="name" content="{$_modx->resource.pagetitle}">
+        <meta itemprop="description" content="{$_modx->resource.description ?: $_modx->resource.pagetitle}">
+        {'!msGallery' | snippet : [
+            'tpl' => 'stik.msGallery',
+        ]}
+        <div class="au-product__description" itemtype="http://schema.org/AggregateOffer" itemprop="offers" itemscope>
+            <meta itemprop="category" content="{$_modx->resource.parent | resource: "pagetitle"}">
+            <meta itemprop="offerCount" content="1">
+            <meta itemprop="price" content="{$price | replace:" ":""}">
+            <meta itemprop="lowPrice" content="{$price | replace:" ":""}">
+            <meta itemprop="priceCurrency" content="RUR">
+            <div class="au-product__marks">
+                {if $_modx->resource.new?}
+                    <span class="au-product__mark">New</span>
+                {/if}
+                {if $_modx->resource.soon?}
+                    <span class="au-product__mark">Soon</span>
+                {/if}
+                {if $_modx->resource.sale?}
+                    <span class="au-product__mark">Sale</span>
+                {/if}
+            </div>
+            <h1 class="au-h1  au-product__title">{$_modx->resource.pagetitle}</h1>
+            <div class="au-card__row">
+                <div class="au-card__price-box">
+                    <span class="au-card__price">{'!msMultiCurrencyPrice' | snippet : ['price' => $price]} {$_modx->getPlaceholder('msmc.symbol_right')}</span>
+                    {if $old_price}
+                        <span class="au-card__price  au-card__price_old">{'!msMultiCurrencyPrice' | snippet : ['price' => $old_price]} {$_modx->getPlaceholder('msmc.symbol_right')}</span>
+                    {/if}
+                </div>
+                <a class="au-product__like msfavorites" href="" aria-label="Добавить в избранное" data-click="" data-data-list="default" data-data-type="resource" data-data-key="{$_modx->resource.id}">
+                    <svg width="24" height="21" viewBox="0 0 24 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M22.0734 1.89911C23.2303 3.06919 23.9114 4.60633 23.9912 6.22747C24.1984 10.4375 20.738 13.252 15.5001 17.5124L15.4964 17.5154C14.5143 18.3142 13.4987 19.1404 12.4162 20.048L11.9532 20.4363L11.4902 20.048C10.4683 19.1911 9.50748 18.4064 8.57835 17.6477L8.57795 17.6473C3.29185 13.3305 -0.200334 10.4787 0.00891556 6.22747C0.0888843 4.60256 0.751369 3.06744 1.87431 1.90486C3.04852 0.689098 4.61284 0.012664 6.27901 0.000175732C7.87224 -0.0111895 9.27648 0.546021 10.4506 1.65802C11.1189 2.29101 11.6083 3.01062 11.9532 3.63925C12.2981 3.01062 12.7876 2.29101 13.4559 1.65802C14.6298 0.545976 16.0332 -0.0113692 17.6274 0.000175732C19.296 0.0127089 20.8749 0.687076 22.0734 1.89911Z" fill="#CCCCCC"></path>
+                    </svg>
+                </a>
+            </div>
+            <form class="ms2_form" method="post">
+                <input type="hidden" name="id" value="{$_modx->resource.id}"/>
+                <input type="hidden" name="count" value="1"/>
+                {'msOptions' | snippet : [
+                    'options' => 'color'
+                    'tpl' => 'stik.msOptions'
+                ]}
+                <div class="au-product__size-box">
+                    <span class="au-product__subtitle">Размер:</span>
+                    <div id="ajax_sizes" class="au-product__sizes">
+                        {'!getRemainsWithAmount' | snippet : [
+                            'tpl' => 'stik.msOptions.size.n.amount'
+                        ]}
+                    </div>
+                </div>
+                <div class="au-product__add-box">
+                    <button class="au-btn  au-product__add-basket  active" type="submit" name="ms2_action" value="cart/add">{'ms2_frontend_add_to_cart' | lexicon}</button>
+                    <button class="au-btn-light  au-product__add-entrance" type="button">
+                        <span class="entrance">Узнать о поступлении</span>
+                        <span class="entrance_end">Подписка оформлена!</span>
+                    </button>
+                    <div class="au-btn-light  au-product__add-size">Выберите размер</div>
+                </div>
+            </form>
+            <div class="au-product__description-text">
+                {$_modx->resource.content}
+                {if $_modx->resource.article?}
+                    <span class="au-product__article">{'stik_product_article' | lexicon}: {$_modx->resource.article}</span>
+                {/if}
+            </div>
+            
+            {set $measurements = $_modx->resource.measurements | replace : '<p></p>' : '' | strip}
+            {set $care = $_modx->resource.care | replace : '<p></p>' : '' | strip}
+            
+            <div class="au-product__info">
+                <div class="au-product__info-head">
+                    {if $measurements}
+                        <a class="au-product__info-title  au-tab-title  active" href="measurements">Обмеры</a>
+                    {/if}
+                    {if $care}
+                        <a class="au-product__info-title  au-tab-title {if !$measurements} active{/if}" href="care">Уход</a>
+                    {/if}
+                    <a class="au-product__info-title  au-tab-title {if !$care && !$measurements} active{/if}" href="delivery">Доставка</a>
+                </div>
+                {if $measurements}
+                    <div class="au-product__info-content  au-tab-content  active" data-tab="measurements">
+                        <div class="au-product__info-group">
+                            {$_modx->resource.measurements}
+                        </div>
+                    </div>
+                {/if}
+                {if $care}
+                    <div class="au-product__info-content  au-product__info-content_care  au-tab-content {if !$measurements} active{/if}" data-tab="care">
+                        {$_modx->resource.care}
+                    </div>
+                {/if}
+                <div class="au-product__info-content  au-product__info-content_delivery  au-tab-content {if !$care && !$measurements} active{/if}" data-tab="delivery">
+                    {'pdoField' | snippet : [
+                        'id' => 19,
+                        'field' => 'content',
+                    ]}
+                </div>
+            </div>
+        </div>
+    </main>
+
+    {set $complete_look = 'msProducts' | snippet : [
+        'parents' => 7,
+        'link' => 1,
+        'limit' => 4,
+        'master' => $_modx->resource.id,
+        'tpl' => 'stik.msProducts.row',
+        'includeThumbs' => 'category',
+        'leftJoin' => [
+          "category_2" => [
+            "class" => "msProductFile",
+            "alias" => "category_2",
+            "on" => "category_2.product_id = msProduct.id  AND category_2.rank = 1 AND category_2.path LIKE '%/category/%'"
+          ]
+        ],
+        'select' => [
+            "category_2" => "category_2.url as category_2"
+        ],
+        'where' => [
+            'Data.image:!=' => null,
+        ]
+    ]}
+
+    {if $complete_look}
+        <section class="au-сomplete">
+            <h2 class="au-h2  au-сomplete__title">Завершите образ</h2>
+            <div class="au-сomplete__row">
+                {$complete_look}
+            </div>
+        </section>
+    {/if}
+
+    {set $categories = $_modx->resource.parent | resource : 'categories'}
+    {set $also_like = 'msProducts' | snippet : [
+        'parents' => $categories ?: $_modx->resource.parent,
+        'resources' => -$_modx->resource.id,
+        'tpl' => 'stik.msProducts.swiper.row',
+        'limit' => 8,
+        'includeThumbs' => 'category',
+        'sortby' => 'Rand()',
+        'leftJoin' => [
+          "category_2" => [
+            "class" => "msProductFile",
+            "alias" => "category_2",
+            "on" => "category_2.product_id = msProduct.id  AND category_2.rank = 1 AND category_2.path LIKE '%/category/%'"
+          ]
+        ],
+        'select' => [
+            "category_2" => "category_2.url as category_2"
+        ],
+        'where' => [
+            'Data.image:!=' => null,
+        ]
+    ]}
+
+    {if $also_like?}
+        <section class="au-liked  au-liked_container">
+            <h2 class="au-h2  au-liked__title">Вам может понравиться</h2>
+            <div class="au-liked__slider  swiper-container">
+                <div class="swiper-wrapper">
+                    {$also_like}
+                </div>
+            </div>
+            <div class="au-swiper-buttons  au-desktop_xl">
+                <div class="au-liked__prev  au-swiper-button-prev  swiper-button-prev"></div>
+                <div class="au-liked__next  au-swiper-button-next  swiper-button-next"></div>
+            </div>
+            <div class="au-liked__pagination  au-swiper-pagination  swiper-pagination"></div>
+        </section>
+    {/if}
+    
+    {* modal *}
+    {'!AjaxForm' | snippet : [
+        'snippet' => 'sizeSubscribe',
+        'form' => 'sizeSubscribe.form',
+        'tpl' => 'sizeSubscribeEmailTplConfirm',
+        'subject' => 'stik_size_subscribe_subject' | lexicon,
+    ]}
+{/block}

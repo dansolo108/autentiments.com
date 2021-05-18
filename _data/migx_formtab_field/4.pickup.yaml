@@ -1,0 +1,10 @@
+id: 4
+config_id: 1
+formtab_id: 1
+field: pickup
+caption: Самовывоз
+description: 'На странице оформления заказа для этого города будет доступен самовывоз и доставка курьером по городу'
+pos: 4
+inputTVtype: checkbox
+sourceFrom: config
+inputOptionValues: Да==1

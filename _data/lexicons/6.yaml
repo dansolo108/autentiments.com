@@ -1,0 +1,5 @@
+id: 6
+name: setting_stikpr_order_status
+value: 'Cтатус заказа'
+namespace: stik
+language: ru

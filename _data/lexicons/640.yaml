@@ -1,0 +1,5 @@
+id: 640
+name: stik_size_subscribe_err_subscribed
+value: 'You are already subscribed to this size'
+topic: site
+namespace: polylang

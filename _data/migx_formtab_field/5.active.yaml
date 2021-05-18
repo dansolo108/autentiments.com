@@ -1,0 +1,9 @@
+id: 5
+config_id: 1
+formtab_id: 1
+field: active
+caption: Активен
+pos: 5
+inputTVtype: checkbox
+sourceFrom: config
+inputOptionValues: Да==1

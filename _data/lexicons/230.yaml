@@ -1,0 +1,6 @@
+id: 230
+name: stik_reset_password_sent_title
+value: 'Ваша информация для входа была отправлена'
+topic: site
+namespace: polylang
+language: ru

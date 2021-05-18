@@ -1,0 +1,5 @@
+key: polylang_detect_visitor_language
+value: '0'
+xtype: combo-boolean
+namespace: polylang
+area: polylang_main

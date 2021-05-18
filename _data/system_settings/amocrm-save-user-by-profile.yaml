@@ -1,0 +1,4 @@
+key: amocrm_save_user_by_profile
+xtype: combo-boolean
+namespace: amocrm
+area: amocrm_main

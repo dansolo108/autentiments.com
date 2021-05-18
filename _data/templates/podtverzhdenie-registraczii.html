@@ -1,0 +1,17 @@
+id: 12
+templatename: 'Подтверждение регистрации'
+description: ''
+category: Login
+properties: 'a:0:{}'
+
+-----
+
+{extends 'template:1'}
+
+{block 'content'}
+    {'!ConfirmRegister' | snippet : [
+        'authenticate' => 1,
+        'redirectTo' => 11,
+        'errorPage' => 11,
+    ]}
+{/block}

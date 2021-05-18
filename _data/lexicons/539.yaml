@@ -1,0 +1,6 @@
+id: 539
+name: stik_intltel_errors_js
+value: '["Неправильный номер", "Неверный код страны", "Слишком короткий", "Слишком длинный", "Неправильный номер"]'
+topic: site
+namespace: polylang
+language: ru

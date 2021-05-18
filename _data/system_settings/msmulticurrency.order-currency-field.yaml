@@ -1,0 +1,4 @@
+key: msmulticurrency.order_currency_field
+value: code
+namespace: msmulticurrency
+area: msmulticurrency.setting_main

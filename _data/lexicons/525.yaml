@@ -1,0 +1,6 @@
+id: 525
+name: stik_profile_sms_phone_change
+value: 'изменить номер'
+topic: site
+namespace: polylang
+language: ru

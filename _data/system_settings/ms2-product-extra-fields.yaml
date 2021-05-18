@@ -1,0 +1,5 @@
+key: ms2_product_extra_fields
+value: 'price,old_price,sortindex,article,color,size,material,new,popular,favorite,soon,sale'
+xtype: textarea
+namespace: minishop2
+area: ms2_product

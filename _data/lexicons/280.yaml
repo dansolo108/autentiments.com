@@ -1,0 +1,6 @@
+id: 280
+name: stik_ss_confirm_text_not_activated
+value: 'Мы сразу сообщим вам о появлении моделей выбранного размера в продаже. Чтобы подтвердить email нажмите кнопку ниже:'
+topic: site
+namespace: polylang
+language: ru

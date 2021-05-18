@@ -1,0 +1,4 @@
+key: amocrm_order_address_fields
+value: 'phone,city,street,building,room,comment'
+namespace: amocrm
+area: amocrm_fields

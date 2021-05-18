@@ -1,0 +1,5 @@
+key: polylang_editor_height
+value: '300'
+xtype: numberfield
+namespace: polylang
+area: polylang_editor

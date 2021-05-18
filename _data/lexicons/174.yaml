@@ -1,0 +1,6 @@
+id: 174
+name: stik_size_subscribe_err_email
+value: 'Неверно указан Email'
+topic: site
+namespace: polylang
+language: ru

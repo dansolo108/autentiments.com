@@ -1,0 +1,5 @@
+key: msmulticurrency.show_currency_in_product
+value: '0'
+xtype: combo-boolean
+namespace: msmulticurrency
+area: msmulticurrency.setting_main

@@ -1,0 +1,6 @@
+id: 115
+name: stik_order_total_products_cost
+value: 'Стоимость товаров'
+topic: site
+namespace: polylang
+language: ru

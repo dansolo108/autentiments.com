@@ -1,0 +1,12 @@
+id: 78
+name: stik.lgnLogoutTpl
+description: ''
+category: Login
+properties: 'a:0:{}'
+
+-----
+
+{* Если шаблон авторизация, то редиректим в ЛК *}
+{if $_modx->resource.template == 8}
+    {$_modx->sendRedirect(11|url)}
+{/if}

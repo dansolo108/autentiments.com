@@ -1,0 +1,5 @@
+id: 4
+name: setting_stikpr_active_before_order
+value: 'Проверка до сохранения заказ'
+namespace: stik
+language: ru

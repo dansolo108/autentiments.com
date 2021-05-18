@@ -1,0 +1,14 @@
+id: 91
+name: stik.orderInput
+description: ''
+category: miniShop2
+properties: 'a:0:{}'
+
+-----
+
+<div class="custom-form__group  custom-form__group_{$field}">
+    <input class="custom-form__input{($field in list $errors) ? ' error' : ''}"
+        type="{if $field == 'email'}email{elseif $field == 'email'}tel{else}text{/if}"
+        name="{$field}" id="{$field}" value="{$form[$field]}" data-val="{$form[$field]}">
+    <label class="custom-form__label" for="{$field}">{('ms2_frontend_' ~ $field) | lexicon}</label>
+</div>

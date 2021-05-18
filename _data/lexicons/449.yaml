@@ -1,0 +1,6 @@
+id: 449
+name: stik_order_delivery_local_courier_max_count_err
+value: 'Для доставки курьером по городу можно заказать не более [[+count]] товаров.'
+topic: site
+namespace: polylang
+language: ru

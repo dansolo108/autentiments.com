@@ -1,0 +1,4 @@
+key: minifyx_process_images
+xtype: combo-boolean
+namespace: minifyx
+area: minifyx_main

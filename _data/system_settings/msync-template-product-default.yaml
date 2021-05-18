@@ -1,0 +1,5 @@
+key: msync_template_product_default
+value: '3'
+xtype: modx-combo-template
+namespace: msync
+area: msync_main

@@ -1,0 +1,6 @@
+id: 182
+name: stik_newsletter_err_subscribed_details
+value: 'Данный Email уже есть в базе подписчиков.'
+topic: site
+namespace: polylang
+language: ru

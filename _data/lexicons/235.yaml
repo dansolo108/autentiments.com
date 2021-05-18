@@ -1,0 +1,6 @@
+id: 235
+name: stik_reset_password_modal_caption
+value: 'Введите адрес электронной почты, на&nbsp;который будет отправлена ссылка для восстановления пароля'
+topic: site
+namespace: polylang
+language: ru

@@ -1,0 +1,6 @@
+text: mspromocode
+parent: minishop2
+action: home
+description: mspromocode_menu_desc
+menuindex: 4
+namespace: mspromocode

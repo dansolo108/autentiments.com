@@ -1,0 +1,4 @@
+key: ms2_payment_tinkoff_taxation
+value: osn
+namespace: minishop2
+area: ms2_payment_tinkoff

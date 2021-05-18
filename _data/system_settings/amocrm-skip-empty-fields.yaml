@@ -1,0 +1,5 @@
+key: amocrm_skip_empty_fields
+value: '1'
+xtype: combo-boolean
+namespace: amocrm
+area: amocrm_main

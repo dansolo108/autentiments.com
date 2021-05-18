@@ -1,0 +1,4 @@
+key: amocrm_new_order_status_id
+value: '1'
+namespace: amocrm
+area: amocrm_pipelines

@@ -1,0 +1,4 @@
+key: ms2_frontend_message_js_settings
+value: '[[+jsUrl]]web/message_settings.js'
+namespace: minishop2
+area: ms2_frontend

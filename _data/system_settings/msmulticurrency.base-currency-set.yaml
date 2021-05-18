@@ -1,0 +1,4 @@
+key: msmulticurrency.base_currency_set
+value: '1'
+namespace: msmulticurrency
+area: msmulticurrency.setting_main

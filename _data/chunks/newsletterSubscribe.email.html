@@ -1,0 +1,20 @@
+id: 57
+source: 1
+name: newsletterSubscribe.email
+description: ''
+category: Письма
+properties: 'a:0:{}'
+
+-----
+
+{extends 'tpl.msEmail'}
+
+{block 'title'}
+    Новый подписчик
+{/block}
+
+{block 'products'}
+    <p style="margin-left:20px;{$style.p}">
+        <strong>Email:</strong> {$email}
+    </p>
+{/block}

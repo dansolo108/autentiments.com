@@ -1,0 +1,5 @@
+key: msync_user_id_import
+value: '1'
+xtype: numberfield
+namespace: msync
+area: msync_1c

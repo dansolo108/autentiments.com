@@ -1,0 +1,6 @@
+id: 166
+name: stik_size_subscribe_success_message
+value: 'Спасибо за подписку на размер!'
+topic: site
+namespace: polylang
+language: ru

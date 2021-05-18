@@ -1,0 +1,5 @@
+key: msync_catalog_root_id
+value: '7'
+xtype: numberfield
+namespace: msync
+area: msync_main

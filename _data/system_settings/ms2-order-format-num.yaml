@@ -1,0 +1,4 @@
+key: ms2_order_format_num
+value: '%y%m'
+namespace: minishop2
+area: ms2_order

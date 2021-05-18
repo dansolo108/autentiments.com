@@ -1,0 +1,5 @@
+key: tinymcerte.alignment_format
+value: '[{"title": "Left", "icon": "align-left", "format": "alignleft"},{"title": "Center", "icon": "align-center", "format": "aligncenter"},{"title": "Right", "icon": "align-right", "format": "alignright"},{"title": "Justify", "icon": "align-justify", "format": "alignjustify"}]'
+xtype: textarea
+namespace: tinymcerte
+area: tinymcerte.style_formats

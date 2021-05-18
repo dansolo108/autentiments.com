@@ -1,0 +1,10 @@
+id: 4
+name: 'Почта России'
+description: ''
+logo: ''
+rank: 3
+class: msDeliveryHandlerStikRp
+properties: null
+requires: ''
+tariff: ONLINE_PARCEL
+slug: post

@@ -1,0 +1,3 @@
+key: extension_packages
+value: '[{"minishop2":{"path":"[[++core_path]]components/minishop2/model/"}},{"mspromocode":{"path":"[[++core_path]]components/mspromocode/model/"}},{"stik":{"path":"[[++core_path]]components/stik/model/"}},{"amocrm":{"path":"[[++core_path]]components/amocrm/model/"}},{"msmulticurrency":{"path":"[[++core_path]]components/msmulticurrency/model/"}},{"polylang":{"path":"[[++core_path]]components/polylang/model/"}}]'
+area: system

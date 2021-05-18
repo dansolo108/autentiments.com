@@ -1,0 +1,4 @@
+key: amocrm_use_simple_queue
+xtype: combo-boolean
+namespace: amocrm
+area: amocrm_main

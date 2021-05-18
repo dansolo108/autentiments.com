@@ -1,0 +1,54 @@
+
+#cdek2_map_modal {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    padding: 60px 20px 14px 22px;
+}
+
+.cdek2_map_container {
+    position: relative;
+    /* display: flex; */
+    width: 100%;
+    height: 100%;
+}
+
+.map-modal-points {
+    position: absolute;
+    left: 12px;
+    top: 15px;
+    font-size: 20px;
+    line-height: 26px;
+}
+
+#cdek2_map {
+    width: calc(100% - 330px);
+    height: 100%;
+}
+
+.cdek2_map-points {
+    position: absolute;
+    width: 330px;
+    right: 0;
+    top: 0;
+    height: 100%;
+    overflow-y: scroll;
+    background: #fff;
+}
+
+.cdek2_map-point {
+    border-bottom: 2px solid #f1f1f1;
+    padding: 15px;
+    cursor: pointer;
+    transition: .5s all ease-in-out;
+}
+
+.cdek2_map-point__worktime {
+    color: #828282;
+    padding: 5px 0;
+}
+
+.cdek2_container .point-address {
+    display: block;
+    padding: 16px 0;
+}

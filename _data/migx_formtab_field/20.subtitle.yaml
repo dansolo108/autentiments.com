@@ -1,0 +1,7 @@
+id: 20
+config_id: 3
+formtab_id: 3
+field: subtitle
+caption: 'Подзаголовок баннера'
+pos: 4
+sourceFrom: config

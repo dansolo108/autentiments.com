@@ -1,0 +1,4 @@
+key: msfavorites_front_css
+value: '[[+assetsUrl]]css/default.min.css'
+namespace: msfavorites
+area: msfavorites_main

@@ -1,0 +1,6 @@
+id: 256
+name: stik_change_pw_form_password_old
+value: 'Старый пароль'
+topic: site
+namespace: polylang
+language: ru

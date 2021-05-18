@@ -1,0 +1,6 @@
+id: 176
+name: stik_size_subscribe_err_subscribed
+value: 'Вы уже подписаны на этот размер'
+topic: site
+namespace: polylang
+language: ru

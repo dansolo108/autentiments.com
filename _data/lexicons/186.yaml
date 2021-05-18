@@ -1,0 +1,5 @@
+id: 186
+name: stik_sizes_list_subscribe
+value: subscription
+topic: site
+namespace: polylang

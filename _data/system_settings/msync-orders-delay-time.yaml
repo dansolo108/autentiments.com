@@ -1,0 +1,5 @@
+key: msync_orders_delay_time
+value: '30'
+xtype: numberfield
+namespace: msync
+area: msync_main

@@ -1,0 +1,4 @@
+key: minifyx_processRawCss
+xtype: combo-boolean
+namespace: minifyx
+area: minifyx_main

@@ -1,0 +1,4 @@
+key: ms2_payment_tinkoff_identifierOrder
+value: id
+namespace: minishop2
+area: ms2_payment_tinkoff

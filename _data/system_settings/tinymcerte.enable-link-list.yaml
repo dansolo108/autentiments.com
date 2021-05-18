@@ -1,0 +1,5 @@
+key: tinymcerte.enable_link_list
+value: '1'
+xtype: combo-boolean
+namespace: tinymcerte
+area: tinymcerte.default

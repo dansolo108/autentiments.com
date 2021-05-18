@@ -1,0 +1,6 @@
+id: 180
+name: stik_newsletter_success_message
+value: 'Для подтверждения подписки перейдите по ссылке в письме'
+topic: site
+namespace: polylang
+language: ru

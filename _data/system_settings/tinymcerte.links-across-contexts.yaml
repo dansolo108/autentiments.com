@@ -1,0 +1,4 @@
+key: tinymcerte.links_across_contexts
+xtype: combo-boolean
+namespace: tinymcerte
+area: tinymcerte.default

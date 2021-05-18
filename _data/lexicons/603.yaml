@@ -1,0 +1,5 @@
+id: 603
+name: stik_basket_not_enough
+value: 'Not enough products'
+topic: site
+namespace: polylang

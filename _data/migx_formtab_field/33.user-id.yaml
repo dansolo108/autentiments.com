@@ -1,0 +1,7 @@
+id: 33
+config_id: 5
+formtab_id: 5
+field: user_id
+caption: 'ID пользователя'
+pos: 3
+sourceFrom: config

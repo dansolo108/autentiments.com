@@ -1,0 +1,134 @@
+<div class="modal  au-modal  au-modal-filter">
+    <button class="au-close  au-filter__close  au-desktop_xl" aria-label="Закрыть"></button>
+    <div class="au-modal__content  au-filters__content  container">
+        <form id="filters" class="au-filters__form">
+            <h3 class="au-filters__title  au-h2  au-desktop_xl">
+                Фильтры и сортировка 
+                <span class="au-filter__count">(10)</span>
+            </h3>
+            <div class="au-filter__row">
+                <div class="au-filter__col  au-filter__col_sizes">
+                    <span class="au-filter__title">Размер</span>
+                    <ul class="au-filter__list">
+                        <li class="au-filter__item">
+                            <input class="au-filter__checkbox" type="checkbox" id="XS" checked>
+                            <label class="au-filter__label" for="XS">XS</label>
+                        </li>
+                        <li class="au-filter__item">
+                            <input class="au-filter__checkbox" type="checkbox" id="S" checked>
+                            <label class="au-filter__label" for="S">S</label>
+                        </li>
+                        <li class="au-filter__item">
+                            <input class="au-filter__checkbox" type="checkbox" id="M">
+                            <label class="au-filter__label" for="M">M</label>
+                        </li>
+                        <li class="au-filter__item">
+                            <input class="au-filter__checkbox" type="checkbox" id="L">
+                            <label class="au-filter__label" for="L">L</label>
+                        </li>
+                    </ul>
+                </div>
+                <div class="au-filter__col  au-filter__col_colors">
+                    <span class="au-filter__title">Цвет</span>
+                    <ul class="au-filter__list">
+                        <li class="au-filter__item">
+                            <input class="au-filter__checkbox" type="checkbox" id="white">
+                            <label class="au-filter__label" for="white">Белый</label>
+                        </li>
+                        <li class="au-filter__item">
+                            <input class="au-filter__checkbox" type="checkbox" id="black" checked>
+                            <label class="au-filter__label" for="black">Чёрный</label>
+                        </li>
+                        <li class="au-filter__item">
+                            <input class="au-filter__checkbox" type="checkbox" id="pinkish" checked>
+                            <label class="au-filter__label" for="pinkish">Пудровый</label>
+                        </li>
+                        <li class="au-filter__item">
+                            <input class="au-filter__checkbox" type="checkbox" id="beige">
+                            <label class="au-filter__label" for="beige">Бежевый</label>
+                        </li>
+                        <li class="au-filter__item">
+                            <input class="au-filter__checkbox" type="checkbox" id="khaki">
+                            <label class="au-filter__label" for="khaki">Хаки</label>
+                        </li>
+                        <li class="au-filter__item">
+                            <input class="au-filter__checkbox" type="checkbox" id="green">
+                            <label class="au-filter__label" for="green">Зелёный</label>
+                        </li>
+                        <li class="au-filter__item">
+                            <input class="au-filter__checkbox" type="checkbox" id="white_">
+                            <label class="au-filter__label" for="white_">Белый</label>
+                        </li>
+                        <li class="au-filter__item">
+                            <input class="au-filter__checkbox" type="checkbox" id="black_" checked>
+                            <label class="au-filter__label" for="black_">Чёрный</label>
+                        </li>
+                        <li class="au-filter__item">
+                            <input class="au-filter__checkbox" type="checkbox" id="pinkish_" checked>
+                            <label class="au-filter__label" for="pinkish_">Пудровый</label>
+                        </li>
+                        <li class="au-filter__item">
+                            <input class="au-filter__checkbox" type="checkbox" id="beige_">
+                            <label class="au-filter__label" for="beige_">Бежевый</label>
+                        </li>
+                        <li class="au-filter__item">
+                            <input class="au-filter__checkbox" type="checkbox" id="khaki_">
+                            <label class="au-filter__label" for="khaki_">Хаки</label>
+                        </li>
+                        <li class="au-filter__item">
+                            <input class="au-filter__checkbox" type="checkbox" id="green_">
+                            <label class="au-filter__label" for="green_">Зелёный</label>
+                        </li>
+                    </ul>
+                </div>
+                <div class="au-filter__col  au-filter__col_materials">
+                    <span class="au-filter__title">Материал</span>
+                    <ul class="au-filter__list">
+                        <li class="au-filter__item  au-filter__item_row">
+                        <input class="au-filter__checkbox" type="checkbox" id="cotton">
+                        <label class="au-filter__label" for="cotton">Хлопок</label>
+                        </li>
+                        <li class="au-filter__item  au-filter__item_row">
+                        <input class="au-filter__checkbox" type="checkbox" id="linen" checked>
+                        <label class="au-filter__label" for="linen">Лён</label>
+                        </li>
+                        <li class="au-filter__item  au-filter__item_row">
+                        <input class="au-filter__checkbox" type="checkbox" id="polyester" checked>
+                        <label class="au-filter__label" for="polyester">Полиэстер</label>
+                        </li>
+                        <li class="au-filter__item  au-filter__item_row">
+                        <input class="au-filter__checkbox" type="checkbox" id="lycra">
+                        <label class="au-filter__label" for="lycra">Лайкра</label>
+                        </li>
+                        <li class="au-filter__item  au-filter__item_row">
+                        <input class="au-filter__checkbox" type="checkbox" id="wool">
+                        <label class="au-filter__label" for="wool">Шерсть</label>
+                        </li>
+                    </ul>
+                </div>
+                <div class="au-filter__col  au-filter__col_costs">
+                    <span class="au-filter__title">Цена</span>
+                    <div class="au-filter__range-box">
+                        <div class="au-filter__slider-range" id="filter-range"></div>
+                        <div class="au-filter__costs">
+                        <input class="au-filter__cost" type="text" id="min_cost" readonly>
+                        <input class="au-filter__cost" type="text" id="max_cost" readonly>
+                        </div>
+                    </div>
+                </div>
+                <div class="au-filter__col  au-filter__col_sort">
+                    <span class="au-filter__title">Сортировка</span>
+                    <div class="au-filter__sorts">
+                        <a class="au-filter__label  au-filter__sort  active" href="">Сначала новинки</a>
+                        <a class="au-filter__label  au-filter__sort" href="">Сначала подешевле</a>
+                        <a class="au-filter__label  au-filter__sort" href="">Сначала подороже</a>
+                    </div>
+                </div>
+            </div>
+            <div class="au-filters__bottom">
+                <button type="reset" class="au-btn-light  au-filters__reset">Сбросить<span>&nbsp;фильтры</span></button>
+                <button type="submit" class="au-btn  au-filters__submit">Показать<span>&nbsp;результаты</span></button>
+            </div>
+        </form>
+    </div>
+</div>

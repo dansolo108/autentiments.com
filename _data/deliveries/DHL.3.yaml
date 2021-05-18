@@ -1,0 +1,10 @@
+id: 3
+name: DHL
+description: ''
+logo: ''
+rank: 2
+class: msDeliveryHandlerDhl
+properties: null
+requires: ''
+tariff: null
+slug: dhl

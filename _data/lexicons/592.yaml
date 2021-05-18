@@ -1,0 +1,5 @@
+id: 592
+name: stik_order_without_manager_calling
+value: 'Place an order without calling the manager'
+topic: site
+namespace: polylang

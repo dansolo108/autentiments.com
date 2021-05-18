@@ -1,0 +1,13 @@
+{
+  "require": {
+    "yandex/translate-api": "^1.5",
+    "google/cloud-translate": "^1.7",
+    "prihod/promt-translate": "^1.0"
+  },
+  "autoload": {
+    "classmap": [
+      "handlers/translator/polylangtranslator.class.php",
+      "model/polylang/polylangformcontroller.class.php"
+    ]
+  }
+}

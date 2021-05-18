@@ -1,0 +1,5 @@
+key: msync_remove_temp
+value: '1'
+xtype: combo-boolean
+namespace: msync
+area: msync_1c

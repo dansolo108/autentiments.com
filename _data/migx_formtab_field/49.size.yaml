@@ -1,0 +1,7 @@
+id: 49
+config_id: 2
+formtab_id: 7
+field: size
+caption: Размер
+pos: 5
+sourceFrom: config

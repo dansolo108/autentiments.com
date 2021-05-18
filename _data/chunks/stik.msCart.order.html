@@ -1,0 +1,15 @@
+id: 86
+name: stik.msCart.order
+description: ''
+category: miniShop2
+properties: 'a:0:{}'
+
+-----
+
+{if count($products)}
+    <ul class="au-cart__cards" id="msCart">
+        {foreach $products as $product}
+            {$_modx->getChunk('stik.msCart.item', $product)}
+        {/foreach}
+    </ul>
+{/if}

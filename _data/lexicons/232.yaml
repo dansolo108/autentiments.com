@@ -1,0 +1,6 @@
+id: 232
+name: stik_reset_password_sent_text
+value: 'Ваша регистрационная информация была отправлена на адрес электронной почты [[+email]].'
+topic: site
+namespace: polylang
+language: ru

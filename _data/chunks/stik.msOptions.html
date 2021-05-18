@@ -1,0 +1,25 @@
+id: 73
+source: 1
+name: stik.msOptions
+description: 'Чанк вывода дополнительных свойств товара miniShop2.'
+category: miniShop2
+properties: 'a:0:{}'
+static_file: core/components/minishop2/elements/chunks/chunk.ms_options.tpl
+
+-----
+
+{foreach $options as $name => $values}
+    <div class="au-product__color-box">
+        <span class="au-product__subtitle">{('ms2_product_' ~ $name) | lexicon}:</span>
+        <div class="au-product__colors">
+            {foreach $values as $value}
+                {set $hex = 'msoGetColor' | snippet : ['input' => $value]}
+                {set $colorId = 'msoGetColor' | snippet : ['input' => $value, 'return_id' => true]}
+                <div class="au-product__color-item">
+                    <input class="au-product__color-input" type="radio" name="options[{$name}]" value="{$value}" id="color_{$colorId}" {if $value@index == 0}checked{/if}>
+                    <label class="au-product__color  active" for="color_{$colorId}" style="background: {$hex};" {if $hex == '#ffffff'}data-color="white"{/if} title="{('stik_color_'~$colorId) | lexicon}"></label>
+                </div>
+            {/foreach}
+        </div>
+    </div>
+{/foreach}

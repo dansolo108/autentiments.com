@@ -1,0 +1,7 @@
+text: msync
+parent: Администрирование
+action: index
+description: msync_menu_desc
+icon: images/icons/plugin.gif
+menuindex: 3
+namespace: msync

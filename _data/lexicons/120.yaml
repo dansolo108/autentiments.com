@@ -1,0 +1,6 @@
+id: 120
+name: stik_order_have_discount_card
+value: 'У меня есть дисконтная карта'
+topic: site
+namespace: polylang
+language: ru

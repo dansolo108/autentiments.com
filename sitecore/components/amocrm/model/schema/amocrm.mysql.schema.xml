@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<model package="amocrm" baseClass="xPDOObject" platform="mysql" defaultEngine="MyISAM" phpdoc-package="amocrm"
+       version="1.1">
+
+    <object class="amoCRMUser" table="amocrm_users" extends="xPDOSimpleObject">
+        <field key="user" dbtype="int" precision="11" attributes="unsigned" phptype="integer" null="false"
+               index="index"/>
+        <field key="user_id" dbtype="int" precision="11" attributes="unsigned" phptype="integer" null="false"/>
+
+        <index alias="user" name="user" primary="false" unique="true" type="BTREE">
+            <column key="user" length="" collation="A" null="false"/>
+        </index>
+        <index alias="user_id" name="user_id" primary="false" unique="true" type="BTREE">
+            <column key="user_id" length="" collation="A" null="false"/>
+        </index>
+
+        <aggregate alias="User" class="modUser" local="user" foreign="id" cardinality="one"
+                   owner="foreign"/>
+        <aggregate alias="UserProfile" class="modUserProfile" local="user" foreign="internalKey" cardinality="one"
+                   owner="foreign"/>
+    </object>
+
+    <object class="amoCRMLead" table="amocrm_leads" extends="xPDOSimpleObject">
+        <field key="order" dbtype="int" precision="11" attributes="unsigned" phptype="integer" null="false"
+               index="index"/>
+        <field key="order_id" dbtype="int" precision="11" attributes="unsigned" phptype="integer" null="false"/>
+        <field key="pipeline_id" dbtype="int" precision="11" attributes="unsigned" phptype="integer" null="false"/>
+
+        <index alias="order" name="order" primary="false" unique="false" type="BTREE">
+            <column key="order" length="" collation="A" null="false"/>
+        </index>
+        <index alias="amo" name="amo" primary="false" unique="false" type="BTREE">
+            <column key="order_id" length="" collation="A" null="false"/>
+            <column key="pipeline_id" length="" collation="A" null="false"/>
+        </index>
+
+        <aggregate alias="Order" class="msOrder" local="order" foreign="id" cardinality="one"
+                   owner="foreign"/>
+    </object>
+
+    <object class="amoCRMOrderStatus" table="amocrm_status" extends="xPDOSimpleObject">
+        <field key="status" dbtype="int" precision="11" attributes="unsigned" phptype="integer" null="false"
+               index="index"/>
+        <field key="status_id" dbtype="int" precision="11" attributes="unsigned" phptype="integer" null="false"/>
+        <field key="pipeline_id" dbtype="int" precision="11" attributes="unsigned" phptype="integer" null="false"/>
+        <index alias="status" name="status" primary="false" unique="false" type="BTREE">
+            <column key="status" length="" collation="A" null="false"/>
+        </index>
+        <aggregate alias="Status" class="msOrderStatus" local="status" foreign="id" cardinality="one"
+                   owner="foreign"/>
+    </object>
+
+    <object class="amoCRMCustomField" table="amocrm_custom_fields" extends="xPDOSimpleObject">
+        <field key="key" dbtype="varchar" precision="255" phptype="string" null="false" index="index"/>
+        <field key="custom_field_id" dbtype="int" precision="11" attributes="unsigned" phptype="integer" null="false"/>
+
+        <index alias="key" name="key" primary="false" unique="false" type="BTREE">
+            <column key="key" length="" collation="A" null="false"/>
+        </index>
+    </object>
+</model>

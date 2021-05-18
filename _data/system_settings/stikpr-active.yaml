@@ -1,0 +1,5 @@
+key: stikpr_active
+value: '1'
+xtype: combo-boolean
+namespace: stik
+area: Остатки

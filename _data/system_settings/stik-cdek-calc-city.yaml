@@ -1,0 +1,5 @@
+key: stik_cdek_calc_city
+value: '1'
+xtype: combo-boolean
+namespace: stik
+area: СДЭК

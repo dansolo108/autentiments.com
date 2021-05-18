@@ -1,0 +1,6 @@
+id: 209
+name: stik_form_login_pw_reset
+value: 'Забыли пароль?'
+topic: site
+namespace: polylang
+language: ru

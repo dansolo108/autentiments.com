@@ -1,0 +1,6 @@
+id: 646
+name: stik_catalog_empty_default_text
+value: 'Пока мы готовим этот раздел, полистайте каталог — в нём есть все доступные к заказу модели.'
+topic: site
+namespace: polylang
+language: ru

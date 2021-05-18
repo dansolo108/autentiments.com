@@ -1,0 +1,6 @@
+id: 216
+name: stik_register_password_confirm
+value: 'Пароль повторно'
+topic: site
+namespace: polylang
+language: ru

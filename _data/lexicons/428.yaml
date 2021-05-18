@@ -1,0 +1,5 @@
+id: 428
+name: stik_order_step_two_buyer_data
+value: 'Enter the recipient''s details'
+topic: site
+namespace: polylang

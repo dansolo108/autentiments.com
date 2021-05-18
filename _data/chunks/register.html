@@ -1,0 +1,53 @@
+id: 51
+name: register
+description: ''
+category: Login
+properties: 'a:0:{}'
+
+-----
+
+{'!Register' | snippet : [    
+    'submitVar' => 'registerbtn',
+    'activation' => 1,
+    'activationEmailSubject' => 'stik_register_activation_email_subject' | lexicon,
+    'activationResourceId' => 12,
+    'submittedResourceId' => 32,
+    'activationEmailTpl' => 'stik.lgnActivateEmailTpl',
+    'successMsg' => 'stik_register_success_msg' | lexicon,
+    'usergroups' => 'Users',
+    'validate' => 'link:blank,
+        password:required:minLength=^8^,
+        password_confirm:password_confirm=^password^,
+        email:required:email',
+    'usernameField' => 'email',
+    'placeholderPrefix' => 'reg.',
+]}
+
+<form action="{9|url}" method="post" class="au-login__form_register">
+    <h3 class="au-h1  au-login__title">Регистрация</h3>
+    <input type="hidden" name="link" value="{$_modx->getPlaceholder('reg.link')}" /> {* nospam *}
+    <div class="custom-form__group">
+        <input class="custom-form__input{if $_modx->getPlaceholder('reg.error.email')} error{/if}" type="email" name="email" id="email_register" value="{$_modx->getPlaceholder('reg.email')}" data-val="{$_modx->getPlaceholder('reg.email')}" required=""> 
+        <label class="custom-form__label" for="email_register">Email</label>
+        <span class="error_field">{$_modx->getPlaceholder('reg.error.email')}</span>
+    </div>
+    <div class="custom-form__group">
+        <input class="custom-form__input{if $_modx->getPlaceholder('reg.error.password')} error{/if}" type="password" name="password" id="password_register" value="{$_modx->getPlaceholder('reg.password')}" data-val="{$_modx->getPlaceholder('reg.password')}" required=""> 
+        <label class="custom-form__label" for="password_register">{'stik_register_password' |lexicon}</label>
+        <span class="error_field">{$_modx->getPlaceholder('reg.error.password')}</span>
+    </div>
+    <div class="custom-form__group">
+        <input class="custom-form__input{if $_modx->getPlaceholder('reg.error.password_confirm')} error{/if}" type="password" name="password_confirm" id="password_register_again" value="{$_modx->getPlaceholder('reg.password_confirm')}" data-val="{$_modx->getPlaceholder('reg.password_confirm')}" required=""> 
+        <label class="custom-form__label" for="password_register_again">{'stik_register_password_confirm' |lexicon}</label>
+        <span class="error_field">{$_modx->getPlaceholder('reg.error.password_confirm')}</span>
+    </div>
+    <div class="custom-form__group-checkbox">
+        <input class="custom-form__check" type="checkbox" id="loyalty">
+        <label class="custom-form__check-label" for="loyalty">Хочу участвовать в программе лояльности</label>
+    </div>
+    <input class="au-btn  au-login__submit  au-login__submit-register" type="submit" name="registerbtn" value="{'stik_register_submit' |lexicon}">
+    <p class="au-subscribe__politics-text">Регистрируясь, вы принимаете <a class="au-subscribe__politics-link au-text-tab_js" href="policy">Политику конфиденциальности</a></p>
+</form>
+<div class="au-login__bottom">
+    <a class="au-btn-light  au-login__tab-link  au-tab-login-title" href="login">Войти</a>
+</div>

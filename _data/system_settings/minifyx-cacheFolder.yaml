@@ -1,0 +1,4 @@
+key: minifyx_cacheFolder
+value: /assets/components/minifyx/cache/
+namespace: minifyx
+area: minifyx_main

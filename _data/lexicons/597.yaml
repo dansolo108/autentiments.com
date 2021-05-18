@@ -1,0 +1,6 @@
+id: 597
+name: stik_order_delivery_not_calculated
+value: 'не рассчитано'
+topic: site
+namespace: polylang
+language: ru

@@ -1,0 +1,5 @@
+key: polylang_use_code_editor
+value: '1'
+xtype: combo-boolean
+namespace: polylang
+area: polylang_editor

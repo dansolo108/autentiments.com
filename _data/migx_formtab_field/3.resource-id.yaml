@@ -1,0 +1,11 @@
+id: 3
+config_id: 1
+formtab_id: 1
+field: resource_id
+caption: 'ID ресурса'
+description: 'ID ресурса с подробным описанием (адрес, режим работы и т.д.)'
+pos: 3
+inputTVtype: listbox
+sourceFrom: config
+inputOptionValues: '@EVAL return ''----||'' . $modx->runSnippet(''pdoResources'', array(''where''=> [''template''=>24], ''limit'' => 0, ''tpl''=>''@INLINE {$pagetitle}=={$id}'', ''outputSeparator''=>''||''));'
+default: '0'

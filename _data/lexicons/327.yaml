@@ -1,0 +1,5 @@
+id: 327
+name: stik_order_total_delivery_discount
+value: 'Delivery discount'
+topic: site
+namespace: polylang

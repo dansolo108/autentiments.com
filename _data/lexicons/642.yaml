@@ -1,0 +1,4 @@
+id: 642
+name: mse2_err_no_results
+value: "<div class=\"au-catalog_empty  au-catalog_empty_search\">\n    <p class=\"au-catalog_empty-text\">Unfortunately, nothing was found for the selected filters.</p>\n    <p class=\"au-catalog_empty-text\">Change the filter settings or use the catalog menu.</p>\n</div>"
+namespace: msearch2

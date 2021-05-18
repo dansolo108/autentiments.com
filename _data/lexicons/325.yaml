@@ -1,0 +1,5 @@
+id: 325
+name: stik_order_total_cost
+value: 'Total payment due'
+topic: site
+namespace: polylang

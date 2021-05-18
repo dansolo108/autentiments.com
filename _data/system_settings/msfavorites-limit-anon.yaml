@@ -1,0 +1,4 @@
+key: msfavorites_limit_anon
+value: '30'
+namespace: msfavorites
+area: msfavorites_main

@@ -1,0 +1,7 @@
+id: 38
+config_id: 5
+formtab_id: 5
+field: status
+caption: Статус
+pos: 8
+sourceFrom: config

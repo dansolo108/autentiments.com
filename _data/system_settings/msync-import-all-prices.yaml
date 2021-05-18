@@ -1,0 +1,4 @@
+key: msync_import_all_prices
+xtype: combo-boolean
+namespace: msync
+area: msync_main

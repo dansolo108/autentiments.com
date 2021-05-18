@@ -1,0 +1,4 @@
+key: amocrm_form_as_lead
+xtype: combo-boolean
+namespace: amocrm
+area: amocrm_main

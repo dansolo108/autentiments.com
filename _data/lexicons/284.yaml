@@ -1,0 +1,6 @@
+id: 284
+name: stik_ns_confirm_not_activated
+value: 'Спасибо за подписку. Чтобы подтвердить email нажмите кнопку ниже:'
+topic: site
+namespace: polylang
+language: ru

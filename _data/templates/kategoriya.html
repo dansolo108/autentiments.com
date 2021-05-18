@@ -1,0 +1,48 @@
+id: 4
+source: 1
+templatename: Категория
+description: ''
+properties: 'a:0:{}'
+
+-----
+
+{extends 'template:1'}
+
+{block 'main'}
+    {set $options = [
+        'parents' => $_modx->resource.id
+        'class' => 'msProduct',
+        'element' => 'msProducts',
+        'limit' => 6,
+        'sortby' => '{"sortindex":"ASC", "menuindex":"ASC"}',
+        'includeThumbs' => 'category',
+        'tpl' => 'stik.msProducts.row',
+        'tplOuter' => 'stik.mFilter2.outer',
+        'suggestions' => false,
+        'ajaxMode' => 'scroll',
+        'leftJoin' => [
+            "category_2" => [
+                "class" => "msProductFile",
+                "alias" => "category_2",
+                "on" => "category_2.product_id = msProduct.id  AND category_2.rank = 1 AND category_2.path LIKE '%/category/%'"
+            ]
+        ],
+        'select' => [
+            "category_2" => "category_2.url as category_2"
+        ],
+        'where' => [
+            'Data.image:!=' => null,
+        ]
+        'filters' => '
+            msoption|size:reversed,
+            msoption|color:default,
+            msoption|material:default,
+            ms|price:price,
+        ',
+        'tplFilter.outer.ms|price' => 'stik.mFilter2.filter.slider',
+        'tplFilter.row.ms|price' => 'stik.mFilter2.filter.number',
+        'tplFilter.outer.default' => 'stik.mFilter2.filter.outer',
+        'tplFilter.row.default' => 'stik.mFilter2.filter.checkbox',
+    ]}
+    {'!mFilter2' | snippet : $options}
+{/block}

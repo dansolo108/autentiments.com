@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<model package="msfavorites" baseClass="xPDOObject" platform="mysql" defaultEngine="InnoDB" phpdoc-package="msfavorites" version="1.1">
+
+
+    <object class="msfFavoriteList" table="msf_favorite_lists" extends="xPDOSimpleObject">
+        <field key="list" dbtype="varchar" precision="40" phptype="string" null="false" />
+        <field key="type" dbtype="varchar" precision="40" phptype="string" null="false" />
+
+        <index alias="list" name="list" primary="false" unique="false" type="BTREE">
+            <column key="list" length="40" collation="A" null="false"/>
+        </index>
+        <index alias="type" name="type" primary="false" unique="false" type="BTREE">
+            <column key="type" length="40" collation="A" null="false"/>
+        </index>
+        <index alias="unique" name="unique" primary="false" unique="true" type="BTREE">
+            <column key="list" length="40" collation="A" null="false"/>
+            <column key="type" length="40" collation="A" null="false"/>
+        </index>
+
+        <validation>
+            <rule field="list" name="preventBlank" type="xPDOValidationRule" rule="xPDOMinLengthValidationRule" value="1" message="msfavorites_err_value"/>
+            <rule field="type" name="preventBlank" type="xPDOValidationRule" rule="xPDOMinLengthValidationRule" value="1" message="msfavorites_err_value"/>
+        </validation>
+
+        <composite alias="FavoriteObject" class="msfFavoriteObject" local="id" foreign="lid" cardinality="many" owner="local"/>
+
+    </object>
+
+
+    <object class="msfFavoriteKey" table="msf_favorite_keys" extends="xPDOSimpleObject">
+       <!-- <field key="id" dbtype="bigint" precision="10" attributes="unsigned" phptype="integer" null="false" index="pk" generated="native" />-->
+        <field key="key" dbtype="varchar" precision="40" phptype="string" null="false" />
+
+        <index alias="key" name="key" primary="false" unique="true" type="BTREE">
+            <column key="key" length="40" collation="A" null="false"/>
+        </index>
+
+        <validation>
+            <rule field="key" name="preventBlank" type="xPDOValidationRule" rule="xPDOMinLengthValidationRule" value="1" message="msfavorites_err_value"/>
+        </validation>
+
+        <composite alias="FavoriteObject" class="msfFavoriteObject" local="id" foreign="kid" cardinality="many" owner="local"/>
+
+    </object>
+
+
+    <object class="msfFavoriteObject" table="msf_favorite_objects" extends="xPDOObject">
+        <field key="lid" dbtype="int" precision="10" attributes="unsigned" phptype="integer" null="false" index="pk" />
+        <field key="kid" dbtype="int" precision="10" attributes="unsigned" phptype="integer" null="false" index="pk" />
+        <field key="uid" dbtype="varchar" precision="40" phptype="string" null="false" index="pk" />
+        <field key="anon" dbtype="tinyint" precision="1" attributes="unsigned" phptype="boolean" null="false" default="1" />
+        <field key="temp" dbtype="tinyint" precision="1" attributes="unsigned" phptype="boolean" null="false" default="1" />
+        <field key="createdon" dbtype="timestamp" phptype="timestamp" null="false" default="CURRENT_TIMESTAMP" index="index" />
+
+        <index alias="lid" name="lid" primary="false" unique="false" type="BTREE">
+            <column key="lid" length="" collation="A" null="false"/>
+        </index>
+        <index alias="kid" name="kid" primary="false" unique="false" type="BTREE">
+            <column key="kid" length="" collation="A" null="false"/>
+        </index>
+        <index alias="uid" name="uid" primary="false" unique="false" type="BTREE">
+            <column key="uid" length="40" collation="A" null="false"/>
+        </index>
+        <index alias="anon" name="anon" primary="false" unique="false" type="BTREE">
+            <column key="anon" length="" collation="A" null="false"/>
+        </index>
+        <index alias="temp" name="temp" primary="false" unique="false" type="BTREE">
+            <column key="temp" length="" collation="A" null="false"/>
+        </index>
+        <index alias="createdon" name="createdon" primary="false" unique="false" type="BTREE">
+            <column key="createdon" length="" collation="A" null="false"/>
+        </index>
+
+        <index alias="unique" name="unique" primary="false" unique="true" type="BTREE">
+            <column key="lid" length="" collation="A" null="false"/>
+            <column key="kid" length="" collation="A" null="false"/>
+            <column key="uid" length="40" collation="A" null="false"/>
+        </index>
+
+        <aggregate alias="FavoriteList" class="msfFavoriteList" local="lid" foreign="id" cardinality="one" owner="foreign"/>
+        <aggregate alias="FavoriteKey" class="msfFavoriteKey" local="kid" foreign="id" cardinality="one" owner="foreign"/>
+
+    </object>
+
+
+    <object class="msfFavoriteObjectExtra" table="msf_favorite_extra_objects" extends="xPDOObject">
+        <field key="lid" dbtype="int" precision="10" attributes="unsigned" phptype="integer" null="false" index="pk" />
+        <field key="kid" dbtype="int" precision="10" attributes="unsigned" phptype="integer" null="false" index="pk" />
+        <field key="uid" dbtype="varchar" precision="40" phptype="string" null="false" index="pk" />
+        <field key="extra" dbtype="text" phptype="array" null="false" default=""/>
+
+        <index alias="lid" name="lid" primary="false" unique="false" type="BTREE">
+            <column key="lid" length="" collation="A" null="false"/>
+        </index>
+        <index alias="kid" name="kid" primary="false" unique="false" type="BTREE">
+            <column key="kid" length="" collation="A" null="false"/>
+        </index>
+        <index alias="uid" name="uid" primary="false" unique="false" type="BTREE">
+            <column key="uid" length="40" collation="A" null="false"/>
+        </index>
+
+        <index alias="unique" name="unique" primary="false" unique="true" type="BTREE">
+            <column key="lid" length="" collation="A" null="false"/>
+            <column key="kid" length="" collation="A" null="false"/>
+            <column key="uid" length="40" collation="A" null="false"/>
+        </index>
+
+    </object>
+
+
+</model>

@@ -1,0 +1,7 @@
+text: minishop2
+parent: topnav
+action: mgr/orders
+description: ms2_menu_desc
+icon: '<i class="icon-shopping-cart icon icon-large"></i>'
+menuindex: 5
+namespace: minishop2

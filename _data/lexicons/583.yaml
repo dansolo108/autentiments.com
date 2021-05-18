@@ -1,0 +1,5 @@
+id: 583
+name: stik_order_step_one_delivery_method
+value: 'Choose a delivery method'
+topic: site
+namespace: polylang

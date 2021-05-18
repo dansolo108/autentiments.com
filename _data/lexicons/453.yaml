@@ -1,0 +1,5 @@
+id: 453
+name: stik_ns_confirm_not_activated
+value: 'Thank you for subscribing. To confirm your email, click the button below:'
+topic: site
+namespace: polylang

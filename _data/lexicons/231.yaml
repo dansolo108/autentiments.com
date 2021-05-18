@@ -1,0 +1,5 @@
+id: 231
+name: stik_reset_password_sent_title
+value: 'Your login information has been sent'
+topic: site
+namespace: polylang

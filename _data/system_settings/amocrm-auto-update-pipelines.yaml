@@ -1,0 +1,4 @@
+key: amocrm_auto_update_pipelines
+xtype: combo-boolean
+namespace: amocrm
+area: amocrm_pipelines

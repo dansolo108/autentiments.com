@@ -1,0 +1,10 @@
+id: 2
+name: 'СДЭК до пункта выдачи заказов'
+description: ''
+logo: ''
+rank: 1
+class: msDeliveryHandlerStikCdek
+properties: null
+requires: ''
+tariff: '136'
+slug: cdek_pvz

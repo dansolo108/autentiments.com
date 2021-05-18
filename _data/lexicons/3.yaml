@@ -1,0 +1,5 @@
+id: 3
+name: setting_stikpr_active_before_add
+value: 'Проверка до добавления в корзину'
+namespace: stik
+language: ru

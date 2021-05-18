@@ -1,0 +1,4 @@
+key: amocrm_order_fields
+value: 'weight,delivery_cost,goods'
+namespace: amocrm
+area: amocrm_fields

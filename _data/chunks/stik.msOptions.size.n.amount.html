@@ -1,0 +1,18 @@
+id: 72
+name: stik.msOptions.size.n.amount
+description: ''
+category: miniShop2
+properties: 'a:0:{}'
+
+-----
+
+{if $options?}
+    {foreach $options as $size => $remain}
+        <div class="au-product__size-item">
+            <input class="au-product__size-input" type="radio" name="options[size]" value="{$size}" id="{$size}"{if $remain == 0} disabled=""{/if}>
+            <label class="au-product__size{if $remain == 0} not-size{/if}" for="{$size}">
+                {$size | uppercase}
+            </label>
+        </div>
+    {/foreach}
+{/if}

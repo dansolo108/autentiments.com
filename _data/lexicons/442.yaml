@@ -1,0 +1,6 @@
+id: 442
+name: stik_order_payment_1
+value: 'Наличными при получении'
+topic: site
+namespace: polylang
+language: ru

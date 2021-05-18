@@ -1,0 +1,8 @@
+id: 1
+name: 'СДЭК курьером'
+description: ''
+logo: ''
+class: msDeliveryHandlerStikCdek
+properties: null
+tariff: '137'
+slug: cdek_courier

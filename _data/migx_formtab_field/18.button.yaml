@@ -1,0 +1,7 @@
+id: 18
+config_id: 3
+formtab_id: 3
+field: button
+caption: 'Текст кнопки баннера'
+pos: 6
+sourceFrom: config

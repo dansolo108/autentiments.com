@@ -1,0 +1,4 @@
+key: ms2_frontend_message_js
+value: '[[+jsUrl]]web/lib/jquery.jgrowl.min.js'
+namespace: minishop2
+area: ms2_frontend

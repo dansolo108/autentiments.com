@@ -1,0 +1,6 @@
+text: msmulticurrency.cmenu.multicurrency
+parent: minishop2
+action: multicurrency
+description: msmulticurrency.cmenu.multicurrency_desc
+menuindex: 3
+namespace: msmulticurrency

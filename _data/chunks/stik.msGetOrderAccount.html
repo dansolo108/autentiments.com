@@ -1,0 +1,142 @@
+id: 81
+name: stik.msGetOrderAccount
+description: ''
+category: miniShop2
+properties: null
+
+-----
+
+{set $coupon = (('!pdoResources' | snippet : [
+    'class' => 'mspcOrder',
+    'loadModels' => 'msPromoCode',
+    'innerJoin' => [
+        'class' => 'mspcCoupon',
+        'alias' => 'mspcCoupon',
+        'on' => 'mspcCoupon.id = mspcOrder.coupon_id',
+    ],
+    'select' => [
+        'mspcOrder' => 'code, discount_amount',
+    ],
+    'where' => [
+        'mspcOrder.order_id' => $order['id'],
+    ],
+    'sortby' => '{"id":"ASC"}',
+    'return' => 'json',
+]) | fromJSON)}
+{if $coupon?}
+    {set $coupon = $coupon[0]}
+{/if}
+{set $currency = $order.properties.msmc.symbol_right ?: 'ms2_frontend_currency' | lexicon}
+{set $cid = $order.properties.msmc.id ?: 1}
+{set $cource = $order.properties.msmc.val ?: 0}
+
+<div class="personal-order container">
+    <div class="personal-order__top">
+        <a href="{1203|url}" class="personal-order__link">{'stik_order_go_back' | lexicon}</a>
+        <h1 class="personal-order__title">{'stik_order_list_number' | lexicon} №{$order.num}</h1>
+    </div>
+    <div class="personal-order__block">
+        <div class="personal-order__info">
+            <p class="personal-order__status"><span>{'stik_order_list_status' | lexicon}</span>
+                <span class="personal-order__content">
+                    {('stik_order_status_' ~ $order.status) | lexicon}
+                </span>
+            </p>
+            {set $available = ($order.createdon | date_format : '%s') | paymentAvailable : 3600}
+            {if $payment_link && $available}
+                <p class="personal-order__payment"><span>{'stik_order_list_payment' | lexicon}</span><span class="personal-order__content"><a href="{$payment_link}">{'stik_order_list_payment_pay' | lexicon}</a></span></p>
+            {/if}
+            <p class="personal-order__order">
+                <span>{'stik_order_delivery' | lexicon}</span>
+                <span class="personal-order__content">
+                    {('stik_order_delivery_' ~ $delivery.id) | lexicon}
+                    {if $total.delivery_cost}
+                        {$delivery_cost = '!msMultiCurrencyPriceCustom' | snippet : [
+                            'price' => $total.delivery_cost,
+                            'cid' => $cid,
+                            'cource' => $cource,
+                        ]}
+                        {$currency}
+                    {else}
+                        {'stik_order_delivery_free' | lexicon}
+                    {/if}
+                    {*if $order.properties.order_rates?}
+                        ({$order.properties.order_rates})
+                    {/if*}
+                </span>
+            </p>
+            {if $order.properties.delivery_date}
+                <p class="personal-order__order">
+                    <span>Дата доставки</span>
+                    <span class="personal-order__content">{$order.properties.delivery_date}</span>
+                </p>
+            {/if}
+            {if $order.properties.pickup_date}
+                <p class="personal-order__order">
+                    <span>Дата самовывоза</span>
+                    <span class="personal-order__content">{$order.properties.pickup_date}</span>
+                </p>
+            {/if}
+            <p class="personal-order__address"><span>{'stik_order_delivery_address' | lexicon}</span>
+                <span class="personal-order__content">
+                    {$address.street} {$address.building}{$address.room ? ('-'~$address.room~',') : ''} {$address.city} {$address.index}, {$address.country}
+                </span>
+            </p>
+        </div>
+
+        <div class="personal-order__basket">
+            <div class="basket__all basket__all--order"> 
+                <div class="basket__quantity basket__quantity--personal">{$total.cart_count | declension : ('stik_declension_product' | lexicon) : true}</div>
+                <div class="basket__info">
+                    {foreach $products as $product}
+                        {set $price = '!msMultiCurrencyPriceCustom' | snippet : ['price' => $product.price, 'cid' => $cid, 'cource' => $cource]}
+                        {set $old_price = '!msMultiCurrencyPriceCustom' | snippet : ['price' => $product.old_price, 'cid' => $cid, 'cource' => $cource]}
+                        <div class="basket__card">
+                            <div class="basket__img"><a href="{$product.id|url}"><img src="{$product.cart}" alt="{$product.pagetitle}"></a></div>
+                            <div class="basket__content">
+                                <div class="basket__content-top">
+                                    <span class="basket__content-name"><a href="{$product.id|url}">{$product.pagetitle}</a></span>
+                                    <p class="basket__content-art">{'stik_basket_article' | lexicon} {$product.article}</p>
+                                </div>
+                                <div class="basket__content-bottom">
+                                    <p class="basket__content-sale">
+                                        {'stik_basket_price' | lexicon} <span>{$price}&nbsp;{$currency}</span>
+                                        {if $product.old_price?}
+                                            <span class="basket__content-sale--old">{$old_price}&nbsp;{$currency}</span>
+                                        {/if}
+                                    </p>
+                                    <p class="basket__content-size">{'stik_basket_size' | lexicon} <span>{$product.options.size | uppercase}</span></p>
+                                    {if $product.hexcolor}
+                                        <p class="basket__content-color">{'stik_basket_color' | lexicon} <span>{('stik_color_'~($product.hexcolor | msoColorName : 'name')) | lexicon}</span></p>
+                                    {/if}
+                                    <div class="basket__content-num">{'stik_basket_count' | lexicon} <span>{$product.count}</span></div>
+    
+                                </div>
+                            </div>
+                            <div class="basket__add">
+                                <div class="basket__sale">
+                                    <p class="basket__price">{$price | replace : ' ' : '&#8239;'}&#8239;{$currency}</p>
+                                    {if $product.old_price?}
+                                        <p class="basket__price basket__price--old">{$old_price | replace : ' ' : '&#8239;'}&#8239;{$currency}</p>
+                                    {/if}
+                                </div>
+                            </div>
+                        </div>
+                    {/foreach}
+                </div>
+                <div class="basket__result basket__result--personal">
+                    <div class="basket__cost">
+                        <p class="basket__total">{'stik_order_total_products_cost' | lexicon} <span>{'!msMultiCurrencyPriceCustom' | snippet : ['price' => ($coupon['discount_amount'] + ($total['cart_cost'] | replace : ' ' : '')), 'cid' => $cid, 'cource' => $cource]}&#8239;{$currency}</span></p>
+                        {if $coupon['discount_amount']?}
+                            <p class="basket__discount">{'stik_order_total_discount_cost' | lexicon} <span>-{'!msMultiCurrencyPriceCustom' | snippet : ['price' => $coupon['discount_amount'], 'cid' => $cid, 'cource' => $cource]}&#8239;{$currency}</span></p>
+                        {/if}
+                        <p class="basket__sum">{'stik_order_total_delivery_cost' | lexicon} <span>{$delivery_cost}&#8239;{$currency}</span></p>
+                        <p class="basket__sum">{'stik_order_total_purchase_amount' | lexicon} <span>{'!msMultiCurrencyPriceCustom' | snippet : ['price' => $total.cost, 'cid' => $cid, 'cource' => $cource]}&#8239;{$currency}</span></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>

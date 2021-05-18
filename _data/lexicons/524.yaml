@@ -1,0 +1,6 @@
+id: 524
+name: stik_profile_sms_code_text
+value: 'Введите код отправленный на номер'
+topic: site
+namespace: polylang
+language: ru

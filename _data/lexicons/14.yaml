@@ -1,0 +1,5 @@
+id: 14
+name: setting_stik_cdek_from_index
+value: 'Индекс города-отправителя'
+namespace: stik
+language: ru

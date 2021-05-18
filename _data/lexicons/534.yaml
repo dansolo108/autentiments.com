@@ -1,0 +1,5 @@
+id: 534
+name: stik_profile_sms_code_text
+value: 'Enter the code sent to the number'
+topic: site
+namespace: polylang

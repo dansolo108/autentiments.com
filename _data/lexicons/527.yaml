@@ -1,0 +1,6 @@
+id: 527
+name: stik_profile_sms_code_time
+value: 'Отправить код повторно через'
+topic: site
+namespace: polylang
+language: ru

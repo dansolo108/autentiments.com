@@ -1,0 +1,6 @@
+id: 542
+name: stik_profile_bonus_no_phone
+value: 'Для участия в бонусной программе необходимо указать и подтвердить ваш номер телефона.'
+topic: site
+namespace: polylang
+language: ru

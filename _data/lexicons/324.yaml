@@ -1,0 +1,5 @@
+id: 324
+name: stik_order_delivery_address
+value: 'Delivery address'
+topic: site
+namespace: polylang

@@ -1,0 +1,5 @@
+key: ms2_services
+value: '{"cart":[],"order":[],"payment":[],"delivery":[]}'
+xtype: textarea
+namespace: minishop2
+area: ms2_main

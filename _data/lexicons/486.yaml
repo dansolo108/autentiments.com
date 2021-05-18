@@ -1,0 +1,6 @@
+id: 486
+name: stik_ss_email_text
+value: 'Товар <a href="[[+link]]">[[+product]]</a> в размере [[+size]], на который вы подписаны, снова в наличии в нашем онлайн-магазине'
+topic: site
+namespace: polylang
+language: ru

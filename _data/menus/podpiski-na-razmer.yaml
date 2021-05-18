@@ -1,0 +1,6 @@
+text: 'Подписки на размер'
+parent: minishop2
+action: index
+menuindex: 6
+params: '&configs=sizeSubscribe'
+namespace: migx

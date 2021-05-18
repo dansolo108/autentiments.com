@@ -1,0 +1,95 @@
+<div class="au-modal  au-modal-login  modal">
+    <div class="au-modal__wrapper  au-login__wrapper">
+        <button class="au-close  au-modal-login__close  au-desktop" aria-label="Закрыть"></button>
+        <div class="au-modal__content  au-modal-login__content">
+            <div class="au-login__img-box  au-desktop">
+                <picture>
+                    <!-- <source type="image/webp" srcset=""> -->
+                    <img width="400" height="616" class="au-login__img" src="/img/au-login-img_login.jpg" alt="">
+                </picture>
+                <picture>
+                    <!-- <source type="image/webp" srcset=""> -->
+                    <img width="400" height="616" class="au-login__img  au-login__img_register" src="/img/au-login-img_register.jpg" alt="">
+                </picture>
+            </div>
+
+            <div class="au-login__tabs">
+                <div class="au-login__tab  au-tab-login-content  active" data-tab="login">
+                    <form class="au-login__form_login">
+                        <h3 class="au-h1  au-login__title">Вход в профиль</h3>
+                        <div class="custom-form__group">
+                            <input class="custom-form__input" type="email" name="email" id="email_login" data-val=""> 
+                            <label class="custom-form__label" for="email_login">Email</label>
+                            <span class="error_name">error</span>
+                        </div>
+                        <div class="custom-form__group">
+                            <input class="custom-form__input" type="password" name="password" id="password_login" data-val=""> 
+                            <label class="custom-form__label" for="password_login">Пароль</label>
+                            <span class="error_name">error</span>
+                        </div>
+                        <div class="au-login__row">
+                            <button class="au-btn  au-login__submit-login" type="submit">Войти</button>
+                            <a class="au-login__recovery-link  au-tab-login-title" href="recovery">Забыли пароль?</a>
+                        </div>
+                    </form>
+                    <div class="au-login__bottom">
+                        <p class="au-login__bottom-text"><b>Нет профиля?</b> Зарегистрируйтесь на сайте, чтобы копить и получать бонусы за покупки</p>
+                        <a class="au-btn-light  au-login__tab-link  au-tab-login-title" href="register">Регистрация</a>
+                    </div>
+                </div>
+
+                <div class="au-login__tab  au-tab-login-content" data-tab="register">
+                    <form class="au-login__form_register">
+                        <h3 class="au-h1  au-login__title">Регистрация</h3>
+                        <div class="custom-form__group">
+                            <input class="custom-form__input" type="email" name="email" id="email_register" data-val=""> 
+                            <label class="custom-form__label" for="email_register">Email</label>
+                            <span class="error_name">error</span>
+                        </div>
+                        <div class="custom-form__group">
+                            <input class="custom-form__input" type="password" name="password" id="password_register" data-val=""> 
+                            <label class="custom-form__label" for="password_register">Пароль</label>
+                            <span class="error_name">error</span>
+                        </div>
+                        <div class="custom-form__group">
+                            <input class="custom-form__input" type="password" name="password" id="password_register_again" data-val=""> 
+                            <label class="custom-form__label" for="password_register_again">Повторно пароль</label>
+                            <span class="error_name">error</span>
+                        </div>
+                        <div class="custom-form__group-checkbox">
+                            <input class="custom-form__check" type="checkbox" id="loyalty">
+                            <label class="custom-form__check-label" for="loyalty">Хочу участвовать в программе лояльности</label>
+                        </div>
+                        <button class="au-btn  au-login__submit  au-login__submit-register" type="submit">Зарегистрироваться</button>
+                        <p class="au-subscribe__politics-text">Регистрируясь, вы принимаете <a class="au-subscribe__politics-link au-text-tab_js" href="policy" data-text="Политика конфиденциальности">Политику конфиденциальности</a></p>
+                    </form>
+                    <div class="au-login__bottom">
+                        <a class="au-btn-light  au-login__tab-link  au-tab-login-title" href="login">Войти</a>
+                    </div>
+                </div>
+
+                <div class="au-login__tab  au-tab-login-content" data-tab="recovery">
+                    <a class="au-login__recovery-back  au-tab-login-title" href="login">
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M5.93411 16.7176L6.64122 17.4247L14.0659 10L6.64117 2.5754L5.93407 3.2825L12.6516 10.0001L5.93411 16.7176Z" fill="#1A1714"/>
+                        </svg>
+                    </a>
+                    <form class="au-login__form_recovery">
+                        <h3 class="au-h1  au-login__title">Восстановление пароля</h3>
+                        <p class="au-login__text  au-login__text-recovery">Введите почту, на которую придёт ссылка на восстановление пароля</p>
+                        <p class="au-login__text  au-login__text-resend">На указанную почту отправлено письмо с ссылкой на восстановление пароля</p>
+                        <div class="custom-form__group">
+                            <input class="custom-form__input" type="email" name="email" placeholder="Email" data-val=""> 
+                            <span class="error_name">error</span>
+                        </div>
+                        <button class="au-btn  au-login__submit  au-login__submit-recovery" type="submit">Отправить</button>
+                        <div class="au-login__recovery-resend">
+                            <p class="au-login__recovery-text">Не пришло письмо?</p>
+                            <button class="au-btn  au-login__submit  au-login__submit-recovery-resend" type="submit">Отправить повторно</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

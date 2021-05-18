@@ -1,0 +1,5 @@
+id: 2
+name: setting_stikpr_active_bcstatus
+value: 'Проверка до изменения статуса'
+namespace: stik
+language: ru

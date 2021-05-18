@@ -1,0 +1,5 @@
+key: stikpr_order_status
+value: '1'
+xtype: numberfield
+namespace: stik
+area: Остатки

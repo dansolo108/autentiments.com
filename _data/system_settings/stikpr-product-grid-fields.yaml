@@ -1,0 +1,4 @@
+key: stikpr_product_grid_fields
+value: 'id,size,color,store_name,remains'
+namespace: stik
+area: Остатки

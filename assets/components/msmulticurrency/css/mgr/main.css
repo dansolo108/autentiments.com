@@ -1,0 +1,128 @@
+/* Search field */
+.x-field-search-clear,
+.x-field-search-go {
+    border-left: 1px solid #e4e4e4 !important;
+}
+
+.x-field-search-clear:hover,
+.x-field-search-go:hover {
+    border-left-color: transparent !important;
+}
+
+.x-field-search-clear:before {
+    content: '\f00d' !important;
+}
+
+.x-field-search-go {
+    right: 31px !important;
+    border-radius: 0 !important;
+}
+
+.x-field-search-go:before {
+    content: '\f002' !important;
+}
+
+/* Grid actions and menu */
+ul.msmc-row-actions {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+ul.msmc-row-actions li {
+    float: left;
+}
+
+ul.msmc-row-actions .btn {
+    padding: 2px;
+    margin-right: 2px;
+    min-width: 26px;
+}
+
+ul.msmc-row-actions .btn.actions-menu {
+    width: 40px;
+}
+
+ul.msmc-row-actions .btn.actions-menu:after {
+    content: " \f107";
+}
+
+a.x-menu-item .x-menu-item-text * {
+    cursor: pointer;
+}
+
+a.x-menu-item .x-menu-item-text .icon {
+    line-height: 16px;
+    top: auto;
+}
+
+.x-menu-list .icon {
+    min-width: 1em;
+    text-align: center;
+}
+
+.ext-strict .x-menu-item-icon {
+    top: 5px;
+}
+
+.x-menu-list-item:hover .icon {
+    color: inherit !important;
+}
+
+.x-menu-list .icon {
+    min-width: 1em;
+    text-align: center;
+}
+
+.x-tab-strip li {
+    list-style: none;
+}
+
+.x-grid3-col-actions {
+    padding: 5px 0 0 5px !important;
+}
+
+.x-grid3-col-actions .action-red, .x-menu .action-red {
+    color: darkred !important;
+}
+
+.x-grid3-col-actions .action-green, .x-menu .action-green {
+    color: darkgreen !important;
+}
+
+.x-grid3-col-actions .action-blue, .x-menu .action-blue {
+    color: cadetblue !important;
+}
+
+.x-grid3-col-actions .action-yellow, .x-menu .action-yellow {
+    color: goldenrod !important;
+}
+
+.x-grid3-col-actions .action-gray, .x-menu .action-gray {
+    color: dimgray !important;
+}
+
+.x-grid3 .green {
+    color: darkgreen;
+}
+
+.x-grid3 .red {
+    color: darkred;
+}
+
+.msmc-cogs img {
+    _display: none;
+}
+
+.msmc-cogs {
+    padding: 3px 20px 3px 6px !important;
+}
+
+.msmc-cogs i.icon {
+    padding-right: 3px;
+    width: 15px;
+}
+
+.msmc-checkboxgroup-panel  .x-form-check-wrap{
+    margin-top: 5px;
+}

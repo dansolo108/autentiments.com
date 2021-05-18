@@ -1,0 +1,7 @@
+id: 51
+config_id: 2
+formtab_id: 7
+field: sendedon
+caption: 'Дата отправки'
+pos: 7
+sourceFrom: config

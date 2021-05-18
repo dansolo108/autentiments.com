@@ -1,0 +1,192 @@
+.mspc-color-black {
+    color: #000;
+}
+
+/* >> Кнопки */
+.mspc-btn-primary,
+.x-btn .mspc-btn-primary {
+    background-color: #009688;
+    box-shadow: 0 0 0 1px #009688;
+    color: #fff;
+}
+
+.mspc-btn-primary2,
+.x-btn .mspc-btn-primary2 {
+    background-color: #607D8B;
+    box-shadow: 0 0 0 1px #607D8B;
+    color: #fff;
+}
+
+.mspc-btn-primary3,
+.x-btn .mspc-btn-primary3 {
+    background-color: #9E9E9E;
+    box-shadow: 0 0 0 1px #9E9E9E;
+    color: #fff;
+}
+
+/* << Кнопки */
+
+.mspc-tabs {
+
+}
+
+.mspc-tabs .icon-link {
+    background-image: none !important;
+}
+
+.x-grid3-col-actions {
+    padding: 3px 0 3px 5px;
+}
+
+ul.mspromocode-row-actions {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    text-align: center;
+}
+
+ul.mspromocode-row-actions li {
+    /*float: right;*/
+    display: inline-block;
+}
+
+ul.mspromocode-row-actions .btn {
+    padding: 5px 5px 4px;
+    margin-right: 2px;
+    min-width: 26px;
+    font-size: inherit;
+}
+
+.mspromocode-grid-row-disabled {
+    font-style: italic;
+    opacity: .6;
+    color: #555;
+}
+
+.mspromocode-grid-row-freeze {
+    color: #3F51B5;
+}
+
+.mspromocode-grid-row-activated {
+    color: #00963E;
+}
+
+.mspromocode-grid-row-disabled.mspromocode-grid-row-activated {
+    opacity: 1;
+}
+
+.action-red {
+    color: #ec1049 !important;
+}
+
+.action-green {
+    color: #3a960d !important;
+}
+
+.action-blue {
+    color: cadetblue !important;
+}
+
+.action-yellow {
+    color: goldenrod !important;
+}
+
+.action-orange {
+    color: #ff751f !important;
+}
+
+.action-gray {
+    color: dimgray !important;
+}
+
+a.x-menu-item .x-menu-item-text, a.x-menu-item .x-menu-item-text .icon {
+    cursor: pointer;
+}
+
+a.x-menu-item .x-menu-item-text .icon {
+    line-height: 16px;
+    top: auto;
+}
+
+.x-menu-list .icon {
+    min-width: 1em;
+    text-align: center;
+}
+
+.x-menu-list-item:hover .icon {
+    color: inherit !important;
+}
+
+/*
+ul.mspromocode-row-actions .actions-menu {width: 40px;}
+ul.mspromocode-row-actions .actions-menu:after {content: " \f107";}
+*/
+
+.x-tabpanel-in-tabpanel-bwrap .x-tab-panel-bwrap {
+    box-shadow: 0 0 5px 0 rgba(0, 0, 0, .1) !important;
+    margin-left: 2px !important;
+}
+
+.x-tabpanel-in-tabpanel-bwrap .x-tab-strip-wrap {
+    padding-left: 2px !important;
+}
+
+.mspc-combo-list-unpublished {
+    color: #aeaeae;
+}
+
+/* Окна */
+.mspc-window .x-tab-panel-bwrap > .x-tab-panel-body > .x-panel {
+
+}
+
+.mspc-window .x-window-body.mspc-window-tabs {
+    padding: 5px 10px 0 10px;
+}
+
+/* Табы */
+.x-tab-panel .x-tab-panel {
+    padding-top: 0;
+}
+
+.modx-panel-subtabs {
+    margin-top: 0;
+    padding: 5px 2px;
+    overflow: hidden;
+}
+
+.modx-panel-subtabs .x-tab-panel-header {
+    padding: 0 10px;
+}
+
+.modx-panel-subtabs .x-tab-strip-wrap ul.x-tab-strip.x-tab-strip-top {
+    background-color: transparent !important;
+}
+
+.modx-panel-subtabs ul.x-tab-strip li:first-child {
+    margin-left: 2px;
+}
+
+.modx-panel-subtabs .x-tab-panel-header > .x-tab-strip-wrap > ul.x-tab-strip > .x-tab-strip-active {
+    box-shadow: 0 -3px 0 #aaa, -1px 0 0 transparent;
+    border-left: 1px solid #f0f0f0;
+    border-right: 1px solid #f0f0f0;
+}
+
+.modx-panel-subtabs .x-tab-strip li.x-tab-strip-active:before {
+    top: 100%;
+}
+
+.modx-panel-subtabs .x-tab-strip li {
+    color: #222;
+}
+
+.modx-panel-subtabs .x-tab-strip .x-tab-strip-text {
+    line-height: 2;
+    font-size: 90%;
+}
+
+.modx-panel-subtabs .x-tab-panel-bwrap {
+    border: 1px solid #f0f0f0;
+    margin-top: -1px;
+}

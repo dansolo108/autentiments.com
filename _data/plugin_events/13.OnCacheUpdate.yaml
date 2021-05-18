@@ -1,0 +1,3 @@
+pluginid: 13
+event: OnCacheUpdate
+priority: 10

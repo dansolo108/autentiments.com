@@ -1,0 +1,4 @@
+key: ms2_order_user_groups
+value: Users
+namespace: minishop2
+area: ms2_order

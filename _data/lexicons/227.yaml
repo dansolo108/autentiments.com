@@ -1,0 +1,6 @@
+id: 227
+name: stik_reset_password_email_subject
+value: 'Смена пароля'
+topic: site
+namespace: polylang
+language: ru

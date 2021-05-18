@@ -1,0 +1,5 @@
+id: 537
+name: stik_profile_sms_code_time
+value: 'Send the code again in'
+topic: site
+namespace: polylang

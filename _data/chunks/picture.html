@@ -1,0 +1,28 @@
+id: 53
+name: picture
+description: ''
+properties: 'a:0:{}'
+
+-----
+
+{set $prefix = $noprefix ? '' : '/assets/uploads/'}
+{if $img}
+    {set $thumb = ($prefix ~ $img) | pthumb : ('w='~$width~'&h='~$height~'&zc=1&f=jpg')}
+    {set $thumb_webp = ($prefix ~ $img) | pthumb : ('w='~$width~'&h='~$height~'&zc=1&f=webp')}
+{/if}
+{if $imgmob}
+    {set $thumb_mob = ($prefix ~ $imgmob) | pthumb : ('w='~$widthmob~'&h='~$heightmob~'&zc=1&f=jpg')}
+    {set $thumb_mob_webp = ($prefix ~ $imgmob) | pthumb : ('w='~$widthmob~'&h='~$heightmob~'&zc=1&f=webp')}
+{/if}
+<picture>
+    {if $img}
+        <source media="(min-width: 1024px)" type="image/webp" srcset="{$thumb_webp}">
+        {if $imgmob}
+            <source media="(min-width: 1024px)" srcset="{$thumb}">
+        {/if}
+    {/if}
+    {if $imgmob}
+        <source type="image/webp" srcset="{$thumb_mob_webp}">
+    {/if}
+    <img width="{$widthmob ?: $width}" height="{$heightmob ?: $height}" class="{$class}" src="{$thumb_mob ?: $thumb}" alt="">
+</picture>

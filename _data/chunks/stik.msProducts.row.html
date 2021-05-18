@@ -1,0 +1,50 @@
+id: 52
+name: stik.msProducts.row
+description: ''
+category: miniShop2
+properties: 'a:0:{}'
+
+-----
+
+{block 'params'}
+    {set $wrapper_classes = 'au-card  au-scroll-animat'}
+    {if $_modx->resource.template == 3}
+        {set $wrapper_classes = 'au-card'}
+    {/if}
+{/block}
+
+<div class="{$wrapper_classes}" id="product-{$id}">
+    <a class="au-card__like msfavorites" href="" aria-label="Добавить в избранное" data-click data-data-list="default" data-data-type="resource" data-data-key="{$id}" {if $_modx->resource.template == 5}data-msfavorites-mode="list"{/if}></a>
+    <a class="au-card__link" href="{$id | url}">
+        <div class="au-card__img-box">
+            <picture>
+                <source type="image/webp" srcset="{$category | replace : ['.jpg', '/category/'] : ['.webp', '/category_webp/']}">
+                <img width="516" height="687" class="au-card__img" src="{$category}" alt="">
+            </picture>
+            <picture>
+                <source type="image/webp" srcset="{$category_2 | replace : ['.jpg', '/category/'] : ['.webp', '/category_webp/']}">
+                <img width="516" height="687" class="au-card__img  au-card__img_hover" src="{$category_2}" alt="">
+            </picture>
+            <div class="au-card__marks">
+                {if $new?}
+                    <span class="au-card__mark">New</span>
+                {/if}
+                {if $sale?}
+                    <span class="au-card__mark">Sale</span>
+                {/if}
+                {if $soon?}
+                    <span class="au-card__mark">Soon</span>
+                {/if}
+            </div>
+        </div>
+        <div class="au-card__description">
+            <span class="au-card__title">{$pagetitle}</span>
+            <div class="au-card__price-box">
+                <span class="au-card__price">{'!msMultiCurrencyPrice' | snippet : ['price' => $price]} {$_modx->getPlaceholder('msmc.symbol_right')}</span>
+                {if $old_price?}
+                    <span class="au-card__price  au-card__price_old">{'!msMultiCurrencyPrice' | snippet : ['price' => $old_price]} {$_modx->getPlaceholder('msmc.symbol_right')}</span>
+                {/if}
+            </div>
+        </div>
+    </a>
+</div>

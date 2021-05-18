@@ -1,0 +1,10 @@
+id: 5
+name: 'Почта EMS'
+description: ''
+logo: ''
+rank: 4
+class: msDeliveryHandlerStikRp
+properties: null
+requires: ''
+tariff: EMS
+slug: ems

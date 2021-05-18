@@ -1,0 +1,5 @@
+id: 7
+name: setting_stikpr_orderback_status
+value: 'Cтатус заказа для возврата'
+namespace: stik
+language: ru

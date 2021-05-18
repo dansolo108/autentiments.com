@@ -1,0 +1,7 @@
+id: 31
+config_id: 5
+formtab_id: 5
+field: product_id
+caption: 'ID товара'
+pos: 1
+sourceFrom: config

@@ -1,0 +1,5 @@
+key: minifyx_exclude_images
+value: '#(thumb|/\d+x\d+/)#i'
+xtype: textarea
+namespace: minifyx
+area: minifyx_main

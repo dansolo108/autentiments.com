@@ -1,0 +1,5 @@
+key: minifyx_exclude_registered
+value: '#(scripts|styles)_[a-z0-9]{10}\.#i'
+xtype: textarea
+namespace: minifyx
+area: minifyx_main

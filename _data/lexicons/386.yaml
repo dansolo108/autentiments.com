@@ -1,0 +1,5 @@
+id: 386
+name: stik_product_select_size_alert
+value: 'Choose a size'
+topic: site
+namespace: polylang

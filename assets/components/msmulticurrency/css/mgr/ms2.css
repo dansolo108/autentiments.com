@@ -1,0 +1,9 @@
+#modx-resource-tabs  .msmc-fieldset .x-tool.x-tool-toggle {
+    position: relative;
+    top: auto;
+    right: auto;
+}
+
+#modx-resource-tabs  .msmc-fieldset  .x-fieldset-header-text {
+    padding-left: 5px;
+}

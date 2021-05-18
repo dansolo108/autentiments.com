@@ -1,0 +1,5 @@
+id: 328
+name: stik_order_total_discount_cost
+value: 'Your discount'
+topic: site
+namespace: polylang

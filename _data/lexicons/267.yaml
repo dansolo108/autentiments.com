@@ -1,0 +1,6 @@
+id: 267
+name: stik_order_total_purchase_amount
+value: 'Сумма покупки'
+topic: site
+namespace: polylang
+language: ru

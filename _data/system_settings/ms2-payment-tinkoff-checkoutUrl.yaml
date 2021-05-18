@@ -1,0 +1,4 @@
+key: ms2_payment_tinkoff_checkoutUrl
+value: 'https://securepay.tinkoff.ru/v2/'
+namespace: minishop2
+area: ms2_payment_tinkoff

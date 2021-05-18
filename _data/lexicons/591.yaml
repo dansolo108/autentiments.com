@@ -1,0 +1,5 @@
+id: 591
+name: stik_order_agree
+value: 'By placing an order, I accept the terms of the user agreement. '
+topic: site
+namespace: polylang

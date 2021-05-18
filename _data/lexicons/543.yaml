@@ -1,0 +1,5 @@
+id: 543
+name: stik_profile_bonus_no_phone
+value: 'To participate in the bonus program, you must specify and confirm your phone number.'
+topic: site
+namespace: polylang

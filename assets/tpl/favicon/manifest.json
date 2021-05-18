@@ -1,0 +1,25 @@
+{
+    "name": "Autentiments",
+    "short_name": "Autentiments",
+    "description": "Autentiments",
+    "lang": "ru",
+    "start_url": "/",
+    "scope": "/",
+    "display": "fullscreen",
+    "orientation": "portrait",
+    "screenshots": [
+        {
+            "src": "screenshots/autentiments-1x.jpg",
+            "sizes": "640x480",
+            "type": "image/jpeg"
+        },{
+            "src": "screenshots/autentiments-2x.jpg",
+            "sizes": "1280x920",
+            "type": "image/jpeg"
+        }
+    ],
+    "icons": [
+        { "src": "icon-192.png", "type": "image/png", "sizes": "192x192" },
+        { "src": "icon-512.png", "type": "image/png", "sizes": "512x512" }
+    ]
+}

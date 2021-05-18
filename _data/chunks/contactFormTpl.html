@@ -1,0 +1,41 @@
+id: 24
+name: contactFormTpl
+description: ''
+properties: null
+
+-----
+
+<form action="" method="post" class="ajax_form">
+    <input type="text" class="form-control" placeholder="Lnk" id="af_link" name="link" value="[[+fi.link]]">
+    <div class="row">
+	<div class="col-md-6">
+		<div class="form-group">
+			<input type="text" class="form-control" placeholder="Имя" id="af_name" name="name" value="[[+fi.name]]">
+			<span class="error_name">[[+fi.error.name]]</span>
+		</div>
+	</div>
+	<div class="col-md-6">
+		<div class="form-group">
+			<input type="text" class="form-control" placeholder="Email" id="af_email" name="email" value="[[+fi.email]]">
+			    <span class="error_email">[[+fi.error.email]]</span>
+		</div>
+	</div>
+	<div class="col-md-12">
+		<div class="form-group">
+			<textarea id="af_message" name="message" class="form-control" id="" cols="30" rows="7" placeholder="Сообщение">[[+fi.message]]</textarea>
+			<span class="error_message">[[+fi.error.message]]</span>
+		</div>
+	</div>
+	<div class="col-md-12">
+		<div class="form-group">
+			<input type="submit" name="contact" value="Отправить Сообщение" class="btn btn-primary">
+		</div>
+	</div>
+    </div>
+    [[+fi.success:is=`1`:then=`
+    <div class="alert alert-success">[[+fi.successMessage]]</div>
+    `]]
+    [[+fi.validation_error:is=`1`:then=`
+    <div class="alert alert-danger">[[+fi.validation_error_message]]</div>
+    `]]
+</form>

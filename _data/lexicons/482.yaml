@@ -1,0 +1,6 @@
+id: 482
+name: stik_order_delivery_local_not_enough
+value: 'Выбранных изделий:<br> [[+products]] нет в необходимом количестве на складе г. [[+city]] для выбранного способа доставки'
+topic: site
+namespace: polylang
+language: ru

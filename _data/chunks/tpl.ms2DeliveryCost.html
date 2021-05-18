@@ -1,0 +1,32 @@
+id: 90
+source: 1
+name: tpl.ms2DeliveryCost
+description: ''
+category: ms2DeliveryCost
+properties: 'a:0:{}'
+static_file: core/components/ms2deliverycost/elements/chunks/item.tpl
+
+-----
+
+{*$costs | print*}
+{*$order | print*}
+{foreach $costs as $delivery index=$index}
+    {var $checked = !$order.delivery && $index == 0 || $delivery.delivery.id == $order.delivery}
+    <div class="au-ordering__delivery-row">
+        <input type="radio" name="delivery" value="{$delivery.delivery.id}" id="delivery_{$delivery.delivery.id}"
+               class="custom-form__radio" data-payments="{$delivery.payments | json_encode}"
+                {$checked ? 'checked' : ''}>
+        <label class="custom-form__radio-label" for="delivery_{$delivery.delivery.id}">
+            <span class="au-ordering__delivery-name">{$delivery.delivery.name}</span>
+            <span class="au-ordering__delivery-info">
+                {if $delivery.cost !== false}
+                    {if $delivery.cost !== 0}
+                        {$delivery.cost} {$_modx->getPlaceholder('msmc.symbol_right')}, {$delivery.rates}
+                    {else}
+                        не рассчитано
+                    {/if}
+                {/if}
+            </span>
+        </label>
+    </div>
+{/foreach}

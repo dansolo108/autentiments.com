@@ -1,0 +1,358 @@
+/* Search field */
+.x-field-search-clear,
+.x-field-search-go {
+    border-left: 1px solid #e4e4e4 !important;
+}
+
+.x-field-search-clear:hover,
+.x-field-search-go:hover {
+    border-left-color: transparent !important;
+}
+
+.x-field-search-clear:before {
+    content: '\f00d' !important;
+}
+
+.x-field-search-go {
+    right: 31px !important;
+    border-radius: 0 !important;
+}
+
+.x-field-search-go:before {
+    content: '\f002' !important;
+}
+
+/* Grids */
+.polylang-row-unpublished div,
+.polylang-row-unpublished span,
+.polylang-row-unpublished a {
+    font-style: italic;
+    color: #aaa !important;
+}
+
+.polylang-row-deleted div,
+.polylang-row-deleted span,
+.polylang-row-deleted a {
+    color: brown !important;
+    text-decoration: line-through !important;
+}
+
+.polylang-row-unpublished img,
+.polylang-row-deleted img {
+    opacity: .5;
+}
+
+.polylang-row-inactive div {
+    font-style: italic;
+    color: #aaa !important;
+}
+
+.polylang-row-required div {
+    color: brown !important;
+}
+
+/* Grid actions and menu */
+ul.polylang-row-actions {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+ul.polylang-row-actions li {
+    float: left;
+}
+
+ul.polylang-row-actions .btn {
+    padding: 2px;
+    margin-right: 2px;
+    min-width: 26px;
+}
+
+ul.polylang-row-actions .btn.actions-menu {
+    width: 40px;
+}
+
+ul.polylang-row-actions .btn.actions-menu:after {
+    content: " \f107";
+}
+
+a.x-menu-item .x-menu-item-text * {
+    cursor: pointer;
+}
+
+a.x-menu-item .x-menu-item-text .icon {
+    line-height: 16px;
+    top: auto;
+}
+
+.x-menu-list .icon {
+    min-width: 1em;
+    text-align: center;
+}
+
+.ext-strict .x-menu-item-icon {
+    top: 5px;
+}
+
+.x-menu-list-item:hover .icon {
+    color: inherit !important;
+}
+
+.x-menu-list .icon {
+    min-width: 1em;
+    text-align: center;
+}
+
+.x-tab-strip li {
+    list-style: none;
+}
+
+.x-grid3-col-actions {
+    padding: 5px 0 0 5px !important;
+}
+
+.x-grid3-col-actions .action-red, .x-menu .action-red {
+    color: darkred !important;
+}
+
+.x-grid3-col-actions .action-green, .x-menu .action-green {
+    color: darkgreen !important;
+}
+
+.x-grid3-col-actions .action-blue, .x-menu .action-blue {
+    color: cadetblue !important;
+}
+
+.x-grid3-col-actions .action-yellow, .x-menu .action-yellow {
+    color: goldenrod !important;
+}
+
+.x-grid3-col-actions .action-gray, .x-menu .action-gray {
+    color: dimgray !important;
+}
+
+.x-grid3 .green {
+    color: darkgreen;
+}
+
+.x-grid3 .red {
+    color: darkred;
+}
+
+.polylang-cogs img {
+    _display: none;
+}
+
+.polylang-cogs {
+    padding: 3px 20px 3px 6px !important;
+}
+
+.polylang-cogs i.icon {
+    padding-right: 3px;
+    width: 15px;
+}
+
+/* combo */
+
+.polylang-field {
+    overflow: hidden;
+}
+
+.x-field-combo-btns {
+    width: 66px;
+}
+
+.x-field-combo-btns,
+.x-trigger-noedit .x-field-combo-btns {
+    display: inline-block !important;
+    border-bottom: none !important;
+}
+
+.x-field-combo-btns .x-form-trigger {
+    border-left: 1px solid #e4e4e4 !important;
+}
+
+.x-field-combo-btns .x-form-trigger:hover {
+    border-left-color: transparent !important;
+}
+
+.x-field-combo-btns .x-form-trigger:hover.trigger-disable {
+    cursor: default !important;
+    box-shadow: none !important;
+    border-left: 1px solid #e4e4e4 !important;
+    background-color: transparent !important;
+    color: #555555;
+}
+
+.x-field-combo-btns .x-form-trigger.trigger-disable:before,
+.x-field-combo-btns .x-form-trigger:hover.trigger-disable:before {
+    opacity: 0.3 !important;
+}
+
+.x-field-combo-btns .x-form-trigger:nth-child(1) {
+    right: 31px !important;
+    border-radius: 0 !important;
+}
+
+.x-field-combo-btns.one .x-form-trigger:nth-child(1) {
+    right: 0 !important;
+    border-radius: 0 3px 3px 0 !important;
+}
+
+.x-field-combo-btns.three {
+    width: 95px;
+}
+
+.x-field-combo-btns.three .x-form-trigger:nth-child(1) {
+    right: 62px !important;
+}
+
+.x-field-combo-btns.three .x-form-trigger:nth-child(2) {
+    right: 31px !important;
+}
+
+.x-field-combo-btns.four {
+    width: 126px;
+}
+
+.x-field-combo-btns.four .x-form-trigger:nth-child(1) {
+    right: 93px !important;
+}
+
+.x-field-combo-btns.four .x-form-trigger:nth-child(2) {
+    right: 62px !important;
+}
+
+.x-field-combo-btns.four .x-form-trigger:nth-child(3) {
+    right: 31px !important;
+}
+
+
+.x-field-combo-btn-search:before {
+    content: '\f002' !important;
+}
+
+.x-field-combo-btn-clear:before {
+    content: '\f00d' !important;
+}
+
+.x-field-combo-btn-settings:before {
+    content: '\f013' !important;
+}
+
+.x-field-combo-btn-list:before {
+    content: '\f03a' !important;
+}
+
+.x-field-combo-btn-plus:before {
+    content: '\f067' !important;
+}
+
+.x-field-combo-btn-upload:before {
+    content: '\f093' !important;
+}
+
+.x-field-combo-btn-view:before {
+    content: '\f06e' !important;
+}
+
+.x-field-combo-btn-home:before {
+    content: '\f015' !important;
+}
+
+.x-field-combo-btn-info:before {
+    content: '\f129' !important;
+}
+
+.x-field-combo-btn-book:before {
+    content: '\f02d' !important;
+}
+
+.x-field-combo-btn-refresh:before {
+    content: '\f021' !important;
+}
+
+.x-field-combo-btn-clock:before {
+    content: '\f017' !important;
+}
+
+.x-field-combo-btn-copy:before {
+    content: '\f0ea' !important;
+}
+
+.x-field-combo-btn-remove:before {
+    content: '\f1f8' !important;
+}
+
+/** Tvs tab  **/
+#polylang-window-polylangcontent-tab-tvs-div:before,
+#polylang-window-polylangcontent-tab-tvs-div:after {
+    content: '';
+    display: table;
+}
+
+#polylang-window-polylangcontent-tab-tvs-div .x-form-field-wrap {
+    width: 100% !important;
+}
+
+/** translate **/
+
+.polylang-translate {
+    position: relative;
+    display: inline-block;
+    top: -2px;
+    right: -5px;
+    height: 16px;
+    padding: 17px 0 0 0;
+    transition: all 0.25s;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.polylang-translate.show {
+    opacity: 1;
+}
+.polylang-translate.disabled {
+    cursor: default;
+}
+
+#polylang-window-polylangcontent-tab-tvs-div .polylang-translate {
+    right: 5px;
+}
+
+.polylang-translate:before {
+    position: relative;
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    bottom: 0;
+    left: 0;
+    padding-left: 4px;
+    color: #555555;
+    content: '\f1ab';
+    font-family: FontAwesome;
+    font-size: 16px;
+    text-align: center;
+    vertical-align: middle;
+    line-height: 1;
+    box-sizing: border-box;
+}
+
+.polylang-translate span {
+    padding-left: 10px;
+    line-height: 16px;
+    font-weight: normal;
+    color: #fc9e45;
+}
+
+.polylang-translate:hover:before {
+    color: #1A7FB8;
+}
+
+.polylang-translate.disabled:hover:before {
+    color: #555555;
+}
+
+.x-form-item label.x-form-item-label:hover .polylang-translate {
+    opacity: 1;
+}

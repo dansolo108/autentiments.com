@@ -1,0 +1,4 @@
+key: mspromocode_frontend_js
+value: '[[+jsUrl]]web/default.js'
+namespace: mspromocode
+area: mspromocode_main

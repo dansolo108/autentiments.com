@@ -1,0 +1,4 @@
+key: minifyx_images_filters
+value: 's[true]'
+namespace: minifyx
+area: minifyx_main

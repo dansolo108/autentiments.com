@@ -1,0 +1,256 @@
+<?php
+/**
+ * The base class for stikProductRemains.
+ */
+
+class stikProductRemains {
+
+    /* @var modX $modx */
+    public $modx;
+    public $namespace = 'stik';
+    public $config = array();
+    public $options;
+    public $order_status;
+    public $orderback_status;
+    public $active = false;
+    public $active_before_add = false;
+    public $active_before_order = false;
+    public $active_bcstatus = false;
+    public $check_options = false;
+    public $default_remains = 0;
+    public $front_js;
+    public $hide_count = false;
+    public $moreless_count = 10;
+
+    /**
+     * @param modX $modx
+     * @param array $config
+     */
+    function __construct (modX &$modx, array $config = array()) {
+        $this->modx =& $modx;
+        $this->namespace = $this->modx->getOption('namespace', $config, 'stik');
+        $corePath = $this->modx->getOption('core_path') . 'components/stik/';
+        $assetsPath = $this->modx->getOption('assets_path') . 'components/stik/';
+        $assetsUrl = $this->modx->getOption('assets_url') . 'components/stik/';
+        $this->config = array_merge(array(
+            'corePath' => $corePath,
+            'assetsPath' => $assetsPath,
+            'modelPath' => $corePath . 'model/',
+            'chunksPath' => $corePath . 'elements/chunks/',
+            'templatesPath' => $corePath . 'elements/templates/',
+            'snippetsPath' => $corePath . 'elements/snippets/',
+            'processorsPath' => $corePath . 'processors/',
+            
+            'assetsUrl' => $assetsUrl,
+            'cssUrl' => $assetsUrl . 'css/',
+            'jsUrl' => $assetsUrl . 'js/',
+            'imagesUrl' => $assetsUrl . 'images/',
+            'actionUrl' => $assetsUrl . 'action.php',
+            'connectorUrl' => $assetsUrl . 'connector.php',
+            
+            'chunkSuffix' => '.chunk.tpl',
+        ), $config);
+        $this->options = $this->modx->getOption('stikpr_options', $config, null);
+        $this->order_status = $this->modx->getOption('stikpr_order_status', $config, 0);
+        $this->orderback_status = $this->modx->getOption('stikpr_orderback_status', $config, 0);
+        $this->active = $this->modx->getOption('stikpr_active', $config, false);
+        $this->active_before_add = $this->modx->getOption('stikpr_active_before_add', $config, false);
+        $this->active_before_order = $this->modx->getOption('stikpr_active_before_order', $config, false);
+        $this->active_bcstatus = $this->modx->getOption('stikpr_active_bcstatus', $config, false);
+        $this->modx->addPackage('stik', $this->config['modelPath']);
+        // $this->modx->lexicon->load('stik:default');
+    }
+
+    public function getRemains($scriptProperties) {
+        $product_id = (int) $this->modx->getOption('id', $scriptProperties, null);
+        $size = (string) $this->modx->getOption('size', $scriptProperties, null);
+        $stores = $this->modx->getOption('store_id', $scriptProperties, ''); // id склада
+        if (!is_array($stores) && $stores != '') {
+            $stores = [$stores];
+        }
+        $strong = (bool) $this->modx->getOption('strong', $scriptProperties, false);
+        $remains = false;
+        if (empty($product_id)) $product_id = $this->modx->resource->get('id');
+        if (is_null($size)) return false;
+        if ($strong) {
+            $where = [
+                'product_id' => $product_id,
+                'size' => $size,
+            ];
+            if (is_array($stores)) {
+                $where['store_id:IN'] = $stores;
+            }
+            $query = $this->modx->newQuery('stikRemains', $where);
+            $query->select('SUM(`stikRemains`.`remains`) as remains');
+            if ( $query->prepare() && $query->stmt->execute() )
+                $remains = $query->stmt->fetchColumn();
+        } elseif (!$strong) {
+            $query = $this->modx->newQuery('stikRemains', [
+                'product_id' => $product_id,
+                'remains:>' => 0
+            ]);
+            $query->select('SUM(`stikRemains`.`remains`) as remains');
+            if ( $query->prepare() && $query->stmt->execute() )
+                $remains = $query->stmt->fetchColumn();
+        }
+        return $remains;
+    }
+
+    public function saveRemains($scriptProperties) {
+        $product_id = (int) $this->modx->getOption('product_id', $scriptProperties, null);
+        $size = (string) $this->modx->getOption('size', $scriptProperties, null);
+        $store = (int) $this->modx->getOption('store_id', $scriptProperties, 1); // id склада
+        $count = (string) $this->modx->getOption('count', $scriptProperties, null);
+        $set = (bool) $this->modx->getOption('set', $scriptProperties, false);
+        if (empty($product_id) || is_null($count)) return false;
+        $where = array();
+        $rem = $this->modx->getObject('stikRemains', array(
+            'product_id' => $product_id,
+            'size' => $size,
+            'store_id' => $store,
+        ));
+        if (isset($rem)) {
+            $rem->set('remains', ($set ? intval($count) : $rem->get('remains')+intval($count)));
+        } else {
+            $rem = $this->modx->newObject('stikRemains', array(
+                'product_id' => $product_id,
+                'size' => $size,
+                'store_id' => $store,
+                'remains' => intval($count)
+            ));
+        }
+        $mode = ( $rem->get('id') > 0 ) ? 'upd' : 'new';
+        $response = $this->modx->invokeEvent('stikprOnBeforeChangeRemains', array(
+            'mode' => $mode,
+            'data' => $rem->toArray(),
+            'id' => $rem->get('id'),
+            'stikRemains' => $rem,
+            'object' => $rem
+        ));
+        $rem->save();
+        $response = $this->modx->invokeEvent('stikprOnChangeRemains', array(
+            'mode' => $mode,
+            'id' => $rem->get('id'),
+            'stikRemains' => $rem,
+            'object' => $rem
+        ));
+        return true;
+    }
+    
+    public function getStoreIdByCity($data_city) {
+        $cacheManager = $this->modx->getCacheManager();
+        $pickup_shops_json = $cacheManager->get('pickup_shops_json_' . $this->modx->getOption('cultureKey'));
+        if (empty($pickup_shops_json)) {
+            $pickup_shops_json = $this->modx->runSnippet('pdoResources', [
+                'parents' => 0,
+                'leftJoin' => '{
+                    "Store" : {
+                        "class" : "stikStore",
+                        "alias" : "Store",
+                        "on" : "Store.resource_id = modResource.id"
+                    }
+                }',
+                'where' => [
+                    'template' => 24,
+                    'Store.pickup' => 1,
+                    'Store.active' => 1,
+                ],
+                'select' => '{
+                    "modResource":"modResource.pagetitle as city",
+                    "Shop":"Store.id as store_id"
+                }',
+                'return' => 'json',
+            ]);
+            $pickup_shops_json = json_decode($pickup_shops, 1);
+            $cacheManager->set('pickup_shops_json_' . $this->modx->getOption('cultureKey'), $pickup_shops_json, 3600);
+        }
+        
+        $store = 0;
+        foreach ($pickup_shops_json as $shop) {
+            if (mb_strtolower($shop['city']) == mb_strtolower($data_city)) {
+                $store = $shop['store_id'];
+            }
+        }
+        
+        return $store;
+    }
+    
+    public function getFittingCitiesArray() {
+        $cacheManager = $this->modx->getCacheManager();
+        if (!$fitting_cities_array = $cacheManager->get('fitting_cities_array')) {
+            $q = $this->modx->newQuery('stikFittingCity');
+            $q->select('stikFittingCity.store_id,stikFittingCity.name,stikFittingCity.cost');
+            $q->where([
+            	'active' => 1
+            ]);
+            
+            if ($q->prepare() && $q->stmt->execute()) {
+                $data = $q->stmt->fetchAll(PDO::FETCH_ASSOC);
+            }
+            
+            $tmp = [];
+            
+            if (is_iterable($data)) {
+                foreach($data as $k => $v) {
+                    $tmp[mb_strtolower($v['name'])] = $data[$k];
+                    unset($tmp[$v['name']]['name']);
+                }
+            }
+            $fitting_cities_array = $tmp;
+            $cacheManager->set('fitting_cities_array', $tmp, 3600);
+        }
+
+        return $fitting_cities_array;
+    }
+    
+    public function getStoresArray() {
+        $cacheManager = $this->modx->getCacheManager();
+        if (!$stores_array = $cacheManager->get('stores_array')) {
+            $q = $this->modx->newQuery('stikStore');
+            $q->select('stikStore.id,stikStore.name,stikStore.1c_id,stikStore.resource_id,stikStore.pickup,stikStore.active,Resource.pagetitle as city');
+            $q->where([
+            	'active' => 1
+            ]);
+            $q->leftJoin('modResource', 'Resource', 'stikStore.resource_id = Resource.id');
+            if ($q->prepare() && $q->stmt->execute()) {
+                $stores_array = $q->stmt->fetchAll(PDO::FETCH_ASSOC);
+            }
+            $cacheManager->set('stores_array', $stores_array, 3600);
+        }
+
+        return $stores_array;
+    }
+    
+    public function arrayUniqueKey($array, $key) {
+        $tmp = $key_array = array(); 
+        $i = 0; 
+     
+        foreach($array as $val) { 
+            if (!in_array($val[$key], $key_array)) { 
+                $key_array[$i] = $val[$key]; 
+                $tmp[$i] = $val; 
+            } 
+            $i++; 
+        } 
+        return $tmp; 
+    }
+
+    public function loadPlugins() {
+        if (!is_object($this->modx->msPlugins) && !is_object($this->modx->ms2Plugins)) {
+            if (!class_exists('msPlugins') && file_exists(MODX_CORE_PATH . 'components/minishop2/model/minishop2/msplugins.class.php')) {
+                require_once(MODX_CORE_PATH . 'components/minishop2/model/minishop2/msplugins.class.php');
+                $this->modx->msPlugins = new msPlugins($this->modx, array());
+            } elseif (!class_exists('ms2Plugins') && file_exists(MODX_CORE_PATH . 'components/minishop2/model/minishop2/plugins.class.php')) {
+                require_once(MODX_CORE_PATH . 'components/minishop2/model/minishop2/plugins.class.php');
+                $this->modx->ms2Plugins = new ms2Plugins($this->modx, array());
+            } else return false;
+        }
+        $plugins = is_object($this->modx->msPlugins) ? $this->modx->msPlugins->getPlugins() : $this->modx->ms2Plugins->plugins;
+        foreach ($plugins as $plugin) {
+            if (!empty($plugin['manager']['stikRemains'])) {
+                $this->modx->controller->addLastJavascript($plugin['manager']['stikRemains']);
+            }
+        }
+    }
+
+}

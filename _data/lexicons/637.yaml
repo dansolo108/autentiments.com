@@ -1,0 +1,5 @@
+id: 637
+name: stik_size_subscribe_err_email
+value: 'Invalid Email address'
+topic: site
+namespace: polylang

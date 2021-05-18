@@ -1,0 +1,4 @@
+key: ms2_payment_tinkoff_receipt_payment_mode
+value: full_payment
+namespace: minishop2
+area: ms2_payment_tinkoff

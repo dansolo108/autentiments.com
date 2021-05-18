@@ -1,0 +1,6 @@
+id: 175
+name: stik_size_subscribe_err_form
+value: 'В форме содержатся ошибки'
+topic: site
+namespace: polylang
+language: ru

@@ -1,0 +1,7 @@
+id: 50
+config_id: 2
+formtab_id: 7
+field: createdon
+caption: 'Дата подписки'
+pos: 6
+sourceFrom: config

@@ -1,0 +1,5 @@
+id: 535
+name: stik_profile_sms_phone_change
+value: 'change the number'
+topic: site
+namespace: polylang

@@ -1,0 +1,4 @@
+.mce-tinymce:not(.mce-floatpanel) {
+    width: 100% !important;
+    box-sizing: border-box !important;
+}

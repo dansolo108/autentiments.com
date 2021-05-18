@@ -1,0 +1,6 @@
+id: 119
+name: stik_order_total_cost
+value: 'Итого к оплате'
+topic: site
+namespace: polylang
+language: ru

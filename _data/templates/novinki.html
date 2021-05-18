@@ -1,0 +1,66 @@
+id: 14
+templatename: Новинки
+description: ''
+properties: 'a:0:{}'
+
+-----
+
+{extends 'template:1'}
+
+{block 'main'}
+    {block 'params'}
+        {set $where = [
+            'Data.new' => 1,
+            'Data.image:!=' => null,
+        ]}
+        {set $wrapper_classes = ''}
+    {/block}
+    
+    {block 'products'}
+        {set $products = '!pdoPage' | snippet : [
+            'element' => 'msProducts',
+            'ajaxMode' => 'scroll',
+            'limit' => 6,
+            'parents' => 7,
+            'sortby' => 'menuindex',
+            'sortdir' => 'ASC',
+            'tpl' => 'stik.msProducts.row',
+            'includeThumbs' => 'category',
+            'leftJoin' => [
+              "category_2" => [
+                "class" => "msProductFile",
+                "alias" => "category_2",
+                "on" => "category_2.product_id = msProduct.id  AND category_2.rank = 1 AND category_2.path LIKE '%/category/%'"
+              ]
+            ],
+            'select' => [
+                "category_2" => "category_2.url as category_2"
+            ],
+            'where' => $where,
+        ]}
+    {/block}
+    {* если товары в категории отсутствуют - для au-category добавляем класс empty *}
+    <main id="pdopage" class="au-category {$wrapper_classes} {if !$products}empty{/if}">
+        <h1 class="au-h1  au-category__title">{$_modx->resource.pagetitle}</h1>
+        <div class="au-catalog rows">
+            {if $products}
+                {$products}
+            {else}
+                <div class="au-catalog_empty">
+                    {if $_modx->resource.catalog_empty_title}
+                        <p class="au-catalog_empty-text  empty-text_margin-bottom">{$_modx->resource.catalog_empty_title}</p>
+                    {/if}
+                    {if $_modx->resource.catalog_empty_text}
+                        <p class="au-catalog_empty-text">
+                            <span class="au-catalog_empty-span">{$_modx->resource.catalog_empty_text}</span>
+                        </p>
+                    {/if}
+                    {if $_modx->resource.catalog_empty_button && $_modx->resource.catalog_empty_link}
+                        <a class="au-catalog_empty-btn  au-btn" href="{$_modx->resource.catalog_empty_link}">{$_modx->resource.catalog_empty_button}</a>
+                    {/if}
+                </div>
+            {/if}
+        </div>
+        {'page.nav' | placeholder}
+    </main>
+{/block}

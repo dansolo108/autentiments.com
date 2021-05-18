@@ -1,0 +1,7 @@
+id: 42
+config_id: 6
+formtab_id: 6
+field: language
+caption: Язык
+pos: 3
+sourceFrom: config

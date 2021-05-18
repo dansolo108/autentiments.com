@@ -1,0 +1,6 @@
+id: 89
+name: stik_form_validation_error_message
+value: 'В форме содержатся ошибки!'
+topic: site
+namespace: polylang
+language: ru

@@ -1,0 +1,5 @@
+id: 397
+name: stik_change_pw_success
+value: 'The password was successfully changed.'
+topic: site
+namespace: polylang

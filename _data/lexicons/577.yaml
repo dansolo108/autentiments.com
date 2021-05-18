@@ -1,0 +1,5 @@
+id: 577
+name: stik_order_step_one_delivery_data
+value: 'Enter delivery details'
+topic: site
+namespace: polylang

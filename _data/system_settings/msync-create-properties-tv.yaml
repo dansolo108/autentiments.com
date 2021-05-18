@@ -1,0 +1,4 @@
+key: msync_create_properties_tv
+xtype: combo-boolean
+namespace: msync
+area: msync_main

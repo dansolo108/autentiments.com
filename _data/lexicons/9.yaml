@@ -1,0 +1,5 @@
+id: 9
+name: setting_stik_cdek_auth_login_desc
+value: 'Логин от вашего личного кабинета СДЭК'
+namespace: stik
+language: ru

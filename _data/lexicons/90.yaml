@@ -1,0 +1,6 @@
+id: 90
+name: stik_form_success_message
+value: 'Сообщение успешно отправлено'
+topic: site
+namespace: polylang
+language: ru

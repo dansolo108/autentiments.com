@@ -1,0 +1,6 @@
+id: 226
+name: stik_reset_password_success
+value: 'Пароль успешно изменен. Используйте пароль из письма.'
+topic: site
+namespace: polylang
+language: ru

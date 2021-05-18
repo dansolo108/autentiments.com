@@ -1,0 +1,7 @@
+text: ms2_system_settings
+parent: minishop2
+action: system/settings
+description: ms2_system_settings_desc
+menuindex: 2
+params: '&ns=minishop2'
+permissions: settings

@@ -1,0 +1,4 @@
+key: pdoFetch.class
+value: PolylangFetch
+namespace: pdotools
+area: pdotools_main

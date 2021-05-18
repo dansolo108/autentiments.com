@@ -1,0 +1,191 @@
+
+[[!msFavorites.initialize]]
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/rainbow/1.2.0/js/rainbow.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/rainbow/1.2.0/js/language/generic.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/rainbow/1.2.0/js/language/html.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/rainbow/1.2.0/js/language/css.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/rainbow/1.2.0/js/language/javascript.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/rainbow/1.2.0/themes/monokai.min.css"/>
+<script>
+	$(document).on('click', 'a.label', function (e) {
+		var name = $(this).attr('name');
+		if (typeof name != 'undefined') {
+			window.location.hash = '#'+name;
+		}
+	});
+</script>
+<style>
+	body {
+		font-size: 13px;
+		line-height: initial;
+	}
+
+	pre {
+		font-size: 12px;
+		-moz-tab-size: 1;
+		-o-tab-size: 1;
+		tab-size: 1;
+	}
+
+	pre *,
+	code * {
+		letter-spacing: initial;
+	}
+
+	pre .close {
+		float: inherit;
+		font-size: inherit;
+		font-weight: inherit;
+		line-height: inherit;
+		text-shadow: none;
+		filter: inherit;
+		opacity: inherit;
+	}
+
+	pre .close:focus,
+	pre .close:hover {
+		text-decoration: inherit;
+		cursor: inherit;
+		filter: inherit;
+		opacity: inherit;
+	}
+
+	.tm-result {
+		padding: 30px;
+		border: 1px solid #ccc;
+		border: 1px solid rgba(0, 0, 0, 0.15);
+		-webkit-border-radius: 2px;
+		-moz-border-radius: 2px;
+		border-radius: 2px;
+	}
+
+</style>
+
+
+<h3 id="ex">Примеры</h3>
+
+<div class="row">
+	<div class="col-md-6">
+		<p>
+			<a class="label label-primary" name="ex-2">пример 2</a>
+		</p>
+
+
+		<p>
+			<b>Постановка:</b>
+			<br>- требуется вывести список избранного
+			<br>- возможность удалить ресурс из списка избранного <b>default</b>
+			<br>- вывести общий счетчик кол-ва в избранном
+		</p>
+		<p>
+			<b>Вызов:</b>
+		</p>
+
+		<pre><code data-language="html">&lt;div id="pdopage" class="msfavorites-parent">
+			&lt;div class="rows">
+			&#91;[!pdoPage?
+			&parents=`0`
+			&element=`msProducts`
+			&resources=`&#91;[!msFavorites.ids]&#93;`
+			&tpl=`@INLINE
+			&lt;div class="msfavorites-parent">
+					&lt;a class="msfavorites"
+					data-click
+					data-data-id="&#91;[+id]&#93;"
+					data-data-list="default"
+					data-msfavorites-mode="list">
+					<i class="msfavorites-icon-heart"></i>
+					<span class="msfavorites-text-load">секунду</span>
+					<span class="msfavorites-text-add">отложить</span>
+					<span class="msfavorites-text-remove">удалить</span>
+					&lt;/a>
+					<span class="msfavorites-total" data-data-list="default">0</span>
+					&#91;[+pagetitle]&#93;
+			&lt;/div>
+			`
+			&ajaxMode=`default`
+			]&#93;
+			&lt;/div>
+			&#91;[!+page.nav]&#93;
+
+			&lt;button class="btn btn-default btn-sm msfavorites msfavorites-action"
+					data-click
+					data-data-list="default"
+					data-data-method="clear"
+			>
+				Очистить список
+			</button>
+			&lt;/div></code></pre>
+	</div>
+
+	<div class="col-md-6">
+		<br><br><br><br><br><br><br>
+		<p>
+			<b>Результат:</b>
+		</p>
+
+		<div id="pdopage" class="msfavorites-parent">
+			<div class="rows">
+				[[!pdoPage:default=`<div><strong>Ваш список избранного пока пуст</strong></div>`?
+				&parents=`0`
+				&resources=`[[!msFavorites.ids]]`
+				&element=`msProducts`
+				&sortby=``
+				&totalVar=`total`
+				&tpl=`item`
+				&ajaxMode=`default`
+				]]
+			</div>
+			[[!+page.nav]]
+
+			[[!+total:gt=`0`:then=`
+			<button class="btn btn-default btn-sm msfavorites msfavorites-action"
+					data-click
+					data-data-list="default"
+					data-data-method="clear"
+			>
+				Очистить список
+			</button>`:else=``]]
+
+
+		</div>
+
+	</div>
+
+</div>
+<br>
+<br>
+
+
+{*
+{'msFavorites.initialize' | snippet}
+
+{set $ids = '!msFavorites.ids' | snippet}
+
+<div id="pdopage">
+	<div class="rows">
+		{'!pdoPage' | snippet: [
+		'parents' => 0,
+		'resources'=> $ids,
+		'element' => 'msProducts',
+		'ajaxMode' => 'default',
+		'tpl' => '@INLINE
+		<div class="msfavorites-parent">
+			<a class="msfavorites"
+			   data-click
+			   data-msfavorites-mode="list"
+			   data-data-id="{$id}"
+			   data-data-list="default"
+			   data-datar-properties=\'{ "sddsd":444 }\'>
+			<i class="msfavorites-icon-heart"></i>
+			</a>
+			{$pagetitle}
+			<br><br>
+		</div>
+		',
+		]}
+	</div>
+	{$_modx->getPlaceholder('page.nav')}
+</div>
+*}

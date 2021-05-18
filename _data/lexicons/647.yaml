@@ -1,0 +1,6 @@
+id: 647
+name: stik_catalog_empty_default_title
+value: 'Здесь будет удобно выбрать нужную вещь.'
+topic: site
+namespace: polylang
+language: ru
