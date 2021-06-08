@@ -1,0 +1,5 @@
+id: 877
+name: stik_order_submit_button
+value: 'Proceed to payment'
+topic: site
+namespace: polylang

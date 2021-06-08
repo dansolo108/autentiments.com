@@ -111,9 +111,23 @@ switch ($modx->event->name) {
         }
         
         $sizes = array_unique($sizes);
+        $colors = array_unique($colors);
         
         $resource->set('size', $sizes);
-        $resource->set('color', $color);
+        $resource->set('color', $colors);
         $resource->save();
+        break;
+
+    case 'mSyncOnSalesExport':
+        // Исключаем заказы, оформленные по спец.ссылке и отправленные в amoCRM
+        foreach ($xml->Документ as $k => $doc) {
+            $id = (int) $doc->Ид;
+            $properties = $orders[$id]->get('properties');
+            $amo_userid = isset($properties['amo_userid']) ? $properties['amo_userid'] : '';
+            if ($amo_userid) {
+                $dom = dom_import_simplexml($doc);
+                $dom->parentNode->removeChild($dom);
+            }
+        }
         break;
 }

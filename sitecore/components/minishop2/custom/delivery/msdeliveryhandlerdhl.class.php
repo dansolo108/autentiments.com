@@ -20,9 +20,9 @@ class msDeliveryHandlerDhl extends msDeliveryHandler implements msDeliveryInterf
         $receiverPostCode = $orderData['index'];
         $cultureKey = $this->modx->cultureKey;
         
-        $siteID = 'v62_eG92GGAvVG';
-        $password = 'g8bnrLomlt';
-        $paymentAccountNumber = '955864180';
+        $siteID = 'v62_hIGJLpUpb1';
+        $password = '79iLqNQsGi';
+        $paymentAccountNumber = '380933116';
         
         $query = $modx->newQuery('stikCountry');
         $query->where( array('ru_name:=' => $country, 'OR:name:=' => $country) );
@@ -174,6 +174,12 @@ class msDeliveryHandlerDhl extends msDeliveryHandler implements msDeliveryInterf
                 }
                 return [($cost + $xml->GetQuoteResponse->BkgDetails->QtdShp->ShippingCharge), $date];
             } else {
+                if($xml && isset($xml->GetQuoteResponse->Note->Condition->ConditionData)){
+                    $modx->log(1, 'DHL Error: ' . $xml->GetQuoteResponse->Note->Condition->ConditionData . " Country: $country, City: $receiverCity, Index: $receiverPostCode");
+                }
+                if($xml && isset($xml->Response->Status->Condition->ConditionData)){
+                    $modx->log(1, 'DHL Error: ' . $xml->Response->Status->Condition->ConditionData . " Country: $country, City: $receiverCity, Index: $receiverPostCode");
+                }
                 return $cost;
             }
         } else {

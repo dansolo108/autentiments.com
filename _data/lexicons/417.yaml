@@ -1,6 +1,6 @@
 id: 417
 name: stik_order_delivery_1
-value: Самовывоз
+value: 'СДЭК курьером'
 topic: site
 namespace: polylang
 language: ru

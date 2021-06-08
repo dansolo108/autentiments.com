@@ -1,0 +1,13 @@
+id: 92
+name: joinLoyalty.form
+description: ''
+category: AjaxForm
+properties: 'a:0:{}'
+
+-----
+
+<form method="post" id="join_loyalty{if $_modx->resource.template == 7}_profile{/if}">
+    <input type="hidden" name="submitted" value="1" />
+    <input type="hidden" name="join_loyalty" value="1" />
+    <button type="submit" class="au-btn-light  au-profile__loyalty-btn">{'stik_loyalty_join_button' | lexicon}</button>
+</form>

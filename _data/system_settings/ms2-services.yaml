@@ -1,5 +1,5 @@
 key: ms2_services
-value: '{"cart":[],"order":[],"payment":[],"delivery":[]}'
+value: '{"cart":[],"order":{"msmcorder":"{core_path}components\/msmulticurrency\/handlers\/order\/msmcorder.class.php"},"payment":[],"delivery":[]}'
 xtype: textarea
 namespace: minishop2
 area: ms2_main

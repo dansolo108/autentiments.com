@@ -47,6 +47,7 @@ foreach ($objects as $object) {
 		'product_id' => $object->get('product_id'),
 		'store_id' => 1,
 		'size' => $object->get('size'),
+		'color' => $object->get('color'),
 		'remains:>' => 0,
 	));
     
@@ -58,8 +59,7 @@ foreach ($objects as $object) {
                 'msProduct.id' => $object->get('product_id'),
                 'msProduct.published' => 1,
                 'msProduct.deleted:!=' => 1,
-                //'msProduct.parent:!=' => 12, // раздел Скоро
-                //'Data.favorite:!=' => 1, // чекбокс Скоро
+                'Data.soon:!=' => 1, // чекбокс Скоро
             ]);
             $product = $modx->getObject('msProduct', $q);
             if ($product) {
@@ -77,7 +77,7 @@ foreach ($objects as $object) {
                     $object->save();
                     $success++;
                 } else {
-                    $modx->log(modX::LOG_LEVEL_INFO,  "stik ERROR: " . $message . "\nID: " . $object->get('id') . "\nEmail: " . $object->get('email') . "\nPhone: " . $object->get('phone'));
+                    $modx->log(modX::LOG_LEVEL_INFO,  "stik ERROR: " . $message . "\nID: " . $object->get('id') . "\nEmail: " . $object->get('email'));
                     $errors++;
                 }
             }

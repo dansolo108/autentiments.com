@@ -1,0 +1,6 @@
+id: 878
+name: stik_order_payment_agree
+value: "Переходя к\_оплате, вы\_принимаете"
+topic: site
+namespace: polylang
+language: ru

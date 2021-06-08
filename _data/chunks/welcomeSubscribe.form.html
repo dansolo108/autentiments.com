@@ -1,0 +1,42 @@
+id: 103
+source: 1
+name: welcomeSubscribe.form
+description: ''
+category: AjaxForm
+properties: 'a:0:{}'
+
+-----
+
+<div class="au-modal-welcome">
+    <div class="au-welcome__wrapper">
+        <div class="au-modal-welcome__content">
+            <button class="au-close-light  au-modal-welcome__close  au-welcome-close" aria-label="{'stik_modal_close' | lexicon}"></button>
+            <div class="au-welcome__img-box">
+                <picture>
+                    <!-- <source type="image/webp" srcset=""> -->
+                    <img width="400" height="616" class="au-welcome__img" src="/assets/tpl/img/modal-welcome-img.jpg" alt="">
+                </picture>
+            </div>
+            <div class="au-welcome__col">
+                <form id="welcome_subscribe_form" class="au-welcome__form ajax_form" action="" method="post">
+                    <input type="hidden" name="language" value="{'cultureKey' | option}">
+                    <input type="hidden" name="welcomeform" value="1">
+                    <input type="text" name="link" value="">
+                    <h3 class="au-welcome__title  au-welcome__title_one">{'stik_welcome_modal_title' | lexicon}</h3>
+                    <p class="au-welcome__text">{'stik_welcome_modal_text' | lexicon}</p>
+                    <div class="custom-form__group  au-welcome__input-group">
+                        <input class="custom-form__input  au-welcome__input" type="email" name="email_sbs" placeholder="Email" value="{$_modx->user.email}" data-val="{$_modx->user.email}"> 
+                        <span class="error_field error_email_sbs"></span>
+                    </div>
+                    <button class="au-btn  au-welcome__btn" type="submit">{'stik_welcome_modal_button' | lexicon}</button>
+                    <p class="au-welcome__politics-text">{'stik_ss_form_agree1' | lexicon} <a class="au-welcome__politics-link au-text-tab_js" href="policy">{'stik_ss_form_policy_link' | lexicon}</a></p>
+                </form>
+                <div class="au-welcome__col-submit">
+                    <h3 class="au-welcome__title">{'stik_welcome_modal_success_title' | lexicon}</h3>
+                    <p class="au-welcome__text">{'stik_welcome_modal_success_text' | lexicon}</p>
+                    <button class="au-btn  au-welcome__btn  au-welcome-close">{'stik_welcome_modal_continue' | lexicon}</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

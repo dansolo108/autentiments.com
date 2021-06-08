@@ -1,5 +1,5 @@
 id: 352
 name: stik_newsletter_form_agree
-value: 'By clicking the Subscribe button, I consent to the processing and transfer of<a href="[[+link]]"> my personal data</a>'
+value: 'By signing up, you accept'
 topic: site
 namespace: polylang

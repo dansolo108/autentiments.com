@@ -16,8 +16,7 @@ $tmp .= ini_get('max_execution_time') == 600 ? 'done' : 'error';
 $modx->log(modX::LOG_LEVEL_INFO,  $tmp);
 
 
-// Удаляем все неактивные записи из произвольной таблицы
-$sql = "DELETE FROM Hvi2w7e_manager_log WHERE user = 6";
+$sql = "DELETE FROM Hvi2w7e_manager_log WHERE user = " . $modx->getOption('msync_user_id_import');
 $count = $modx->exec($sql);
 
 

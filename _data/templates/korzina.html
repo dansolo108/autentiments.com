@@ -10,13 +10,13 @@ properties: 'a:0:{}'
 {extends 'template:1'}
 
 {block 'header'}
-    <header class="au-header container">
+    <header class="au-header  au-header-cart  container">
         <div class="au-header__head">
             <a class="au-ordering__link-back" href="" onclick="javascript:history.back(); return false;">
                 <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M14.0658 3.28239L13.3587 2.57529L5.93408 9.99992L13.3588 17.4246L14.0659 16.7175L7.34831 9.99991L14.0658 3.28239Z" fill="#1A1714"></path>
                 </svg>
-                <span class="au-desktop">Назад</span>
+                <span class="au-desktop">{'stik_link_back' | lexicon}</span>
             </a>
             <button class="au-close  au-login__header-close" aria-label="{'stik_modal_close' | lexicon}">
                 <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -34,12 +34,13 @@ properties: 'a:0:{}'
 
 {block 'main'}
     {if $.get['msorder']}
-        {$_modx->sendRedirect(1265 | url : [] : ['msorder' => $.get['msorder']])}
+        {$_modx->sendRedirect(26 | url : [] : ['msorder' => $.get['msorder']])}
     {/if}
     {set $msOrder = '!msOrder' | snippet : [
         'tpl' => 'stik.msOrder',
-        'userFields' => '{"country":"","city":"","index":"","name":"name","surname":"surname","phone":"mobilephone","building":"building","have_discount_card":"","agree":"","without_manager_calling":""}'
+        'userFields' => '{"msloyalty":"","name":"name","surname":"surname","phone":"mobilephone","building":"building","corpus":"corpus","entrance":"entrance","room":"room"}'
     ]}
+    {*"country":"","city":"","index":"",*}
     {if $msOrder}
         {$msOrder}
         {* Подключаем скрипты для СДЭК и DaData *}
@@ -50,41 +51,20 @@ properties: 'a:0:{}'
             'registerJs' => 'default',
             'cssSources' => '
                 /assets/components/stik_cdek/css/web/jquery.fancybox.min.css,
-                /assets/components/stik_cdek/css/web/auto-complete.css,
                 /assets/components/stik_cdek/css/web/cdek.css,
             ',
             'jsSources' => '
                 /assets/components/stik_cdek/js/web/deliveryPoints.js,
-                /assets/components/stik_cdek/js/web/autocomplete/auto-complete.min.js,
-                /assets/components/stik_cdek/js/web/autocomplete/init.js,
                 /assets/components/stik_cdek/js/web/cdek.default.js,
                 /assets/components/stik_cdek/js/web/jquery.fancybox.min.js,
             ',
         ]}
-        <div id="cost-system" class="system mfp-hide white-popup-block">
-            <a class="popup-modal-dismiss basket__cross" href="#"><img src="/assets/tpl/img/basket_close.svg" alt="close"></a>
-            {$_modx->config['discount_system_' ~ $_modx->config['cultureKey']]}
-        </div>
-        {'!msEcommerceCheckout' | snippet}
     {else}
-        <main>
-            <div class="basket-empty">
-                <h1 class="basket-empty__title">{'stik_basket_empty_main_title' | lexicon}</h1>
-                <p class="basket-empty__description">{'stik_basket_empty_title' | lexicon}</p>
-                <div class="basket-empty__cards collection container">
-                    <div class="collection__card">
-                        <a href="{6|url}">
-                            <div class="collection__photo"><img src="/assets/tpl/img/collection_1.png" alt="collection_1"></div>
-                            <h3 class="collections__card-title">{'stik_basket_empty_to_catalog' | lexicon}</h3>
-                        </a>
-                    </div>
-                    <div class="collection__card">
-                        <a href="{1190|url}">
-                            <div class="collection__photo"><img src="/assets/tpl/img/collection_2.png" alt="collection_2"></div>
-                            <h3 class="collections__card-title">{'stik_basket_empty_to_lookbooks' | lexicon}</h3>
-                        </a>
-                    </div>
-                </div>
+        <main class="au-ordering  page-container ajax-loader-block">
+            <div class="au-cart__empty" style="display:block;">
+                <h3 class="au-h1  au-cart__title">{'stik_empty_basket_title' | lexicon}</h3>
+                <p class="au-cart__text">{'stik_empty_basket_text' | lexicon}</p>
+                <a class="au-btn" href="{7|url}">{'stik_empty_basket_view_catalog' | lexicon}</a>
             </div>
         </main>
     {/if}

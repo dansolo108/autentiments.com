@@ -1,0 +1,6 @@
+id: 710
+name: stik_empty_basket_title
+value: 'Ваша корзина пуста'
+topic: site
+namespace: polylang
+language: ru

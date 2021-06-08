@@ -1,0 +1,6 @@
+id: 824
+name: stik_profile_loyalty_purchase_amount
+value: 'Сумма покупок'
+topic: site
+namespace: polylang
+language: ru

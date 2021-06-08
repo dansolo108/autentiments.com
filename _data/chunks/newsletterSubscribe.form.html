@@ -9,14 +9,15 @@ properties: 'a:0:{}'
 
 <section class="au-subscribe">
     <h2 class="au-h2 au-subscribe__title">
-        <span class="au-subscribe__start">Подписка</span>
-        <span class="au-subscribe__end">Вы подписаны на новости</span>
+        <span class="au-subscribe__start">{'stik_newsletter_form_title' | lexicon}</span>
+        <span class="au-subscribe__end">{'stik_newsletter_form_title_success' | lexicon}</span>
     </h2>
     <div class="au-subscribe__subtitle-box">
-        <p class="au-subscribe__subtitle au-subscribe__start">Первыми узнавайте о новых коллекциях, уникальных предложениях и секретных акциях</p>
-        <p class="au-subscribe__subtitle au-subscribe__end">Спасибо за подписку! На указанную электронную почту отправлено письмо для подтверждения</p>
+        <p class="au-subscribe__subtitle au-subscribe__start">{'stik_newsletter_form_subtitle' | lexicon}</p>
+        <p class="au-subscribe__subtitle au-subscribe__end">{'stik_newsletter_form_subtitle_success' | lexicon}</p>
     </div>
-    <form id="newsletter_subscribe_form ajax_form" class="au-subscribe__form" action="" method="post">
+    <form id="newsletter_subscribe_form" class="au-subscribe__form ajax_form" action="" method="post">
+        <input type="hidden" name="footerform" value="1">
         <input type="text" name="link" value="">
         <input type="hidden" name="language" value="{'cultureKey' | option}">
         <div class="custom-form__group  au-subscribe__input-group">
@@ -27,7 +28,7 @@ properties: 'a:0:{}'
                 </svg>
             </button>
             <span class="error_email_sbs"></span>
-            <p class="au-subscribe__politics-text">Подписываясь, вы принимаете <a class="au-subscribe__politics-link au-text-tab_js" href="policy" data-text="Политика конфиденциальности">Политику конфиденциальности</a></p>
+            <p class="au-subscribe__politics-text">{'stik_newsletter_form_agree' | lexicon} <a class="au-subscribe__politics-link au-text-tab_js" href="policy">{'stik_ss_form_policy_link' | lexicon}</a></p>
         </div>
     </form>
 </section>

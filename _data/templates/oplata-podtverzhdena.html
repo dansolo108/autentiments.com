@@ -1,0 +1,17 @@
+id: 17
+templatename: 'Оплата подтверждена'
+description: ''
+properties: 'a:0:{}'
+
+-----
+
+{extends 'template:1'}
+
+
+{block 'main'}
+    <main class="au-payment-end">
+        {'!msGetOrder' | snippet : [
+            'tpl' => 'stik.msGetOrder',
+        ]}
+    </main>
+{/block}

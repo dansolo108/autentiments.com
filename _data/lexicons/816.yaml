@@ -1,0 +1,6 @@
+id: 816
+name: stik_newsletter_form_subtitle_success
+value: 'Спасибо за подписку! На указанную электронную почту отправлено письмо для подтверждения'
+topic: site
+namespace: polylang
+language: ru

@@ -12,7 +12,8 @@ switch ($modx->event->name) {
         // SQL:
         // ALTER TABLE `modx_user_attributes` ADD `name` VARCHAR(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' AFTER `fullname`, ADD `surname` VARCHAR(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' AFTER `name`, ADD `building` VARCHAR(10) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL AFTER `surname`, ADD `room` VARCHAR(10) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL AFTER `building`;
         // ALTER TABLE `modx_user_attributes` ADD `corpus` VARCHAR(10) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL AFTER `room`;
-        // ALTER TABLE `modx_user_attributes` ADD `phone_active` TINYINT(1) UNSIGNED NOT NULL DEFAULT '0' AFTER `mobilephone`;
+        // ALTER TABLE `modx_user_attributes` ADD `join_loyalty` TINYINT(1) UNSIGNED NOT NULL DEFAULT '0' AFTER `mobilephone`;
+        // ALTER TABLE `modx_user_attributes` ADD `amo_userid` INT(10) UNSIGNED NOT NULL AFTER `website`;
         $modx->loadClass('modUserProfile');
         $modx->map['modUserProfile']['fields']['name'] = '';
         $modx->map['modUserProfile']['fields']['surname'] = '';
@@ -20,7 +21,8 @@ switch ($modx->event->name) {
         $modx->map['modUserProfile']['fields']['room'] = null;
         $modx->map['modUserProfile']['fields']['corpus'] = null;
         $modx->map['modUserProfile']['fields']['entrance'] = null;
-        // $modx->map['modUserProfile']['fields']['phone_active'] = 0;
+        $modx->map['modUserProfile']['fields']['join_loyalty'] = 0;
+        $modx->map['modUserProfile']['fields']['amo_userid'] = null;
         
         $modx->map['modUserProfile']['fieldMeta']['name'] = array(
             'dbtype' => 'varchar',
@@ -63,13 +65,20 @@ switch ($modx->event->name) {
             'phptype' => 'integer',
             'null' => false,
         );
-        // $modx->map['modUserProfile']['fieldMeta']['phone_active'] = array(
-        //     'dbtype' => 'tinyint',
-        //     'precision' => '1',
-        //     'attributes' => 'unsigned',
-        //     'phptype' => 'boolean',
-        //     'default' => 0,
-        // );
+        $modx->map['modUserProfile']['fieldMeta']['join_loyalty'] = array(
+            'dbtype' => 'tinyint',
+            'precision' => '1',
+            'attributes' => 'unsigned',
+            'phptype' => 'boolean',
+            'default' => 0,
+        );
+        $modx->map['modUserProfile']['fieldMeta']['amo_userid'] = array(
+            'dbtype' => 'int',
+            'precision' => '10',
+            'phptype' => 'integer',
+            'attributes' => 'unsigned',
+            'null' => false,
+        );
         
         break;
         
@@ -85,7 +94,8 @@ switch ($modx->event->name) {
             $data['room'] = htmlspecialchars($user->Profile->room);
             $data['corpus'] = htmlspecialchars($user->Profile->corpus);
             $data['entrance'] = htmlspecialchars($user->Profile->entrance);
-            // $data['phone_active'] = $user->Profile->phone_active ? 'true' : 'false';
+            $data['amo_userid'] = (int)$user->Profile->amo_userid;
+            $data['join_loyalty'] = $user->Profile->join_loyalty ? 'true' : 'false';
 
             $modx->controller->addHtml("
                 <script type='text/javascript'>
@@ -113,28 +123,28 @@ switch ($modx->event->name) {
                                 maxLength: 100,
                                 value: '{$data['surname']}',
                             }));
-                            // leftCol.items.insert(8, 'modx-user-phone-active', new Ext.form.Checkbox({
-                            //     id: 'modx-user-phone-active',
-                            //     name: 'phone_active',
-                            //     hideLabel: true,
-                            //     boxLabel: 'Телефон активирован',
-                            //     description: 'Телефон подтвержден по СМС',
-                            //     xtype: 'xcheckbox',
-                            //     inputValue: 1,
-                            //     listeners: {
-                            //         beforerender: function(that) {
-                            //             that.hiddenField = new Ext.Element(document.createElement('input')).set({
-                            //                 type: 'hidden',
-                            //                 name: that.name,
-                            //                 value: 0,
-                            //             });
-                            //         },
-                            //         afterrender: function(that) {
-                            //             that.el.insertHtml('beforeBegin', that.hiddenField.dom.outerHTML);
-                            //         },
-                            //     },
-                            //     checked: {$data['phone_active']},
-                            // }));
+                            leftCol.items.insert(8, 'modx-user-join-loyalty', new Ext.form.Checkbox({
+                                id: 'modx-user-join-loyalty',
+                                name: 'join_loyalty',
+                                hideLabel: true,
+                                boxLabel: 'Программа лояльности',
+                                description: 'Участвует в программе лояльности',
+                                xtype: 'xcheckbox',
+                                inputValue: 1,
+                                listeners: {
+                                    beforerender: function(that) {
+                                        that.hiddenField = new Ext.Element(document.createElement('input')).set({
+                                            type: 'hidden',
+                                            name: that.name,
+                                            value: 0,
+                                        });
+                                    },
+                                    afterrender: function(that) {
+                                        that.el.insertHtml('beforeBegin', that.hiddenField.dom.outerHTML);
+                                    },
+                                },
+                                checked: {$data['join_loyalty']},
+                            }));
                             leftCol.items.insert(11, 'modx-user-room', new Ext.form.TextField({
                                 id: 'modx-user-room',
                                 name: 'room',
@@ -161,6 +171,15 @@ switch ($modx->event->name) {
                                 anchor: '50%',
                                 maxLength: 10,
                                 value: '{$data['entrance']}',
+                            }));
+                            leftCol.items.insert(11, 'modx-user-amo-userid', new Ext.form.NumberField({
+                                id: 'modx-user-amo-userid',
+                                name: 'amo_userid',
+                                fieldLabel: 'ID в amoCRM',
+                                xtype: 'numberfield',
+                                anchor: '50%',
+                                maxLength: 10,
+                                value: '{$data['amo_userid']}',
                             }));
                         });
                     });
@@ -239,7 +258,13 @@ switch ($modx->event->name) {
                     </script>");
         }
     break;
-        
+
+    case 'msOnGetStatusCart':
+        $values = & $modx->event->returnedValues;
+        $values['status'] = $status;
+        $values['status']['real_total_cost'] = $status['total_cost'] + $status['total_discount'];
+    break;
+
     case 'msOnBeforeCreateOrder':
         // Сохраняем receiver
         if (isset($_POST['name']) && isset($_POST['surname'])){
@@ -253,12 +278,12 @@ switch ($modx->event->name) {
             $addressProperties = array();
         }
         
-        if (isset($_POST['have_discount_card']) && $_POST['have_discount_card'] == 1){
-            $addressProperties['have_discount_card'] = 1;
-        }
-        if (isset($_POST['without_manager_calling']) && $_POST['without_manager_calling'] == 1){
-            $addressProperties['without_manager_calling'] = 1;
-        }
+        // if (isset($_POST['have_discount_card']) && $_POST['have_discount_card'] == 1){
+        //     $addressProperties['have_discount_card'] = 1;
+        // }
+        // if (isset($_POST['without_manager_calling']) && $_POST['without_manager_calling'] == 1){
+        //     $addressProperties['without_manager_calling'] = 1;
+        // }
         if (isset($_POST['point']) && $_POST['point']){
             $addressProperties['point'] = htmlentities($_POST['point'], ENT_COMPAT | ENT_HTML401, 'UTF-8');
         }
@@ -271,15 +296,26 @@ switch ($modx->event->name) {
         $orderProperties = $msOrder->get('properties');
         if (!is_array($orderProperties)) $orderProperties = array();
 
-        if (isset($_POST['delivery_date_5']) && $_POST['delivery_date_5'] && $_POST['delivery'] == 5){
-            $orderProperties['delivery_date'] = htmlentities($_POST['delivery_date_5'], ENT_COMPAT | ENT_HTML401, 'UTF-8');
+        if (isset($_POST['order_rates']) && $_POST['order_rates']){
+            $orderProperties['order_rates'] = htmlentities($_POST['order_rates'], ENT_COMPAT | ENT_HTML401, 'UTF-8');
         }
-        if (isset($_POST['delivery_date_1']) && $_POST['delivery_date_1'] && $_POST['delivery'] == 1){
-            $orderProperties['pickup_date'] = htmlentities($_POST['delivery_date_1'], ENT_COMPAT | ENT_HTML401, 'UTF-8');
+        
+        if (isset($_POST['order_discount']) && $_POST['order_discount']){
+            $orderProperties['order_discount'] = (int)$_POST['order_discount'];
         }
-        // if (isset($_POST['order_rates']) && $_POST['order_rates']){
-        //     $orderProperties['order_rates'] = htmlentities($_POST['order_rates'], ENT_COMPAT | ENT_HTML401, 'UTF-8');
-        // }
+        
+        // Проверяем периходил ли пользователь по специальной ссылке
+        $amoUserid = $_SESSION['amo_userid'];
+        if (!$amoUserid) {
+            if ($user = $modx->getObject('modUser', $msOrder->get('user_id'))) {
+                if ($profile = $user->getOne('Profile')) {
+                    $amoUserid = $profile->get('amo_userid');
+                }
+            }
+        }
+        if ($amoUserid){
+            $orderProperties['amo_userid'] = $amoUserid;
+        }
         
         if (count($orderProperties) > 0){
             $msOrder->set('properties', $orderProperties);
@@ -355,13 +391,29 @@ switch ($modx->event->name) {
         
     case 'msmcOnGetPrice':
         $returned_values = & $modx->event->returnedValues;
-        $values =  $modx->event->params;
+        $values = $modx->event->params;
         $returned_values = $values;
         if ($values['currency']['cid'] != 1) {
-            if ($newPrice) {
-                $returned_values['newPrice'] = ceil($newPrice);
-            } else {
-                $returned_values['newPrice'] = ceil($price);
+            $returned_values['newPrice'] = ceil($newPrice ?: $price);
+        }
+        break;
+        
+    case 'OnHandleRequest':
+        // $modx->log(1, print_r($_SESSION,1));
+        $amoUserid = (int)$_GET['amo'];
+        if ($amoUserid) {
+            $_SESSION['amo_userid'] = $amoUserid;
+            if ($user = $modx->getUser()) {
+                if ($profile = $user->getOne('Profile')) {
+                    if (!$profile->get('amo_userid')) {
+                        $profile->set('amo_userid', $amoUserid);
+                        $profile->save();
+                        if ($modx->getObject('amoCRMUser', array('user' => $user->get('id'), 'user_id' => $amoUserid))) {
+                            $contact = $modx->newObject('amoCRMUser', array('user' => $user->get('id'), 'user_id' => $amoUserid));
+                            $contact->save();
+                        }
+                    }
+                }
             }
         }
         break;
@@ -408,7 +460,7 @@ switch ($modx->event->name) {
             return false;
         });
         
-        $fenom->addModifier('priceFormat', function ($input) use ($modx) {
+        $fenom->addModifier('priceFormat', function ($input, $no_space = false) use ($modx) {
             $input = str_replace(" ", "", $input);
             if ($input > 0) {
                 $pf = $modx->fromJSON($modx->getOption('ms2_price_format', null, '[2, ".", " "]'));
@@ -421,6 +473,7 @@ switch ($modx->event->name) {
                         $price = str_replace($matches[0], $tmp, $price);
                     }
                 }
+                if ($no_space) $price = str_replace(' ', '', $price);
                 return $price;
             } else {
                 return $input;

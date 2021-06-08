@@ -1,0 +1,6 @@
+id: 752
+name: stik_contacts_feedback_success
+value: '<b>Ваше сообщение отправлено!</b> Спасибо, ваше мнение важно для нас и помогает стать лучше'
+topic: site
+namespace: polylang
+language: ru

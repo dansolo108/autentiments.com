@@ -1,0 +1,9 @@
+id: 60
+config_id: 10
+formtab_id: 10
+field: image1
+caption: 'Картинка №1'
+pos: 1
+inputTVtype: image
+sourceFrom: migx
+sources: '[{"MIGX_id":1,"context":"web","sourceid":3}]'

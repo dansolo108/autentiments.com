@@ -5,8 +5,8 @@ properties: 'a:0:{}'
 
 -----
 
-// $stikProductRemains = $modx->getService('stik', 'stikProductRemains', $modx->getOption('core_path').'components/stik/model/', $scriptProperties);
-// if (!($stikProductRemains instanceof stikProductRemains)) return '';
+$stikProductRemains = $modx->getService('stik', 'stikProductRemains', $modx->getOption('core_path').'components/stik/model/', $scriptProperties);
+if (!($stikProductRemains instanceof stikProductRemains)) return '';
 
 /** @var array $scriptProperties */
 
@@ -35,10 +35,17 @@ foreach ($remains as $remain) {
     $option[trim($remain->get('size'))] += $remain->get('remains');
 }
 
-// восстанавливаем порядок сортировки размеров, как в админке
+$sortSizes = $stikProductRemains->getSortSizes();
+
+// восстанавливаем порядок сортировки размеров и добавляем недостающие
 foreach ($resource_sizes as $k => $v) {
     $rows[$v] = $option[$v];
 }
+
+// сортируем, как указано в компоненте
+uksort($rows, function($a, $b) use ($sortSizes) {
+    return array_search($a, $sortSizes) - array_search($b, $sortSizes);
+});
 
 return $pdoTools->getChunk($tpl, array(
     'id' => $product_id,

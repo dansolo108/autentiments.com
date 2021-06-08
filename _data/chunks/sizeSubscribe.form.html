@@ -13,6 +13,7 @@ properties: 'a:0:{}'
             <h3 class="au-h1  au-entrance__title">{'stik_ss_form_title' | lexicon}</h3>
             <form class="au-entrance__form" id="size_subscribe_form" action="" method="post">
                 <input type="hidden" name="size" value="">
+                <input type="hidden" name="color" value="">
                 <input type="hidden" name="product_id" value="{$_modx->resource.id}">
                 <input type="hidden" name="language" value="{$_modx->config['cultureKey']}">
                 <div class="custom-form__group">
@@ -21,7 +22,7 @@ properties: 'a:0:{}'
                     <input class="custom-form__input  au-subscribe__input" type="email" name="email" placeholder="Введите e-mail" value="{$_modx->user.email}" data-val="{$_modx->user.email}"> 
                     <span class="error_email"></span>
                     <button class="au-btn  au-entrance__submit" type="submit">{'stik_ss_form_submit' | lexicon}</button>
-                    <p class="au-subscribe__politics-text">{'stik_ss_form_agree1' | lexicon} <a class="au-subscribe__politics-link au-text-tab_js" href="policy">{'stik_ss_form_agree2' | lexicon}</a></p>
+                    <p class="au-subscribe__politics-text">{'stik_ss_form_agree1' | lexicon} <a class="au-subscribe__politics-link au-text-tab_js" href="policy">{'stik_ss_form_policy_link' | lexicon}</a></p>
                 </div>
             </form>
         </div>

@@ -1,6 +1,6 @@
 id: 57
 name: stik_newsletter_form_agree
-value: 'Нажимая кнопку Подписаться, я даю согласие  на обработку и передачу моих <a href="[[+link]]">персональных данных</a>'
+value: "Подписываясь, вы\_принимаете"
 topic: site
 namespace: polylang
 language: ru

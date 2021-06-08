@@ -45,7 +45,6 @@ class msDeliveryHandlerStikCdek extends msDeliveryHandler implements msDeliveryI
         $receiverCityId = $orderData['cdek_id'];
         
         if (empty($receiverCity) || empty($receiverIndex)) return $cost;
-        
         $client = new CdekClient($this->config['authLogin'], $this->config['authPassword']);
         
         $request = new Requests\CalculationAuthorizedRequest();

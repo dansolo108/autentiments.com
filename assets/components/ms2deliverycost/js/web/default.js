@@ -28,19 +28,23 @@ jQuery(document).ready(function($) {
 		this.loadEffect();
 		var self = this;
 		setTimeout(function() {
-			$.get(window.location.href, {deliveryGetCost: 'get'}, function(data) {
-				var content = $(data).find(self.block).html();
-				$(self.block).html(content);
-				console.log('updated');
+			$.get('/assets/components/stik/getAjaxDeliveryCost.php', {deliveryGetCost: 'get', language: $('html').attr('lang')}, function(data) {
+				$(self.block).html(data);
+				// console.log('updated');
+				setOrderRates();
 				self.loadEffect(1);
 			}, 'html');
 		}, 2000);
 	}
 	ms2DeliveryCost.loadEffect = function(show) {
 		if (!show) {
-			$(this.block).css('opacity', '0.5');
+            $('.dl-ajax-loader', this.block).addClass('enabled');
+            $(this.block).addClass('loading');
+			//$(this.block).css('opacity', '0.5');
 		} else {
-			$(this.block).css('opacity', '1');
+            $('.dl-ajax-loader', this.block).removeClass('enabled');
+            $(this.block).removeClass('loading');
+			//$(this.block).css('opacity', '1');
 		}
 		
 	}

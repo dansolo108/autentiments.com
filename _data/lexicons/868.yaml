@@ -1,0 +1,6 @@
+id: 868
+name: stik_order_bonuses_writeoff_promocode
+value: 'При списании бонусов, промо-код неактивен.'
+topic: site
+namespace: polylang
+language: ru

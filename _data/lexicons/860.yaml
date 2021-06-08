@@ -1,0 +1,6 @@
+id: 860
+name: stik_order_bonuses_collect_with_promocode
+value: "При\_применении промо-кода, бонусы не\_списываются."
+topic: site
+namespace: polylang
+language: ru

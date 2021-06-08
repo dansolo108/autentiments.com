@@ -133,16 +133,22 @@ $cartUserCurrency = $currencyData['cart_user_currency'];
 $products = array();
 $cart_count = 0;
 foreach ($rows as $product) {
+
+    $product['original_price'] = $msmc->getPrice($product['original_price'], 0, $currencyId, $course, false);
+    $product['old_price'] = $msmc->getPrice($product['old_price'], 0, $currencyId, $course, false);
+    
+    if (!$cartUserCurrency && $currencyId != $baseCurrencyId) {
+        $product['price'] = $msmc->getPrice($product['price'], 0, $currencyId, $course, false);
+        $product['cost'] = $product['price'] * $product['count'];
+    } else {
+
+    }
+
     $product['old_price'] = $miniShop2->formatPrice(
         $product['original_price'] > $product['price']
             ? $product['original_price']
             : $product['old_price']
     );
-
-    if ($currencyId != $baseCurrencyId) {
-        $product['price'] = $msmc->getPrice($product['price'], 0, $currencyId, $course, false);
-        $product['cost'] = $product['price'] * $product['count'];
-    }
 
     $product['price'] = $miniShop2->formatPrice($product['price']);
     $product['cost'] = $miniShop2->formatPrice($product['cost']);

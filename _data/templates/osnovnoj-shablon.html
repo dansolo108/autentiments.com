@@ -9,6 +9,10 @@ properties: 'a:0:{}'
 <html lang="{$_modx->config['cultureKey']}">
   <head>
     {'!msFavorites.initialize' | snippet}
+    {set $msMultiCurrency = '!msMultiCurrency' | snippet : [
+        'tpl' => 'stik.msMultiCurrency',
+        'frontendCss' => '',
+    ]}
     <meta charset="utf-8">
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
     <meta name="format-detection" content="telephone=no">
@@ -30,6 +34,7 @@ properties: 'a:0:{}'
     <link rel="stylesheet" href="/assets/tpl/css/jquery-ui.css">
     <link rel="stylesheet" href="/assets/tpl/css/swiper-bundle.css">
     <link rel="stylesheet" href="/assets/tpl/css/datepicker.css">
+    <link rel="stylesheet" href="/assets/components/minishop2/css/web/lib/jquery.jgrowl.min.css">
     <link rel="stylesheet" href="/assets/tpl/css/style.css">
 
     <link rel="icon" href="/assets/tpl/favicon/favicon.ico">
@@ -56,16 +61,15 @@ properties: 'a:0:{}'
                         <path d="M14.0659 3.28239L13.3588 2.57529L5.93414 9.99992L13.3588 17.4246L14.0659 16.7175L7.34837 9.99991L14.0659 3.28239Z" fill="#1A1714"/>
                     </svg>
                 </button>
-                <button class="au-header__btn au-header__btn-lang au-mobile" aria-label="Переключить язык/валюту">RU <span>|</span> ₽...</button>
+                <button class="au-header__btn au-header__btn-lang au-mobile" aria-label="Переключить язык/валюту">{$_modx->config['cultureKey'] | upper} <span>|</span> {$_pls['msmc.symbol_right']}...</button>
                 <div class="au-header__lang-box">
-                    <div class="au-header__lang">
-                        <a class="au-header__lang-link active" href="">RU</a>
-                        <a class="au-header__lang-link" href="">EN</a>
-                    </div>
-                    <div class="au-header__currency">
-                        <a class="au-header__currency-link active" href="">₽ (RUB)</a>
-                        <a class="au-header__currency-link" href="">€ (EUR)</a>
-                    </div>
+                    {'!PolylangLinks' | snippet : [
+                        'tpl' => 'stik.PolylangLinks',
+                        'showActive' => true,
+                        'activeClass' => 'active',
+                        'css' => '',
+                    ]}
+                    {$msMultiCurrency}
                 </div>
             </div>
             <a class="au-header__logo" href="/">
@@ -107,7 +111,7 @@ properties: 'a:0:{}'
                     <h3 class="au-search__title  au-h2 au-desktop_xl">{'stik_search_title' | lexicon}</h3>
                     <form method="get" action={25|url}>
                         <div class="custom-form__group">
-                            <input class="custom-form__input  custom-form__input_search" type="text" name="search" value="" id="search" placeholder="Что вы хотите найти?">
+                            <input class="custom-form__input  custom-form__input_search" type="text" name="search" value="" id="search" placeholder="{'stik_search_placeholder' | lexicon}">
                             <button class="au-search__submit" type="submit">
                                 <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path fill-rule="evenodd" clip-rule="evenodd" d="M8 1C11.866 1 15 4.13401 15 8C15 9.76078 14.3499 11.3697 13.2766 12.5999L18.3536 17.6768L17.6464 18.3839L12.5673 13.3048C11.3414 14.3613 9.7453 15 8 15C4.13401 15 1 11.866 1 8C1 4.13401 4.13401 1 8 1ZM8 14C11.3137 14 14 11.3137 14 8C14 4.68629 11.3137 2 8 2C4.68629 2 2 4.68629 2 8C2 11.3137 4.68629 14 8 14Z" fill="white"/>
@@ -123,8 +127,7 @@ properties: 'a:0:{}'
                         'parents' => 0,
                         'resources' => '-1,',
                         'level' => 3,
-                        'sortby' => '',
-                        'sortdir' => '',
+                        'sortby' => 'menuindex',
                         'tplOuter' => '@INLINE {$wrapper}',
                         'tpl' => 'mainMenu.tpl',
                         'tplInnerRow' => '@INLINE <li class="au-header__sub-item"><a class="au-header__sub-link" href="{$link}">{$menutitle}</a></li>',
@@ -133,14 +136,14 @@ properties: 'a:0:{}'
                         ]
                     ]}
                     <li class="au-header__item  au-header__sub-open  au-mobile_xl">
-                        <span class="au-header__link">Информация</span>
+                        <span class="au-header__link">{'stik_menu_info' | lexicon}</span>
                         <div class="au-header__sub-box">
-                            <button class="au-header__btn-back  au-header__sub-close">Назад</button>
-                            <span class="au-header__sub-title">Информация</span>
+                            <button class="au-header__btn-back  au-header__sub-close">{'stik_link_back' | lexicon}</button>
+                            <span class="au-header__sub-title">{'stik_menu_info' | lexicon}</span>
                             <div class="au-header__sub-wrapper">
                                 <ul class="au-header__sub-list">
                                     <li class="au-header__sub-item">
-                                        <a class="au-header__sub-link" href="{2|url}">О нас</a>
+                                        <a class="au-header__sub-link" href="{2|url}">{'stik_menu_link_about' | lexicon}</a>
                                     </li>
                                     {'pdoMenu' | snippet : [
                                         'parents' => 16,
@@ -158,7 +161,7 @@ properties: 'a:0:{}'
                 <div class="au-burger__contacts">
                     <a class="au-burger__phone" href="tel:{$_modx->config.phone | preg_replace : '/[^0-9+]/' : ''}">{$_modx->config.phone}</a>
                     <div class="au-burger__social-box">
-                        <a class="au-burger__social" href="{$_modx->config.instagram}" target="_blank" aria-label="Мы в Instagram">
+                        <a class="au-burger__social" href="{$_modx->config.instagram}" target="_blank" aria-label="{'stik_link_instagram' | lexicon}">
                             <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path fill-rule="evenodd" clip-rule="evenodd" d="M5.75 1.99609C3.67897 1.99609 2 3.67516 2 5.74648V14.2472C2 16.3186 3.67897 17.9976 5.75 17.9976H14.25C16.321 17.9976 18 16.3186 18 14.2472V5.74648C18 3.67516 16.321 1.99609 14.25 1.99609H5.75ZM1 5.74648C1 3.12296 3.1266 0.996094 5.75 0.996094H14.25C16.8734 0.996094 19 3.12296 19 5.74648V14.2472C19 16.8708 16.8734 18.9976 14.25 18.9976H5.75C3.1266 18.9976 1 16.8708 1 14.2472V5.74648Z" fill="white"/>
                                 <path fill-rule="evenodd" clip-rule="evenodd" d="M10.4156 7.19738C9.8261 7.10996 9.22403 7.21066 8.69505 7.48513C8.16607 7.75961 7.7371 8.1939 7.46917 8.72623C7.20123 9.25856 7.10797 9.86181 7.20265 10.4502C7.29733 11.0386 7.57513 11.5821 7.99653 12.0035C8.41793 12.4249 8.96148 12.7027 9.54987 12.7974C10.1383 12.8921 10.7415 12.7988 11.2738 12.5309C11.8062 12.263 12.2405 11.834 12.5149 11.305C12.7894 10.776 12.8901 10.174 12.8027 9.58447C12.7135 8.98314 12.4333 8.42645 12.0035 7.9966C11.5736 7.56675 11.0169 7.28655 10.4156 7.19738ZM8.23448 6.59751C8.95016 6.22616 9.76472 6.08993 10.5623 6.2082C11.3758 6.32884 12.129 6.70793 12.7106 7.28949C13.2921 7.87105 13.6712 8.62423 13.7919 9.43778C13.9101 10.2354 13.7739 11.0499 13.4026 11.7656C13.0312 12.4813 12.4436 13.0616 11.7234 13.4241C11.0032 13.7866 10.187 13.9128 9.391 13.7847C8.59495 13.6566 7.85956 13.2808 7.28942 12.7106C6.71929 12.1405 6.34345 11.4051 6.21535 10.6091C6.08726 9.81302 6.21343 8.99685 6.57593 8.27664C6.93843 7.55643 7.5188 6.96887 8.23448 6.59751Z" fill="white"/>
@@ -187,149 +190,72 @@ properties: 'a:0:{}'
         </main>
     {/block}
 
-    <footer class="au-footer  page-container">
-        {'!AjaxForm' | snippet : [
-            'snippet' => 'newsletterSubscribe',
-            'form' => 'newsletterSubscribe.form',
-            'emailTo' => $_modx->config.ms2_email_manager,
-            'subject' => 'stik_newsletter_form_subject' | lexicon,
-            'subjectConfirm' => 'stik_newsletter_form_subject_confirm' | lexicon,
-            'tpl' => 'newsletterSubscribe.email',
-            'tplConfirm' => 'newsletterSubscribeEmailTplConfirm',
-        ]}
-        <ul class="au-footer__menu">
-            <li class="au-footer__item">
-                <a class="au-footer__link" href="{2|url}">О нас</a>
-            </li>
-            {'pdoMenu' | snippet : [
-                'parents' => 16,
-                'resources' => '20,17,18,19',
-                'sortby' => 'menuindex',
-                'level' => 1,
-                'tplOuter' => '@INLINE {$wrapper}',
-                'tpl' => '@INLINE <li class="au-footer__item"><a class="au-footer__link  au-text-tab_js" href="{$link}">{$menutitle}</a></li>',
+    {block 'footer'}
+        <footer class="au-footer  page-container">
+            {'!AjaxForm' | snippet : [
+                'snippet' => 'newsletterSubscribe',
+                'form' => 'newsletterSubscribe.form',
+                'emailTo' => $_modx->config.ms2_email_manager,
+                'subject' => 'stik_newsletter_form_subject' | lexicon,
+                'subjectConfirm' => 'stik_newsletter_form_subject_confirm' | lexicon,
+                'tpl' => 'newsletterSubscribe.email',
+                'tplConfirm' => 'newsletterSubscribeEmailTplConfirm',
+                'submitVar' => 'footerform',
             ]}
-        </ul>
-        <ul class="au-footer__menu">
-            <li class="au-footer__item">
-                <a class="au-footer__link" href="{$_modx->config.instagram}" target="_blank">Мы в Instagram</a>
-            </li>
-            <li class="au-footer__item">
-                <a class="au-footer__link" href="https://wa.me/{$_modx->config.whatsapp | preg_replace : '/[^0-9]/' : ''}" target="_blank">Написать в Whatsapp</a>
-            </li>
-        </ul>
-        <div class="au-footer__info-box">
-            <div class="au-footer__box-link">
+            <ul class="au-footer__menu">
+                <li class="au-footer__item">
+                    <a class="au-footer__link" href="{2|url}">{'stik_menu_link_about' | lexicon}</a>
+                </li>
                 {'pdoMenu' | snippet : [
                     'parents' => 16,
-                    'resources' => '31,30',
+                    'resources' => '20,17,18,19',
                     'sortby' => 'menuindex',
                     'level' => 1,
                     'tplOuter' => '@INLINE {$wrapper}',
-                    'tpl' => '@INLINE <a class="au-footer__policy-link  au-text-tab_js" href="{$link}"">{$menutitle}</a>',
+                    'tpl' => '@INLINE <li class="au-footer__item"><a class="au-footer__link  au-text-tab_js" href="{$link}">{$menutitle}</a></li>',
                 ]}
+            </ul>
+            <ul class="au-footer__menu">
+                <li class="au-footer__item">
+                    <a class="au-footer__link" href="{$_modx->config.instagram}" target="_blank">{'stik_link_instagram' | lexicon}</a>
+                </li>
+                <li class="au-footer__item">
+                    <a class="au-footer__link" href="https://wa.me/{$_modx->config.whatsapp | preg_replace : '/[^0-9]/' : ''}" target="_blank">{'stik_link_whatsapp' | lexicon}</a>
+                </li>
+            </ul>
+            <div class="au-footer__info-box">
+                <div class="au-footer__box-link">
+                    {'pdoMenu' | snippet : [
+                        'parents' => 16,
+                        'resources' => '31,30',
+                        'sortby' => 'menuindex',
+                        'level' => 1,
+                        'tplOuter' => '@INLINE {$wrapper}',
+                        'tpl' => '@INLINE <a class="au-footer__policy-link  au-text-tab_js" href="{$link}"">{$menutitle}</a>',
+                    ]}
+                </div>
+                <div class="au-footer__year">
+                    © Autentiments 2021
+                </div>
+                <div class="au-footer__developer">
+                    {'stik_development' | lexicon}
+                    <a class="au-footer__developer-link" href="https://stik.pro/fashion/" target="_blank">
+                        <svg width="46" height="13" viewBox="0 0 46 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M19.9491 6.54823C19.0312 6.38289 18.2712 6.2477 18.2712 5.66326C18.2712 5.16098 18.7123 4.82404 19.4618 4.82404C20.2944 4.82404 20.7871 5.17138 20.7976 5.86397H23.0671C23.0619 4.11378 21.6576 2.93866 19.5186 2.93866C17.3796 2.93866 15.9553 4.08258 15.9553 5.73917C15.9553 7.8003 17.7522 8.17259 19.1681 8.40553C20.106 8.56152 20.8713 8.74247 20.8713 9.34146C20.8713 9.94046 20.2786 10.2264 19.6133 10.2264C18.7533 10.2264 18.1512 9.83855 18.1396 9.05653H15.8027C15.8185 10.9284 17.3017 12.1836 19.5239 12.1836C21.7618 12.1836 23.2408 11.0189 23.2408 9.23227C23.2408 7.10771 21.3955 6.80198 19.9491 6.54823Z" fill="#868383"/>
+                            <path d="M29.4043 9.83119C28.5284 9.83119 28.0411 9.34451 28.0411 8.50009V5.08811H30.4432V3.18817H28.0011V0.900341H27.5442L24.042 4.58063V5.08811H25.6462V8.81103C25.6462 10.7526 26.841 11.9381 28.7906 11.9381H30.4948V9.83119H29.4043Z" fill="#868383"/>
+                            <path d="M32.4601 3.18827V11.9392H34.8549V3.18827H32.4601Z" fill="#868383"/>
+                            <path d="M41.8522 7.35621L44.8449 3.1882H42.0879L39.431 7.07647V0.5H38.9805L37.0362 2.56633V11.9391H39.431V7.7545L42.2669 11.9391H45.1702L41.8522 7.35621Z" fill="#868383"/>
+                            <path d="M11.8951 2.56525V4.825L10.2992 5.73493C10.1849 5.7998 10.0553 5.83393 9.92344 5.83393C9.79157 5.83393 9.662 5.7998 9.54764 5.73493L4.2843 2.73788C4.2524 2.71959 4.22591 2.69335 4.20751 2.66178C4.1891 2.63021 4.17941 2.59441 4.17941 2.55797C4.17941 2.52153 4.1891 2.48574 4.20751 2.45416C4.22591 2.42259 4.2524 2.39635 4.2843 2.37806L5.68435 1.57732C5.76436 1.53169 5.85513 1.50766 5.94752 1.50766C6.03991 1.50766 6.13067 1.53169 6.21068 1.57732L9.54764 3.47414C9.662 3.53901 9.79157 3.57314 9.92344 3.57314C10.0553 3.57314 10.1849 3.53901 10.2992 3.47414L11.8951 2.56525Z" fill="#868383"/>
+                            <path d="M11.8952 6.94764V9.20219C11.8963 9.24274 11.8873 9.28293 11.8689 9.31922C11.8505 9.3555 11.8234 9.38674 11.7899 9.41017L11.7667 9.42369L6.70339 12.3012C6.47449 12.4315 6.21493 12.5001 5.95073 12.5001C5.68654 12.5001 5.42698 12.4315 5.19808 12.3012L0 9.33946V7.08387L5.19808 10.0414C5.42679 10.1717 5.68618 10.2403 5.95021 10.2403C6.21424 10.2403 6.47363 10.1717 6.70234 10.0414L11.7657 7.16082L11.7888 7.1473C11.8214 7.12479 11.848 7.09492 11.8665 7.06019C11.885 7.02546 11.8948 6.98688 11.8952 6.94764Z" fill="#868383"/>
+                            <path d="M7.55923 7.29393L6.32656 7.99484C6.21217 8.0602 6.08237 8.09462 5.95023 8.09462C5.81809 8.09462 5.68828 8.0602 5.5739 7.99484L0.131601 4.89795L0.110548 4.88547C0.0770985 4.86198 0.0500052 4.83072 0.0316499 4.79445C0.0132946 4.75819 0.00423952 4.71802 0.00528084 4.67749V2.41982C0.00501039 2.46079 0.0149521 2.50119 0.0342286 2.53746C0.0535051 2.57373 0.0815235 2.60476 0.115811 2.6278L7.55923 6.86445C7.59751 6.88611 7.62931 6.91738 7.65143 6.95509C7.67355 6.9928 7.6852 7.03561 7.6852 7.07919C7.6852 7.12277 7.67355 7.16558 7.65143 7.20329C7.62931 7.241 7.59751 7.27226 7.55923 7.29393Z" fill="#868383"/>
+                        </svg>
+                    </a>
+                </div>
             </div>
-            <div class="au-footer__year">
-                © Autentiments 2021
-            </div>
-            <div class="au-footer__developer">
-                Разработка
-                <a class="au-footer__developer-link" href="https://stik.pro/fashion/" target="_blank">
-                    <svg width="46" height="13" viewBox="0 0 46 13" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M19.9491 6.54823C19.0312 6.38289 18.2712 6.2477 18.2712 5.66326C18.2712 5.16098 18.7123 4.82404 19.4618 4.82404C20.2944 4.82404 20.7871 5.17138 20.7976 5.86397H23.0671C23.0619 4.11378 21.6576 2.93866 19.5186 2.93866C17.3796 2.93866 15.9553 4.08258 15.9553 5.73917C15.9553 7.8003 17.7522 8.17259 19.1681 8.40553C20.106 8.56152 20.8713 8.74247 20.8713 9.34146C20.8713 9.94046 20.2786 10.2264 19.6133 10.2264C18.7533 10.2264 18.1512 9.83855 18.1396 9.05653H15.8027C15.8185 10.9284 17.3017 12.1836 19.5239 12.1836C21.7618 12.1836 23.2408 11.0189 23.2408 9.23227C23.2408 7.10771 21.3955 6.80198 19.9491 6.54823Z" fill="#868383"/>
-                        <path d="M29.4043 9.83119C28.5284 9.83119 28.0411 9.34451 28.0411 8.50009V5.08811H30.4432V3.18817H28.0011V0.900341H27.5442L24.042 4.58063V5.08811H25.6462V8.81103C25.6462 10.7526 26.841 11.9381 28.7906 11.9381H30.4948V9.83119H29.4043Z" fill="#868383"/>
-                        <path d="M32.4601 3.18827V11.9392H34.8549V3.18827H32.4601Z" fill="#868383"/>
-                        <path d="M41.8522 7.35621L44.8449 3.1882H42.0879L39.431 7.07647V0.5H38.9805L37.0362 2.56633V11.9391H39.431V7.7545L42.2669 11.9391H45.1702L41.8522 7.35621Z" fill="#868383"/>
-                        <path d="M11.8951 2.56525V4.825L10.2992 5.73493C10.1849 5.7998 10.0553 5.83393 9.92344 5.83393C9.79157 5.83393 9.662 5.7998 9.54764 5.73493L4.2843 2.73788C4.2524 2.71959 4.22591 2.69335 4.20751 2.66178C4.1891 2.63021 4.17941 2.59441 4.17941 2.55797C4.17941 2.52153 4.1891 2.48574 4.20751 2.45416C4.22591 2.42259 4.2524 2.39635 4.2843 2.37806L5.68435 1.57732C5.76436 1.53169 5.85513 1.50766 5.94752 1.50766C6.03991 1.50766 6.13067 1.53169 6.21068 1.57732L9.54764 3.47414C9.662 3.53901 9.79157 3.57314 9.92344 3.57314C10.0553 3.57314 10.1849 3.53901 10.2992 3.47414L11.8951 2.56525Z" fill="#868383"/>
-                        <path d="M11.8952 6.94764V9.20219C11.8963 9.24274 11.8873 9.28293 11.8689 9.31922C11.8505 9.3555 11.8234 9.38674 11.7899 9.41017L11.7667 9.42369L6.70339 12.3012C6.47449 12.4315 6.21493 12.5001 5.95073 12.5001C5.68654 12.5001 5.42698 12.4315 5.19808 12.3012L0 9.33946V7.08387L5.19808 10.0414C5.42679 10.1717 5.68618 10.2403 5.95021 10.2403C6.21424 10.2403 6.47363 10.1717 6.70234 10.0414L11.7657 7.16082L11.7888 7.1473C11.8214 7.12479 11.848 7.09492 11.8665 7.06019C11.885 7.02546 11.8948 6.98688 11.8952 6.94764Z" fill="#868383"/>
-                        <path d="M7.55923 7.29393L6.32656 7.99484C6.21217 8.0602 6.08237 8.09462 5.95023 8.09462C5.81809 8.09462 5.68828 8.0602 5.5739 7.99484L0.131601 4.89795L0.110548 4.88547C0.0770985 4.86198 0.0500052 4.83072 0.0316499 4.79445C0.0132946 4.75819 0.00423952 4.71802 0.00528084 4.67749V2.41982C0.00501039 2.46079 0.0149521 2.50119 0.0342286 2.53746C0.0535051 2.57373 0.0815235 2.60476 0.115811 2.6278L7.55923 6.86445C7.59751 6.88611 7.62931 6.91738 7.65143 6.95509C7.67355 6.9928 7.6852 7.03561 7.6852 7.07919C7.6852 7.12277 7.67355 7.16558 7.65143 7.20329C7.62931 7.241 7.59751 7.27226 7.55923 7.29393Z" fill="#868383"/>
-                    </svg>
-                </a>
-            </div>
-        </div>
-    </footer>
+        </footer>
+    {/block}
 
-    <!-- modals -->
-    <div class="au-modal-cookie">
-        <div class="au-modal-cookie__content">
-            <button class="au-close-light  au-modal-cookie__close" aria-label="{'stik_modal_close' | lexicon}"></button>
-            <span class="au-modal-cookie__title">Cookie files</span>
-            <p class="au-modal-cookie__text">Продолжая просмотр страниц на сайте, вы соглашетесть с политикой Cookie</p>
-        </div>
-    </div>
-    <div class="au-modal-welcome">
-        <div class="au-welcome__wrapper">
-            <div class="au-modal-welcome__content">
-                <button class="au-close-light  au-modal-welcome__close  au-welcome-close" aria-label="{'stik_modal_close' | lexicon}"></button>
-                <div class="au-welcome__img-box">
-                    <picture>
-                        <!-- <source type="image/webp" srcset=""> -->
-                        <img width="400" height="616" class="au-welcome__img" src="/assets/tpl/img/modal-welcome-img.jpg" alt="">
-                    </picture>
-                </div>
-                <div class="au-welcome__col">
-                    <form class="au-welcome__form">
-                        <h3 class="au-welcome__title  au-welcome__title_one">Получите скидку 10% на первый заказ!</h3>
-                        <p class="au-welcome__text">Подпишитесь на новости и будьте в курсе акций и новых поступлений</p>
-                        <div class="custom-form__group  au-welcome__input-group">
-                            <input class="custom-form__input  au-welcome__input" type="email" name="email" placeholder="Email" data-val=""> 
-                            <span class="error_name">error</span>
-                        </div>
-                        <button class="au-btn  au-welcome__btn" type="submit">Подписаться</button>
-                        <p class="au-welcome__politics-text">Подписываясь, вы принимаете <a class="au-welcome__politics-link au-text-tab_js" href="policy">Политику конфиденциальности</a></p>
-                    </form>
-                    <div class="au-welcome__col-submit">
-                        <h3 class="au-welcome__title">Спасибо за подписку!</h3>
-                        <p class="au-welcome__text">На указанную электронную почту придёт письмо для подтверждения</p>
-                        <button class="au-btn  au-welcome__btn  au-welcome-close">Продолжить покупки</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="au-modal  au-modal-login  modal">
-        <div class="au-modal__wrapper  au-login__wrapper">
-            <button class="au-close  au-modal-login__close  au-desktop" aria-label="{'stik_modal_close' | lexicon}"></button>
-            <div class="au-modal__content  au-modal-login__content">
-                <div class="au-login__img-box  au-desktop">
-                    <picture>
-                        <!-- <source type="image/webp" srcset=""> -->
-                        <img width="400" height="616" class="au-login__img" src="/assets/tpl/img/au-login-img_login.jpg" alt="">
-                    </picture>
-                    <picture>
-                        <!-- <source type="image/webp" srcset=""> -->
-                        <img width="400" height="616" class="au-login__img  au-login__img_register" src="/assets/tpl/img/au-login-img_register.jpg" alt="">
-                    </picture>
-                </div>
-    
-                <div class="au-login__tabs">
-                    <div class="au-login__tab  au-tab-login-content  active" data-tab="login">
-                        {include 'login'}
-                    </div>
-    
-                    <div class="au-login__tab  au-tab-login-content" data-tab="register">
-                        {include 'register'}
-                    </div>
-    
-                    <div class="au-login__tab  au-tab-login-content" data-tab="recovery">
-                        <a class="au-login__recovery-back  au-tab-login-title" href="login">
-                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M5.93411 16.7176L6.64122 17.4247L14.0659 10L6.64117 2.5754L5.93407 3.2825L12.6516 10.0001L5.93411 16.7176Z" fill="#1A1714"/>
-                            </svg>
-                        </a>
-                        {include 'reset_pw'}
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="au-modal au-modal-cart  modal" id="ms2_cart_modal">
-        {* содержимое в чанке stik.msCart.ajax *}
-    </div>
-    
-    <div class="au-modal-text-page  container  modal">
-        {* содержимое в чанке ajaxModalInfo *}
-    </div>
+    {include 'modals'}
 
     <!-- scripts -->
     <script src="/assets/tpl/js/vendor/jquery-3.6.0.min.js"></script>
@@ -344,5 +270,7 @@ properties: 'a:0:{}'
     <script src="/assets/tpl/js/my_swiper.js"></script>
     <script src="/assets/tpl/js/script.js"></script>
     <script src="/assets/tpl/js/modx.js"></script>
+
+    {$_modx->getPlaceholder('MinifyX.javascript')}
   </body>
 </html>

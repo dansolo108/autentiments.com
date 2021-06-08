@@ -1,0 +1,6 @@
+id: 731
+name: join_loyalty_form_auth_error
+value: 'Необходимо авторизоваться'
+topic: site
+namespace: polylang
+language: ru

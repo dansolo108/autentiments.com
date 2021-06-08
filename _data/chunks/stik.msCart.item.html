@@ -6,7 +6,10 @@ properties: 'a:0:{}'
 
 -----
 
-<li class="au-cart__card" id="{$key}">
+{set $template = $_modx->resource.template}
+<li class="au-cart__card {if $template == 11}au-order__card{/if}" id="{$key}">
+    {* для расчета корректной стоимости корзины с примененным купоном *}
+    <input type="hidden" name="price" value="{$real_price = $id | resource : 'price'}">
     <div class="au-cart__img-box">
         <picture>
             <source type="image/webp" srcset="{$cart | replace : ['.jpg', '/cart/'] : ['.webp', '/cart_webp/']}">
@@ -14,37 +17,48 @@ properties: 'a:0:{}'
         </picture>
     </div>
     <div class="au-cart__description">
-        <div class="au-cart__row">
+        {if $template == 11}
             {if $article}
-                <span class="au-cart__article">Арт.: {$article}</span>
+                <span class="au-cart__article">{'stik_basket_article' | lexicon}: {$article}</span>
             {/if}
-            <form method="post" class="ms2_form text-md-right">
-                <input type="hidden" name="key" value="{$key}">
-                <button class="au-cart__del" type="submit" name="ms2_action" value="cart/remove">{'stik_basket_delete' | lexicon}</button>
-            </form>
-        </div>
+        {else}
+            <div class="au-cart__row">
+                {if $article}
+                    <span class="au-cart__article">{'stik_basket_article' | lexicon}: {$article}</span>
+                {/if}
+                <form method="post" class="ms2_form text-md-right">
+                    <input type="hidden" name="key" value="{$key}">
+                    <button class="au-cart__del" type="submit" name="ms2_action" value="cart/remove">{'stik_basket_delete' | lexicon}</button>
+                </form>
+            </div>
+        {/if}
         <p class="au-cart__card-title">{$pagetitle}</p>
         <div class="au-card__price-box  au-card__cart-price">
-            <span class="au-card__price">{'!msMultiCurrencyPrice' | snippet : ['price' => $price]} {$_modx->getPlaceholder('msmc.symbol_right')}</span>
+            <span class="au-card__price price"><span>{'!msMultiCurrencyPrice' | snippet : ['price' => $price]}</span> {$_modx->getPlaceholder('msmc.symbol_right')}</span>
             {if $old_price?}
-                <span class="au-card__price  au-card__price_old">{'!msMultiCurrencyPrice' | snippet : ['price' => $old_price]} {$_modx->getPlaceholder('msmc.symbol_right')}</span>
+                <span class="au-card__price  au-card__price_old old_price" {if !$old_price}style="display:none;"{/if}><span>{'!msMultiCurrencyPrice' | snippet : ['price' => $old_price]}</span> {$_modx->getPlaceholder('msmc.symbol_right')}</span>
             {/if}
         </div>
         <div class="au-cart__row">
             <div class="au-cart__sub-row">
                 <div class="au-cart__color" data-color="black" style="background: #1C1C1C;" title="{$options.color}"></div>
                 <span class="au-cart__size">{$options.size}</span>
+                {if $template == 11}
+                    <span class="au-order__card-count">1 шт</span>
+                {/if}
             </div>
-            <form method="post" class="au-cart__card-count-form ms2_form" role="form">
-                <input type="hidden" name="key" value="{$key}"/>
-                <button class="btn btn-sm" type="submit" name="ms2_action" value="cart/change">&#8635;</button>
-                
-                <button class="au-cart__minus" type="button" aria-label="Минус"></button>
-                <span>
-                    <input class="au-cart__card-count" type="number" name="count" value="{$count}" max="{$options['max_count']}">
-                </span>
-                <button class="au-cart__plus" type="button" aria-label="Плюс"></button>
-            </form>
+            {if $template != 11}
+                <form method="post" class="au-cart__card-count-form ms2_form" role="form">
+                    <input type="hidden" name="key" value="{$key}"/>
+                    <button class="btn btn-sm" type="submit" name="ms2_action" value="cart/change">&#8635;</button>
+                    
+                    <button class="au-cart__minus" type="button" aria-label="{'stik_count_minus' | lexicon}"></button>
+                    <span>
+                        <input class="au-cart__card-count" type="number" name="count" value="{$count}" max="{$options['max_count']}">
+                    </span>
+                    <button class="au-cart__plus" type="button" aria-label="{'stik_count_plus' | lexicon}"></button>
+                </form>
+            {/if}
         </div>
     </div>
     <a class="au-full-link" href="{$id|url}" aria-label="{$pagetitle}"></a>

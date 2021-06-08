@@ -1,0 +1,4 @@
+key: stik_maxma_url
+value: 'https://api-test.maxma.com/'
+namespace: stik
+area: Maxma

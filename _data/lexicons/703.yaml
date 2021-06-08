@@ -1,0 +1,6 @@
+id: 703
+name: stik_order_delivery_choose
+value: 'Выберите способ доставки:'
+topic: site
+namespace: polylang
+language: ru

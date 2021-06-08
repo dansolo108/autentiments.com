@@ -5,6 +5,6 @@ logo: ''
 rank: 2
 class: msDeliveryHandlerDhl
 properties: null
-requires: ''
+requires: 'country,city,index,street,building,name,surname,phone,email'
 tariff: null
 slug: dhl

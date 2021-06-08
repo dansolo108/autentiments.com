@@ -6,97 +6,100 @@ properties: 'a:0:{}'
 
 -----
 
-<div class="au-ordering__info-top">
-    <p class="au-ordering__login  active">
-        <a class="au-ordering__login-link  btn_login_open  au-tab-login-title" href="login">Войдите</a> или  
-        <a class="au-ordering__login-link  btn_login_open  au-tab-login-title" href="register">зарегистрируйтесь</a> для автоматического заполнения полей, накопления и списания бонусов
-    </p>
+{set $lang = $_modx->config['cultureKey']}
+
+{if !$_modx->hasSessionContext('web') || !$_modx->user.join_loyalty}
+    <div class="au-ordering__info-top">
+        <p class="au-ordering__login  active">
+            <a class="au-ordering__login-link  btn_login_open  au-tab-login-title" href="login">{'stik_order_login' | lexicon}</a> {'stik_order_login_text' | lexicon}
+        </p>
+    </div>
+    {*{elseif !$_modx->user.join_loyalty}
     <div class="au-ordering__loyalty">
-        <div class="au-ordering__loyalty_start">
+        <div class="au-ordering__loyalty_start active">
             <p class="au-ordering__loyalty-text">
-                Участвуйте в <a class="au-ordering__loyalty-link  au-text-tab_js" href="loyalty" data-text="Программа лояльности">программе лояльности</a> для накопления и списания бонусов
+                {'stik_loyalty_join_text' | lexicon}
             </p>
-            <a class="au-btn-light  au-ordering__loyalty-btn" href="">Участвовать</a>
+            {'!AjaxForm' | snippet : [
+                'snippet' => 'joinLoyalty',
+                'form' => 'joinLoyalty.form',
+            ]}
         </div>
         <div class="au-ordering__loyalty_end">
             <b class="au-ordering__loyalty-title">Поздравляем!</b>
             <p class="au-ordering__loyalty-text">Вы стали участником программы лояльности. Теперь вы сможете накапливать и тратить бонусы за покупки</p>
         </div>
-    </div>
-</div>
-<main class="au-ordering  page-container">
-    <h1 class="visually-hidden">Оформление заказа</h1>
+    </div>*}
+{/if}
+<main class="au-ordering  page-container ajax-loader-block" id="msOrder">
+    <h1 class="visually-hidden">{$_modx->resource.pagetitle}</h1>
     
-    <div class="au-ordering__ordering" id="msOrder">
-        <div class="au-ordering__cart">
-            <h2 class="au-h2  au-cart__title">
-                Корзина
-                <span class="au-cart__count">3</span>
-            </h2>
-            {'!msMultiCurrencyCart' | snippet : [
-                'tpl' => 'stik.msCart.order',
-                'includeThumbs' => 'cart',
-            ]}
-        </div>
+    <div class="au-ordering__ordering">
+        {'!msCart' | snippet : [
+            'tpl' => 'stik.msCart.order',
+            'includeThumbs' => 'cart',
+        ]}
 
-        <div class="au-ordering__promo-code">
-            <!-- при успешном применении промокода для формы au-promo-code__form добавляется класс applied-code -->
-            <form class="au-promo-code__form" autocomplete="off">
-                <div class="au-promo-code__head">
-                    <h2 class="au-h2  au-promo-code__title">Промо-код</h2>
-                    <button class="au-promo-code__cancel" type="submit">Отменить</button>
-                </div>
-                <div class="custom-form__group">
-                    <input class="custom-form__input  au-promo-code__input" type="text" name="promo-code" placeholder="Введите код" data-val=""> 
-                    <span class="error_name">error</span>
-                    <span class="au-promo-code__applied">Промокод применён</span>
-                    <button class="au-btn  au-promo-code__submit" type="submit">Ок</button>
-                </div>
-            </form>
-        </div>
-
-        <div class="au-ordering__bonuses">
-            <form class="au-bonuses__form" autocomplete="off">
-                <h2 class="au-h2  au-bonuses__title">
-                    Бонусы
-                    <span class="au-bonuses__count">
-                        <span>120</span>
-                        бонусов
-                    </span>
-                </h2>
-                <div class="au-bonuses__info">
-                    <div class="au-bonuses__head">
-                        <a class="au-bonuses__subtitle  au-tab-title  active" href="hoard">Копить</a>
-                        <a class="au-bonuses__subtitle  au-tab-title" href="spend">Потратить</a>
-                        <button class="au-bonuses__subtitle  bonus-rules-open" type="button">Правила</button>
-                    </div>
-                    <div class="au-bonuses__content  au-tab-content  active" data-tab="hoard">
-                        <p class="au-bonuses__text">За покупку на ваш счёт будет зачислено <span>30</span> бонусов!</p>
-                    </div>
-                    <div class="au-bonuses__content  au-tab-content" data-tab="spend">
-                      <div class="custom-form__group">
-                        <input class="custom-form__input  au-bonuses__input" type="number" name="bonus" id="bonus" data-val=""> 
-                        <label class="custom-form__label" for="bonus">Потратить бонусов</label>
-                        <span class="error_name">error</span>
-                        <button class="au-btn  au-bonuses__submit" type="submit">Ок</button>
-                      </div>
-                    </div>
-                </div>
-                <div class="au-bonuses__used">
-                    <p class="au-bonuses__text">С вашего счёта списано <span>120</span> бонусов.</p>
-                    <p class="au-bonuses__text">При списании бонусов, промо-код неактивен.</p>
-                    <button class="au-bonuses__cancel" type="submit">Отменить</button>
-                </div>
-            </form>
-        </div>
+        {$_modx->setPlaceholder('msloyalty', $form.msloyalty)}
+        {'!mspcForm' | snippet : [
+            'tpl' => 'stik.mspcForm',
+            'form' => $form,
+        ]}
         
         <form class="au-ordering__form ms2_form" method="post" autocomplete="off">
-            <h2 class="au-h2  au-ordering__title">Доставка</h2>
+            <input type="hidden" name="order_rates">
+            <input type="hidden" name="order_discount">
+            <input type="hidden" name="point">
+            <input type="hidden" name="cdek_id">
+            
+            <div class="au-ordering__bonuses {if $_modx->getPlaceholder('coupon')}disabled-bonuses{/if}">
+                <div class="au-bonuses__form {if $form.msloyalty}used-bonuses{/if}">
+                    <h2 class="au-h2  au-bonuses__title">
+                        {'stik_order_info_bonuses' | lexicon}
+                        <span class="au-bonuses__count">
+                            <span>{$maxmaClientBalance = '!maxmaClientBalance' | snippet : ['phone' => $_modx->user.mobilephone]}</span>
+                            {$maxmaClientBalance | declension : ('stik_declension_bonuses' | lexicon)}
+                        </span>
+                    </h2>
+                    <div class="au-bonuses__info">
+                        <div class="au-bonuses__head">
+                            <a class="au-bonuses__subtitle  au-tab-title  active" href="hoard">{'stik_order_bonuses_tab_collect' | lexicon}</a>
+                            <a class="au-bonuses__subtitle  au-tab-title" href="spend">{'stik_order_bonuses_tab_spend' | lexicon}</a>
+                            <button class="au-bonuses__subtitle  bonus-rules-open" type="button">{'stik_order_bonuses_tab_rules' | lexicon}</button>
+                        </div>
+                        <div class="au-bonuses__content  au-tab-content  active" data-tab="hoard">
+                            <p class="au-bonuses__text">{'stik_order_bonuses_collect_text' | lexicon} <span class="msloyalty_accrual">0</span> <span class="msloyalty_accrual_declension"></span>!</p>
+                        </div>
+                        <div class="au-bonuses__content  au-tab-content" data-tab="spend">
+                          <div class="custom-form__group">
+                            <input class="custom-form__input  au-bonuses__input" type="number" name="msloyalty" id="bonus" value="{$form.msloyalty}" data-val="{$form.msloyalty}"> 
+                            <label class="custom-form__label" for="bonus">{'stik_order_bonuses_label' | lexicon}</label>
+                            <span class="error_field"></span>
+                            <button class="au-btn  au-bonuses__submit" type="button">Ок</button>
+                          </div>
+                        </div>
+                    </div>
+                    <div class="au-bonuses__used">
+                        <p class="au-bonuses__text">{'stik_order_bonuses_writeoff_text' | lexicon} <span class="msloyalty_writeoff_amount">{$form.msloyalty}</span> <span class="msloyalty_writeoff_declension"></span>.</p>
+                        <p class="au-bonuses__text">{'stik_order_bonuses_writeoff_promocode' | lexicon}</p>
+                        <button class="au-bonuses__cancel" type="button">{'stik_order_bonuses_writeoff_cancel' | lexicon}</button>
+                    </div>
+                    <div class="au-bonuses__disabled">
+                        <p class="au-bonuses__text">{'stik_order_bonuses_collect_text' | lexicon} <span class="msloyalty_accrual">0</span> <span class="msloyalty_accrual_declension"></span>!</p>
+                        <p class="au-bonuses__text">{'stik_order_bonuses_collect_with_promocode' | lexicon}</p>
+                    </div>
+                </div>
+            </div>
+
+            <h2 class="au-h2  au-ordering__title">{'stik_order_delivery_title' | lexicon}</h2>
             <div class="au-ordering__row">
                 <div class="custom-form__group  custom-form__group_arrow">
-                    <input class="custom-form__input{('country' in list $errors) ? ' error' : ''}"
-                        type="text"
-                        name="country" id="country" value="{$form['country']}" data-val="{$form['country']}">
+                    <select id="country" name="country" class="custom-form__input{('country' in list $errors) ? ' error' : ''}">
+                        {'!getCountry' | snippet : [
+                            'lang' => $lang,
+                            'selected' => $form.country
+                        ]}
+                    </select>
                     <label class="custom-form__label" for="country">{('ms2_frontend_country') | lexicon}</label>
                 </div>
                 {include 'stik.orderInput' form=$form field='city'}
@@ -104,28 +107,18 @@ properties: 'a:0:{}'
             </div>
             <div class="au-ordering__next-step">
                 <div class="au-ordering__delivery">
-                    <p class="au-ordering__delivery-title">Выберите способ доставки:</p>
-                    <div class="au-ordering__delivery-box" id="deliveries">
+                    <p class="au-ordering__delivery-title">{'stik_order_delivery_choose' | lexicon}</p>
+                    <div class="au-ordering__delivery-box dl-ajax-loader-block" id="deliveries">
+                        {* при изменении параметров вызова, также изменить здесь assets/components/stik/getAjaxDeliveryCost.php *}
                         {'!ms2DeliveryCost' | snippet: [
+                            'language' => $lang,
                             'cost' => 0,
                             'tpl' => 'tpl.ms2DeliveryCost',
                             'required' => 'country,city,index',
                         ]}
                     </div>
                 </div>
-
-                <div id="payments" style="display:none;">
-                    {foreach $payments as $payment index=$index}
-                        {var $checked = !($order.payment in keys $payments) && $index == 0 || $payment.id == $order.payment}
-                        <label class="col-form-label payment input-parent">
-                            <input type="radio" name="payment" value="{$payment.id}" id="payment_{$payment.id}"{$checked ? 'checked' : ''}>
-                            {$payment.name}
-                        </label>
-                    {/foreach}
-                </div>
-
-                <input type="hidden" name="point">
-                <input type="hidden" name="cdek_id">
+                
                 <div id="cdek2_map_ajax">
                     {* при изменении параметров вызова, также изменить здесь assets/components/stik_cdek/cdekDeliveryPointsAjax.php *}
                 	{'!cdekDeliveryPoints' | snippet}
@@ -138,361 +131,94 @@ properties: 'a:0:{}'
                     {include 'stik.orderInput' form=$form field='entrance'}
                     {include 'stik.orderInput' form=$form field='room'}
                     <div class="custom-form__group">
-                        <textarea class="custom-form__input" cols="100" rows="1" name="comment" id="comment" data-val=""></textarea>
-                        <label class="custom-form__label" for="comment">Комментарий</label>
-                        <span class="error_name">error</span>
+                        <textarea class="custom-form__input{('comment' in list $errors) ? ' error' : ''}" cols="100" rows="1" name="comment" id="comment" data-val="">{$form.comment}</textarea>
+                        <label class="custom-form__label" for="comment">{'ms2_frontend_comment' | lexicon}</label>
                     </div>
                 </div>
                 <div class="au-ordering__row  au-ordering__row_buyer">
-                    <h2 class="au-h2  au-ordering__title">Покупатель</h2>
+                    <h2 class="au-h2  au-ordering__title">{'stik_order_buyer_title' | lexicon}</h2>
                     {include 'stik.orderInput' form=$form field='name'}
-                    {include 'stik.orderInput' form=$form field='surename'}
+                    {include 'stik.orderInput' form=$form field='surname'}
                     {include 'stik.orderInput' form=$form field='email'}
                     {include 'stik.orderInput' form=$form field='phone'}
                 </div>
+                
+                <div id="payments" class="au-ordering__row  au-ordering__row_payment">
+                    <h2 class="au-h2  au-ordering__title">{'stik_order_payments_title' | lexicon}</h2>
+                    <div class="au-ordering__delivery-box" id="payment_method">
+                        {foreach $payments as $payment index=$index}
+                            {if $language == 'ru' && $payment.id == 2}
+                            {else}
+                                <div class="au-ordering__delivery-row payment input-parent">
+                                    {*var $checked = !($order.payment in keys $payments) && $index == 0 || $payment.id == $order.payment*}
+                                    {var $checked = $lang == 'ru' && $payment.id == 5 || $lang != 'ru' && $payment.id == 2}
+                                    <input type="radio" name="payment" class="custom-form__radio" value="{$payment.id}" id="payment_{$payment.id}"{$checked ? 'checked' : ''}>
+                                    <label class="custom-form__radio-label" for="payment_{$payment.id}">{$payment.name}</label>
+                                </div>
+                            {/if}
+                        {/foreach}
+                    </div>
+                </div>
+                
             </div>
+            <input type="checkbox" id="join_loyalty_order" name="join_loyalty" value="1" style="display:none;">
+            <button id="submitbtn" type="submit" name="ms2_action" value="order/submit" class="ms2_link" style="display:none;">submit</button>
         </form>
     </div>
     <div class="au-ordering__total">
         <div class="au-ordering__sticky">
-            <h2 class="au-h2  au-ordering__total-title">Ваш заказ</h2>
+            <h2 class="au-h2  au-ordering__total-title">{'stik_order_info_title' | lexicon}</h2>
             <table class="au-cart__modal-table">
                 <tr class="au-cart__modal-tr">
-                    <td class="au-cart__modal-td">Всего</td>
-                    <td class="au-cart__modal-td">31 400 ₽</td>
+                    <td class="au-cart__modal-td">{'stik_order_info_cart_cost' | lexicon}</td>
+                    <td class="au-cart__modal-td"><span class="ms2_total_no_discount">{'!msMultiCurrencyPrice' | snippet : ['price' => $_modx->getPlaceholder('cart_total_cost')]}</span> {$_modx->getPlaceholder('msmc.symbol_right')}</td>
+                </tr>
+                <tr class="au-cart__modal-tr total_discount_wrapper" {if !$_modx->getPlaceholder('cart_discount')} style="display:none;"{/if}>
+                    <td class="au-cart__modal-td">{'stik_order_info_discount' | lexicon}</td>
+                    <td class="au-cart__modal-td">-<span class="ms2_total_discount_custom">{'!msMultiCurrencyPrice' | snippet : ['price' => $_modx->getPlaceholder('cart_discount')]}</span> {$_modx->getPlaceholder('msmc.symbol_right')}</td>
                 </tr>
                 <tr class="au-cart__modal-tr">
-                    <td class="au-cart__modal-td">Скидка</td>
-                    <td class="au-cart__modal-td">- 2 000 ₽</td>
+                    <td class="au-cart__modal-td">{'stik_order_info_delivery_cost' | lexicon}</td>
+                    <td class="au-cart__modal-td"><span class="ms2_delivery_cost">-</span></td>
                 </tr>
-                <tr class="au-cart__modal-tr">
-                    <td class="au-cart__modal-td">Доставка</td>
-                    <td class="au-cart__modal-td">-</td>
+                <tr class="au-cart__modal-tr mspc_discount_amount" style="display: none;">
+                    <td class="au-cart__modal-td">{'stik_order_info_promocode_discount' | lexicon}</td>
+                    <td class="au-cart__modal-td">-<span>0</span> {$_modx->getPlaceholder('msmc.symbol_right')}</td>
+                </tr>
+                <tr class="au-cart__modal-tr loyalty_discount_amount" style="display:none;">
+                    <td class="au-cart__modal-td">{'stik_order_info_loyalty_discount' | lexicon}</td>
+                    <td class="au-cart__modal-td">-<span>0</span> {$_modx->getPlaceholder('msmc.symbol_right')}</td>
                 </tr>
                 <tr class="au-cart__modal-tr  au-cart__modal-tr_total">
-                    <td class="au-cart__modal-td">Итого</td>
-                    <td class="au-cart__modal-td">29 400 ₽</td>
+                    <td class="au-cart__modal-td">{'stik_order_info_total_cost' | lexicon}</td>
+                    <td class="au-cart__modal-td"><span class="ms2_order_cost">{$order.cost ?: 0}</span> {$_modx->getPlaceholder('msmc.symbol_right')}</td>
                 </tr>
             </table>
-            <button class="au-btn  au-ordering__submit" type="submit">Перейти к оплате</button>
-            <p class="au-ordering__politics  au-subscribe__politics-text">Переходя к оплате, вы принимаете <a class="au-subscribe__politics-link au-text-tab_js" href="policy" data-text="Политика конфиденциальности">Политику конфиденциальности</a></p>
+            {if !$_modx->user.join_loyalty}
+                <div class="custom-form__group-checkbox  au-ordering__group-checkbox-loyalty">
+                    <input class="custom-form__check" type="checkbox" id="join_loyalty_visible" name="join_loyalty_visible" value="1">
+                    <label class="custom-form__check-label" for="join_loyalty_visible">{'stik_modal_register_loyalty_label' | lexicon} <a class="au-register__loyalty-link au-text-tab_js" href="loyalty">{'stik_modal_register_loyalty_link' | lexicon}</a></label>
+                </div>
+            {/if}
+            <button type="button" class="au-btn  au-ordering__submit" id="order_submit">{'stik_order_submit_button' | lexicon}</button>
+            <p class="au-ordering__politics  au-subscribe__politics-text">{'stik_order_payment_agree' | lexicon} <a class="au-subscribe__politics-link au-text-tab_js" href="policy">{'stik_ss_form_policy_link' | lexicon}</a></p>
         </div>
     </div>
+    <img class="ajax-loader" src="assets/tpl/img/loader.svg" alt="">
 </main>
 
 <!-- modals -->
 <div class="au-modal au-modal-bonus-rules  modal">
     <div class="au-modal__wrapper">
-        <button class="au-close modal-close  au-bonus-rules__close" aria-label="Закрыть"></button>
+        <button class="au-close modal-close  au-bonus-rules__close" aria-label="{'stik_modal_close' | lexicon}"></button>
         <div class="au-modal__content  au-bonus-rules">
-            <h3 class="au-h2  au-bonus-rules__title">Правила начисления и списания бонусов</h3>
+            <h3 class="au-h2  au-bonus-rules__title">{'pdoField' | snippet : ['id' => 464,'field' => 'pagetitle',]}</h3>
             <div class="au-bonus-rules__content">
-                <p>% начисления бонусов зависит от накопленной суммы покупок в нашем магазине:</p>
-                <ul>
-                    <li>
-                        Базовый уровень:
-                        <span>до 50 тыс. ₽ — 5%;</span>     
-                    </li>
-                    <li>
-                        Бронзовый уровень:     
-                        <span>50–70 тыс. ₽ — 6%;</span>
-                    </li>
-                    <li>
-                        Серебряный уровень:     
-                        <span>70–100 тыс. ₽ — 7%;</span>
-                    </li>
-                    <li>
-                        Золотой уровень:     
-                        <span>выше 100 тыс. ₽ — 10%.</span>
-                    </li>
-                </ul>
-                <p>Бонусы начисляются на счёт в течение 14 дней после покупки.</p>
-                <p>Бонусы актуальны 365 дней.</p>
-                <p>Правила списания: 1 балл = 1 рубль.</p>
-                <p>До 99% покупки вы сможете оплатить бонусами.</p>
+                {'pdoField' | snippet : [
+                    'id' => 464,
+                    'field' => 'content',
+                ]}
             </div>
         </div>
     </div>
 </div>
-
-
-
-
-
-
-{*
-
-<section class="order container ajax-loader-block">
-
-    <h1 class="order__title">{$_modx->resource.pagetitle}</h1>
-    
-    {set $lang = $_modx->config['cultureKey']}
-    {$_modx->setPlaceholder('order_total_cost', ($order.cost ?: 0))}
-    {set $msCart = '!msMultiCurrencyCart' | snippet : [
-        'tpl' => 'stik.msCart.order',
-        'includeThumbs' => 'cart',
-    ]}
-    
-
-    {if !$_modx->hasSessionContext('web')}
-        <div class="order__reg">
-            <p><a href="#regist-form" class="header__link header__link-reg popup-regist-open">{'stik_order_login' | lexicon} <span>{'stik_order_login_or' | lexicon}</span> {'stik_order_register' | lexicon}</a> {'stik_order_login_text' | lexicon}</p>
-        </div>
-    {/if}
-
-    <div class="order__all">
-
-        <div class="order__form" id="msOrder">
-            <form class="ms2_form" method="post">
-                <input type="hidden" name="order_rates">
-                <div class="step-app" id="demo">
-                    <ul class="step-steps">
-                        <li data-step-target="step1">
-                            <svg width="34" height="20" viewBox="0 0 34 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M33.6865 17.3165L30.791 4.283H22.368V0.0094986H0.313477V17.3165H4.53448C4.77498 18.829 6.08498 19.9905 7.66448 19.9905C9.24398 19.9905 10.5535 18.8295 10.7945 17.3165H21.368H22.368H23.5745C23.815 18.829 25.1255 19.9905 26.7055 19.9905C28.285 19.9905 29.5945 18.8295 29.8355 17.3165H33.6865ZM7.66448 18.99C6.46648 18.99 5.49098 18.0155 5.49098 16.816C5.49098 15.618 6.46598 14.642 7.66448 14.642C8.86298 14.642 9.83798 15.6175 9.83798 16.816C9.83798 18.0155 8.86298 18.99 7.66448 18.99ZM21.368 16.3165H10.7945C10.554 14.804 9.24398 13.6425 7.66448 13.6425C6.08498 13.6425 4.77548 14.8035 4.53448 16.3165H1.31348V1.0095H21.368V4.283V16.3165ZM26.7055 18.99C25.507 18.99 24.531 18.0155 24.531 16.816C24.531 15.618 25.5065 14.642 26.7055 14.642C27.9035 14.642 28.879 15.6175 28.879 16.816C28.879 18.0155 27.904 18.99 26.7055 18.99ZM26.7055 13.6425C25.1255 13.6425 23.8155 14.8035 23.5745 16.3165H22.368V5.283H29.989L30.8985 9.3785H26.5465V9.878H31.01L32.44 16.316H29.835C29.5945 14.8035 28.285 13.6425 26.7055 13.6425Z" fill="#1B1B1B"></path>
-                            </svg>
-                        </li>
-                        <li data-step-target="step2">
-                            <svg width="34" height="20" viewBox="0 0 34 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M10 9.5C11.1046 9.5 12 8.60457 12 7.5C12 6.39543 11.1046 5.5 10 5.5C8.89543 5.5 8 6.39543 8 7.5C8 8.60457 8.89543 9.5 10 9.5Z" stroke="#949494" stroke-linecap="round" stroke-linejoin="round"></path>
-                                <path d="M6 15V15C6 12.7934 7.78879 11 9.99538 11V11V11C12.2045 11 14 12.7909 14 15V15" stroke="#949494"></path>
-                                <rect x="0.5" y="0.5" width="33" height="19" rx="1.5" stroke="#949494"></rect>
-                                <rect x="18" y="7" width="11" height="1" fill="#949494"></rect>
-                                <rect x="18" y="11" width="8" height="1" fill="#949494"></rect>
-                            </svg>
-                        </li>
-                        <li data-step-target="step3">
-                            <svg width="34" height="20" viewBox="0 0 34 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <rect x="0.5" y="0.5" width="33" height="19" rx="1.5" stroke="#949494"></rect>
-                                <rect x="1" y="4" width="32" height="1" fill="#949494"></rect>
-                                <rect x="25" y="14" width="5" height="1" fill="#949494"></rect>
-                            </svg>   
-                        </li>
-                    </ul>
-                    <div class="step-content">
-                        <div class="summary__info">
-                            <h3 class="step_header">{'stik_order_step_one_title' | lexicon}</h3>
-                            <a href="javascript:;" class="editStep" data-index="0" style="display: none;">{'stik_order_step_edit' | lexicon}</a>
-                        </div>
-                        <div class="summary" style="display: none;"></div>
-                        <div class="order__step step-tab-panel" id="tab-order" data-step="step1">
-                            <p>{'stik_order_step_one_delivery_data' | lexicon}</p>
-                            <div class="personal__data-form custom-form custom-form--order frmInfoFirst" id="frmInfoFirst">
-                                <div class="personal__data-form__name">
-                                    <div class="custom-form-group">
-                                        <select id="country" name="country" class="custom-form-control">
-                                            {'!getCountry' | snippet : [
-                                                'lang' => $lang,
-                                                'selected' => $form.country
-                                            ]}
-                                        </select>
-                                        <span class="custom-input-placeholder">{('ms2_frontend_country') | lexicon}</span>
-                                    </div>
-                                </div>
-                                <div class="personal__data-form__name">
-                                    {include 'fd.orderInput' form=$form field='city'}
-                                </div>
-                                <div class="personal__data-form__contacts">
-                                    {include 'fd.orderInput' form=$form field='index'}
-                                </div>
-                            </div>
-        
-                            <div class="order__info" style="display: none;">
-                                <div id="deliveries">
-                                    <p>{'stik_order_step_one_delivery_method' | lexicon}</p>
-                                    {foreach $deliveries as $delivery index=$index}
-                                        {if $lang != 'en' || ($lang == 'en' && $delivery.id == 7)}
-                                            {var $checked = !($order.delivery in keys $deliveries) && $index == 0 || $delivery.id == $order.delivery}
-                                            {if $delivery.id == 7 && $lang == 'en'}
-                                                {var $checked = true}
-                                            {/if}
-                                            <div class="order__radio order__radio-pickup delivery input-parent {$delivery.slug} {if $delivery.id != 7}delivery-ru{/if}" {if $delivery.id | in : [1, 5]}style="display:none;"{/if}>
-                                                <div class="order__radio-content{$checked ? ' active' : ''}">
-                                                    <input type="radio" name="delivery" value="{$delivery.id}" id="delivery_{$delivery.id}"
-                                                        data-payments="{$delivery.payments | json_encode}"
-                                                        {$checked ? 'checked' : ''}>
-                                                    <label for="delivery_{$delivery.id}">
-                                                        <span>{('stik_order_delivery_' ~ $delivery.id) | lexicon}</span>
-                                                        <span class="order__radio-price">
-                                                            <span class="delivery_cost">
-                                                                {if $delivery.id == 5}
-                                                                    {$delivery.price} {$_modx->getPlaceholder('msmc.symbol_right')}
-                                                                {elseif $delivery.id == 1}
-                                                                    {'stik_order_delivery_free' | lexicon}
-                                                                {/if}
-                                                            </span>
-                                                            {if $delivery.id != 1}
-                                                                <span class="order__radio-hidden">, </span>
-                                                            {/if}
-                                                        </span>
-                                                        <span class="order__radio-days delivery_rate">{if $delivery.id == 5}1 {'stik_order_day' | lexicon}{/if}</span>
-                                                    </label>
-                                                    
-                                                    {if $delivery.id in list [1,5]}
-                                                        <div class="custom-form-group  datepicker-form-group">
-                                                            <input type="text" name="delivery_date_{$delivery.id}" id="delivery_date_{$delivery.id}" class="custom-form-control  datepicker-here" placeholder="Выберите дату" readonly>
-                                                            <span class="custom-input-placeholder">{$delivery.id == 1 ? 'Дата самовывоза' : 'Дата доставки'}</span>
-                                                        </div>
-                                                    {/if}
-                                                </div>
-                                                
-                                                {if $delivery.id == 1?}
-                                                    <p><span>{'stik_order_delivery_pickup_address' | lexicon}: <span class="local_pickup_address"></span></span></p>
-                                                {/if}
-                                            </div>
-                                        {/if}
-                                    {/foreach}
-        
-                                    <div class="order__adress">
-                                        <div class="order__street">
-
-                                        </div>
-                                    </div>
-                                    <div class="order__adress">
-                                        <div class="order__street hide_on_local_pickup">
-                                            {include 'fd.orderInput' form=$form field='street'}
-                                            {include 'fd.orderInput' form=$form field='building'}
-                                        </div>
-                                        <div class="order__street hide_on_local_pickup">
-                                            {include 'fd.orderInput' form=$form field='corpus'}
-                                            {include 'fd.orderInput' form=$form field='room'}
-                                        </div>
-                                        <div class="order__text">
-                                            <p>{'stik_order_optional_field' | lexicon}</p>
-                                            <input type="text" name="comment" value="{$form.comment}"
-                                                class="{('comment' in list $errors) ? ' error' : ''}" id="comment"
-                                                placeholder="{'ms2_frontend_comment' | lexicon}" autocomplete="off">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="summary_contacts__info">
-                            <h3 class="step_header">{'stik_order_step_two_title' | lexicon}</h3>
-                            <a href="javascript:;" class="editStep" data-index="1" style="display: none;">{'stik_order_step_edit' | lexicon}</a>
-                        </div>
-                        <div class="summary_contacts" style="display: none;"></div>
-                        <div class="order__step step-tab-panel" id="tab-contacts" data-step="step2">
-                            <p>{'stik_order_step_two_buyer_data' | lexicon}</p>
-                            <div class="personal__data-form order__step-contacts custom-form custom-form--order" id="frmInfo">
-                                <div class="personal__data-form__name">
-                                    {include 'fd.orderInput' form=$form field='name'}
-                                    {include 'fd.orderInput' form=$form field='surname'}
-                                </div>
-                                <div class="personal__data-form__contacts">
-                                    {include 'fd.orderInput' form=$form field='phone'}
-                                </div>
-                                <div class="personal__data-form__contacts">
-                                    {include 'fd.orderInput' form=$form field='email'}
-                                </div>
-                            </div>
-                        </div>
-        
-                        <h3 class="step_header">{'stik_order_step_three_title' | lexicon}</h3>
-                        <div class="order__step step-tab-panel" id="tab-cost" data-step="step3">
-                            <div class="order__cost">
-                                <p class="order__cost-name">{'stik_order_total_products_cost' | lexicon}</p>
-                                <p class="order__cost-summa"><span class="real_total_cost">{'!msMultiCurrencyPriceCustom' | snippet : ['price' => $_modx->getPlaceholder('cart_total_cost')]}</span> {$_modx->getPlaceholder('msmc.symbol_right')}</p>
-                            </div>
-                            <div class="order__cost mspc_discount_amount">
-                                <p class="order__cost-name">{'stik_order_total_discount_cost' | lexicon}</p>
-                                <p class="order__cost-summa">
-                                    -<span>{'!msMultiCurrencyPriceCustom' | snippet : ['price' => $_modx->getPlaceholder('discount_amount')]}</span> {$_modx->getPlaceholder('msmc.symbol_right')}
-                                </p>
-                            </div>
-                            <div class="order__cost delivery_cost_wrapper">
-                                <p class="order__cost-name">{'stik_order_total_delivery_cost' | lexicon}</p>
-                                <p class="order__cost-summa"><span class="ms2_delivery_cost">-</span></p>
-                            </div>
-                            <div class="order__cost delivery_discount_wrapper">
-                                <p class="order__cost-name">{'stik_order_total_delivery_discount' | lexicon}</p>
-                                <p class="order__cost-summa">-<span class="ms2_delivery_discount"></span></p>
-                            </div>
-                            <div class="order__cost order__cost--all">
-                                <p class="order__cost-name">{'stik_order_total_cost' | lexicon}</p>
-                                <p class="order__cost-summa"><span class="ms2_order_cost">{$order.cost ?: 0}</span> {$_modx->getPlaceholder('msmc.symbol_right')}</p>
-                            </div>
-                            <div class="order__group">
-                                <div id="payments">
-                                  <p>{'stik_order_title_payments' | lexicon}</p>
-                                  {foreach $payments as $payment index=$index}
-                                    {var $checked = !($order.payment in keys $payments) && $index == 0 || $payment.id == $order.payment}
-                                    <div class="ordering__col input-parent">
-                                        <input class="ordering__payment-input" type="radio" name="payment" value="{$payment.id}" id="payment_{$payment.id}"{$checked ? 'checked' : ''}>
-                                        <label class="ordering__payment-label" for="payment_{$payment.id}">
-                                          {if $payment.logo?}
-                                            <div>
-                                              <img src="{$payment.logo}" alt="{$payment.name}">
-                                            </div>
-                                          {/if}
-                                          <span>{('stik_order_payment_' ~ $payment.id) | lexicon}</span>
-                                          {if $payment.id == 3}
-                                            <div class="ordering__payment-caption" id="pickup_payment_caption" style="display:none;">Оплаченные товары хранятся у нас в бутике и доступны для самовывоза 14 дней</div>
-                                          {/if}
-                                          {if $payment.id == 3 && $lang == 'en'}
-                                            <div class="ordering__payment-caption">The payment derives in Rubles (Russian currency) from the currency applied to your card.</div>
-                                          {/if}
-                                        </label>
-                                    </div>
-                                  {/foreach}
-                                </div>
-                            </div>
-                            <div class="order__group">
-                                <div class="order__group-checkbox">
-                                    <input id="have_discount_card" name="have_discount_card" type="checkbox" value="1" {if $form['have_discount_card']}checked{/if}>
-                                    <label for="have_discount_card">{'stik_order_have_discount_card' | lexicon}</label>
-                                    <p><a href="{1193|url}" target="_blank">{'stik_order_have_discount_card_caption' | lexicon}</a></p>
-                                </div>
-                                <div class="order__group-checkbox">
-                                    <input id="agree" name="agree" type="checkbox" value="1" {if $form['agree']}checked{/if}>
-                                    <label for="agree">{'stik_order_agree' | lexicon : ['link' => 1220|url]}</label>
-                                </div>
-                                <div class="order__group-checkbox without_manager_calling_wrapper hide_on_local_pickup">
-                                    <input id="without_manager_calling" name="without_manager_calling" type="checkbox" value="1" {if $form['without_manager_calling']}checked{/if}>
-                                    <label for="without_manager_calling">{'stik_order_without_manager_calling' | lexicon}</label>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="step-footer">
-                        <button data-step-action="next" class="step-btn">{'stik_order_button_next' | lexicon}</button>
-                        <button data-step-action="finish" class="step-btn">{'stik_order_button_pay' | lexicon}</button>
-                        <button id="submit_order" type="submit" name="ms2_action" value="order/submit" class="ms2_link" style="display:none;">Оплатить</button>
-                        <div class="order__card">
-                            <img src="/assets/tpl/img/order_visa.svg" alt="Visa">
-                            <img src="/assets/tpl/img/order_master.svg" alt="MasterCard">
-                            <img src="/assets/tpl/img/order_apay.svg" alt="Apple Pay">
-                            <img src="/assets/tpl/img/order_gpay.svg" alt="Google Pay">
-                        </div>
-                    </div>
-                </div>
-            </form>
-        </div>
-
-        <div id="msCartAjaxWrapper" class="order__basket">
-            {$msCart}
-        </div>
-
-    </div>
-
-    <div class="order__footer">
-        <div class="question">
-            <p class="question__decription">{'stik_order_any_questions' | lexicon}</p>
-            <div class="product__social-mobile__group">
-                <div class="product__social-mobile__item product__social-mobile__item--whatsapp">
-                    <a href="https://wa.me/{$_modx->config.whatsapp | preg_replace : '/[^0-9]/' : ''}">{'stik_link_whatsapp' | lexicon}</a>
-                </div>
-                <div class="product__social-mobile__item product__social-mobile__item--insta">
-                    <a href="https://instagram.com/{$_modx->config.instagram}/">{'stik_link_instagram' | lexicon}</a>
-                </div>
-                <div class="product__social-mobile__item product__social-mobile__item--mail">
-                    <a href="mailto:{$_modx->config.email}">{'stik_link_email' | lexicon}</a>
-                </div>
-            </div>
-        </div>
-    </div>
-    
-    <img class="ajax-loader" src="assets/tpl/img/loader.svg" alt="">
-</section>*}

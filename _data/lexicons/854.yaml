@@ -1,0 +1,6 @@
+id: 854
+name: stik_order_bonuses_collect_text
+value: 'За покупку на ваш счёт будет зачислено'
+topic: site
+namespace: polylang
+language: ru

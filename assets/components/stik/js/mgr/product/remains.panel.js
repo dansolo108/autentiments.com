@@ -27,6 +27,7 @@ Ext.extend(msProductRemains.grid.ProductRemains,MODx.grid.Grid,{
             ,store_id: {header: _('ms2_product_store_id'), sortable: true, width: 50}
             ,store_name: {header: _('ms2_product_store_name'), sortable: true, width: 50}
             ,size: {header: _('mspr_product_size'), width: 100, renderer: msProductRemains.utils.defined}
+            ,color: {header: _('mspr_product_color'), width: 100, renderer: msProductRemains.utils.defined}
         };
 
         for (var i in msProductRemains.plugin) {

@@ -1,4 +1,5 @@
 key: ms2_payment_tinkoff_showLog
+value: '0'
 xtype: combo-boolean
 namespace: minishop2
 area: ms2_payment_tinkoff

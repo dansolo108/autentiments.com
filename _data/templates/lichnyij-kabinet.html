@@ -29,37 +29,46 @@ properties: 'a:0:{}'
         </div>
         <div class="au-profile__content  page-container">
             <div class="au-profile__loyalty-box">
-                <div class="au-profile__loyalty  active">
-                    <h2 class="au-h2  au-profile__loyalty-title">Программа лояльности</h2>
-                    <p class="au-ordering__loyalty-text">
-                        Участвуйте в <a class="au-ordering__loyalty-link  au-text-tab_js" href="loyalty" data-text="Программа лояльности">программе лояльности</a> для накопления и списания бонусов
-                    </p>
-                    <a class="au-btn-light  au-profile__loyalty-btn" href="">Участвовать</a>
-                </div>
-                <div class="au-profile__loyalty  au-profile__loyalty_bonuses">
+                {if !$_modx->user.join_loyalty}
+                    <div class="au-profile__loyalty  active">
+                        <h2 class="au-h2  au-profile__loyalty-title">{'stik_profile_loyalty_title' | lexicon}</h2>
+                        <p class="au-ordering__loyalty-text loyalty-text_join">
+                            {'stik_loyalty_join_text' | lexicon}
+                        </p>
+                        <p class="au-ordering__loyalty-text loyalty-text_no-tel">
+                            {'stik_loyalty_no_phone_text' | lexicon}
+                        </p>
+                        {'!AjaxForm' | snippet : [
+                            'snippet' => 'joinLoyalty',
+                            'form' => 'joinLoyalty.form',
+                        ]}
+                    </div>
+                {/if}
+                <div class="au-profile__loyalty  au-profile__loyalty_bonuses {if $_modx->user.join_loyalty}active{/if}">
                     <h2 class="au-h2  au-profile__loyalty-title">
-                        Бонусы
+                        {'stik_profile_loyalty_bonuses' | lexicon}
                         <span class="au-bonuses__count">
-                            <span>120</span>
-                            бонусов
+                            <span>{$maxmaClientBalance = '!maxmaClientBalance' | snippet : ['phone' => $_modx->user.mobilephone]}</span>
+                            {$maxmaClientBalance | declension : ('stik_declension_bonuses' | lexicon)}
                         </span>
                     </h2>
+                    {'!getLoyaltyInfo' | snippet}
                     <div class="au-profile__loyalty-row">
-                        <span class="au-profile__loyalty-col">Нынешний уровень</span>
-                        <b class="au-profile__loyalty-value" id="current_level">Базовый</b>
+                        <span class="au-profile__loyalty-col">{'stik_profile_loyalty_current_level' | lexicon} {*$_modx->getPlaceholder('loyalty.discount')*}</span>
+                        <b class="au-profile__loyalty-value" id="current_level">{('stik_loyalty_level_name_' ~ $_modx->getPlaceholder('loyalty.id')) | lexicon}</b>
                     </div>
                     <div class="au-profile__loyalty-range">
-                        <div class="au-profile__loyalty-slider"></div>
+                        <div class="au-profile__loyalty-slider" style="width: {$_modx->getPlaceholder('loyalty.next_slider_percent')}%;"></div>
                     </div>
                     <div class="au-profile__loyalty-row">
-                        <span class="au-profile__loyalty-col">Сумма покупок</span>
-                        <b class="au-profile__loyalty-value"><span id="amount">21300</span> ₽</b>
+                        <span class="au-profile__loyalty-col">{'stik_profile_loyalty_purchase_amount' | lexicon}</span>
+                        <b class="au-profile__loyalty-value"><span id="amount">{$_modx->getPlaceholder('loyalty.amount') | priceFormat}</span> ₽</b>
                     </div>
                     <div class="au-profile__loyalty-row  au-profile__amount_level">
-                        <span class="au-profile__loyalty-col">До следующего уровня</span>
-                        <b class="au-profile__loyalty-value"><span id="amount_level">50000</span> ₽</b>
+                        <span class="au-profile__loyalty-col">{'stik_profile_loyalty_to_next_level' | lexicon}</span>
+                        <b class="au-profile__loyalty-value"><span id="amount_level">{$_modx->getPlaceholder('loyalty.next_amount') | priceFormat}</span> ₽</b>
                     </div>
-                    <a class="au-profile__loyalty-tab  au-text-tab_js" href="loyalty" data-text="Программа лояльности">О программе лояльности</a>
+                    <a class="au-profile__loyalty-tab  au-text-tab_js" href="loyalty">{'stik_profile_loyalty_link_about' | lexicon}</a>
                 </div>
             </div>
 
@@ -97,11 +106,12 @@ properties: 'a:0:{}'
                             <label class="custom-form__label" for="email">Email</label>
                             <span class="error_field">{$_modx->getPlaceholder('error.email')}</span>
                         </div>
-                        <div class="custom-form__group">
+                        <div class="custom-form__group custom-form__group_tel">
                             <input class="custom-form__input{if $_modx->getPlaceholder('error.mobilephone')} error{/if}" type="tel" name="mobilephone" id="mobilephone"
                                 value="{$_modx->getPlaceholder('mobilephone')}" data-val="{$_modx->getPlaceholder('mobilephone')}"> 
                             <label class="custom-form__label" for="mobilephone">{'stik_profile_form_mobilephone' | lexicon}</label>
                             <span class="error_field">{$_modx->getPlaceholder('error.mobilephone')}</span>
+                            <div class="group-no-phone__title">Введите номер телефона</div>
                         </div>
                         <div class="custom-form__group custom-form__group_date">
                             <input class="custom-form__input datepicker-here{if $_modx->getPlaceholder('error.dob')} error{/if}" type="text" name="dob" id="dob"
@@ -138,12 +148,14 @@ properties: 'a:0:{}'
                 <button class="au-btn-light  au-change-password__btn-open">{'stik_profile_form_password_change' | lexicon}</button>
             </div>
             <div class="au-profile__tab-content  au-tab-content" data-tab="purchases">
-                <h2 class="au-h2  au-profile__order-title">Покупки</h2>
+                <h2 class="au-h2  au-profile__order-title">{'stik_profile_orders_title' | lexicon}</h2>
                 {set $orders = '!pdoArchiveYear' | snippet : [
+                    'limit' => 0,
                     'tpl' => 'stik.tpl.msOrders.row',
                     'tplYear' => '@INLINE <span class="au-profile__order-year">{$year}</span><ul class="au-profile__orders">{$wrapper}</ul>',
                     'class' => 'msOrder',
                     'sortby' => 'createdon',
+                    'sortdir' => 'DESC',
                     'tpl' => 'stik.tpl.msOrders.row',
                     'where' => [
                         'user_id' => $_modx->user.id
@@ -153,8 +165,8 @@ properties: 'a:0:{}'
                     {$orders}
                 {else}
                     <div class="au-profile__orders_empty">
-                        <p class="au-profile__orders-text">Ваш список покупок пока пуст. Воспользуйтесь каталогом для поиска товаров</p>
-                        <a class="au-btn  au-profile__orders-btn" href="{7|url}">Перейти в каталог</a>
+                        <p class="au-profile__orders-text">{'stik_profile_orders_empty_text' | lexicon}</p>
+                        <a class="au-btn  au-profile__orders-btn" href="{7|url}">{'stik_profile_orders_empty_btn' | lexicon}</a>
                     </div>
                 {/if}
             </div>

@@ -1,0 +1,5 @@
+id: 879
+name: stik_order_payment_agree
+value: 'When you proceed to payment, you accept'
+topic: site
+namespace: polylang

@@ -1,7 +1,7 @@
 id: 22
 name: msMultiCurrency
 category: msMultiCurrency
-properties: null
+properties: 'a:0:{}'
 static_file: core/components/msmulticurrency/elements/plugins/msMultiCurrency.plugin.php
 
 -----
@@ -28,18 +28,18 @@ switch ($modx->event->name) {
         $modx->event->returnedValues['status'] = $status;
         break;
     case 'msOnGetOrderCost':
-        $userCurrencyData = $msmc->getUserCurrencyData();
-        if (!empty($with_cart) && !empty($cost)) {
-            $deliveryCost = 0;
-            if (!empty($delivery_cost)) {
-                $deliveryCost = $msmc->getPrice($delivery_cost, 0, $userCurrencyData['id'], 0, false);
-            }
-            $cost = $msmc->getOrderCost($order, $userCurrencyData['id'], $with_cart);
-            $modx->event->returnedValues['cost'] = $cost + $deliveryCost;
-            $modx->event->returnedValues['delivery_cost'] = $deliveryCost;
-        } else if (empty($with_cart) && $only_cost) {
-            $modx->event->returnedValues['cost'] = $msmc->getPrice($cost, 0, $userCurrencyData['id'], 0, false);
-        }
+        // $userCurrencyData = $msmc->getUserCurrencyData();
+        // if (!empty($with_cart) && !empty($cost)) {
+        //     $deliveryCost = 0;
+        //     if (!empty($delivery_cost)) {
+        //         $deliveryCost = $msmc->getPrice($delivery_cost, 0, $userCurrencyData['id'], 0, false);
+        //     }
+        //     $cost = $msmc->getOrderCost($order, $userCurrencyData['id'], $with_cart);
+        //     $modx->event->returnedValues['cost'] = $cost + $deliveryCost;
+        //     $modx->event->returnedValues['delivery_cost'] = $deliveryCost;
+        // } else if (empty($with_cart) && $only_cost) {
+        //     $modx->event->returnedValues['cost'] = $msmc->getPrice($cost, 0, $userCurrencyData['id'], 0, false);
+        // }
         break;
     case 'msOnSubmitOrder':
         if (!$cartUserCurrency) {

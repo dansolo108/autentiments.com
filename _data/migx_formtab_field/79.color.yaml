@@ -1,0 +1,7 @@
+id: 79
+config_id: 13
+formtab_id: 13
+field: color
+caption: Цвет
+pos: 5
+sourceFrom: config

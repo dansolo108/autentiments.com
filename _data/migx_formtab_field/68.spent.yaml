@@ -1,0 +1,7 @@
+id: 68
+config_id: 12
+formtab_id: 12
+field: spent
+caption: 'Всего потрачено'
+pos: 1
+sourceFrom: config

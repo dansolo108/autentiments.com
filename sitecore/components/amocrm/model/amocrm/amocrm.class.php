@@ -391,7 +391,7 @@ class amoCRM
     {
         $result = array();
         /** @var msOrderStatus[] $statuses */
-        $statuses = $this->modx->getIterator('msOrderStatus', array('active' => 1));
+        $statuses = $this->modx->getCollection('msOrderStatus', array('active' => 1));
         foreach ($statuses as & $status) {
             $result[] = $status->toArray();
         }

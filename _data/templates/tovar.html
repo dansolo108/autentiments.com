@@ -54,7 +54,7 @@ properties: 'a:0:{}'
                     'tpl' => 'stik.msOptions'
                 ]}
                 <div class="au-product__size-box">
-                    <span class="au-product__subtitle">Размер:</span>
+                    <span class="au-product__subtitle">{'stik_product_size' | lexicon}:</span>
                     <div id="ajax_sizes" class="au-product__sizes">
                         {'!getRemainsWithAmount' | snippet : [
                             'tpl' => 'stik.msOptions.size.n.amount'
@@ -64,10 +64,10 @@ properties: 'a:0:{}'
                 <div class="au-product__add-box">
                     <button class="au-btn  au-product__add-basket  active" type="submit" name="ms2_action" value="cart/add">{'ms2_frontend_add_to_cart' | lexicon}</button>
                     <button class="au-btn-light  au-product__add-entrance" type="button">
-                        <span class="entrance">Узнать о поступлении</span>
-                        <span class="entrance_end">Подписка оформлена!</span>
+                        <span class="entrance">{'stik_product_subscribe_button' | lexicon}</span>
+                        <span class="entrance_end">{'stik_product_subscribe_success' | lexicon}</span>
                     </button>
-                    <div class="au-btn-light  au-product__add-size">Выберите размер</div>
+                    <div class="au-btn-light  au-product__add-size">{'stik_product_select_size' | lexicon}</div>
                 </div>
             </form>
             <div class="au-product__description-text">
@@ -83,12 +83,12 @@ properties: 'a:0:{}'
             <div class="au-product__info">
                 <div class="au-product__info-head">
                     {if $measurements}
-                        <a class="au-product__info-title  au-tab-title  active" href="measurements">Обмеры</a>
+                        <a class="au-product__info-title  au-tab-title  active" href="measurements">{'stik_product_measurements_title' | lexicon}</a>
                     {/if}
                     {if $care}
-                        <a class="au-product__info-title  au-tab-title {if !$measurements} active{/if}" href="care">Уход</a>
+                        <a class="au-product__info-title  au-tab-title {if !$measurements} active{/if}" href="care">{'stik_product_care_title' | lexicon}</a>
                     {/if}
-                    <a class="au-product__info-title  au-tab-title {if !$care && !$measurements} active{/if}" href="delivery">Доставка</a>
+                    <a class="au-product__info-title  au-tab-title {if !$care && !$measurements} active{/if}" href="delivery">{'stik_product_delivery_title' | lexicon}</a>
                 </div>
                 {if $measurements}
                     <div class="au-product__info-content  au-tab-content  active" data-tab="measurements">
@@ -136,7 +136,7 @@ properties: 'a:0:{}'
 
     {if $complete_look}
         <section class="au-сomplete">
-            <h2 class="au-h2  au-сomplete__title">Завершите образ</h2>
+            <h2 class="au-h2  au-сomplete__title">{'stik_product_complete_look_title' | lexicon}</h2>
             <div class="au-сomplete__row">
                 {$complete_look}
             </div>
@@ -168,7 +168,7 @@ properties: 'a:0:{}'
 
     {if $also_like?}
         <section class="au-liked  au-liked_container">
-            <h2 class="au-h2  au-liked__title">Вам может понравиться</h2>
+            <h2 class="au-h2  au-liked__title">{'stik_product_also_like_title' | lexicon}</h2>
             <div class="au-liked__slider  swiper-container">
                 <div class="swiper-wrapper">
                     {$also_like}

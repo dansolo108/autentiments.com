@@ -1,4 +1,4 @@
 key: ms2_payment_paypal_currency
-value: USD
+value: EUR
 namespace: minishop2
 area: ms2_payment

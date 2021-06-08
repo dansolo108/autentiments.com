@@ -1,0 +1,5 @@
+id: 861
+name: stik_order_bonuses_collect_with_promocode
+value: 'When applying a promo code, bonuses are not deducted.'
+topic: site
+namespace: polylang

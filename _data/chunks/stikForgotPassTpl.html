@@ -6,8 +6,8 @@ properties: 'a:0:{}'
 
 -----
 
-<form action="[[~[[*id]]]]" method="post" class="au-login__form_recovery [[+loginfp.errors:notempty=`submit-resend`]]">
-    <h3 class="au-h1  au-login__title">Восстановление пароля</h3>
+<form action="{13|url}" method="post" class="au-login__form_recovery [[+loginfp.errors:notempty=`submit-resend`]]">
+    <h3 class="au-h1  au-login__title">{'stik_reset_pw_title' | lexicon}</h3>
     <p class="au-login__text  au-login__text-recovery">{'stik_reset_password_caption' | lexicon}</p>
     <p class="au-login__text  au-login__text-resend">[[+loginfp.errors]]</p>
     <div class="custom-form__group">
@@ -19,7 +19,7 @@ properties: 'a:0:{}'
     <input type="submit" name="login_fp" class="au-btn  au-login__submit  au-login__submit-recovery" value="[[%login.reset_password]]" />
     
     <div class="au-login__recovery-resend">
-        <p class="au-login__recovery-text">Не пришло письмо?</p>
-        <input type="submit" name="login_fp" class="au-btn  au-login__submit  au-login__submit-recovery-resend" value="Отправить повторно" />
+        <p class="au-login__recovery-text">{'stik_reset_pw_send_again_title' | lexicon}</p>
+        <input type="submit" name="login_fp" class="au-btn  au-login__submit  au-login__submit-recovery-resend" value="{'stik_reset_pw_send_again_button' | lexicon}" />
     </div>
 </form>

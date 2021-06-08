@@ -1,6 +1,6 @@
 function calcRealTotalCost() {
     var real_total_cost = 0;
-    $(miniShop2.Cart.cart + ' .basket__card').each(function(){
+    $(miniShop2.Cart.cart + ' .au-cart__card').each(function(){
         var price = $(this).find('input[name=price]').val(),
             count = $(this).find('input[name=count]').val();
         real_total_cost = real_total_cost + (price * count);
@@ -8,38 +8,25 @@ function calcRealTotalCost() {
     $('.real_total_cost').text(miniShop2.Utils.formatPrice(real_total_cost));
 }
 
-function localDeliveryFields(delivery) {
-    if (delivery == 1) {
-        $('.hide_on_local_pickup').hide();
-    } else {
-        $('.hide_on_local_pickup').show();
-    }
-}
-
-function pickupDeliveryPayment(delivery) {
-    if (delivery == 1) {
-        $('#pickup_payment_caption').show();
-    } else {
-        $('#pickup_payment_caption').hide();
-    }
-}
-
 function chooseVisibleDelivery(delivery) {
-    if ($('input[name="delivery"]:checked').parent().parent().is(':visible') === false) {
-        $('.order__radio-pickup.delivery:visible').first().find('input[name="delivery"]').click();
-    }
-}
-
-function managerCallingVisability(status) {
-    if (status === true) {
-        $('.without_manager_calling_wrapper').css('display', 'none');
-    } else {
-        $('.without_manager_calling_wrapper').show();
+    if ($('input[name="delivery"]:checked').parent().is(':visible') === false) {
+        $('.au-ordering__delivery-row:visible').first().find('input[name="delivery"]').click();
     }
 }
 
 function declension(n, titles) {
     return titles[(n % 10 === 1 && n % 100 !== 11) ? 0 : n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 10 || n % 100 >= 20) ? 1 : 2];
+}
+
+function checkDeliveryFields(n, titles) {
+    if ($('#country').val() && $('#city').val() && $('#index').val()) {
+        miniShop2.Order.getcost();
+    }
+}
+
+function validateEmail(email) {
+    const re = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
+    return re.test(String(email).toLowerCase());
 }
 
 function msmcGetPrice(price) {
@@ -57,38 +44,68 @@ function msmcGetPrice(price) {
     }
 }
 
-function setRates() {
-    // $('input[name="order_rates"]').val($('input[name="delivery"]:checked').siblings('label').find('.delivery_rate').text());
-    miniShop2.Order.add('order_rates', $('input[name="delivery"]:checked').siblings('label').find('.delivery_rate').text());
+// Сохраняем в скрытое поле сроки доставки
+function setOrderRates() {
+    $('input[name="order_rates"]').val($('input[name="delivery"]:checked').siblings('label').find('.delivery_rate').text())
+}
+
+// Сохраняем в скрытое поле скидку на заказ
+function setOrderDiscount() {
+    $('input[name="order_discount"]').val($('.ms2_total_discount_custom').text().replace(" ", ""))
+}
+
+function promocodeApplied() {
+    $('.au-promo-code__submit').removeClass('active');
+    $('.au-promo-code__form').addClass('applied-code');
+    $('.au-ordering__bonuses').addClass('disabled-bonuses');
+}
+
+function promocodeRemoved() {
+    $('.au-promo-code__submit').addClass('active');
+    $('.au-promo-code__form').removeClass('applied-code');
+    $('.au-ordering__bonuses').removeClass('disabled-bonuses');
 }
 
 $(document).ready(function() {
     if (window.miniShop2) {
+        
         $(document).on('mspc_set mspc_freshen', function(e, response) { // событие mspc_freshen добавлено в кастомном js-файле
             if(response.mspc.discount_amount > 0) {
                 $('.mspc_discount_amount span').text(miniShop2.Utils.formatPrice(msmcGetPrice(response.mspc.discount_amount)));
+                promocodeApplied();
             } else {
                 $('.mspc_discount_amount span').text("-");
+                promocodeRemoved();
             }
         });
     
         $(document).on('mspc_remove', function(e, response) {
             if(response.mspc.discount_amount == 0) {
-                $('.mspc_discount_amount span').text("-")
+                $('.mspc_discount_amount span').text("-");
+                promocodeRemoved();
             }
         });
     
-        miniShop2.Callbacks.add('Cart.change.response.success', 'fd_cart_change_ok', function(response) {
+        miniShop2.Callbacks.add('Cart.change.response.success', 'stik', function(response) {
             $('.ms2_total_cost').text(miniShop2.Utils.formatPrice(msmcGetPrice(response.data.total_cost)));
-            $('.mse2_total_declension').text(declension(response.data.total_count, stik_declension_product_js));
+            // $('.mse2_total_declension').text(declension(response.data.total_count, stik_declension_product_js));
+            $('.ms2_total_no_discount').text(miniShop2.Utils.formatPrice(msmcGetPrice(response.data.real_total_cost)));
+            $('.ms2_total_discount_custom').text(miniShop2.Utils.formatPrice(msmcGetPrice(response.data.total_discount)));
             calcRealTotalCost();
+            if ($('#msOrder').length) {
+                miniShop2.Order.getcost();
+            }
         });
     
-        miniShop2.Callbacks.add('Cart.remove.response.success', 'fd_cart_remove_ok', function() {
+        miniShop2.Callbacks.add('Cart.remove.response.success', 'stik', function() {
+            $('.ms2_total_no_discount').text(miniShop2.Utils.formatPrice(response.data.real_total_cost));
             calcRealTotalCost();
+            if ($('#msOrder').length) {
+                miniShop2.Order.getcost();
+            }
         });
         
-        miniShop2.Callbacks.add('Cart.add.response.success', 'fd_cart_add_ok', function() {
+        miniShop2.Callbacks.add('Cart.add.response.success', 'stik', function() {
             showAjaxCart();
             // dataLayer.push({'event': 'add_cart'});
         });
@@ -100,66 +117,62 @@ $(document).ready(function() {
                 !miniShop2.Utils.empty(response.data.city) ||
                 !miniShop2.Utils.empty(response.data.index)
             ) {
-                if ($('#country').val() && $('#city').val() && $('#index').val()) {
-                    miniShop2.Order.getcost();
+                checkDeliveryFields();
+            }
+            
+            if (typeof(response.data.msloyalty) != "undefined" && response.data.msloyalty !== null) {
+                miniShop2.Order.getcost();
+                
+                if (response.data.msloyalty > 0) {
+                    $('.au-bonuses__form').addClass('used-bonuses');
+                    $('.au-promo-code__form').addClass('disabled-code');
+                    $('.mspc_field').prop('disabled', true);
+                } else {
+                    $('.au-bonuses__form').removeClass('used-bonuses');
+                    $('.au-promo-code__form').removeClass('disabled-code');
+                    $('.mspc_field').prop('disabled', false);
                 }
             }
             
-            if(!miniShop2.Utils.empty(response.data.delivery)) {
-                // скрываем/показываем поля при самовывозе
-                localDeliveryFields(response.data.delivery);
-                // скрываем/показываем подпись у способа оплаты при самовывозе
-                pickupDeliveryPayment(response.data.delivery);
-            }
-            
             chooseVisibleDelivery();
-            console.log($('#country').val());
-            console.log($('#city').val());
-            console.log($('#index').val());
+            
             if ($('#country').val() && $('#city').val() && $('#index').val()) {
-                console.log('PASSED');
                 $('.au-ordering').addClass('next-step');
             } else {
-                console.log('NOT PASSED');
-                $('.au-ordering').addClass('next-step');
+                $('.au-ordering').removeClass('next-step');
             }
         });
         
-        miniShop2.Callbacks.add('Order.getcost.before', 'fd_order_getcost_before', function() {
+        miniShop2.Callbacks.add('Order.getcost.before', 'stik', function() {
             // Перед расчетом стоимости, делаем блок с ценами, доставками, способами оплаты неактивным и показываем прелоадер
             $('.ajax-loader').addClass('enabled');
             $('.ajax-loader-block').addClass('loading');
         });
         
-        miniShop2.Callbacks.add('Order.getcost.response.error', 'fd_orders_getcost_err', function(response) {
+        miniShop2.Callbacks.add('Order.getcost.response.error', 'stik', function(response) {
             // убираем прелоадер
             $('.ajax-loader').removeClass('enabled');
             $('.ajax-loader-block').removeClass('loading');
-            // showAjaxCart('full');
         });
         
-        miniShop2.Callbacks.add('Order.getcost.response.success', 'fd_orders_getcost_ok', function(response) {
+        miniShop2.Callbacks.add('Order.getcost.response.success', 'stik', function(response) {
             // убираем прелоадер
             $('.ajax-loader').removeClass('enabled');
             $('.ajax-loader-block').removeClass('loading');
             
-            var countryLower = $('#country').val().toLowerCase();
+            // var countryLower = $('#country').val().toLowerCase();
             
-            if (countryLower == 'россия') {
-                $('.delivery-ru').show();
-            } else {
-                $('.delivery-ru').hide();
-            }
-            
-            if ($.inArray(countryLower, ['беларусь', 'казахстан', 'украина']) !== -1) {
-                $('.delivery.cdek_courier,.delivery.cdek_pvz').show();
-                if (countryLower == 'украина') {
-                    $('.delivery.cdek_pvz').hide();
-                }
-            }
+            // if (countryLower == 'россия' || countryLower == 'russian federation') {
+            //     $('.delivery-ru').show();
+            // } else {
+            //     $('.delivery-ru').hide();
+            // }
             
             // Стоимость заказа, поскольку она находится за пределами #msOrder
-            $('.ms2_order_cost').text(miniShop2.Utils.formatPrice(response.data.cost))
+            $('.ms2_order_cost').text(miniShop2.Utils.formatPrice(response.data.cost));
+            
+            // Сроки доставки для сохранения в заказ
+            $('.ms2_order_cost').text(miniShop2.Utils.formatPrice(response.data.cost));
             
             // Общая стоимость доставки
             if(response.data.delivery_cost > 0) {
@@ -170,94 +183,58 @@ $(document).ready(function() {
                 // $('#city, #index').addClass('error');
             }
             
-            // showAjaxCart('full');
-            
-            // скидка на доставку
-            if(response.data.delivery_discount > 0) {
-                $('.ms2_delivery_discount').text(miniShop2.Utils.formatPrice(response.data.delivery_discount) + " " + ms2_frontend_currency);
-                $('.delivery_discount_wrapper').css('display', 'flex');
+            // бонусы
+            if(response.data.msloyalty > 0) {
+                $('.loyalty_discount_amount').show();
+                $('.loyalty_discount_amount span').text(miniShop2.Utils.formatPrice(response.data.msloyalty));
+                $('.msloyalty_writeoff_amount').text(miniShop2.Utils.formatPrice(response.data.msloyalty));
+                $('.msloyalty_writeoff_declension').text(declension(response.data.msloyalty, stik_declension_bonuses_js));
             } else {
-                $('.ms2_delivery_discount').text("");
-                $('.delivery_discount_wrapper').hide();
+                $('.loyalty_discount_amount').hide();
+                $('.msloyalty_writeoff_amount').text(0);
             }
             
-            // показываем стоимость и сроки у каждого способа доставки
-            if($(".delivery.cdek_courier").length) {
-                if(response.data.courier > 0) {
-                    $('.delivery.cdek_courier .delivery_cost').text(miniShop2.Utils.formatPrice(response.data.courier) + " " + ms2_frontend_currency);
-                } else {
-                    $('.delivery.cdek_courier .delivery_cost').text(stik_order_delivery_impossible_calculate);
-                }
-                $('.delivery.cdek_courier .delivery_rate').text(response.data.courier_rates);
-            }
-            
-            if($(".delivery.cdek_pvz").length) {
-                if(response.data.pvz > 0) {
-                    $('.delivery.cdek_pvz .delivery_cost').text(miniShop2.Utils.formatPrice(response.data.pvz) + " " + ms2_frontend_currency);
-                } else {
-                    $('.delivery.cdek_pvz .delivery_cost').text(stik_order_delivery_impossible_calculate);
-                }
-                $('.delivery.cdek_pvz .delivery_rate').text(response.data.pvz_rates);
-            }
-            
-            if($(".delivery.ems").length) {
-                if(response.data.ems > 0) {
-                    $('.delivery.ems .delivery_cost').text(miniShop2.Utils.formatPrice(response.data.ems) + " " + ms2_frontend_currency);
-                } else {
-                    $('.delivery.ems .delivery_cost').text(stik_order_delivery_impossible_calculate);
-                }
-                $('.delivery.ems .delivery_rate').text(response.data.ems_rates);
-            }
-            
-            if($(".delivery.dhl").length) {
-                if(response.data.dhl > 0) {
-                    $('.delivery.dhl .delivery_cost').text(miniShop2.Utils.formatPrice(response.data.dhl) + " " + ms2_frontend_currency);
-                } else {
-                    $('.delivery.dhl .delivery_cost').text(stik_order_delivery_impossible_calculate);
-                }
-                $('.delivery.dhl .delivery_rate').text(response.data.dhl_rates);
-            }
-            
-            if($(".delivery.post").length) {
-                if(response.data.post > 0) {
-                    $('.delivery.post .delivery_cost').text(miniShop2.Utils.formatPrice(response.data.post) + " " + ms2_frontend_currency);
-                } else {
-                    $('.delivery.post .delivery_cost').text(stik_order_delivery_impossible_calculate);
-                }
-                $('.delivery.post .delivery_rate').text(response.data.post_rates);
-            }
-            
-            if($(".delivery.local_courier").length) {
-                if(response.data.local_courier > 0) {
-                    $('.delivery.local_courier .delivery_cost').text(miniShop2.Utils.formatPrice(response.data.local_courier) + " " + ms2_frontend_currency);
-                } else {
-                    $('.delivery.local_courier .delivery_cost').text(stik_order_delivery_impossible_calculate);
-                }
-            }
-            
-            if(response.data.hide_local_courier === true) {
-                $('.delivery.local_courier').hide();
-            }
-            if(response.data.hide_local_pickup === true) {
-                $('.delivery.local_pickup').hide();
+            if(response.data.loyalty_accrual > 0) {
+                $('.msloyalty_accrual').text(miniShop2.Utils.formatPrice(response.data.loyalty_accrual));
+                $('.msloyalty_accrual_declension').text(declension(response.data.loyalty_accrual, stik_declension_bonuses_js));
             }
             
             chooseVisibleDelivery();
-            // setRates();
+            setOrderRates();
+            setOrderDiscount();
         });
         
-        miniShop2.Callbacks.add('Order.submit.response.success', 'fd_order_submit_ok', function(response) {
+        /*miniShop2.Callbacks.add('Order.submit.response.success', 'stik', function(response) {
             const orderCost = parseFloat($('.ms2_order_cost').first().text().replace(" ", ""));
-            // dataLayer.push({'event': 'order'});
+            dataLayer.push({'event': 'order'});
             fbq('track', 'Purchase', { currency: "RUB", value: orderCost.toFixed(2) }, {eventID: response.data.msorder});
-        });
+        });*/
         
-        if ($('#msOrder').length) {
-            // скрываем/показываем поля при самовывозе
-            localDeliveryFields($('input[name="delivery"]:checked').val());
-            // скрываем/показываем подпись у способа оплаты при самовывозе
-            pickupDeliveryPayment($('input[name="delivery"]:checked').val());
+        // checkDeliveryFields();
+    }
+    
+    
+    $('.au-bonuses__cancel').click(function(e) {
+        e.preventDefault();
+        miniShop2.Order.add('msloyalty', '');
+    });
+    
+    $('#join_loyalty_visible').on('click', function() {
+        if($(this).prop('checked')) {
+            $('#msOrder #join_loyalty_order').prop('checked', true);
+        } else {
+            $('#msOrder #join_loyalty_order').prop('checked', false);
         }
+    });
+    
+    // Сохраняем поле в сессию при изменениии select
+    if ($('#msOrder').length) {
+        $(document).on('change', '#msOrder select', function () {
+            var $this = $(this);
+            var key = $this.attr('name');
+            var value = $this.find('option:selected').val();
+            miniShop2.Order.add(key, value);
+        });
     }
     
     // изменение кол-ва в ajax-корзине
@@ -295,18 +272,6 @@ $(document).ready(function() {
         $('button#submitbtn').click();
     });
     
-    $('#have_discount_card').on('change', function () {
-        managerCallingVisability(this.checked);
-    });
-    
-    managerCallingVisability($('#have_discount_card').is(':checked'));
-    
-    $('.product-info__choise-size .popup-modal').click(function(){
-        let size = $(this).text();
-        $('#sub-modal input[name="size"]').val(size);
-        $('#sub-modal .modal-size_subscribe__size').text(size);
-    });
-    
     // Предотвращаем показ предыдущей стоимости доставки СДЭК при неверно указанных данных
     $("#city").bind("paste keyup", function() {
         if ($('input[name="cdek_id"]').val() !== '') {
@@ -332,6 +297,7 @@ $(document).ready(function() {
 
 $('#msProduct input.au-product__color-input').on('change', function () {
     let id = $('#msProduct .ms2_form input[name=id]').val();
+    let $this = this;
     $.post(window.location.href, {
         stikpr_action: 'sizes/get',
         language: $('html').attr('lang'),
@@ -342,7 +308,9 @@ $('#msProduct input.au-product__color-input').on('change', function () {
         if (data) {
             $('#ajax_sizes').html(data);
         }
-    })
+    });
+    $('.au-product__slider .au-product__card').hide();
+    $('.au-product__slider .au-product__card[data-color='+$($this).val()+']').show();
 });
 
 $(document).on('af_complete', function(event, response) {
@@ -350,7 +318,9 @@ $(document).on('af_complete', function(event, response) {
         var form = response.form;
     
         switch (form.attr('id')) {
-            case 'contact_form':
+            case 'contacts_form':
+                $('.au-contacts__form-box').addClass('hide');
+                $('.au-contacts__message-info').addClass('show');
                 // dataLayer.push({'event': 'message'});
                 break;
             case 'newsletter_subscribe_form':
@@ -358,15 +328,22 @@ $(document).on('af_complete', function(event, response) {
                 $('.au-subscribe').addClass('subscribe_submit-end');
                 // dataLayer.push({'event': 'email'});
                 break;
+            case 'welcome_subscribe_form':
+                $('.au-welcome__col').addClass('welcome_submit-end');
+                break;
             case 'size_subscribe_form':
                 $('.au-close').trigger('click');
                 $('.au-product__add-entrance').addClass('end').prop('disabled', true);
                 break;
+            case 'join_loyalty':
+                $('.au-ordering__loyalty_start').removeClass('active');
+                $('.au-ordering__loyalty_end').addClass('active');
+                break;
+            case 'join_loyalty_profile':
+                location.reload();
+                // $('.au-profile__loyalty').removeClass('active');
+                // $('.au-profile__loyalty_bonuses').addClass('active');
+                break;
         }
     }
 });
-
-function validateEmail(email) {
-    const re = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
-    return re.test(String(email).toLowerCase());
-}

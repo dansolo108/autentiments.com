@@ -1,0 +1,6 @@
+id: 900
+name: stik_order_loyalty_amount_error
+value: 'Вы можете оплатить бонусами только [[+percent]]% ([[+allowable_amount_text]]) от суммы корзины.'
+topic: site
+namespace: polylang
+language: ru

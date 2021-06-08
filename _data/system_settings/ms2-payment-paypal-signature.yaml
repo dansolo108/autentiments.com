@@ -1,4 +1,5 @@
 key: ms2_payment_paypal_signature
+value: A2vy0r8wlqhAeccXCmFk9Y6Pmi6GAjQ2Yv26c3CO8D3S0gf3AW.NQ2rC
 xtype: text-password
 namespace: minishop2
 area: ms2_payment

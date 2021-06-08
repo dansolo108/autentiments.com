@@ -1,0 +1,9 @@
+id: 65
+config_id: 10
+formtab_id: 10
+field: position
+caption: 'Увеличить картинку №1 и расположить:'
+pos: 4
+inputTVtype: listbox
+sourceFrom: config
+inputOptionValues: '--==||Справа==right||Слева==left'

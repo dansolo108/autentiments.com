@@ -1,4 +1,4 @@
 key: ms2_payment_tinkoff_tax
-value: none
+value: vat0
 namespace: minishop2
 area: ms2_payment_tinkoff

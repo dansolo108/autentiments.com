@@ -64,6 +64,7 @@ class stikProductRemains {
     public function getRemains($scriptProperties) {
         $product_id = (int) $this->modx->getOption('id', $scriptProperties, null);
         $size = (string) $this->modx->getOption('size', $scriptProperties, null);
+        $color = (string) $this->modx->getOption('color', $scriptProperties, null);
         $stores = $this->modx->getOption('store_id', $scriptProperties, ''); // id склада
         if (!is_array($stores) && $stores != '') {
             $stores = [$stores];
@@ -71,11 +72,12 @@ class stikProductRemains {
         $strong = (bool) $this->modx->getOption('strong', $scriptProperties, false);
         $remains = false;
         if (empty($product_id)) $product_id = $this->modx->resource->get('id');
-        if (is_null($size)) return false;
+        if (is_null($size) || is_null($color)) return false;
         if ($strong) {
             $where = [
                 'product_id' => $product_id,
                 'size' => $size,
+                'color' => $color,
             ];
             if (is_array($stores)) {
                 $where['store_id:IN'] = $stores;
@@ -99,6 +101,7 @@ class stikProductRemains {
     public function saveRemains($scriptProperties) {
         $product_id = (int) $this->modx->getOption('product_id', $scriptProperties, null);
         $size = (string) $this->modx->getOption('size', $scriptProperties, null);
+        $color = (string) $this->modx->getOption('color', $scriptProperties, null);
         $store = (int) $this->modx->getOption('store_id', $scriptProperties, 1); // id склада
         $count = (string) $this->modx->getOption('count', $scriptProperties, null);
         $set = (bool) $this->modx->getOption('set', $scriptProperties, false);
@@ -107,6 +110,7 @@ class stikProductRemains {
         $rem = $this->modx->getObject('stikRemains', array(
             'product_id' => $product_id,
             'size' => $size,
+            'color' => $color,
             'store_id' => $store,
         ));
         if (isset($rem)) {
@@ -115,6 +119,7 @@ class stikProductRemains {
             $rem = $this->modx->newObject('stikRemains', array(
                 'product_id' => $product_id,
                 'size' => $size,
+                'color' => $color,
                 'store_id' => $store,
                 'remains' => intval($count)
             ));
@@ -175,32 +180,17 @@ class stikProductRemains {
         return $store;
     }
     
-    public function getFittingCitiesArray() {
-        $cacheManager = $this->modx->getCacheManager();
-        if (!$fitting_cities_array = $cacheManager->get('fitting_cities_array')) {
-            $q = $this->modx->newQuery('stikFittingCity');
-            $q->select('stikFittingCity.store_id,stikFittingCity.name,stikFittingCity.cost');
-            $q->where([
-            	'active' => 1
-            ]);
-            
-            if ($q->prepare() && $q->stmt->execute()) {
-                $data = $q->stmt->fetchAll(PDO::FETCH_ASSOC);
-            }
-            
-            $tmp = [];
-            
-            if (is_iterable($data)) {
-                foreach($data as $k => $v) {
-                    $tmp[mb_strtolower($v['name'])] = $data[$k];
-                    unset($tmp[$v['name']]['name']);
-                }
-            }
-            $fitting_cities_array = $tmp;
-            $cacheManager->set('fitting_cities_array', $tmp, 3600);
-        }
-
-        return $fitting_cities_array;
+    public function getSortSizes() {
+        return [
+            'XS',
+            'S',
+            'M',
+            'L',
+            'XL',
+            'XXL',
+            'XXXL',
+            'Onesize',
+        ];
     }
     
     public function getStoresArray() {

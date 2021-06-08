@@ -2,7 +2,8 @@ id: 11
 source: 1
 name: miniShop2
 category: miniShop2
-properties: null
+properties: 'a:0:{}'
+disabled: 1
 static_file: core/components/minishop2/elements/plugins/plugin.minishop2.php
 
 -----

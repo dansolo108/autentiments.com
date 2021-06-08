@@ -326,8 +326,21 @@ class amoCRMTools
                 } elseif (!empty($field['name'])) {
                     $output[mb_strtolower($field['name'])] = $field;
                 }
-
             }
+
+            if($result['_page_count'] > 1) {
+                for ($i = $result['_page'] + 1; $i <= $result['_page_count']; $i++) {
+                    $result = $this->sendRequest('/api/v4/' . $type . '/custom_fields', array('page' => $i), 'GET');
+                    foreach ($result['_embedded']['custom_fields'] as $field) {
+                        if (!empty($field['code'])) {
+                            $output[mb_strtolower($field['code'])] = $field;
+                        } elseif (!empty($field['name'])) {
+                            $output[mb_strtolower($field['name'])] = $field;
+                        }
+                    }
+                }
+            }
+
 
             return $output;
         }
@@ -438,6 +451,8 @@ class amoCRMTools
             curl_setopt($curl, CURLOPT_CUSTOMREQUEST, 'DELETE');
             curl_setopt($curl, CURLOPT_POSTFIELDS, json_encode($data));
         }
+
+        curl_setopt($curl,CURLOPT_HEADER, false);
 
         curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 1);
         curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, 2);

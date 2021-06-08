@@ -1,0 +1,5 @@
+id: 869
+name: stik_order_bonuses_writeoff_promocode
+value: 'When debiting bonuses, the promo code is inactive.'
+topic: site
+namespace: polylang

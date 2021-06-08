@@ -8,12 +8,17 @@ properties: 'a:0:{}'
 $product_id = (int)$_POST['product_id'];
 $email = htmlspecialchars(strip_tags($_POST['email']));
 $size = htmlspecialchars(strip_tags($_POST['size']));
+$color = htmlspecialchars(strip_tags($_POST['color']));
 $language = htmlspecialchars(strip_tags($_POST['language']));
 
 $errors = array();
 
 if (empty($size)) {
     $errors['size'] = $modx->lexicon('stik_size_subscribe_err_size');
+}
+
+if (empty($color)) {
+    $errors['color'] = $modx->lexicon('stik_size_subscribe_err_color');
 }
 
 if (empty($email) || !preg_match('/.+@.+\..+/i', $email)) {
@@ -32,6 +37,7 @@ if (!empty($errors)) {
         'email' => $email,
         'product_id' => $product_id,
         'size' => $size,
+        'color' => $color,
         'language' => $language,
         'status' => 0
     ]);
@@ -40,7 +46,7 @@ if (!empty($errors)) {
         // Создаем запись
         $object = $modx->newObject('stikSizesubscriber');
         
-        $hash = $email.$product_id.$size.$language;
+        $hash = $email.$product_id.$size.$color.$language;
         
         $active = 0; // подписка не активна по умолчанию
         $profile = $modx->user->getOne('Profile');
@@ -52,6 +58,7 @@ if (!empty($errors)) {
             'product_id' => $product_id,
             'user_id' => $modx->getLoginUserID($modx->context->key) ?: 0,
             'size' => $size,
+            'color' => $color,
             'language' => $language,
             'createdon' => time(),
             'hash' => crypt($hash, md5($hash)),

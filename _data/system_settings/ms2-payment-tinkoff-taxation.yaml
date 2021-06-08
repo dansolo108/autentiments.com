@@ -1,4 +1,4 @@
 key: ms2_payment_tinkoff_taxation
-value: osn
+value: usn_income_outcome
 namespace: minishop2
 area: ms2_payment_tinkoff

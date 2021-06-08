@@ -1,0 +1,6 @@
+id: 866
+name: stik_order_bonuses_writeoff_text
+value: "С\_вашего счёта списано"
+topic: site
+namespace: polylang
+language: ru

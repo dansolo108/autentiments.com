@@ -1,0 +1,6 @@
+id: 802
+name: login.user_err_nf_email
+value: "На\_указанную почту отправлено письмо с\_ссылкой на\_восстановление пароля"
+topic: forgotpassword
+namespace: login
+language: ru

@@ -1,7 +1,7 @@
 jQuery(document).ready(function($) {
 	var ajaxId = '#cdek2_map_ajax';
 	var cdekStatus = $('#ms_cdek2_status');
-	var cdek_ids = '3';
+	var cdek_ids = '2';
 	var cdek_arr = cdek_ids.split(',');
 
 	if (checkCDEK()) {

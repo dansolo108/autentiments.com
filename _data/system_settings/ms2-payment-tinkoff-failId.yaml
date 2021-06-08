@@ -1,5 +1,5 @@
 key: ms2_payment_tinkoff_failId
-value: '1'
+value: '27'
 xtype: numberfield
 namespace: minishop2
 area: ms2_payment_tinkoff

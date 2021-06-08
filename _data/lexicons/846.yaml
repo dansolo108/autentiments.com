@@ -1,0 +1,6 @@
+id: 846
+name: join_loyalty_form_phone_error
+value: 'Укажите и сохраните телефон в личном кабинете'
+topic: site
+namespace: polylang
+language: ru

@@ -1,5 +1,9 @@
 Changelog for msMultiCurrency integration into MODx Revolution.
 
+msMultiCurrency 1.2.2
+====================================
+- Added: Custom order processing class "msmcOrder"
+
 msMultiCurrency 1.2.1
 ====================================
 - Added: Currency rate provider "European Central Bank (ECB)"

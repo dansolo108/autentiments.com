@@ -1,3 +1,4 @@
 key: ms2_payment_tinkoff_paymentReferenceTerm
+value: 1h
 namespace: minishop2
 area: ms2_payment_tinkoff

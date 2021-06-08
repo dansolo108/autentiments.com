@@ -1,4 +1,4 @@
 key: ms2_payment_paypal_api_url
-value: 'https://api-3t.paypal.com/nvp'
+value: 'https://api-3t.sandbox.paypal.com/nvp'
 namespace: minishop2
 area: ms2_payment

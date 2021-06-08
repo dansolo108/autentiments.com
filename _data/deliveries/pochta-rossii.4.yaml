@@ -3,8 +3,9 @@ name: 'Почта России'
 description: ''
 logo: ''
 rank: 3
+active: 0
 class: msDeliveryHandlerStikRp
 properties: null
-requires: ''
+requires: 'country,city,index,street,building,name,surname,phone,email'
 tariff: ONLINE_PARCEL
 slug: post

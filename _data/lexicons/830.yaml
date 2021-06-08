@@ -1,0 +1,6 @@
+id: 830
+name: stik_declension_bonuses
+value: бонус|бонуса|бонусов
+topic: site
+namespace: polylang
+language: ru

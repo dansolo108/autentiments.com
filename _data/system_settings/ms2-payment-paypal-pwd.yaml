@@ -1,4 +1,5 @@
 key: ms2_payment_paypal_pwd
+value: RBBFZHC453EN9HW4
 xtype: text-password
 namespace: minishop2
 area: ms2_payment

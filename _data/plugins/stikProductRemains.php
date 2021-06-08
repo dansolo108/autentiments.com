@@ -114,14 +114,6 @@ switch ( $modx->event->name ) {
 		    'id' => $goods[$key]['id'],
 		    'strong' => false
 		];
-		$fittingCitiesArray = $stikProductRemains->getFittingCitiesArray();
-		$data_city_lower = mb_strtolower($order['city']);
-		// Если город Москва, учитываем несколько складов
-		// либо один из городов с примеркой
-        if (($data_city_lower == 'москва' || (isset($fittingCitiesArray[$data_city_lower]) && $fittingCitiesArray[$data_city_lower]['store_id'] == 1)) && $order['delivery'] == 5) {
-            $options['store_id'] = [1,4,5];
-            $params['strong'] = true;
-        }
 		$remains = $stikProductRemains->getRemains(array_merge($options,$params));
 		if ( $remains < $count ) {
 			$product = $modx->getObject('msProduct', $goods[$key]['id']);
@@ -256,13 +248,12 @@ switch ( $modx->event->name ) {
         // регистрируем переменные для js
         $modx->regClientStartupHTMLBlock('<script type="text/javascript">
             var ms2_frontend_currency = "'.$modx->getPlaceholder('msmc.symbol_right').'",
-                stik_order_delivery_free = "'.$modx->lexicon('stik_order_delivery_free').'",
                 stik_order_delivery_not_calculated = "'.$modx->lexicon('stik_order_delivery_not_calculated').'",
                 stik_order_delivery_impossible_calculate = "'.$modx->lexicon('stik_order_delivery_Impossible_calculate').'",
                 stik_order_need_to_accept_terms = "'.$modx->lexicon('stik_order_need_to_accept_terms').'",
                 stik_order_fill_required_fields = "'.$modx->lexicon('stik_order_fill_required_fields').'",
                 stik_basket_not_enough = "'.$modx->lexicon('stik_basket_not_enough').'",
-                stik_declension_product_js = '.$modx->lexicon('stik_declension_product_js').',
+                stik_declension_bonuses_js = '.$modx->lexicon('stik_declension_bonuses_js').',
                 intlTelErrorMap = '.$modx->lexicon('stik_intltel_errors_js').';
         </script>');
         break;

@@ -9,5 +9,6 @@ $xpdo_meta_map = array (
     3 => 'stikSubscriber',
     4 => 'stikCountry',
     5 => 'stikCity',
+    6 => 'stikLoyaltyLevel',
   ),
 );

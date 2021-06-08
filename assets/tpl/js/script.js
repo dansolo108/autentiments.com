@@ -31,6 +31,22 @@ function resizeTextarea() {
 }
 
 
+// скрыть/показать пароль
+function toggleShowPassword() {
+
+    $('.au-login__password-hide-btn').click(function () {
+        const input = $(this).siblings('.custom-form__input');
+        $(this).toggleClass('show');
+
+        if ($(this).hasClass('show')) {
+            input.attr('type', 'text');
+        } else {
+            input.attr('type', 'password');
+        }
+    });
+}
+
+
 // фиксация шапки при скролле вверх
 function fixedHeaderTop() {
     let header = $('.au-header');
@@ -405,26 +421,28 @@ function addProductCart() {
         $(this).removeClass('active');
         btnBasket.addClass('active');
     });
-    size.click(function() {
+    $(document).on('click', '.au-product__size', function() {
         btnBasket.css('visibility', 'visible');
         btnBasket.css('opacity', '1');
-        btnSize.css('visibility', 'hidden');
-        btnSize.css('opacity', '0');
-        notSize.removeClass('active');
+        $('.au-product__add-size').css('visibility', 'hidden');
+        $('.au-product__add-size').css('opacity', '0');
+        $('.not-size').removeClass('active');
         $('.au-product__add-entrance').removeClass('active');
         $('.au-product__add-entrance').removeClass('end').prop('disabled', false);
     }); 
 
-    notSize.click(function() {
+    $(document).on('click', '.not-size', function() {
         $(this).addClass('active');
         $('.au-product__add-entrance').addClass('active');
         $('.au-product__size-input').prop('checked', false);
         $('.au-product__add-entrance').removeClass('end').prop('disabled', false);
     });
 
-    $('.au-product__add-entrance').click(function() {
-        let size = $('.au-product__size.not-size.active').attr('for');
+    $(document).on('click', '.au-product__add-entrance', function() {
+        let size = $('.au-product__size.not-size.active').attr('for'),
+            color = $('.au-product__color-input:checked').val();;
         $('#size_subscribe_form input[name="size"]').val(size);
+        $('#size_subscribe_form input[name="color"]').val(color);
         $('#size_subscribe_form .selected-size_js').text(size);
         
         $('.modal').removeClass('active');
@@ -461,6 +479,17 @@ function toggleLoginTabs() {
         $('.au-tab-login-content').removeClass('active');
         $(this).addClass('active');
         content.addClass('active');
+    });
+}
+
+
+function showRegisterPhone() {
+    $('.loyalty-check_js').on('change', function() {
+        if ($(this).is(':checked')) {
+            $('.custom-form__register_phone').fadeIn();
+        } else {
+            $('.custom-form__register_phone').hide();
+        }
     });
 }
 
@@ -520,6 +549,7 @@ function toggleTextModal() {
                     $('.au-ordering__link-back').removeClass('au-hidden');
                 }, 200);
                 $('.modal').removeClass('active');
+                $('.au-modal-overlay').removeClass('active');
                 $('.au-header').removeClass('out');
                 setTimeout(function() {
                     $('.au-header__sub-box').removeClass('active top');
@@ -593,26 +623,30 @@ function countAmountForLevel() {
         let amountLevel = $('#amount_level');
         let currentLevel = $('#current_level');
         
-        $('.au-profile__loyalty-slider').css('width', `${x}%`);
+        // $('.au-profile__loyalty-slider').css('width', `${x}%`);
 
-        if (amount < LEVEL_ONE) {
-            currentLevel.text('Базовай');
-            amountLevel.text(LEVEL_ONE - amount);
-        } else if (amount >= LEVEL_ONE && amount < LEVEL_TWO) {
-            currentLevel.text('Бронзовый');
-            amountLevel.text(LEVEL_TWO - amount);
-        } else if (amount >= LEVEL_TWO && amount <= AMOUNT_TOTAL) {
-            currentLevel.text('Серебряный');
-            amountLevel.text(AMOUNT_TOTAL - amount + 1);
-        } else if (amount > AMOUNT_TOTAL) {
-            currentLevel.text('Золотой');
-            $('.au-profile__amount_level').hide();
-        }
+        // if (amount < LEVEL_ONE) {
+        //     currentLevel.text('Базовай');
+        //     amountLevel.text(LEVEL_ONE - amount);
+        // } else if (amount >= LEVEL_ONE && amount < LEVEL_TWO) {
+        //     currentLevel.text('Бронзовый');
+        //     amountLevel.text(LEVEL_TWO - amount);
+        // } else if (amount >= LEVEL_TWO && amount <= AMOUNT_TOTAL) {
+        //     currentLevel.text('Серебряный');
+        //     amountLevel.text(AMOUNT_TOTAL - amount + 1);
+        // } else if (amount > AMOUNT_TOTAL) {
+        //     currentLevel.text('Золотой');
+        //     $('.au-profile__amount_level').hide();
+        // }
     }
 }
 
 
 $(document).ready(function() {
+    
+    if ($('.au-header-cart').length) {
+        $('body').addClass('au-ordering-home');
+    }
 
     $('input[type=number]').on('input', function() {
         this.value = this.value.replace(/[^\d]/g, '');
@@ -631,47 +665,10 @@ $(document).ready(function() {
         $('.au-profile__submit').prop('disabled', false);
     });
     
-    // $('.au-profile__form').submit(function() {
-    //     $('.au-profile__submit').prop('disabled', true);
-    // });
-    
-    
-    // программа лояльности в ЛК   (test)
-    $('.au-profile__loyalty-btn').click(function(e) {
-        e.preventDefault();
-        $('.au-profile__loyalty').removeClass('active');
-        $('.au-profile__loyalty_bonuses').addClass('active');
-    });
-    
-    
-    // отправка сообщения в контактах   (test)
-    $('.au-contacts__submit').click(function(e) {
-        e.preventDefault();
-        $('.au-contacts__form-box').addClass('hide');
-        $('.au-contacts__message-info').addClass('show');
-    });
-
-
-    // для subscribe в приветственной модалке  (test)
-    $('.au-welcome__form').submit(function(e) {
-        e.preventDefault();
-        $('.au-welcome__col').addClass('welcome_submit-end');
-    });
-
-
-    // promo-cod   (test)
-    $('.au-promo-code__form').submit(function(e) {
-        e.preventDefault();
-        $('.au-promo-code__input').prop('disabled', true);
-        $('.au-promo-code__submit').removeClass('active');
-        $(this).addClass('applied-code');
-    });
 
     $('.au-promo-code__cancel').click(function(e) {
         e.preventDefault();
-        $('.au-promo-code__input').prop('disabled', false);
-        $('.au-promo-code__submit').addClass('active');
-        $('.au-promo-code__form').removeClass('applied-code');
+        $('.mspc_btn').click();
     });
 
     $('.au-promo-code__input').on('input', function() {
@@ -679,27 +676,9 @@ $(document).ready(function() {
     });
 
 
-    // bonuses  (test)
-    $('.au-bonuses__form').submit(function(e) {
-        e.preventDefault();
-        $('.au-bonuses__form').addClass('used-bonuses');
-    });
-
-    $('.au-bonuses__cancel').click(function(e) {
-        e.preventDefault();
-        $('.au-bonuses__form').removeClass('used-bonuses');
-    });
-
     $('.au-bonuses__input').on('input', function() {
         $('.au-bonuses__submit').addClass('active');
     });
-
-
-    // input city change 
-    // $('#city').change(function() {
-    //     $('.au-ordering').addClass('next-step');
-    // });
-
 
     // disabled contacts submit
     $('.au-contacts__col-form .custom-form__input').on('input', function() {
@@ -707,31 +686,39 @@ $(document).ready(function() {
             $('.au-contacts__submit').prop('disabled', false);
         }
     });
+    
+    // test
+    $('.au-profile__loyalty-btn').click((e) => {
+        if ($('input[name="mobilephone"]').val() == '') {
+            e.preventDefault(); 
+            addPhoneLoyalty();
+        }
+    });
 });
 
 
-function validate() {
-    let input = $('.au-ordering__form input.custom-form__input');
-    let inputvalue = input.filter(function (n) {
-        return this.value.length > 0;
-    });
+// function validate() {
+//     let input = $('.au-ordering__form input.custom-form__input');
+//     let inputvalue = input.filter(function (n) {
+//         return this.value.length > 0;
+//     });
 
-    if (inputvalue.length == input.length) {
-        $('.au-ordering__submit').prop('disabled', false);
-        $('.au-ordering__politics').show();
-    } else {
-        $('.au-ordering__submit').prop('disabled', true);
-        $('.au-ordering__politics').hide();
-    }
-}
+//     if (inputvalue.length == input.length) {
+//         $('.au-ordering__submit').prop('disabled', false);
+//         $('.au-ordering__politics').show();
+//     } else {
+//         $('.au-ordering__submit').prop('disabled', true);
+//         $('.au-ordering__politics').hide();
+//     }
+// }
 
 // disabled ordering submit
-$(document).ready(function() {
-    if ($(window).width() >= 1024) {
-        $('.au-ordering__submit').prop('disabled', true);
-        $('.au-ordering__form input.custom-form__input').on('input', validate);
-    }
-});
+// $(document).ready(function() {
+//     if ($(window).width() >= 1024) {
+//         $('.au-ordering__submit').prop('disabled', true);
+//         $('.au-ordering__form input.custom-form__input').on('input', validate);
+//     }
+// });
 
 
 // cookie
@@ -790,11 +777,20 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 
 
+function addPhoneLoyalty() {
+    $('.loyalty-text_no-tel').fadeIn();
+    $('.loyalty-text_join').hide();
+    $('.au-profile__loyalty-btn').hide();
+    $('.custom-form__group_tel').addClass('group-no-phone');
+    $('.custom-form__group_tel input').focus(); 
+}
+
 
 $(document).ready(function() {
     resizeWindowHeight();
     setDataValInput();
     resizeTextarea();
+    toggleShowPassword();
     fixedHeaderTop();
     toggleLangBlock();
     toggleTextModal();
@@ -805,6 +801,7 @@ $(document).ready(function() {
     // startUpRangeUiCost();
     openModalLogin();
     openModalCart();
+    showRegisterPhone();
     // changeCountCards();
     openBonusRules();
     hideLoyaltyMobile();
@@ -816,5 +813,5 @@ $(document).ready(function() {
     toggleProductTabs();
     toggleLoginTabs();
     openLookbookImg();
-    countAmountForLevel();
+    // countAmountForLevel();
 });

@@ -9,6 +9,28 @@ class msOrderCustom extends msOrderHandler implements msOrderInterface
 {
 
     /**
+     * @param miniShop2 $ms2
+     * @param array $config
+     */
+    function __construct(miniShop2 & $ms2, array $config = array())
+    {
+        $this->ms2 = $ms2;
+        $this->modx = $ms2->modx;
+        $this->pdotools = $this->modx->getService('pdoTools');
+
+        $this->config = array_merge(array(
+            'order' => & $_SESSION['minishop2']['order'],
+        ), $config);
+
+        $this->order = &$this->config['order'];
+        $this->modx->lexicon->load('minishop2:order');
+
+        if (empty($this->order) || !is_array($this->order)) {
+            $this->order = array();
+        }
+    }
+
+    /**
      * @param array $data
      *
      * @return array|string
@@ -182,31 +204,6 @@ class msOrderCustom extends msOrderHandler implements msOrderInterface
     }
 
     /**
-     * @param miniShop2 $ms2
-     * @param array $config
-     */
-    function __construct(miniShop2 & $ms2, array $config = array())
-    {
-        $this->ms2 = $ms2;
-        $this->modx = $ms2->modx;
-        $this->pdotools = $this->modx->getService('pdoTools');;
-
-        $this->config = array_merge(array(
-            'order' => & $_SESSION['minishop2']['order'],
-            'delivery_discount_count' => $this->modx->getOption('ms2_cart_delivery_discount_count'),
-            'delivery_discount_amount' => $this->modx->getOption('ms2_cart_delivery_discount_amount'),
-            'local_courier_max_count' => $this->modx->getOption('ms2_cart_delivery_local_courier_max_count'),
-        ), $config);
-
-        $this->order = &$this->config['order'];
-        $this->modx->lexicon->load('minishop2:order');
-
-        if (empty($this->order) || !is_array($this->order)) {
-            $this->order = array();
-        }
-    }
-
-    /**
      * @param bool $with_cart
      * @param bool $only_cost
      *
@@ -226,37 +223,37 @@ class msOrderCustom extends msOrderHandler implements msOrderInterface
             return $this->error($response['message']);
         }
         
+        $stikLoyalty = $this->modx->getService('stik_loyalty', 'stikLoyalty', $this->modx->getOption('core_path').'components/stik/model/', []);
+        
         $lang = $this->modx->getOption('cultureKey');
 
         /** @var MsMC $msmc */
         $msmc = $this->modx->getService('msmulticurrency', 'MsMC');
         $userCurrencyId = $msmc->getUserCurrency();
+        
+        $cost_loyalty = $this->order['total_cost_loyalty'] ? $this->order['total_cost_loyalty'] : false;
 
         $cart = $this->ms2->cart->status();
-        $cost = $with_cart
-            ? $cart['total_cost']
-            : 0;
+            
+		$cost = $with_cart
+			? ($this->order['msloyalty'] > 0
+				? $cost_loyalty
+				: $cart['total_cost'])
+			: 0;
+        
+        $loyaltyAccrual = $stikLoyalty->getLoyaltyBonusAccrual($cart['total_cost']);
 
         
         /** @var msDelivery $delivery */
         if (!empty($this->order['delivery']) && $delivery = $this->modx->getObject('msDelivery',
                 array('id' => $this->order['delivery']))
         ) {
-            $cost_without_delivery = $cost;
             $cost = $delivery->getCost($this, $cost);
         }
         
         if (is_array($cost)) {
-            // if ($cost[1] && $cost[2]) {
-            //     $post_rates = $ems_rates = $pvz_rates = $courier_rates = $this->getRates($cost[1], $cost[2], $this->order['delivery']);
-            // }
-            // elseif ($cost[1]) {
-            //     $dhl_rates = $this->getRates($cost[1], $cost[1], $this->order['delivery']);
-            // }
-            // $post_rates = $ems_rates = $pvz_rates = $courier_rates = ($cost[1] && $cost[2]) ? $this->getRates($cost[1], $cost[2], $this->order['delivery']) : '';
             $cost = $cost[0];
         }
-        
         $cost = $cost > 0 ? $cost : 0;
         
         if (!$delivery_cost && isset($delivery)) {
@@ -266,10 +263,6 @@ class msOrderCustom extends msOrderHandler implements msOrderInterface
         if (is_array($delivery_cost)) {
             $delivery_cost = $delivery_cost[0];
         }
-        
-        $delivery_only_initial = $cost - $cost_without_delivery;
-        
-        $delivery_only_initial = $delivery_only_initial > 0 ? $delivery_only_initial : 0;
         
         /** @var msPayment $payment */
         if (!empty($this->order['payment']) && $payment = $this->modx->getObject('msPayment',
@@ -289,6 +282,10 @@ class msOrderCustom extends msOrderHandler implements msOrderInterface
             return $this->error($response['message']);
         }
         $cost = $response['data']['cost'];
+		$msloyalty = $response['data']['msloyalty'] ?: $this->order['msloyalty'];
+		$msloyalty_text = $response['data']['msloyalty_text'] ?: $this->order['msloyalty_text'];
+		$msloyalty_allowable_amount = $response['data']['msloyalty_allowable_amount'] ?: $this->order['msloyalty_allowable_amount'];
+        // $this->modx->log(1, $cost);
 
         if ($userCurrencyId != 1 && $backend === false) {
             $cost = $msmc->getPrice($cost, 0, 0, 0.0, false);
@@ -299,47 +296,12 @@ class msOrderCustom extends msOrderHandler implements msOrderInterface
             : $this->success('', array(
                 'cost' => $cost,
                 'delivery_cost' => $msmc->getPrice($delivery_cost, 0, 0, 0.0, false),
+				'msloyalty' => $msmc->getPrice($msloyalty, 0, 0, 0.0, false),
+				'msloyalty_text' => $msloyalty_text,
+				'msloyalty_allowable_amount' => $msmc->getPrice($msloyalty_allowable_amount, 0, 0, 0.0, false),
+				'cost_loyalty' => $msmc->getPrice($cost_loyalty, 0, 0, 0.0, false),
+				'loyalty_accrual' => $msmc->getPrice($loyaltyAccrual, 0, 0, 0.0, false),
             ));
-    }
-    
-    public function getRates($periodMin, $periodMax, $delivery_id = 0)
-    {
-        $rates = '';
-        
-        // увеличиваем сроки доставки
-        if ($delivery_id == in_array($delivery_id, [4,6])) {
-            // почта
-            $periodMin += 10;
-            $periodMax += 10;
-        } elseif (in_array($delivery_id, [2,3])) {
-            // СДЭК
-            $periodMin += 3;
-            $periodMax += 4;
-        } elseif ($delivery_id == 7) {
-            // DHL
-            if (!is_numeric($periodMin)) {
-                $periodMin = (string) $periodMin;
-                $datetime = date_create($periodMin);
-                $interval = date_diff(date_create('now'), $datetime);
-                $dhlDays = $interval->format('%a');
-                $periodMin = $dhlDays + 3;
-                $periodMax = $dhlDays + 4;
-            } else {
-                return '';
-            }
-        }
-        
-        if ($declension = $this->pdotools->getFenom()->getModifier('declension')) {
-        	$days_text = $declension($periodMax, $this->modx->lexicon('stik_declension_days'));
-        } else {
-            $days_text = $this->modx->lexicon('stik_days');
-        }
-        if ($periodMin == $periodMax) {
-            $rates = $periodMin . ' ' . $days_text;
-        } else {
-            $rates = $periodMin . '-' . $periodMax . ' ' . $days_text;
-        }
-        return $rates;
     }
     
 }

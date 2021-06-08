@@ -15,6 +15,7 @@ $xpdo_meta_map['stikSizesubscriber']= array (
     'user_id' => 0,
     'language' => '',
     'size' => '',
+    'color' => '',
     'createdon' => NULL,
     'sendedon' => NULL,
     'hash' => '',
@@ -62,6 +63,14 @@ $xpdo_meta_map['stikSizesubscriber']= array (
       'dbtype' => 'varchar',
       'phptype' => 'string',
       'precision' => '15',
+      'null' => false,
+      'default' => '',
+    ),
+    'color' => 
+    array (
+      'dbtype' => 'varchar',
+      'phptype' => 'string',
+      'precision' => '50',
       'null' => false,
       'default' => '',
     ),
@@ -163,6 +172,22 @@ $xpdo_meta_map['stikSizesubscriber']= array (
       'columns' => 
       array (
         'size' => 
+        array (
+          'length' => '',
+          'collation' => 'A',
+          'null' => false,
+        ),
+      ),
+    ),
+    'color' => 
+    array (
+      'alias' => 'color',
+      'primary' => false,
+      'unique' => false,
+      'type' => 'BTREE',
+      'columns' => 
+      array (
+        'color' => 
         array (
           'length' => '',
           'collation' => 'A',

@@ -35,7 +35,7 @@ $modx->setLogLevel(modX::LOG_LEVEL_ERROR);
 $modx->getService('error','error.modError');
 
 
-print $modx->runSnippet('msMultiCurrencyCart', [
+print $modx->runSnippet('msCart', [
     'tpl' => 'stik.msCart.ajax',
     'includeThumbs' => 'cart',
 ]);

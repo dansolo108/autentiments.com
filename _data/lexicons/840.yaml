@@ -1,0 +1,5 @@
+id: 840
+name: setting_stik_maxma_shop_code
+value: 'Код магазина, в котором осуществляется операция'
+namespace: stik
+language: ru

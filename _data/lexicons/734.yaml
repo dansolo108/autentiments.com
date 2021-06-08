@@ -1,0 +1,5 @@
+id: 734
+name: join_loyalty_success
+value: 'You are now participating in the program'
+topic: site
+namespace: polylang

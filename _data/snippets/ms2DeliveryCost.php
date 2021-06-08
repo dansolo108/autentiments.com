@@ -18,6 +18,7 @@ required - необходимые поля для перезагрузки ме�
 if (!$miniShop2 = $modx->getService('miniShop2')) {
     return ;
 }
+$miniShop2->initialize($modx->context->key);
 if (!$pdo = $modx->getService('pdoTools')) {
     return ;
 }
@@ -54,9 +55,12 @@ $q->sortby('rank', 'ASC');
 $col = $modx->getCollection('msDelivery', $q);
 $order = $miniShop2->order;
 
-$out = ['costs' => [], 'order' => []];
+$out = ['costs' => [], 'order' => [], 'language' => $language];
 
 foreach ($col as $delivery) {
+    // в английской версии расчитываем только DHL
+    if ($language == 'en' && $delivery->get('id') != 3) continue;
+    
     $paymentsArr = array();
     $payments = $delivery->getMany('Payments');
     foreach($payments as $item) {
@@ -66,18 +70,25 @@ foreach ($col as $delivery) {
     if ($_GET['deliveryGetCost'] == 'get') {
         $costDelivery = $delivery->getCost($order, $cost);
         if (is_array($costDelivery)) {
+            $rates = '';
             if ($costDelivery[1] && $costDelivery[2]) {
-                // $rates = $this->getRates($costDelivery[1], $costDelivery[2], $this->order['delivery']);
+                $rates = $modx->runSnippet('getRates', [
+                    'periodMin' => $costDelivery[1],
+                    'periodMax' => $costDelivery[2],
+                    'delivery_id' => $delivery->get('id')
+                ]);
             } elseif ($costDelivery[1]) {
-                // $rates = $this->getRates($costDelivery[1], $costDelivery[1], $this->order['delivery']);
+                $rates = $modx->runSnippet('getRates', [
+                    'periodMin' => $costDelivery[1],
+                    'periodMax' => $costDelivery[1],
+                    'delivery_id' => $delivery->get('id')
+                ]);
             }
-            // $rates = ($costDelivery[1] && $costDelivery[2]) ? $this->getRates($costDelivery[1], $costDelivery[2], $this->order['delivery']) : '';
             $costDelivery = $costDelivery[0];
         }
     } else {
         $costDelivery = $rates = false;
     }
-    $rates = '1-2 дня';
     
     $out['costs'][] = [
         'cost' => $costDelivery,
@@ -87,5 +98,5 @@ foreach ($col as $delivery) {
     ];
 }
 $out['order'] = $order->get();
-$modx->log(1, print_r($out,1));
+// $modx->log(1, print_r($out,1));
 return $pdo->getChunk($tpl, $out);

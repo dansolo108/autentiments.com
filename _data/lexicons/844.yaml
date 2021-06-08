@@ -1,0 +1,6 @@
+id: 844
+name: stik_loyalty_no_phone_text
+value: 'Для участия в программе лояльности укажите номер телефона в личных данных и сохраните изменения'
+topic: site
+namespace: polylang
+language: ru

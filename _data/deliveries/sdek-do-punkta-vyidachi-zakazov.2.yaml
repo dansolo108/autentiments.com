@@ -5,6 +5,6 @@ logo: ''
 rank: 1
 class: msDeliveryHandlerStikCdek
 properties: null
-requires: ''
+requires: 'country,city,index,name,surname,phone,email,point'
 tariff: '136'
 slug: cdek_pvz

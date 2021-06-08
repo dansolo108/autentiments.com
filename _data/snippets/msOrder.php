@@ -2,7 +2,7 @@ id: 48
 source: 1
 name: msOrder
 category: miniShop2
-properties: 'a:3:{s:3:"tpl";a:7:{s:4:"name";s:3:"tpl";s:4:"desc";s:12:"ms2_prop_tpl";s:4:"type";s:9:"textfield";s:7:"options";a:0:{}s:5:"value";s:11:"tpl.msOrder";s:7:"lexicon";s:20:"minishop2:properties";s:4:"area";s:0:"";}s:10:"userFields";a:7:{s:4:"name";s:10:"userFields";s:4:"desc";s:19:"ms2_prop_userFields";s:4:"type";s:9:"textfield";s:7:"options";a:0:{}s:5:"value";s:0:"";s:7:"lexicon";s:20:"minishop2:properties";s:4:"area";s:0:"";}s:7:"showLog";a:7:{s:4:"name";s:7:"showLog";s:4:"desc";s:16:"ms2_prop_showLog";s:4:"type";s:13:"combo-boolean";s:7:"options";a:0:{}s:5:"value";b:0;s:7:"lexicon";s:20:"minishop2:properties";s:4:"area";s:0:"";}}'
+properties: 'a:3:{s:7:"showLog";a:7:{s:4:"name";s:7:"showLog";s:4:"desc";s:16:"ms2_prop_showLog";s:4:"type";s:13:"combo-boolean";s:7:"options";a:0:{}s:5:"value";b:0;s:7:"lexicon";s:20:"minishop2:properties";s:4:"area";s:0:"";}s:3:"tpl";a:7:{s:4:"name";s:3:"tpl";s:4:"desc";s:12:"ms2_prop_tpl";s:4:"type";s:9:"textfield";s:7:"options";a:0:{}s:5:"value";s:11:"tpl.msOrder";s:7:"lexicon";s:20:"minishop2:properties";s:4:"area";s:0:"";}s:10:"userFields";a:7:{s:4:"name";s:10:"userFields";s:4:"desc";s:19:"ms2_prop_userFields";s:4:"type";s:9:"textfield";s:7:"options";a:0:{}s:5:"value";s:0:"";s:7:"lexicon";s:20:"minishop2:properties";s:4:"area";s:0:"";}}'
 static_file: core/components/minishop2/elements/snippets/snippet.ms_order.php
 
 -----
@@ -156,7 +156,11 @@ foreach ($fields as $key => $value) {
                 ? $profile['extended'][$tmp]
                 : '';
         } else {
-            $value = $profile[$value];
+            if (!empty($profile[$value])) {
+                $value = $profile[$value];
+            } else {
+                $value = $order[$key];
+            }
         }
         $response = $miniShop2->order->add($key, $value);
         if ($response['success'] && !empty($response['data'][$key])) {

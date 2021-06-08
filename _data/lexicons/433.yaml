@@ -1,6 +1,6 @@
 id: 433
 name: stik_order_login_text
-value: 'для быстрого оформления заказа'
+value: 'для автоматического заполнения полей, накопления и списания бонусов'
 topic: site
 namespace: polylang
 language: ru

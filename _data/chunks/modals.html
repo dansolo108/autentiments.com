@@ -1,0 +1,79 @@
+id: 101
+name: modals
+description: ''
+properties: 'a:0:{}'
+
+-----
+
+<div class="au-modal-cookie">
+    <div class="au-modal-cookie__content">
+        <button class="au-close-light  au-modal-cookie__close" aria-label="{'stik_modal_close' | lexicon}"></button>
+        <span class="au-modal-cookie__title">{'stik_modal_cookie_title' | lexicon}</span>
+        <p class="au-modal-cookie__text">{'stik_modal_cookie_text' | lexicon}</p>
+    </div>
+</div>
+
+{* modal-welcome *}
+{'!AjaxForm' | snippet : [
+    'snippet' => 'newsletterSubscribe',
+    'form' => 'welcomeSubscribe.form',
+    'emailTo' => $_modx->config.ms2_email_manager,
+    'subject' => 'stik_newsletter_form_subject' | lexicon,
+    'subjectConfirm' => 'stik_newsletter_form_subject_confirm' | lexicon,
+    'tpl' => 'newsletterSubscribe.email',
+    'tplConfirm' => 'newsletterSubscribeEmailTplConfirm',
+    'submitVar' => 'welcomeform',
+]}
+
+{if !$_modx->hasSessionContext('web')}
+    <div class="au-modal  au-modal-login  modal">
+        <div class="au-modal__wrapper  au-login__wrapper">
+            <button class="au-close  au-modal-login__close  au-desktop" aria-label="{'stik_modal_close' | lexicon}"></button>
+            <div class="au-modal__content  au-modal-login__content">
+                <div class="au-login__img-box  au-desktop">
+                    <picture>
+                        <!-- <source type="image/webp" srcset=""> -->
+                        <img width="400" height="616" class="au-login__img" src="/assets/tpl/img/au-login-img_login.jpg" alt="">
+                    </picture>
+                    <picture>
+                        <!-- <source type="image/webp" srcset=""> -->
+                        <img width="400" height="616" class="au-login__img  au-login__img_register" src="/assets/tpl/img/au-login-img_register.jpg" alt="">
+                    </picture>
+                </div>
+    
+                <div class="au-login__tabs">
+                    <div class="au-login__tab  au-tab-login-content  active" data-tab="login">
+                        {if $_modx->resource.template != 8}
+                            {include 'login'}
+                        {/if}
+                    </div>
+    
+                    <div class="au-login__tab  au-tab-login-content" data-tab="register">
+                        {if $_modx->resource.template != 13}
+                            {include 'register'}
+                        {/if}
+                    </div>
+    
+                    <div class="au-login__tab  au-tab-login-content" data-tab="recovery">
+                        <a class="au-login__recovery-back  au-tab-login-title" href="login">
+                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M5.93411 16.7176L6.64122 17.4247L14.0659 10L6.64117 2.5754L5.93407 3.2825L12.6516 10.0001L5.93411 16.7176Z" fill="#1A1714"/>
+                            </svg>
+                        </a>
+                        {if $_modx->resource.template != 10}
+                            {include 'reset_pw'}
+                        {/if}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{/if}
+
+<div class="au-modal au-modal-cart  modal" id="ms2_cart_modal">
+    {* содержимое в чанке stik.msCart.ajax *}
+</div>
+
+<div class="au-modal-text-page  container  modal">
+    {* содержимое в чанке ajaxModalInfo *}
+</div>

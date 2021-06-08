@@ -3,5 +3,5 @@ name: PayPal
 description: ''
 logo: ''
 rank: 1
-class: PayPal
+class: PayPalCustom
 properties: null

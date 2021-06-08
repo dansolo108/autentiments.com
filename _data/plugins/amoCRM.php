@@ -2,7 +2,8 @@ id: 21
 source: 1
 name: amoCRM
 category: amoCRM
-properties: null
+properties: 'a:0:{}'
+disabled: 1
 
 -----
 

@@ -1,0 +1,5 @@
+id: 847
+name: join_loyalty_form_phone_error
+value: 'Specify and save the phone number in your personal account'
+topic: site
+namespace: polylang

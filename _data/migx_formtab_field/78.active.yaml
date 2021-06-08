@@ -1,0 +1,7 @@
+id: 78
+config_id: 13
+formtab_id: 13
+field: active
+caption: active
+pos: 10
+sourceFrom: config

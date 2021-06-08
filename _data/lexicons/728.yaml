@@ -1,0 +1,5 @@
+id: 728
+name: stik_profile_orders_empty_text
+value: 'Your shopping list is still empty. Use the catalog to search for products'
+topic: site
+namespace: polylang
