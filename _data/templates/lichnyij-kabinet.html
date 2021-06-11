@@ -47,8 +47,9 @@ properties: 'a:0:{}'
                 <div class="au-profile__loyalty  au-profile__loyalty_bonuses {if $_modx->user.join_loyalty}active{/if}">
                     <h2 class="au-h2  au-profile__loyalty-title">
                         {'stik_profile_loyalty_bonuses' | lexicon}
+                        {set $maxmaClientBalance = '!maxmaClientBalance' | snippet : ['phone' => $_modx->user.mobilephone]}
                         <span class="au-bonuses__count">
-                            <span>{$maxmaClientBalance = '!maxmaClientBalance' | snippet : ['phone' => $_modx->user.mobilephone]}</span>
+                            <span>{'!msMultiCurrencyPriceFloor' | snippet : ['price' => $maxmaClientBalance]}</span>
                             {$maxmaClientBalance | declension : ('stik_declension_bonuses' | lexicon)}
                         </span>
                     </h2>
@@ -58,15 +59,15 @@ properties: 'a:0:{}'
                         <b class="au-profile__loyalty-value" id="current_level">{('stik_loyalty_level_name_' ~ $_modx->getPlaceholder('loyalty.id')) | lexicon}</b>
                     </div>
                     <div class="au-profile__loyalty-range">
-                        <div class="au-profile__loyalty-slider" style="width: {$_modx->getPlaceholder('loyalty.next_slider_percent')}%;"></div>
+                        <div class="au-profile__loyalty-slider" style="width: {$_modx->getPlaceholder('loyalty.next_slider_percent') ?: 100}%;"></div>
                     </div>
                     <div class="au-profile__loyalty-row">
                         <span class="au-profile__loyalty-col">{'stik_profile_loyalty_purchase_amount' | lexicon}</span>
-                        <b class="au-profile__loyalty-value"><span id="amount">{$_modx->getPlaceholder('loyalty.amount') | priceFormat}</span> ₽</b>
+                        <b class="au-profile__loyalty-value"><span id="amount">{'!msMultiCurrencyPriceFloor' | snippet : ['price' => $_modx->getPlaceholder('loyalty.amount')]}</span> {$_modx->getPlaceholder('msmc.symbol_right')}</b>
                     </div>
                     <div class="au-profile__loyalty-row  au-profile__amount_level">
                         <span class="au-profile__loyalty-col">{'stik_profile_loyalty_to_next_level' | lexicon}</span>
-                        <b class="au-profile__loyalty-value"><span id="amount_level">{$_modx->getPlaceholder('loyalty.next_amount') | priceFormat}</span> ₽</b>
+                        <b class="au-profile__loyalty-value"><span id="amount_level">{if $_modx->getPlaceholder('loyalty.next_amount')}{'!msMultiCurrencyPriceFloor' | snippet : ['price' => $_modx->getPlaceholder('loyalty.next_amount')]}</span> {$_modx->getPlaceholder('msmc.symbol_right')}{else}-{/if}</b>
                     </div>
                     <a class="au-profile__loyalty-tab  au-text-tab_js" href="loyalty">{'stik_profile_loyalty_link_about' | lexicon}</a>
                 </div>

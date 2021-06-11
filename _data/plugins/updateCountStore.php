@@ -27,9 +27,9 @@ switch ($modx->event->name) {
             $values['properties']['data']['pagetitle'] = $res->get('pagetitle');
             $values['properties']['data']['longtitle'] = $res->get('longtitle');
             // $values['properties']['data']['article'] = $res->get('article');
-            if ($res->get('thumb')) {
-                $values['data']['images'] = [];
-            }
+            
+            // не загружаем картинки для товара, загружаем для оффера
+            $values['data']['images'] = [];
         }
         break;
     
@@ -85,6 +85,41 @@ switch ($modx->event->name) {
                     'count' => $count,
                     'set' => true
                 ]);
+            }
+        }
+        
+        // Привязка цвета оффера к изображению
+        if ($xml->Картинка) {
+            foreach ($xml->Картинка as $k => $v) {
+                // $fileName = preg_replace('/\.\w+$/', '', $v);
+                $full_url = MODX_ASSETS_PATH.'components/msync/1c_temp/' . $v;
+                if (file_exists($full_url)) {
+                    $file = array('id' => $initial_id, 'name' => $v, 'file' => $full_url, 'description' => $color);
+    
+                    $response = $modx->runProcessor('mgr/gallery/upload', $file, array('processors_path' => MODX_CORE_PATH . 'components/minishop2/processors/'));
+                    // не очень красиво, вероятно стоит проверять хеш
+                    if ($response->isError() && $response->getMessage() != $modx->lexicon('ms2_err_gallery_exists')) {
+                        $modx->log(1, 'Ошибка загрузки изображения оффера (' . $initial_id . "): \r\n" . print_r($response->getMessage(), 1));
+                    } else {
+                        $object = $response->getObject();
+                        if ($options = $offer->getMany('Options')) {
+                            foreach ($options as $option) {
+                                if ($option->get('option') == 'color') {
+                                    $color = $option->get('value');
+                                }
+                            }
+                        }
+                        if ($color) {
+                            $msProductFile = $modx->getObject('msProductFile', $object['id']);
+                            $msProductFile->set('description', $color);
+                            $msProductFile->save();
+                        } else {
+                            $modx->log(1, 'Не удалось определить цвет: ' . $object['id']);
+                        }
+                    }
+                } else {
+                    $modx->log(1, 'Ошибка загрузки изображения оффера (' . $initial_id . '), файл (' . $full_url . ') не найден');
+                }
             }
         }
         

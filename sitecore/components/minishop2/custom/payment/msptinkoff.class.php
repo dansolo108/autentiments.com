@@ -146,6 +146,7 @@ class mspTinkoff extends msPaymentHandler implements msPaymentInterface
     {
         $order_cart_cost = $order->get('cart_cost');
         $order_delivery_cost = $order->get('delivery_cost');
+        $order_cost = $order->get('cost');
 
         $products = [];
         /** @var msOrderProduct $product */
@@ -197,6 +198,7 @@ class mspTinkoff extends msPaymentHandler implements msPaymentInterface
             $name = mb_substr($product['name'], 0, 64, 'UTF-8');
 
             if (!empty($amount)) {
+                $final_amount += $price * $quantity;
                 $item = [
                     'Name'     => $name,
                     'Price'    => $price,
@@ -216,6 +218,16 @@ class mspTinkoff extends msPaymentHandler implements msPaymentInterface
                 }
 
                 $items[] = $item;
+            }
+        }
+        
+        // добавляем оставшуюся разницу к доставке
+        if (!empty($final_amount)) {
+            $final_diff = ($order_cost * 100) - $final_amount;
+            if ($final_diff) {
+                $items_last_key = array_key_last($items);
+                $items[$items_last_key]['Price'] = $items[$items_last_key]['Price'] + $final_diff;
+                $items[$items_last_key]['Amount'] = $items[$items_last_key]['Amount'] + $final_diff;
             }
         }
 

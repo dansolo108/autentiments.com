@@ -1,0 +1,5 @@
+id: 915
+name: msoptionhexcolor_colors_intro
+value: 'Список возможных магазинов товаров. То, что вы сюда добавите, можно выбрать в опции <b>hexcolor</b>.<br> <b>Для каждого цвета нужно будет заполнить переводы в лексиконах вида stik_color_{ID}, где {ID} это id цвета, расположенный в левой колонке.</b>'
+namespace: msoptionhexcolor
+language: ru

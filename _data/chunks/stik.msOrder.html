@@ -56,8 +56,9 @@ properties: 'a:0:{}'
                 <div class="au-bonuses__form {if $form.msloyalty}used-bonuses{/if}">
                     <h2 class="au-h2  au-bonuses__title">
                         {'stik_order_info_bonuses' | lexicon}
+                        {set $maxmaClientBalance = '!maxmaClientBalance' | snippet : ['phone' => $_modx->user.mobilephone]}
                         <span class="au-bonuses__count">
-                            <span>{$maxmaClientBalance = '!maxmaClientBalance' | snippet : ['phone' => $_modx->user.mobilephone]}</span>
+                            <span>{'!msMultiCurrencyPriceFloor' | snippet : ['price' => $maxmaClientBalance]}</span>
                             {$maxmaClientBalance | declension : ('stik_declension_bonuses' | lexicon)}
                         </span>
                     </h2>

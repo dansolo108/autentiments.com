@@ -296,9 +296,9 @@ class msOrderCustom extends msOrderHandler implements msOrderInterface
             : $this->success('', array(
                 'cost' => $cost,
                 'delivery_cost' => $msmc->getPrice($delivery_cost, 0, 0, 0.0, false),
-				'msloyalty' => $msmc->getPrice($msloyalty, 0, 0, 0.0, false),
+				'msloyalty' => $msloyalty,
 				'msloyalty_text' => $msloyalty_text,
-				'msloyalty_allowable_amount' => $msmc->getPrice($msloyalty_allowable_amount, 0, 0, 0.0, false),
+				'msloyalty_allowable_amount' => $this->modx->runSnippet('msMultiCurrencyPriceFloor', ['price'=>$msloyalty_allowable_amount]),
 				'cost_loyalty' => $msmc->getPrice($cost_loyalty, 0, 0, 0.0, false),
 				'loyalty_accrual' => $msmc->getPrice($loyaltyAccrual, 0, 0, 0.0, false),
             ));

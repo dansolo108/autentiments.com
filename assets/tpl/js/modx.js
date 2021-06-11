@@ -29,7 +29,7 @@ function validateEmail(email) {
     return re.test(String(email).toLowerCase());
 }
 
-function msmcGetPrice(price) {
+function msmcGetPrice(price, floor = false) {
     price = price.toString().replace(/\s+/g, '');
     
     let cource = parseFloat(msMultiCurrencyConfig.course),
@@ -38,7 +38,11 @@ function msmcGetPrice(price) {
 
     if (currencyId != 1) {
         price = priceFloat/cource;
-        return Math.ceil(price);
+        if (floor === true) {
+            return Math.floor(price);
+        } else {
+            return Math.ceil(price);
+        }
     } else {
         return price;
     }
@@ -202,6 +206,14 @@ $(document).ready(function() {
             chooseVisibleDelivery();
             setOrderRates();
             setOrderDiscount();
+        });
+        
+        miniShop2.Callbacks.add('Order.submit.response.error', 'stik', function(response) {
+            if (response.data.indexOf( 'point' ) != -1 ) {
+                $('#cdek2_map_ajax').addClass('error');
+            } else {
+                $('#cdek2_map_ajax').removeClass('error');
+            }
         });
         
         /*miniShop2.Callbacks.add('Order.submit.response.success', 'stik', function(response) {

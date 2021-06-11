@@ -1,7 +1,6 @@
 <?php
 ini_set('display_errors', 1);
 ini_set('error_reporting', 1);
-
 if (empty($_REQUEST['type'])) {
     die('Access denied: empty type');
 } else {
@@ -12,6 +11,7 @@ if (empty($_REQUEST['type'])) {
 define('MODX_API_MODE', true);
 require_once dirname(dirname(dirname(dirname(__FILE__)))) . '/index.php';
 
+// $modx->log(1, print_r($_REQUEST,1));
 $modx->getService('error', 'error.modError');
 $modx->getRequest();
 $modx->setLogLevel(modX::LOG_LEVEL_ERROR);

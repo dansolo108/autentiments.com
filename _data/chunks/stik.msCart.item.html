@@ -41,10 +41,12 @@ properties: 'a:0:{}'
         </div>
         <div class="au-cart__row">
             <div class="au-cart__sub-row">
-                <div class="au-cart__color" data-color="black" style="background: #1C1C1C;" title="{$options.color}"></div>
+                {set $hex = 'msoGetColor' | snippet : ['input' => $options.color]}
+                {set $colorId = 'msoGetColor' | snippet : ['input' => $options.color, 'return_id' => true]}
+                <div class="au-cart__color" {if $hex == '#ffffff'}data-color="white"{/if} style="background: {$hex};" title="{('stik_color_'~$colorId) | lexicon}"></div>
                 <span class="au-cart__size">{$options.size}</span>
                 {if $template == 11}
-                    <span class="au-order__card-count">1 шт</span>
+                    <span class="au-order__card-count">{$count} {'stik_product_count_unit' | lexicon}</span>
                 {/if}
             </div>
             {if $template != 11}

@@ -14,11 +14,6 @@ $maxma = $modx->getService('maxma', 'maxma', $modx->getOption('core_path').'comp
 if (!($stikLoyalty instanceof stikLoyalty) || !($maxma instanceof maxma)) return '';
 
 switch($modx->event->name) { 
-        
-    case 'OnLoadWebDocument':
-        $modx->setPlaceholder('loyalty_discount', $stikLoyalty->getBonusPercentage());
-        break;
-
     case 'msOnBeforeAddToOrder':
         /** @var string $key */
         if ($key == 'msloyalty') {
@@ -54,8 +49,9 @@ switch($modx->event->name) {
         if (!empty($with_cart) && !empty($cart)) {
             $data = $order->get();
             if ($data && $data['msloyalty']) {
+                $currency = (float)$modx->getPlaceholder('msmc.val');
                 $status = $order->ms2->cart->status();
-                $cost = $status['total_cost'] - $data['msloyalty'];
+                $cost = $status['total_cost'] - ($data['msloyalty'] * $currency);
                 $order->add('total_cost_loyalty', $cost ? $cost : 0);
             }
         }
@@ -74,7 +70,7 @@ switch($modx->event->name) {
             
                     $allowable_amount = floor($cost * 99 / 100);
                     
-                    $bonus = number_format($maxma->getClientBalanceByPhone($profile->get('mobilephone')), 0, '.', '');
+                    $bonus = $modx->runSnippet('msMultiCurrencyPriceFloor', ['price' => $maxma->getClientBalanceByPhone($profile->get('mobilephone'))]) /*number_format(($maxma->getClientBalanceByPhone($profile->get('mobilephone'))), 0, '.', '')*/;
                     if ($bonus < $allowable_amount) {
                         $allowable_amount = $bonus;
                     }
@@ -84,7 +80,7 @@ switch($modx->event->name) {
                         $allowable_amount_text = $declension($allowable_amount, $modx->lexicon('stik_declension_bonuses'), true);
                     }
                     
-                    $order->add('msloyalty_text', 'Макс. ' . ($allowable_amount_text ? $allowable_amount_text : $allowable_amount));
+                    $order->add('msloyalty_text', $modx->lexicon('stik_order_loyalty_text_max') . ' ' . ($allowable_amount_text ? $allowable_amount_text : $allowable_amount));
                     $order->add('msloyalty_allowable_amount', $allowable_amount);
                 }
             }
@@ -119,13 +115,17 @@ switch($modx->event->name) {
                 ]);
             }
         }
-        if ($data && !empty($data['msloyalty']) && $maxma->checkBonuses($data['msloyalty']) === true) {
-            $properties['msloyalty'] = $data['msloyalty'];
-            $maxma->setOrder($msOrder->get('id'), $data['msloyalty'], 'apply'); // создаем заказ и резервируем бонусы
-        } else {
-            $bonuses_ammount = $stikLoyalty->getLoyaltyBonusAccrual($msOrder->get('cart_cost'), $msOrder->get('user_id'));
-            $properties['msloyalty_accrue'] = $bonuses_ammount;
-            $maxma->setOrder($msOrder->get('id'), $bonuses_ammount, 'collect'); // создаем заказ и начисляем бонусы
+        if ($data && !empty($data['msloyalty'])) {
+            $currency = (float)$modx->getPlaceholder('msmc.val');
+            $data['msloyalty'] = ceil($data['msloyalty'] * $currency);
+            if ($maxma->checkBonuses($data['msloyalty']) === true) {
+                $properties['msloyalty'] = $data['msloyalty'];
+                $maxma->setOrder($msOrder->get('id'), $data['msloyalty'], 'apply'); // создаем заказ и резервируем бонусы
+            } else {
+                $bonuses_ammount = $stikLoyalty->getLoyaltyBonusAccrual($msOrder->get('cart_cost'), $msOrder->get('user_id'));
+                $properties['msloyalty_accrue'] = $bonuses_ammount;
+                $maxma->setOrder($msOrder->get('id'), $bonuses_ammount, 'collect'); // создаем заказ и начисляем бонусы
+            }
         }
         $msOrder->set('properties', $properties);
         $msOrder->save();

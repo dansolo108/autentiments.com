@@ -21,8 +21,8 @@ switch ($modx->event->name) {
                 }
             }
         }
-        // если нет, то выполняем стандартный скрипт
-        if (!$amoUserid) {
+        // если да, то выполняем стандартный скрипт
+        if ($amoUserid) {
             if (!($amo = $modx->getService('amocrm', 'amoCRM', MODX_CORE_PATH . 'components/amocrm/model/amocrm/'))) {
                 return;
             }

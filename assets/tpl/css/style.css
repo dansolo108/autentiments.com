@@ -318,7 +318,8 @@ textarea {
   .custom-form__input:focus {
     border-color: #999999; }
   .custom-form__input.error {
-    color: #B34746; }
+    color: #B34746;
+    border-bottom-color: #B34746;}
 
 .custom-form__input::-webkit-input-placeholder {
   color: #6D6A6A; }
@@ -5212,6 +5213,16 @@ input[name="link"] {
 .loading {
     opacity: .4;
     pointer-events: none;
+}
+
+#cdek2_map_ajax .pvz_error {
+    display: none;
+    color: #B34746;
+    margin-bottom: 15px;
+}
+
+#cdek2_map_ajax.error .pvz_error {
+    display: block;
 }
 
 /*** MiniShop2 ***/
