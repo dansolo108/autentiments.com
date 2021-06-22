@@ -21,21 +21,25 @@ properties: 'a:0:{}'
                 <source type="image/webp" srcset="{$category | replace : ['.jpg', '/category/'] : ['.webp', '/category_webp/']}">
                 <img width="516" height="687" class="au-card__img" src="{$category}" alt="">
             </picture>
-            <picture>
-                <source type="image/webp" srcset="{$category_2 | replace : ['.jpg', '/category/'] : ['.webp', '/category_webp/']}">
-                <img width="516" height="687" class="au-card__img  au-card__img_hover" src="{$category_2}" alt="">
-            </picture>
-            <div class="au-card__marks">
-                {if $new?}
-                    <span class="au-card__mark">New</span>
-                {/if}
-                {if $sale?}
-                    <span class="au-card__mark">Sale</span>
-                {/if}
-                {if $soon?}
-                    <span class="au-card__mark">Soon</span>
-                {/if}
-            </div>
+            {if $category_2}
+                <picture>
+                    <source type="image/webp" srcset="{$category_2 | replace : ['.jpg', '/category/'] : ['.webp', '/category_webp/']}">
+                    <img width="516" height="687" class="au-card__img  au-card__img_hover" src="{$category_2}" alt="">
+                </picture>
+            {/if}
+            {if $new || $sale || $soon}
+                <div class="au-card__marks">
+                    {if $new?}
+                        <span class="au-card__mark">New</span>
+                    {/if}
+                    {if $sale?}
+                        <span class="au-card__mark">Sale</span>
+                    {/if}
+                    {if $soon?}
+                        <span class="au-card__mark">Soon</span>
+                    {/if}
+                </div>
+            {/if}
         </div>
         <div class="au-card__description">
             <span class="au-card__title">{$pagetitle}</span>

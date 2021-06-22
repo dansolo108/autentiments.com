@@ -22,10 +22,19 @@ properties: 'a:0:{}'
     <meta name="author" content="Autentiments">
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="Autentiments">
-    <meta property="og:title" content="{$_modx->resource.pagetitle}">
-    <meta property="og:description" content="{$_modx->resource.description}">
+    <meta property="og:title" content="{$_modx->resource.og_title ?: $_modx->resource.pagetitle}">
+    <meta property="og:description" content="{$_modx->resource.og_description ?: $_modx->resource.description}">
     <meta property="og:url" content="{$_modx->resource.id | url : ['scheme' => 'full']}">
-    <meta property="og:image" content="{$_modx->config.site_url | preg_replace : '#/$#' : ''}{$_modx->resource.image ?: ''}">
+    {if $_modx->resource.img}
+        {set $tv_img = '/assets/uploads/' ~ $_modx->resource.img}
+    {/if}
+    {if $_modx->resource.og_image}
+        {set $tv_og_image = '/' ~ $_modx->resource.og_image}
+    {/if}
+    {set $og_image = ($tv_og_image ?: $_modx->resource.image) ?: $tv_img}
+    {if $og_image}
+        <meta property="og:image" content="{$_modx->config.site_url | preg_replace : '#/$#' : ''}{$og_image}">
+    {/if}
 
     <link rel="preload" href="/assets/tpl/fonts/Circe-Regular.woff2" as="font" crossorigin="">
     <link rel="preload" href="/assets/tpl/fonts/Circe-Light.woff2" as="font" crossorigin="">
@@ -143,7 +152,7 @@ properties: 'a:0:{}'
                             <div class="au-header__sub-wrapper">
                                 <ul class="au-header__sub-list">
                                     <li class="au-header__sub-item">
-                                        <a class="au-header__sub-link" href="{2|url}">{'stik_menu_link_about' | lexicon}</a>
+                                        <a class="au-header__sub-link" href="{2|url}">{$linkAbout = 'pdoField' | snippet : ['id' => 2]}</a>
                                     </li>
                                     {'pdoMenu' | snippet : [
                                         'parents' => 16,
@@ -204,7 +213,7 @@ properties: 'a:0:{}'
             ]}
             <ul class="au-footer__menu">
                 <li class="au-footer__item">
-                    <a class="au-footer__link" href="{2|url}">{'stik_menu_link_about' | lexicon}</a>
+                    <a class="au-footer__link" href="{2|url}">{$linkAbout}</a>
                 </li>
                 {'pdoMenu' | snippet : [
                     'parents' => 16,
@@ -238,8 +247,8 @@ properties: 'a:0:{}'
                     © Autentiments 2021
                 </div>
                 <div class="au-footer__developer">
-                    {'stik_development' | lexicon}
                     <a class="au-footer__developer-link" href="https://stik.pro/fashion/" target="_blank">
+                        {'stik_development' | lexicon}
                         <svg width="46" height="13" viewBox="0 0 46 13" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M19.9491 6.54823C19.0312 6.38289 18.2712 6.2477 18.2712 5.66326C18.2712 5.16098 18.7123 4.82404 19.4618 4.82404C20.2944 4.82404 20.7871 5.17138 20.7976 5.86397H23.0671C23.0619 4.11378 21.6576 2.93866 19.5186 2.93866C17.3796 2.93866 15.9553 4.08258 15.9553 5.73917C15.9553 7.8003 17.7522 8.17259 19.1681 8.40553C20.106 8.56152 20.8713 8.74247 20.8713 9.34146C20.8713 9.94046 20.2786 10.2264 19.6133 10.2264C18.7533 10.2264 18.1512 9.83855 18.1396 9.05653H15.8027C15.8185 10.9284 17.3017 12.1836 19.5239 12.1836C21.7618 12.1836 23.2408 11.0189 23.2408 9.23227C23.2408 7.10771 21.3955 6.80198 19.9491 6.54823Z" fill="#868383"/>
                             <path d="M29.4043 9.83119C28.5284 9.83119 28.0411 9.34451 28.0411 8.50009V5.08811H30.4432V3.18817H28.0011V0.900341H27.5442L24.042 4.58063V5.08811H25.6462V8.81103C25.6462 10.7526 26.841 11.9381 28.7906 11.9381H30.4948V9.83119H29.4043Z" fill="#868383"/>

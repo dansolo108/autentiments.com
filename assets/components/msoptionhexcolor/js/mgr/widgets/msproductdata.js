@@ -1,4 +1,4 @@
-miniShop2.plugin.hexcolor = {
+/*miniShop2.plugin.hexcolor = {
     // Изменение полей для панели товара
     getFields: function () {
         // console.log('getFields');
@@ -69,4 +69,4 @@ Ext.ComponentMgr.onAvailable("minishop2-product-tabs", function () {
         xtype: 'minishop2-combo-hexcolor',
         description: '<b>[[+hexcolor]]</b>',
     });
-});
+});*/

@@ -233,6 +233,8 @@ class msOrderCustom extends msOrderHandler implements msOrderInterface
         
         $cost_loyalty = $this->order['total_cost_loyalty'] ? $this->order['total_cost_loyalty'] : false;
 
+        $this->modx->log(1, print_r($this->order,1));
+
         $cart = $this->ms2->cart->status();
             
 		$cost = $with_cart

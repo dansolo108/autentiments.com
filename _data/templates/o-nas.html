@@ -12,8 +12,6 @@ properties: 'a:0:{}'
     <main class="au-about">
         <h1 class="au-h1  au-about__title">{$_modx->resource.pagetitle}</h1>
         <div class="au-about__cover">
-            <p>{$_modx->resource.img}</p>
-            <p>{$_modx->resource.img_mob}</p>
             {if $_modx->resource.video}
                 <video class="au-about__img" webkit-playsinline playsinline autoplay loop muted poster="">
                     <source src="/assets/uploads/{$_modx->resource.video}" type="video/mp4">

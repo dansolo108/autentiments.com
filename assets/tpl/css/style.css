@@ -1215,8 +1215,11 @@ input:-webkit-autofill:active {
   .au-header__sub-wrapper {
     display: flex;
     justify-content: center;
-    height: auto; }
+    height: auto;}
+    .active .au-header__sub-img-box {
+        opacity: 1; }
   .au-header__sub-img-box {
+    opacity: 0;
     display: flex; }
   .au-header__sub-img {
     margin-left: 8px; } }
@@ -5069,7 +5072,7 @@ input:-webkit-autofill:active {
   transition: all 0.2s ease-in-out; }
 
 .au-footer__year,
-.au-footer__developer {
+.au-footer__developer-link {
   color: #6D6A6A; }
 
 .au-footer__year {
@@ -5084,10 +5087,10 @@ input:-webkit-autofill:active {
   font-size: 14px;
   line-height: 19px;
   text-align: right; }
-  .au-footer__developer-link {
+  .au-footer__developer-link svg {
     position: relative;
     top: 2px;
-    padding-left: 7px; }
+    margin-left: 7px; }
     .au-footer__developer-link svg * {
       fill: #868383;
       transition: all 0.2s ease-in-out; }

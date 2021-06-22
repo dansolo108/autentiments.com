@@ -10,7 +10,7 @@ properties: 'a:0:{}'
 
 {block 'main'}
     {* если товары в категории отсутствуют - для au-category добавляем класс empty *}
-    <main  id="pdopage" class="msfavorites-parent au-category  au-category_like empty">
+    <main id="pdopage" class="msfavorites-parent au-category  au-category_like empty">
         <h1 class="au-h1  au-category__title">
             {$_modx->resource.pagetitle}
             <span class="au-category__title-count msfavorites-total"></span>
@@ -35,7 +35,6 @@ properties: 'a:0:{}'
                     "category_2" => "category_2.url as category_2"
                 ],
                 'where' => [
-                    'Data.new' => 1,
                     'Data.image:!=' => null,
                 ],
             ]}

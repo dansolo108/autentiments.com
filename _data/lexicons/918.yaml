@@ -1,0 +1,5 @@
+id: 918
+name: stik_newsletter_success_message
+value: 'Подписка успешно оформлена'
+topic: site
+namespace: polylang

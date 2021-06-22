@@ -33,6 +33,20 @@ switch ($modx->event->name) {
         }
         break;
     
+    case 'mSyncOnProductImport':
+        if ($mode == 'category') {
+            $parent = $resource->get('parent');
+            if ($parent == 35) {
+                $resource->set('parent', 7); // перемещаем в другую категорию
+                $resource->save();
+            }
+        } /*else {
+            $resource->set('uuid_1c', $data['uuid']);
+            $resource->save();
+        }*/
+        
+        break;
+    
     case 'mSyncOnProductOffers':
         
         $stikProductRemains = $modx->getService('stik','stikProductRemains', $modx->getOption('core_path').'components/stik/model/');

@@ -45,6 +45,13 @@ switch($modx->event->name) {
         }
         break;
 
+    case 'msOnBeforeRemoveFromOrder':
+        /** @var string $key */
+        if ($key == 'msloyalty') {
+            $order->remove('total_cost_loyalty');
+        }
+        break;
+
     case 'msOnBeforeGetOrderCost':
         if (!empty($with_cart) && !empty($cart)) {
             $data = $order->get();

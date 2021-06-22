@@ -31,6 +31,29 @@ switch ($modx->event->name) {
             }
         }
         break;
+
+    case 'amocrmOnBeforeOrderSend':
+        // передаем сохраненный в сессии или профиле id пользователя amoCRM
+        $amoUserid = $_SESSION['amo_userid'] ?: '';
+
+        if (is_object($msOrder) && !$amoUserid) {
+            if ($profile = $msOrder->getOne('UserProfile')) {
+                $amoUserid = $profile->get('amo_userid');
+            }
+        }
+
+        $values = & $scriptProperties['__returnedValues'];
+
+        if (!is_array($values)) {
+            $values = array();
+        }
+        if (!isset($values['lead']) or !is_array($values['lead'])) {
+            $values['lead'] = array();
+        }
+        $values['lead']['_embedded']['contacts'][0]['id'] = $amoUserid;
+        $modx->event->returnedValues = $values;
+        break;
+
     case 'msOnChangeOrderStatus':
         if (!($amo = $modx->getService('amocrm', 'amoCRM', MODX_CORE_PATH . 'components/amocrm/model/amocrm/'))) {
             return;
@@ -47,6 +70,7 @@ switch ($modx->event->name) {
         }
         return true;
         break;
+
     case "OnUserFormSave":
     case "OnUserProfileSave":
         if (!($amo = $modx->getService('amocrm', 'amoCRM', MODX_CORE_PATH . 'components/amocrm/model/amocrm/'))) {
