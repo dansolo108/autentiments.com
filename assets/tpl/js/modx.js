@@ -175,8 +175,14 @@ $(document).ready(function() {
             // Стоимость заказа, поскольку она находится за пределами #msOrder
             $('.ms2_order_cost').text(miniShop2.Utils.formatPrice(response.data.cost));
             
-            // Сроки доставки для сохранения в заказ
-            $('.ms2_order_cost').text(miniShop2.Utils.formatPrice(response.data.cost));
+            // Отключаем кнопку оформления заказа, если не рассчиталась доставка
+            // if(response.data.delivery_cost > 0) {
+            //     $('#order_submit').prop('disabled', false)
+            //     $('#delivery_error_text').hide()
+            // } else {
+            //     $('#order_submit').prop('disabled', true)
+            //     $('#delivery_error_text').show()
+            // }
             
             // Общая стоимость доставки
             if(response.data.delivery_cost > 0) {

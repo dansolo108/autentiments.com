@@ -386,6 +386,10 @@ form.ajax_form span.error {
   line-height: 14px;
   color: #B34746; }
 
+#delivery_error_text {
+    color: #B34746;
+}
+
 input:-webkit-autofill,
 input:-webkit-autofill:hover,
 input:-webkit-autofill:focus,
@@ -3735,11 +3739,10 @@ input:-webkit-autofill:active {
 @media (min-width: 1024px) {
   .au-modal-filter {
     top: 118px;
-    height: calc(100vh - 118px);
-    height: calc(var(--vh,1vh)*100 - 118px); }
-  .au-filters__content {
-    height: 300px;
+    height: auto;
     box-shadow: 0px 7px 7px 0 rgba(0, 0, 0, 0.16); }
+  .au-filters__content {
+    height: 300px; }
   .au-filter__row {
     gap: 0 20px;
     grid-template-columns: 0.6fr 0.75fr 0.75fr 1fr auto;
@@ -3768,6 +3771,10 @@ input:-webkit-autofill:active {
   .au-filter__list {
     max-height: 172px;
     overflow-y: auto; }
+  .au-filter__list::-webkit-scrollbar {
+    position: absolute;
+    max-width: 0px;
+    max-height: 0; }
   .au-filter__item .au-filter__label:hover::before {
     width: 100%; }
   .au-filters__reset {

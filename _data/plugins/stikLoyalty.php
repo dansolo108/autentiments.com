@@ -8,10 +8,9 @@ properties: 'a:0:{}'
 // Плагин работает только для авторизованных пользователей
 if (!$modx->user->hasSessionContext('web')) return;
 
-$stikLoyalty = $modx->getService('stik_loyalty', 'stikLoyalty', $modx->getOption('core_path').'components/stik/model/', []);
 $maxma = $modx->getService('maxma', 'maxma', $modx->getOption('core_path').'components/stik/model/', []);
 
-if (!($stikLoyalty instanceof stikLoyalty) || !($maxma instanceof maxma)) return '';
+if (!($maxma instanceof maxma)) return '';
 
 switch($modx->event->name) { 
     case 'msOnBeforeAddToOrder':
@@ -21,17 +20,27 @@ switch($modx->event->name) {
                 $check = $maxma->checkBonuses($value);
                 if ($check !== true) {
                     $modx->event->output($check);
+                    $response = array(
+                        'success' => false
+                        ,'message' => $check
+                        ,'data' => array('msloyalty' => 0)
+                    );
+                    exit(json_encode($response));
                 }
                 
                 $data = $order->get();
-                $percent = 99;
+                $percent = $modx->getOption('stik_maxma_cart_percent');
+                $ms2 = $modx->getService('miniShop2');
+                $ms2->initialize($modx->context->key);
+                $cart = $ms2->cart->status();
+                $msloyalty_allowable_amount = floor($cart['total_cost'] * $percent / 100);
     
                 $pdoTools = $modx->getService('pdoTools');
                 if ($declension = $pdoTools->getFenom()->getModifier('declension')) {
-                    $allowable_amount_text = $declension($data['msloyalty_allowable_amount'], $modx->lexicon('stik_declension_bonuses'), true);
+                    $allowable_amount_text = $declension($msloyalty_allowable_amount, $modx->lexicon('stik_declension_bonuses'), true);
                 }
                 
-                if ($data['msloyalty_allowable_amount'] < $value) {
+                if ($msloyalty_allowable_amount < $value) {
                     $response = array(
                         'success' => false
                         ,'message' => $modx->lexicon('stik_order_loyalty_amount_error', ['percent' => $percent, 'allowable_amount_text' => $allowable_amount_text])
@@ -40,59 +49,9 @@ switch($modx->event->name) {
                     exit(json_encode($response));
                 }
             } else {
-                $order->remove('total_cost_loyalty');
+                $order->remove('msloyalty');
             }
         }
-        break;
-
-    case 'msOnBeforeRemoveFromOrder':
-        /** @var string $key */
-        if ($key == 'msloyalty') {
-            $order->remove('total_cost_loyalty');
-        }
-        break;
-
-    case 'msOnBeforeGetOrderCost':
-        if (!empty($with_cart) && !empty($cart)) {
-            $data = $order->get();
-            if ($data && $data['msloyalty']) {
-                $currency = (float)$modx->getPlaceholder('msmc.val');
-                $status = $order->ms2->cart->status();
-                $cost = $status['total_cost'] - ($data['msloyalty'] * $currency);
-                $order->add('total_cost_loyalty', $cost ? $cost : 0);
-            }
-        }
-        break;
-
-    case 'msOnGetOrderCost':
-        
-        if ($user = $modx->getUser()) {
-            if ($profile = $user->getOne('Profile')) {
-                if ($profile->get('mobilephone') && $profile->get('join_loyalty')) {
-                    
-                    $status = $order->ms2->cart->status();
-                    $data = $order->get();
-            
-                    $cost = $status['total_cost'];
-            
-                    $allowable_amount = floor($cost * 99 / 100);
-                    
-                    $bonus = $modx->runSnippet('msMultiCurrencyPriceFloor', ['price' => $maxma->getClientBalanceByPhone($profile->get('mobilephone'))]) /*number_format(($maxma->getClientBalanceByPhone($profile->get('mobilephone'))), 0, '.', '')*/;
-                    if ($bonus < $allowable_amount) {
-                        $allowable_amount = $bonus;
-                    }
-                    
-                    $pdoTools = $modx->getService('pdoTools');
-                    if ($declension = $pdoTools->getFenom()->getModifier('declension')) {
-                        $allowable_amount_text = $declension($allowable_amount, $modx->lexicon('stik_declension_bonuses'), true);
-                    }
-                    
-                    $order->add('msloyalty_text', $modx->lexicon('stik_order_loyalty_text_max') . ' ' . ($allowable_amount_text ? $allowable_amount_text : $allowable_amount));
-                    $order->add('msloyalty_allowable_amount', $allowable_amount);
-                }
-            }
-        }
-
         break;
 
     case 'msOnCreateOrder':
@@ -106,10 +65,11 @@ switch($modx->event->name) {
         $user = $modx->getObject('modUser', $msOrder->get('user_id'));
         $profile = $user->getOne('Profile');
         
-        if ($_POST['join_loyalty'] == 1) {
+        if (isset($_POST['join_loyalty']) && $_POST['join_loyalty'] == 1) {
             $properties['join_loyalty'] = 1;
             
             $profile->set('join_loyalty', 1);
+            $profile->set('mobilephone', $data['phone']);
             $profile->save();
             // создаем клиента в Maxma
             if ($data) {
@@ -122,13 +82,18 @@ switch($modx->event->name) {
                 ]);
             }
         }
-        if ($data && !empty($data['msloyalty'])) {
-            $currency = (float)$modx->getPlaceholder('msmc.val');
-            $data['msloyalty'] = ceil($data['msloyalty'] * $currency);
-            if ($maxma->checkBonuses($data['msloyalty']) === true) {
-                $properties['msloyalty'] = $data['msloyalty'];
-                $maxma->setOrder($msOrder->get('id'), $data['msloyalty'], 'apply'); // создаем заказ и резервируем бонусы
+        if ($maxma->userphone) {
+            if ($data && !empty($data['msloyalty'])) {
+                // $currency = (float)$modx->getPlaceholder('msmc.val');
+                // $data['msloyalty'] = ceil($data['msloyalty'] * $currency);
+                if ($maxma->checkBonuses($data['msloyalty']) === true) {
+                    $properties['msloyalty'] = $data['msloyalty'];
+                    $maxma->setOrder($msOrder->get('id'), $data['msloyalty'], 'apply'); // создаем заказ и резервируем бонусы
+                }
             } else {
+                $stikLoyalty = $modx->getService('stik_loyalty', 'stikLoyalty', $modx->getOption('core_path').'components/stik/model/', []);
+                if (!($stikLoyalty instanceof stikLoyalty)) return '';
+                
                 $bonuses_ammount = $stikLoyalty->getLoyaltyBonusAccrual($msOrder->get('cart_cost'), $msOrder->get('user_id'));
                 $properties['msloyalty_accrue'] = $bonuses_ammount;
                 $maxma->setOrder($msOrder->get('id'), $bonuses_ammount, 'collect'); // создаем заказ и начисляем бонусы
@@ -140,16 +105,32 @@ switch($modx->event->name) {
         
     case 'msOnChangeOrderStatus':
         $properties = $order->get('properties');
+        
+        if (empty($properties['msloyalty']) && empty($properties['msloyalty_accrue']) && empty($properties['join_loyalty'])) return '';
+        
         // Оплачен
         if ($status == 2) {
-            if (isset($properties['msloyalty']) && $properties['msloyalty']) {
-                $maxma->confirmOrder($order->get('id')); // подтверждаем заказ и списываем бонусы
-            }
+            $maxma->confirmOrder($order->get('id')); // подтверждаем заказ и списываем бонусы
         }
         // Отменен
         if ($status == 4) {
-            if (isset($properties['msloyalty']) && $properties['msloyalty'] || isset($properties['join_loyalty']) && $properties['join_loyalty']) {
+            $payed = $modx->getObject('msOrderLog', [
+                'order_id' => $order->get('id'),
+                'action' => 'status',
+                'entry' => 2,
+            ]);
+            // если у заказа в истории был статус "Оплачен"
+            if ($payed) {
+                $maxma->returnOrder($order->get('id')); // делаем возврат и пересчет бонусов
+            } else {
                 $maxma->cancelOrder($order->get('id')); // отменяем заказ и возвращаем бонусы
             }
         }
+        break;
+        
+    case 'msmcOnToggleCurrency':
+        $ms2 = $modx->getService('miniShop2');
+        $ms2->initialize($modx->context->key);
+        $ms2->order->remove('msloyalty');
+        break;
 }

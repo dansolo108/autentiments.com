@@ -44,7 +44,7 @@ properties: 'a:0:{}'
     </div>
     <div class="custom-form__group  custom-form__register_phone"{if $_modx->getPlaceholder('reg.join_loyalty')} style="display: block;"{/if}>
         <input class="custom-form__input required{if $_modx->getPlaceholder('reg.error.mobilephone')} error{/if}" type="tel" name="mobilephone" id="phone_register" value="{$_modx->getPlaceholder('reg.mobilephone')}" data-val="{$_modx->getPlaceholder('reg.mobilephone')}">
-        <label class="custom-form__label" for="phone_register">Телефон</label>
+        <label class="custom-form__label" for="phone_register">{'stik_register_mobilephone' |lexicon}</label>
         <span class="error_field">{$_modx->getPlaceholder('reg.error.mobilephone')}</span>
     </div>
     <input class="au-btn  au-login__submit  au-login__submit-register" type="submit" name="registerbtn" value="{'stik_register_submit' |lexicon}">

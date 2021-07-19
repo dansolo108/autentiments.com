@@ -165,6 +165,18 @@ switch ($modx->event->name) {
         $resource->set('size', $sizes);
         $resource->set('color', $colors);
         $resource->save();
+        
+        // копируем размеры и цвета в переводы
+        // фикс фильтров в английской версии
+        $polylangProduct = $modx->getObject('PolylangProduct', array('content_id' => $initial_id, 'culture_key' => 'en'));
+        if (!$polylangProduct) {
+            $polylangProduct = $modx->newObject('PolylangProduct');
+            $polylangProduct->set('content_id', $initial_id);
+            $polylangProduct->set('culture_key', 'en');
+        }
+        $polylangProduct->set('size', $sizes);
+        $polylangProduct->set('color', $colors);
+        $polylangProduct->save();
         break;
 
     case 'mSyncOnSalesExport':

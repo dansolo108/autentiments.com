@@ -20,7 +20,7 @@ properties: 'a:0:{}'
         <div class="au-lookbook__cover">
             {if $_modx->resource.video}
                 <video class="au-lookbooks__img" webkit-playsinline playsinline autoplay loop muted poster="">
-                    <source src="/assets/uploads/{$_modx->resource.video}" type="video/mp4">
+                    <source src="{$_modx->resource.video}" type="video/mp4">
                 </video>
             {else}
                 {include 'picture' img=$_modx->resource.img height=417 width=1000 class='au-lookbooks__img'}
@@ -36,9 +36,9 @@ properties: 'a:0:{}'
             </div>
 
             {set $intresting = 'pdoResources' | snippet : [
-                'includeTVs' => 'img',
-                'prepareTVs' => 'img',
-                'processTVs' => 'img',
+                'includeTVs' => 'img,video',
+                'prepareTVs' => 'img,video',
+                'processTVs' => 'img,video',
                 'parents' => $_modx->resource.parent,
                 'resources' => -$_modx->resource.id,
                 'tpl' => 'tpl.lookbookSlider',

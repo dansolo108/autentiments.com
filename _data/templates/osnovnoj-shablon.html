@@ -19,6 +19,9 @@ properties: 'a:0:{}'
     <title>{$_modx->resource.longtitle ?: $_modx->resource.pagetitle}</title>
     <meta name="description" content="{$_modx->resource.description}" />
     <base href="{$_modx->config.site_url}">
+    {'!PolylangCanonical' | snippet : [
+        'tpl' => '@INLINE <link  rel="alternate" hreflang="{if $lang == "en"}en-us{else}{$lang}{/if}" href="{$url}"/>'
+    ]}
     <meta name="author" content="Autentiments">
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="Autentiments">
@@ -39,12 +42,32 @@ properties: 'a:0:{}'
     <link rel="preload" href="/assets/tpl/fonts/Circe-Regular.woff2" as="font" crossorigin="">
     <link rel="preload" href="/assets/tpl/fonts/Circe-Light.woff2" as="font" crossorigin="">
 
-    <!-- styles -->
-    <link rel="stylesheet" href="/assets/tpl/css/jquery-ui.css">
-    <link rel="stylesheet" href="/assets/tpl/css/swiper-bundle.css">
-    <link rel="stylesheet" href="/assets/tpl/css/datepicker.css">
-    <link rel="stylesheet" href="/assets/components/minishop2/css/web/lib/jquery.jgrowl.min.css">
-    <link rel="stylesheet" href="/assets/tpl/css/style.css">
+    {'!MinifyX' | snippet : [
+        'minifyCss' => 1,
+        'minifyJs' => 1,
+        'registerCss' => 'default',
+        'cssSources' => '
+            /assets/tpl/css/jquery-ui.css,
+            /assets/tpl/css/swiper-bundle.css,
+            /assets/tpl/css/datepicker.css,
+            /assets/components/minishop2/css/web/lib/jquery.jgrowl.min.css,
+            /assets/tpl/css/style.css
+        ',
+        'jsSources' => '
+            /assets/tpl/js/vendor/jquery-3.6.0.min.js,
+            /assets/tpl/js/vendor/jquery.cookie.js,
+            /assets/tpl/js/vendor/jquery-ui.min.js,
+            /assets/tpl/js/vendor/jquery.ui.touch-punch.min.js,
+            /assets/tpl/js/vendor/scrollreveal.min.js,
+            /assets/tpl/js/vendor/theia-sticky-sidebar.js,
+            /assets/tpl/js/vendor/swiper-bundle.js,
+            /assets/tpl/js/vendor/datepicker.js,
+            /assets/tpl/js/my_scrollreveal.js,
+            /assets/tpl/js/my_swiper.js,
+            /assets/tpl/js/script.js,
+            /assets/tpl/js/modx.js
+        ',
+    ]}
 
     <link rel="icon" href="/assets/tpl/favicon/favicon.ico">
     <link rel="icon" href="/assets/tpl/favicon/icon.svg" type="image/svg+xml">
@@ -93,7 +116,7 @@ properties: 'a:0:{}'
                 {else}
                     <button class="au-header__btn  au-header__btn_login  btn_login_open  au-desktop_xl">{'stik_header_menu_login' | lexicon}</button>
                 {/if}
-                <a class="au-header__btn au-header__btn_favorite msfavorites-total-all visible" href="{14|url}" aria-label="Избранное">
+                <a class="au-header__btn au-header__btn_favorite msfavorites msfavorites-total-all visible" href="{14|url}" aria-label="Избранное">
                     <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path fill-rule="evenodd" clip-rule="evenodd" d="M18.9934 6.87367C19.1488 10.1685 16.5535 12.3712 12.6251 15.7053L12.6223 15.7077C11.8857 16.3329 11.124 16.9794 10.3122 17.6897L9.96492 17.9936L9.61768 17.6897C8.85115 17.019 8.13036 16.4048 7.43346 15.811C3.46889 12.4326 0.849749 10.2007 1.00669 6.87367C1.06666 5.602 1.56353 4.40061 2.40573 3.49076C3.28639 2.53929 4.45963 2.00991 5.70926 2.00014C6.90418 1.99124 7.95736 2.42732 8.83792 3.29758C9.00663 3.46433 9.16015 3.63876 9.29945 3.81558C9.31969 3.84126 9.33962 3.867 9.35926 3.89277C9.60606 4.2166 9.80596 4.5458 9.96492 4.84811C10.1239 4.5458 10.3238 4.2166 10.5706 3.89277C10.6562 3.78047 10.7474 3.66882 10.8445 3.55915C10.9231 3.47042 11.0055 3.38299 11.0919 3.29758C11.9724 2.42729 13.0249 1.9911 14.2206 2.00014C15.472 2.00995 16.6562 2.53771 17.555 3.48626C18.4227 4.40198 18.9336 5.60495 18.9934 6.87367ZM11.9752 14.9453L11.9779 14.943C13.9671 13.2547 15.5154 11.9357 16.5645 10.6442C17.5838 9.38939 18.0571 8.24886 17.9945 6.92078C17.9459 5.88966 17.5308 4.91455 16.8291 4.17409C16.1081 3.41316 15.1793 3.00776 14.213 3.00011C13.8013 2.99703 13.4137 3.06045 13.0484 3.1934C12.5976 3.35744 12.1808 3.62735 11.7949 4.00878C11.3866 4.41238 11.076 4.88373 10.85 5.3135L9.96492 6.99686L9.07981 5.3135C8.85384 4.88373 8.54333 4.41244 8.13498 4.00883C7.43636 3.31839 6.63578 2.99336 5.7167 3.00011C4.75455 3.00774 3.84066 3.41263 3.13959 4.17006C2.46207 4.90199 2.05478 5.87761 2.00558 6.92079C1.94215 8.26537 2.42137 9.42162 3.45161 10.6937C4.51135 12.0022 6.07512 13.3396 8.08219 15.0499L8.08425 15.0517C8.68568 15.5642 9.30879 16.0952 9.96497 16.6657C10.6668 16.0558 11.3318 15.4914 11.9731 14.947L11.9752 14.9453Z" fill="#1A1714"/>
                     </svg>
@@ -118,9 +141,9 @@ properties: 'a:0:{}'
                 <button class="au-close  au-search__close  au-desktop_xl" aria-label="{'stik_modal_close' | lexicon}"></button>
                 <div class="au-modal__content  au-modal__search-content">
                     <h3 class="au-search__title  au-h2 au-desktop_xl">{'stik_search_title' | lexicon}</h3>
-                    <form method="get" action={25|url}>
+                    <form method="get" action={7|url}>
                         <div class="custom-form__group">
-                            <input class="custom-form__input  custom-form__input_search" type="text" name="search" value="" id="search" placeholder="{'stik_search_placeholder' | lexicon}">
+                            <input class="custom-form__input  custom-form__input_search" type="text" name="query" value="{$.get['query']}" id="search" placeholder="{'stik_search_placeholder' | lexicon}">
                             <button class="au-search__submit" type="submit">
                                 <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path fill-rule="evenodd" clip-rule="evenodd" d="M8 1C11.866 1 15 4.13401 15 8C15 9.76078 14.3499 11.3697 13.2766 12.5999L18.3536 17.6768L17.6464 18.3839L12.5673 13.3048C11.3414 14.3613 9.7453 15 8 15C4.13401 15 1 11.866 1 8C1 4.13401 4.13401 1 8 1ZM8 14C11.3137 14 14 11.3137 14 8C14 4.68629 11.3137 2 8 2C4.68629 2 2 4.68629 2 8C2 11.3137 4.68629 14 8 14Z" fill="white"/>
@@ -240,7 +263,7 @@ properties: 'a:0:{}'
                         'sortby' => 'menuindex',
                         'level' => 1,
                         'tplOuter' => '@INLINE {$wrapper}',
-                        'tpl' => '@INLINE <a class="au-footer__policy-link  au-text-tab_js" href="{$link}"">{$menutitle}</a>',
+                        'tpl' => '@INLINE <a class="au-footer__policy-link  au-text-tab_js" href="{$link}">{$menutitle}</a>',
                     ]}
                 </div>
                 <div class="au-footer__year">
@@ -265,20 +288,6 @@ properties: 'a:0:{}'
     {/block}
 
     {include 'modals'}
-
-    <!-- scripts -->
-    <script src="/assets/tpl/js/vendor/jquery-3.6.0.min.js"></script>
-    <script src="/assets/tpl/js/vendor/jquery.cookie.js"></script>
-    <script src="/assets/tpl/js/vendor/jquery-ui.min.js"></script>
-    <script src="/assets/tpl/js/vendor/jquery.ui.touch-punch.min.js"></script>
-    <script src="/assets/tpl/js/vendor/scrollreveal.min.js"></script>
-    <script src="/assets/tpl/js/vendor/theia-sticky-sidebar.js"></script>
-    <script src="/assets/tpl/js/vendor/swiper-bundle.js"></script>
-    <script src="/assets/tpl/js/vendor/datepicker.js"></script>
-    <script src="/assets/tpl/js/my_scrollreveal.js"></script>
-    <script src="/assets/tpl/js/my_swiper.js"></script>
-    <script src="/assets/tpl/js/script.js"></script>
-    <script src="/assets/tpl/js/modx.js"></script>
 
     {$_modx->getPlaceholder('MinifyX.javascript')}
   </body>

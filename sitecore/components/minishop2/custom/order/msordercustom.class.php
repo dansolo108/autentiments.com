@@ -77,6 +77,10 @@ class msOrderCustom extends msOrderHandler implements msOrderInterface
         $cart_cost = $this->getCost(true, true, true) - $delivery_cost;
         $createdon = date('Y-m-d H:i:s');
         
+        if (!$delivery_cost > 0) {
+            return $this->error('stik_delivery_error_text');
+        }
+        
         // Выводим ошибку, если количество товаров больше допустимого для курьера по городу и оплаты при получении
         if ($cart_status['total_count'] > $this->config['local_courier_max_count'] && $this->order['delivery'] == 5 && $this->order['payment'] == 1) {
             return $this->error($this->modx->lexicon('stik_order_delivery_local_courier_max_count_err', ['count' => $this->config['local_courier_max_count']]));
@@ -223,22 +227,29 @@ class msOrderCustom extends msOrderHandler implements msOrderInterface
             return $this->error($response['message']);
         }
         
-        $stikLoyalty = $this->modx->getService('stik_loyalty', 'stikLoyalty', $this->modx->getOption('core_path').'components/stik/model/', []);
-        
         $lang = $this->modx->getOption('cultureKey');
-
-        /** @var MsMC $msmc */
+        $percent = $this->modx->getOption('stik_maxma_cart_percent');
+        
+        $stikLoyalty = $this->modx->getService('stik_loyalty', 'stikLoyalty', $this->modx->getOption('core_path').'components/stik/model/', []);
+        $maxma = $this->modx->getService('maxma', 'maxma', $this->modx->getOption('core_path').'components/stik/model/', []);
         $msmc = $this->modx->getService('msmulticurrency', 'MsMC');
         $userCurrencyId = $msmc->getUserCurrency();
-        
-        $cost_loyalty = $this->order['total_cost_loyalty'] ? $this->order['total_cost_loyalty'] : false;
 
-        $this->modx->log(1, print_r($this->order,1));
+        // $this->modx->log(1, print_r($this->order,1));
 
         $cart = $this->ms2->cart->status();
-            
+        $msloyalty = $this->order['msloyalty'] ?: 0;
+        
+        if (!empty($with_cart) && !empty($cart)) {
+            if (!empty($msloyalty)) {
+                $currency = (float)$this->modx->getPlaceholder('msmc.val');
+                $cost_loyalty = $cart['total_cost'] - ($msloyalty * $currency);
+                $cost_loyalty = $cost_loyalty ?: 0;
+            }
+        }
+        
 		$cost = $with_cart
-			? ($this->order['msloyalty'] > 0
+			? ($msloyalty > 0
 				? $cost_loyalty
 				: $cart['total_cost'])
 			: 0;
@@ -283,12 +294,24 @@ class msOrderCustom extends msOrderHandler implements msOrderInterface
         if (!$response['success']) {
             return $this->error($response['message']);
         }
+        
         $cost = $response['data']['cost'];
-		$msloyalty = $response['data']['msloyalty'] ?: $this->order['msloyalty'];
-		$msloyalty_text = $response['data']['msloyalty_text'] ?: $this->order['msloyalty_text'];
-		$msloyalty_allowable_amount = $response['data']['msloyalty_allowable_amount'] ?: $this->order['msloyalty_allowable_amount'];
-        // $this->modx->log(1, $cost);
-
+        
+        if ($maxma->userphone) { // проверяем участвует ли пользователь в программе лояльности
+            $msloyalty_allowable_amount = floor($cart['total_cost'] * $percent / 100);
+            
+            $bonus = $this->modx->runSnippet('msMultiCurrencyPriceFloor', ['price' => $maxma->getClientBalanceByPhone($maxma->userphone)]) /*number_format(($maxma->getClientBalanceByPhone($profile->get('mobilephone'))), 0, '.', '')*/;
+            if ($bonus < $msloyalty_allowable_amount) {
+                $msloyalty_allowable_amount = $bonus;
+            }
+            
+            $pdoTools = $this->modx->getService('pdoTools');
+            if ($declension = $pdoTools->getFenom()->getModifier('declension')) {
+                $allowable_amount_text = $declension($msloyalty_allowable_amount, $this->modx->lexicon('stik_declension_bonuses'), true);
+            }
+            $msloyalty_text = $this->modx->lexicon('stik_order_loyalty_text_max') . ' ' . ($allowable_amount_text ? $allowable_amount_text : $msloyalty_allowable_amount);
+        }
+        
         if ($userCurrencyId != 1 && $backend === false) {
             $cost = $msmc->getPrice($cost, 0, 0, 0.0, false);
         }
@@ -300,7 +323,7 @@ class msOrderCustom extends msOrderHandler implements msOrderInterface
                 'delivery_cost' => $msmc->getPrice($delivery_cost, 0, 0, 0.0, false),
 				'msloyalty' => $msloyalty,
 				'msloyalty_text' => $msloyalty_text,
-				'msloyalty_allowable_amount' => $this->modx->runSnippet('msMultiCurrencyPriceFloor', ['price'=>$msloyalty_allowable_amount]),
+				'msloyalty_allowable_amount' => $this->modx->runSnippet('msMultiCurrencyPriceFloor', ['price' => $msloyalty_allowable_amount]),
 				'cost_loyalty' => $msmc->getPrice($cost_loyalty, 0, 0, 0.0, false),
 				'loyalty_accrual' => $msmc->getPrice($loyaltyAccrual, 0, 0, 0.0, false),
             ));

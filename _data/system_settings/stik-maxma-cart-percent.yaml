@@ -1,0 +1,5 @@
+key: stik_maxma_cart_percent
+value: '99'
+xtype: numberfield
+namespace: stik
+area: Maxma

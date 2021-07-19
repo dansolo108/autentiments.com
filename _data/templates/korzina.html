@@ -38,7 +38,7 @@ properties: 'a:0:{}'
     {/if}
     {set $msOrder = '!msOrder' | snippet : [
         'tpl' => 'stik.msOrder',
-        'userFields' => '{"name":"name","surname":"surname","phone":"mobilephone","building":"building","corpus":"corpus","entrance":"entrance","room":"room"}'
+        'userFields' => '{"msloyalty":"","name":"name","surname":"surname","phone":"mobilephone","building":"building","corpus":"corpus","entrance":"entrance","room":"room"}'
     ]}
     {*"country":"","city":"","index":"",*}
     {if $msOrder}

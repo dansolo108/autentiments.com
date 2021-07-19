@@ -8,7 +8,7 @@ properties: 'a:0:{}'
 
 {set $lang = $_modx->config['cultureKey']}
 
-{if !$_modx->hasSessionContext('web') || !$_modx->user.join_loyalty}
+{if !$_modx->hasSessionContext('web')}
     <div class="au-ordering__info-top">
         <p class="au-ordering__login  active">
             <a class="au-ordering__login-link  btn_login_open  au-tab-login-title" href="login">{'stik_order_login' | lexicon}</a> {'stik_order_login_text' | lexicon}
@@ -52,45 +52,47 @@ properties: 'a:0:{}'
             <input type="hidden" name="point">
             <input type="hidden" name="cdek_id">
             
-            <div class="au-ordering__bonuses {if $_modx->getPlaceholder('coupon')}disabled-bonuses{/if}">
-                <div class="au-bonuses__form {if $form.msloyalty}used-bonuses{/if}">
-                    <h2 class="au-h2  au-bonuses__title">
-                        {'stik_order_info_bonuses' | lexicon}
-                        {set $maxmaClientBalance = '!maxmaClientBalance' | snippet : ['phone' => $_modx->user.mobilephone]}
-                        <span class="au-bonuses__count">
-                            <span>{'!msMultiCurrencyPriceFloor' | snippet : ['price' => $maxmaClientBalance]}</span>
-                            {$maxmaClientBalance | declension : ('stik_declension_bonuses' | lexicon)}
-                        </span>
-                    </h2>
-                    <div class="au-bonuses__info">
-                        <div class="au-bonuses__head">
-                            <a class="au-bonuses__subtitle  au-tab-title  active" href="hoard">{'stik_order_bonuses_tab_collect' | lexicon}</a>
-                            <a class="au-bonuses__subtitle  au-tab-title" href="spend">{'stik_order_bonuses_tab_spend' | lexicon}</a>
-                            <button class="au-bonuses__subtitle  bonus-rules-open" type="button">{'stik_order_bonuses_tab_rules' | lexicon}</button>
+            {if $_modx->user.join_loyalty}
+                <div class="au-ordering__bonuses {if $_modx->getPlaceholder('coupon')}disabled-bonuses{/if}">
+                    <div class="au-bonuses__form {if $form.msloyalty}used-bonuses{/if}">
+                        <h2 class="au-h2  au-bonuses__title">
+                            {'stik_order_info_bonuses' | lexicon}
+                            {set $maxmaClientBalance = '!maxmaClientBalance' | snippet : ['phone' => $_modx->user.mobilephone]}
+                            <span class="au-bonuses__count">
+                                <span>{'!msMultiCurrencyPriceFloor' | snippet : ['price' => $maxmaClientBalance]}</span>
+                                {$maxmaClientBalance | declension : ('stik_declension_bonuses' | lexicon)}
+                            </span>
+                        </h2>
+                        <div class="au-bonuses__info">
+                            <div class="au-bonuses__head">
+                                <a class="au-bonuses__subtitle  au-tab-title  active" href="hoard">{'stik_order_bonuses_tab_collect' | lexicon}</a>
+                                <a class="au-bonuses__subtitle  au-tab-title" href="spend">{'stik_order_bonuses_tab_spend' | lexicon}</a>
+                                <button class="au-bonuses__subtitle  bonus-rules-open" type="button">{'stik_order_bonuses_tab_rules' | lexicon}</button>
+                            </div>
+                            <div class="au-bonuses__content  au-tab-content  active" data-tab="hoard">
+                                <p class="au-bonuses__text">{'stik_order_bonuses_collect_text' | lexicon} <span class="msloyalty_accrual">0</span> <span class="msloyalty_accrual_declension"></span>!</p>
+                            </div>
+                            <div class="au-bonuses__content  au-tab-content" data-tab="spend">
+                              <div class="custom-form__group">
+                                <input class="custom-form__input  au-bonuses__input" type="number" name="msloyalty" id="bonus" value="{$form.msloyalty}" data-val="{$form.msloyalty}"> 
+                                <label class="custom-form__label" for="bonus">{'stik_order_bonuses_label' | lexicon}</label>
+                                <span class="error_field"></span>
+                                <button class="au-btn  au-bonuses__submit" type="button">Ок</button>
+                              </div>
+                            </div>
                         </div>
-                        <div class="au-bonuses__content  au-tab-content  active" data-tab="hoard">
+                        <div class="au-bonuses__used">
+                            <p class="au-bonuses__text">{'stik_order_bonuses_writeoff_text' | lexicon} <span class="msloyalty_writeoff_amount">{$form.msloyalty}</span> <span class="msloyalty_writeoff_declension"></span>.</p>
+                            <p class="au-bonuses__text">{'stik_order_bonuses_writeoff_promocode' | lexicon}</p>
+                            <button class="au-bonuses__cancel" type="button">{'stik_order_bonuses_writeoff_cancel' | lexicon}</button>
+                        </div>
+                        <div class="au-bonuses__disabled">
                             <p class="au-bonuses__text">{'stik_order_bonuses_collect_text' | lexicon} <span class="msloyalty_accrual">0</span> <span class="msloyalty_accrual_declension"></span>!</p>
+                            <p class="au-bonuses__text">{'stik_order_bonuses_collect_with_promocode' | lexicon}</p>
                         </div>
-                        <div class="au-bonuses__content  au-tab-content" data-tab="spend">
-                          <div class="custom-form__group">
-                            <input class="custom-form__input  au-bonuses__input" type="number" name="msloyalty" id="bonus" value="{$form.msloyalty}" data-val="{$form.msloyalty}"> 
-                            <label class="custom-form__label" for="bonus">{'stik_order_bonuses_label' | lexicon}</label>
-                            <span class="error_field"></span>
-                            <button class="au-btn  au-bonuses__submit" type="button">Ок</button>
-                          </div>
-                        </div>
-                    </div>
-                    <div class="au-bonuses__used">
-                        <p class="au-bonuses__text">{'stik_order_bonuses_writeoff_text' | lexicon} <span class="msloyalty_writeoff_amount">{$form.msloyalty}</span> <span class="msloyalty_writeoff_declension"></span>.</p>
-                        <p class="au-bonuses__text">{'stik_order_bonuses_writeoff_promocode' | lexicon}</p>
-                        <button class="au-bonuses__cancel" type="button">{'stik_order_bonuses_writeoff_cancel' | lexicon}</button>
-                    </div>
-                    <div class="au-bonuses__disabled">
-                        <p class="au-bonuses__text">{'stik_order_bonuses_collect_text' | lexicon} <span class="msloyalty_accrual">0</span> <span class="msloyalty_accrual_declension"></span>!</p>
-                        <p class="au-bonuses__text">{'stik_order_bonuses_collect_with_promocode' | lexicon}</p>
                     </div>
                 </div>
-            </div>
+            {/if}
 
             <h2 class="au-h2  au-ordering__title">{'stik_order_delivery_title' | lexicon}</h2>
             <div class="au-ordering__row">
@@ -202,6 +204,7 @@ properties: 'a:0:{}'
                 </div>
             {/if}
             <button type="button" class="au-btn  au-ordering__submit" id="order_submit">{'stik_order_submit_button' | lexicon}</button>
+            {*<p id="delivery_error_text" class=" au-subscribe__politics-text" style="display:none;">{'stik_delivery_error_text' | lexicon}</p>*}
             <p class="au-ordering__politics  au-subscribe__politics-text">{'stik_order_payment_agree' | lexicon} <a class="au-subscribe__politics-link au-text-tab_js" href="policy">{'stik_ss_form_policy_link' | lexicon}</a></p>
         </div>
     </div>

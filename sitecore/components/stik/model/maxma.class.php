@@ -154,6 +154,7 @@ class maxma {
         if (!$this->userphone) return $this->modx->lexicon('stik_loyalty_err_not_confirmed');
         
         $balance = $this->getClientBalanceByPhone($this->userphone);
+        $balance = str_replace(' ', '', $this->modx->runSnippet('msMultiCurrencyPriceFloor', ['price' => $balance, 'format' => false]));
         
         if ($bonuses <= $balance) return true;
         
@@ -219,6 +220,33 @@ class maxma {
         
         if (isset($data['errorCode'])) {
             $this->modx->log(1, 'Maxma cancelOrder error: ' . print_r($data, 1));
+            return false;
+        } else {
+            return $data;
+        }
+    }
+    
+    // Отмена заказа и возврат зарезервированных бонусов
+    public function returnOrder(string $order_id) {
+        $order = $this->modx->getObject('msOrder', $order_id);
+        if (!$order) return false;
+        
+        $params = [];
+        $params['transaction'] = [
+            'phoneNumber' => $this->userphone,
+            'id' => $order_id,
+            'executedAt' => date("c"),
+            'purchaseId' => $order_id,
+            'shopCode' => $this->config['shopCode'],
+            'shopName' => $this->config['shopName'],
+            'refundAmount' => $order->get('cost'),
+        ];
+        
+        $response = $this->modRestClient->post('apply-return', $params);
+        $data = $response->process();
+        
+        if (isset($data['errorCode'])) {
+            $this->modx->log(1, 'Maxma returnOrder error: ' . print_r($data, 1));
             return false;
         } else {
             return $data;

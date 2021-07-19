@@ -15,6 +15,7 @@ switch ($modx->event->name) {
         // ALTER TABLE `modx_user_attributes` ADD `join_loyalty` TINYINT(1) UNSIGNED NOT NULL DEFAULT '0' AFTER `mobilephone`;
         // ALTER TABLE `modx_user_attributes` ADD `amo_userid` INT(10) UNSIGNED NOT NULL AFTER `website`;
         $modx->loadClass('modUserProfile');
+        
         $modx->map['modUserProfile']['fields']['name'] = '';
         $modx->map['modUserProfile']['fields']['surname'] = '';
         $modx->map['modUserProfile']['fields']['building'] = null;
@@ -78,6 +79,15 @@ switch ($modx->event->name) {
             'phptype' => 'integer',
             'attributes' => 'unsigned',
             'null' => false,
+        );
+        
+        // polyLang
+        $modx->loadClass('PolylangProduct');
+        $modx->map['PolylangProduct']['fields']['material'] = NULL;
+        $modx->map['PolylangProduct']['fieldMeta']['material'] = array(
+            'dbtype' => 'text',
+            'phptype' => 'json',
+            'null' => true,
         );
         
         break;

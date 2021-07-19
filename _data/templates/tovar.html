@@ -62,8 +62,8 @@ properties: 'a:0:{}'
                     </div>
                 </div>
                 <div class="au-product__add-box">
-                    <button class="au-btn  au-product__add-basket  active" type="submit" name="ms2_action" value="cart/add">{'ms2_frontend_add_to_cart' | lexicon}</button>
-                    <button class="au-btn-light  au-product__add-entrance" type="button">
+                    <button class="au-btn  au-product__add-basket {if !$_modx->resource.soon}active{/if}" type="submit" name="ms2_action" value="cart/add">{'ms2_frontend_add_to_cart' | lexicon}</button>
+                    <button class="au-btn-light  au-product__add-entrance {if $_modx->resource.soon}active{/if}" type="button">
                         <span class="entrance">{'stik_product_subscribe_button' | lexicon}</span>
                         <span class="entrance_end">{'stik_product_subscribe_success' | lexicon}</span>
                     </button>

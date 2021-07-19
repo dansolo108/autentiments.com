@@ -93,13 +93,11 @@ switch ($modx->event->name) {
         }
         break;
 
-    case 'msOnChangeOrderStatus':
-        // Update customer stat
+    /*case 'msOnChangeOrderStatus':
         if (empty($status) || $status != 2) {
             return;
         }
 
-        /** @var modUser $user */
         if ($user = $order->getOne('User')) {
             $q = $modx->newQuery('msOrder', array('type' => 0));
             $q->innerJoin('modUser', 'modUser', array('modUser.id = msOrder.user_id'));
@@ -113,12 +111,54 @@ switch ($modx->event->name) {
             $q->select('SUM(msOrder.cart_cost)'); // считаем без доставки для stikLoyalty
             if ($q->prepare() && $q->stmt->execute()) {
                 $spent = $q->stmt->fetchColumn();
-                /** @var msCustomerProfile $profile */
                 if ($profile = $modx->getObject('msCustomerProfile', array('id' => $user->get('id')))) {
                     $profile->set('spent', $spent);
                     $profile->save();
                 }
             }
         }
+        break;*/
+        
+        
+	case 'msOnChangeOrderStatus':
+		//$order - объект msOrder
+		//$status - идентификатор статуса
+		$modx->log(1, $status);
+
+		if (empty($status) || ($status != 2 && $status != 4)) {
+			return;
+		}
+
+        // проверяем, неменялся ли до этого статус на "Оплачен"
+        $paid = $modx->getCount('msOrderLog', array(
+            'order_id' => $order->get('id'),
+            'action' => 'status',
+            'entry' => 2,
+        ));
+        $modx->log(1, $paid);
+        if ($paid > 1 && $status != 4) {
+            return;
+        }
+
+		if ($user = $order->getOne('User')) {
+			/** @var msCustomerProfile $profile */
+			if ($profile = $order->getOne('CustomerProfile')) {
+				$user_amount = $profile->get('spent');
+				
+				// вычисляем сумму выкупа за вычетом доставки
+				$accrual_amount = $order->get('cost');
+				if ($order->get('delivery_cost') > 0) {
+				    $accrual_amount = $accrual_amount - $order->get('delivery_cost');
+				}
+				$accrual_amount = $accrual_amount > 0 ? $accrual_amount : 0;
+				$modx->log(1, $accrual_amount);
+				if ($status == 2) {
+    				$profile->set('spent', $user_amount + $accrual_amount);
+				} elseif ($status == 4) {
+    				$profile->set('spent', $user_amount - $accrual_amount);
+				}
+				$profile->save();
+			}
+		}
         break;
 }

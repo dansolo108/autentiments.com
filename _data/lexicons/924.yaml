@@ -1,0 +1,5 @@
+id: 924
+name: setting_stik_maxma_cart_percent
+value: 'Максимальный процент корзины, который можно оплатить бонусами'
+namespace: stik
+language: ru

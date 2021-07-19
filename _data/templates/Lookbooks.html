@@ -13,9 +13,9 @@ properties: 'a:0:{}'
         <h1 class="au-h1  au-lookbooks__title">{$_modx->resource.pagetitle}</h1>
         <div class="au-lookbooks__cards rows">
             {'!pdoPage' | snippet : [
-                'includeTVs' => 'img',
-                'prepareTVs' => 'img',
-                'processTVs' => 'img',
+                'includeTVs' => 'img,video',
+                'prepareTVs' => 'img,video',
+                'processTVs' => 'img,video',
                 'parents' => $_modx->resource.id,
                 'tpl' => 'tpl.lookbookList',
                 'sortby' => 'menuindex',

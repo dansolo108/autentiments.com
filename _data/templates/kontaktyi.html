@@ -82,13 +82,13 @@ properties: 'a:0:{}'
                     </div>
                     <div class="au-contacts__col">
                         <h2 class="au-h2  au-contacts__title">{'stik_contacts_title_bank_details' | lexicon}</h2>
-                        {$_modx->config.bank_details}
+                        {$_modx->config['cultureKey'] == 'ru' ? $_modx->config.bank_details : $_modx->config.bank_details_en}
                     </div>
                 </div>
                 <div class="au-contacts__map-box">
                     <h2 class="au-h2  au-contacts__title">{'stik_contacts_title_address' | lexicon}</h2>
                     {if $_modx->config.address}
-                        <p class="au-contacts__map-text">{$_modx->config.address}</p>
+                        <p class="au-contacts__map-text">{$_modx->config['cultureKey'] == 'ru' ? $_modx->config.address : $_modx->config.address_en}</p>
                     {/if}
                     <div class="au-contacts__map" id="mymap">
                         {$_modx->config.map}

@@ -1,5 +1,5 @@
 key: polylang_mse2_index
-value: '0'
+value: '1'
 xtype: combo-boolean
 namespace: polylang
 area: polylang_mse2
