@@ -1704,8 +1704,8 @@ input:-webkit-autofill:active {
   .au-catalog {
     width: calc(100% + 14px);
     margin: 0 -7px; }
-  .au-category__category .au-card {
-    width: 33.3%; }
+  .au-catalog .au-card {
+    width: 33.3% }
   .empty,
   .empty_search {
     padding-top: 160px;
@@ -1767,8 +1767,6 @@ input:-webkit-autofill:active {
     padding-right: 30px;
     padding-bottom: 30px;
     margin-top: -9px; }
-  .au-category__category .au-card {
-    width: 50%; }
   .empty.au-category__category .au-category__head,
   .empty_search.au-category__category .au-category__head {
     justify-content: space-between; }
