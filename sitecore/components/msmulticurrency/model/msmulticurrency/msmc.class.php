@@ -446,7 +446,7 @@ class MsMC
      * @param int $setId
      * @return array|mixed
      */
-    public function getCurrencies($cache = true, $onlyEnable = true, $setId = 0)
+   public function getCurrencies($cache = true, $onlyEnable = true, $setId = 0)
     {
         $setId = $setId ? $setId : $this->config['baseCurrencySetId'];
         $cacheOptions = array(
@@ -465,15 +465,15 @@ class MsMC
             $q->select($this->modx->getSelectColumns('MultiCurrency', 'MultiCurrency'));
 
             $q->where(array(
-                'sid' => $setId,
+                '`sid`' => $setId,
             ));
 
             if ($onlyEnable) {
                 $q->where(array(
-                    'enable' => 1,
+                    '`enable`' => 1,
                 ));
             }
-            $q->sortby('rank');
+            $q->sortby('`rank`');
 
             if ($q->prepare() && $q->stmt->execute()) {
                 while ($item = $q->stmt->fetch(PDO::FETCH_ASSOC)) {
