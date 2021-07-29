@@ -64,7 +64,8 @@ switch ($modx->event->name) {
             'dbtype' => 'int',
             'precision' => 2,
             'phptype' => 'integer',
-            'null' => false,
+            'null' => true,
+            'default' => null,
         );
         $modx->map['modUserProfile']['fieldMeta']['join_loyalty'] = array(
             'dbtype' => 'tinyint',
