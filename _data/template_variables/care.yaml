@@ -1,5 +1,5 @@
 id: 9
-type: richtext
+type: textarea
 name: care
 caption: Уход
 category: Инфо

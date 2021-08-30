@@ -77,8 +77,8 @@ properties: 'a:0:{}'
                 {/if}
             </div>
             
-            {set $measurements = $_modx->resource.measurements | replace : '<p></p>' : '' | strip}
-            {set $care = $_modx->resource.care | replace : '<p></p>' : '' | strip}
+            {set $measurements = $_modx->resource.measurements | strip}
+            {set $care = $_modx->resource.care | strip}
             
             <div class="au-product__info">
                 <div class="au-product__info-head">
@@ -93,13 +93,13 @@ properties: 'a:0:{}'
                 {if $measurements}
                     <div class="au-product__info-content  au-tab-content  active" data-tab="measurements">
                         <div class="au-product__info-group">
-                            {$_modx->resource.measurements}
+                            {$_modx->resource.measurements | striptags | nl2br}
                         </div>
                     </div>
                 {/if}
                 {if $care}
                     <div class="au-product__info-content  au-product__info-content_care  au-tab-content {if !$measurements} active{/if}" data-tab="care">
-                        {$_modx->resource.care}
+                        {$_modx->resource.care | striptags | nl2br}
                     </div>
                 {/if}
                 <div class="au-product__info-content  au-product__info-content_delivery  au-tab-content {if !$care && !$measurements} active{/if}" data-tab="delivery">
