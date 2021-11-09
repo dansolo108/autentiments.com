@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * @var amoCRM $amo
+ * @var modX $modx
+ */
 define('MODX_API_MODE', true);
 
 $dir = dirname(__FILE__);
@@ -21,12 +25,11 @@ for ($i = 0; $i <= 10; $i++) {
 $modx->getService('error', 'error.modError');
 $modx->setLogLevel(modX::LOG_LEVEL_ERROR);
 $modx->setLogTarget('FILE');
-//$modx->setLogTarget(XPDO_CLI_MODE ? 'ECHO' : 'HTML');
 $modx->error->message = null; // Обнуляем переменную
 
 error_reporting(E_ALL);
 
-/** @var amoCRM $amo */
+
 if (!$amoBase = $modx->getService('amocrm', 'amoCRM', $modx->getOption('amocrm_core_path', null,
         $modx->getOption('core_path') . 'components/amocrm/') . 'model/amocrm/', array())
 ) {
@@ -70,7 +73,6 @@ while (true) {
         try {
 
             $amo->auth();
-//                $amo->updateAccountConfig();
 
             switch ($task->get('action')) {
 
@@ -96,10 +98,6 @@ while (true) {
                         $properties['leads']);
                     break;
 
-//                    case amoCRM::SQ_ACTION_UPDATE_CONTACT:
-//                        $processed = (bool) $amo->updateContact($properties['user'], $properties['user_id']);
-//                        break;
-
                 case amoCRMTools::SQ_ACTION_CHANGE_ORDER_STATUS:
                     if (!$amo->tools->getMS2()) {
                         $processed = true;
@@ -111,8 +109,13 @@ while (true) {
                         if ($modx->getOption('amocrm_update_order_on_change_status')) {
                             $processed = (bool)$amo->addOrder($msOrder);
                         } else {
-                            $processed = (bool)$amo->changeOrderStatusInAmo($properties['ms2OrderId'],
+                            $processed = (bool)$amo->leadsController->changeOrderStatusInAmo($properties['ms2OrderId'],
                                 $properties['ms2StatusId']);
+                            // if (isset($processed['success']) && $processed['success'] == true) {
+                            //     $processed = true;
+                            // } else {
+                            //     $processed = false;
+                            // }
                         }
                     } else {
                         $processed = true;
@@ -136,7 +139,7 @@ while (true) {
                         $leadTasks = $modx->getCollection('sqMessage', $q);
                         $leadTask = array_shift($leadTasks);
                         $properties = $leadTask->get('properties');
-                        $processed = (boolean)$amo->changeOrderStatusInMS2($properties['id'], $properties['status_id']);
+                        $processed = (boolean)$amo->leadsController->changeOrderStatusInMS2($properties['id'], $properties['status_id']);
                         foreach ($leadTasks as $lt) {
                             $lt->set('processed', $processed);
                             $lt->save();
@@ -163,7 +166,7 @@ while (true) {
                         $contactTasks = $modx->getCollection('sqMessage', $q);
                         $contactTask = array_shift($contactTasks);
                         $properties = $contactTask->get('properties');
-                        $processed = (boolean)$amo->updateUserInMODX($properties);;
+                        $processed = (boolean)$amo->contactsController->updateUserInMODX($properties);;
                         foreach ($contactTasks as $ct) {
                             $ct->set('processed', $processed);
                             $ct->save();
@@ -196,20 +199,6 @@ while (true) {
 
             $trace = implode("\n", $result);
 
-//                $props = $task->get('properties');
-//                $rounds = isset($props['rounds']) ? $props['rounds'] : array();
-//                $rounds[] = array(
-//                    'time' => time(),
-//                    'errorCode' => $fiscal->printer->getErrorCode(),
-//                    'error' => $ex->getMessage(),
-//                    'commands' => print_r($fiscal->transport->log, 1),
-//                    'trace' => $trace,
-//                    'log' => print_r($fiscal->printer->log, 1),
-//                );
-//                $props['rounds'] = $rounds;
-//                $task->set('properties', $props);
-//                $task->save();
-
         }
 
         if ($processed === true) {
@@ -218,7 +207,6 @@ while (true) {
                 array('id' => $task->get('id')),
                 array('processors_path' => $simpleQueue->config['processorsPath'])
             );
-//                echo print_r($response->response, 1);
             $modx->error->message = null; // Обнуляем переменную
         } else {
             $task->set('status', $task->get('status') + 1);
@@ -233,6 +221,5 @@ while (true) {
         exit();
     }
     sleep(1);
-//    break;
 
 }

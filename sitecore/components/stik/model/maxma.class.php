@@ -94,7 +94,7 @@ class maxma {
         $data = $response->process();
         
         if (isset($data['errorCode'])) {
-            $this->modx->log(1, 'Maxma getClientInfo error: ' . print_r($data, 1));
+            // $this->modx->log(1, 'Maxma getClientInfo error: ' . print_r($data, 1));
             return false;
         } else {
             return $data;

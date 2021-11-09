@@ -209,11 +209,11 @@ switch ( $modx->event->name ) {
 		$res = $modx->getObject("modResource", $scriptProperties['id']);
 		if ( !$res || $res->get('class_key') != 'msProduct' ) break;
 		$modx->controller->addLexiconTopic('stik:manager');
-		$modx->controller->addJavascript($stikProductRemains->config['jsUrl'].'mgr/stikproductremains.js');
-		$modx->controller->addLastJavascript($stikProductRemains->config['jsUrl'].'mgr/product/remains.panel.js');
-		$modx->controller->addLastJavascript($stikProductRemains->config['jsUrl'] . 'mgr/misc/stikpr.utils.js');
+		$modx->controller->addJavascript($stikProductRemains->config['jsUrl'].'mgr/stikproductremains.js?v=0.0.1');
+		$modx->controller->addLastJavascript($stikProductRemains->config['jsUrl'].'mgr/product/remains.panel.js?v=0.0.1');
+		$modx->controller->addLastJavascript($stikProductRemains->config['jsUrl'] . 'mgr/misc/stikpr.utils.js?v=0.0.1');
 		$stikProductRemains->loadPlugins();
-		$grid_fields = array_map('trim', explode(',', $modx->getOption('stikpr_product_grid_fields', null, 'id,store_id,size,color,remains', true)));
+		$grid_fields = array_map('trim', explode(',', $modx->getOption('stikpr_product_grid_fields', null, 'id,store_id,size,color,remains,hide', true)));
 		$modx->controller->addHtml(str_replace('					', '', '
 			<script type="text/javascript">
 				msProductRemains.config.connector_url = \'' . $stikProductRemains->config['connectorUrl'] . '\';
@@ -249,6 +249,7 @@ switch ( $modx->event->name ) {
         $modx->regClientStartupHTMLBlock('<script type="text/javascript">
             var ms2_frontend_currency = "'.$modx->getPlaceholder('msmc.symbol_right').'",
                 stik_order_delivery_not_calculated = "'.$modx->lexicon('stik_order_delivery_not_calculated').'",
+                stik_order_delivery_free = "'.$modx->lexicon('stik_order_delivery_free').'",
                 stik_order_delivery_impossible_calculate = "'.$modx->lexicon('stik_order_delivery_Impossible_calculate').'",
                 stik_order_need_to_accept_terms = "'.$modx->lexicon('stik_order_need_to_accept_terms').'",
                 stik_order_fill_required_fields = "'.$modx->lexicon('stik_order_fill_required_fields').'",

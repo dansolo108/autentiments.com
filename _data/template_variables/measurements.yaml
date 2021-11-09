@@ -1,7 +1,7 @@
 id: 8
 type: textarea
 name: measurements
-caption: Обмеры
+caption: 'Параметры изделия'
 category: Инфо
 elements: ''
 display: default

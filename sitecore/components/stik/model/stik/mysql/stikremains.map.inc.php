@@ -15,6 +15,7 @@ $xpdo_meta_map['stikRemains']= array (
     'size' => '',
     'color' => '',
     'remains' => 0,
+    'hide' => 0,
   ),
   'fieldMeta' => 
   array (
@@ -54,6 +55,15 @@ $xpdo_meta_map['stikRemains']= array (
     array (
       'dbtype' => 'int',
       'precision' => '10',
+      'phptype' => 'integer',
+      'null' => false,
+      'default' => 0,
+    ),
+    'hide' => 
+    array (
+      'dbtype' => 'tinyint',
+      'precision' => '1',
+      'attributes' => 'unsigned',
       'phptype' => 'integer',
       'null' => false,
       'default' => 0,
@@ -118,6 +128,22 @@ $xpdo_meta_map['stikRemains']= array (
       'columns' => 
       array (
         'color' => 
+        array (
+          'length' => '',
+          'collation' => 'A',
+          'null' => false,
+        ),
+      ),
+    ),
+    'hide' => 
+    array (
+      'alias' => 'hide',
+      'primary' => false,
+      'unique' => false,
+      'type' => 'BTREE',
+      'columns' => 
+      array (
+        'hide' => 
         array (
           'length' => '',
           'collation' => 'A',

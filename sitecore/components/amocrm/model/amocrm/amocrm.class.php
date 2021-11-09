@@ -390,10 +390,13 @@ class amoCRM
     public function getMiniShopStatuses()
     {
         $result = array();
-        /** @var msOrderStatus[] $statuses */
-        $statuses = $this->modx->getCollection('msOrderStatus', array('active' => 1));
-        foreach ($statuses as & $status) {
-            $result[] = $status->toArray();
+        /** @var xPDOObject $statuses */
+        $statuses = $this->modx->getIterator('msOrderStatus', array('active' => 1));
+        $statuses->rewind();
+        if($statuses->valid()) {
+            foreach ($statuses as $status) {
+                $result[] = $status->toArray();
+            }
         }
 
         return $result;

@@ -73,6 +73,23 @@ properties: 'a:0:{}'
     <link rel="icon" href="/assets/tpl/favicon/icon.svg" type="image/svg+xml">
     <link rel="apple-touch-icon" href="/assets/tpl/favicon/apple-touch-icon.png">
     <link rel="manifest" href="/assets/tpl/favicon/manifest.json">
+    <!— Facebook Pixel Code —>
+    <script>
+        !function(f,b,e,v,n,t,s)
+        { if(f.fbq)return;n=f.fbq=function(){ n.callMethod?
+        n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+        if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+        n.queue=[];t=b.createElement(e);t.async=!0;
+        t.src=v;s=b.getElementsByTagName(e)[0];
+        s.parentNode.insertBefore(t,s)}(window, document,'script',
+        'https://connect.facebook.net/en_US/fbevents.js');
+        fbq('init', '943673246230723');
+        fbq('track', 'PageView');
+    </script>
+    <noscript><img height="1" width="1" style="display:none"
+    src="https://www.facebook.com/tr?id=943673246230723&ev=PageVie.."
+    /></noscript>
+    <!— End Facebook Pixel Code —>
   </head>
 
   <body>
@@ -270,7 +287,7 @@ properties: 'a:0:{}'
                     © Autentiments 2021
                 </div>
                 <div class="au-footer__developer">
-                    <a class="au-footer__developer-link" href="https://stik.pro/fashion/" target="_blank">
+                    <a class="au-footer__developer-link" href="https://stik.pro/" target="_blank">
                         {'stik_development' | lexicon}
                         <svg width="46" height="13" viewBox="0 0 46 13" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M19.9491 6.54823C19.0312 6.38289 18.2712 6.2477 18.2712 5.66326C18.2712 5.16098 18.7123 4.82404 19.4618 4.82404C20.2944 4.82404 20.7871 5.17138 20.7976 5.86397H23.0671C23.0619 4.11378 21.6576 2.93866 19.5186 2.93866C17.3796 2.93866 15.9553 4.08258 15.9553 5.73917C15.9553 7.8003 17.7522 8.17259 19.1681 8.40553C20.106 8.56152 20.8713 8.74247 20.8713 9.34146C20.8713 9.94046 20.2786 10.2264 19.6133 10.2264C18.7533 10.2264 18.1512 9.83855 18.1396 9.05653H15.8027C15.8185 10.9284 17.3017 12.1836 19.5239 12.1836C21.7618 12.1836 23.2408 11.0189 23.2408 9.23227C23.2408 7.10771 21.3955 6.80198 19.9491 6.54823Z" fill="#868383"/>
@@ -284,11 +301,31 @@ properties: 'a:0:{}'
                     </a>
                 </div>
             </div>
+            <div class="fixed-buttons">
+                <a href="tg://resolve?domain=autentiments" target="_blank" class="fixed-buttons__telegram"><img src="https://img.icons8.com/ios/50/ffffff/sent.png"/>&nbsp;Написать</a>
+                <a href="https://wa.me/79215702113?text=Добрый%20день!" target="_blank" class="fixed-buttons__whatsapp"><img src="https://img.icons8.com/ios/50/ffffff/whatsapp--v1.png"/>&nbsp;Написать</a>
+            </div>
         </footer>
     {/block}
 
     {include 'modals'}
 
     {$_modx->getPlaceholder('MinifyX.javascript')}
+    <!-- Yandex.Metrika counter -->
+    <script type="text/javascript" >
+       (function(m,e,t,r,i,k,a){ m[i]=m[i]||function(){ (m[i].a=m[i].a||[]).push(arguments)};
+       m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+       (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+    
+       ym(86113805, "init", {
+            clickmap:true,
+            trackLinks:true,
+            accurateTrackBounce:true,
+            webvisor:true,
+            ecommerce:"dataLayer"
+       });
+    </script>
+    <noscript><div><img src="https://mc.yandex.ru/watch/86113805" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+    <!-- /Yandex.Metrika counter -->
   </body>
 </html>

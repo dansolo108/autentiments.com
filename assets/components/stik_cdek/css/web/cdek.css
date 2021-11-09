@@ -43,6 +43,10 @@
     transition: .5s all ease-in-out;
 }
 
+.cdek2_map-point.is-active {
+    background-color: #f1f1f1;
+}
+
 .cdek2_map-point__worktime {
     color: #828282;
     padding: 5px 0;

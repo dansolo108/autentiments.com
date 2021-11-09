@@ -99,7 +99,7 @@ properties: 'a:0:{}'
                     <div class="au-contacts__message">
                         <div class="au-contacts__form-box">
                             <p class="au-contacts__col-text">{'stik_contacts_feedback_text' | lexicon}</p>
-                            {'!AjaxForm' | snippet : [
+                            {'-!AjaxForm' | snippet : [
                                 'hooks' => 'FormItSaveForm,email,amoCRMAddContact',
                                 'amoCRMmodxAmoFieldsEq' => 'name==contact_name||email==contact_email||message==Комментарий к заказу',
                                 'formFields' => 'name,email,message',

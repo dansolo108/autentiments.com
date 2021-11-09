@@ -21,11 +21,11 @@ msProductRemains.utils.jsonArray = function(val,cell,row) {
 msProductRemains.utils.bool = function(value) {
 	var color, text;
 	if (value == 0 || value == false || value == undefined) {
-		color = 'red';
+		color = 'green';
 		text = _('no');
 	}
 	else {
-		color = 'green';
+		color = 'red';
 		text = _('yes');
 	}
 

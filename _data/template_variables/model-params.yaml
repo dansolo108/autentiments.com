@@ -1,0 +1,14 @@
+id: 17
+type: textarea
+name: model_params
+caption: 'Параметры модели'
+category: Инфо
+elements: ''
+rank: 10
+display: default
+default_text: ''
+properties: 'a:0:{}'
+input_properties: 'a:1:{s:10:"allowBlank";s:4:"true";}'
+output_properties: 'a:0:{}'
+polylang_enabled: 1
+content: ''

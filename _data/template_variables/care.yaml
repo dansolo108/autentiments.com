@@ -1,9 +1,10 @@
 id: 9
 type: textarea
 name: care
-caption: Уход
+caption: 'Состав и уход'
 category: Инфо
 elements: ''
+rank: 5
 display: default
 default_text: ''
 properties: 'a:0:{}'

@@ -1,0 +1,14 @@
+Changelog for simpleQueue.
+
+0.1.1-pl
+==============
+- Fixed creaate table for messages
+
+0.1.0-pl
+==============
+- Added logger switch in system settings
+- Added indexes to sqMessage object
+
+0.1.0-beta
+==============
+- First public version

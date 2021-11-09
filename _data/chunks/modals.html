@@ -12,8 +12,7 @@ properties: 'a:0:{}'
         <p class="au-modal-cookie__text">{'stik_modal_cookie_text' | lexicon}</p>
     </div>
 </div>
-
-{* modal-welcome *}
+{*
 {'!AjaxForm' | snippet : [
     'snippet' => 'newsletterSubscribe',
     'form' => 'welcomeSubscribe.form',
@@ -24,6 +23,7 @@ properties: 'a:0:{}'
     'tplConfirm' => 'newsletterSubscribeEmailTplConfirm',
     'submitVar' => 'welcomeform',
 ]}
+*}
 
 {if !$_modx->hasSessionContext('web')}
     <div class="au-modal  au-modal-login  modal">

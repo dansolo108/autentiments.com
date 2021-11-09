@@ -70,6 +70,28 @@ function promocodeRemoved() {
     $('.au-ordering__bonuses').removeClass('disabled-bonuses');
 }
 
+function showLoading() {
+    $('.ajax-loader').addClass('enabled');
+    $('.ajax-loader-block').addClass('loading');
+}
+
+function hideLoading() {
+    $('.ajax-loader').removeClass('enabled');
+    $('.ajax-loader-block').removeClass('loading');
+}
+
+// Переключение цветов в галерее товара
+function reloadMsGallery(color, product) {
+    if ($('#msGallery').length) {
+        $.post("/assets/components/stik/getAjaxMsGallery.php", {color: color, product: product}, function(data) {
+            if (data) {
+                $('#msGallery').replaceWith(data);
+                productGalleryInit();
+            }
+        });
+    }
+}
+
 $(document).ready(function() {
     if (window.miniShop2) {
         
@@ -149,20 +171,17 @@ $(document).ready(function() {
         
         miniShop2.Callbacks.add('Order.getcost.before', 'stik', function() {
             // Перед расчетом стоимости, делаем блок с ценами, доставками, способами оплаты неактивным и показываем прелоадер
-            $('.ajax-loader').addClass('enabled');
-            $('.ajax-loader-block').addClass('loading');
+            showLoading();
         });
         
         miniShop2.Callbacks.add('Order.getcost.response.error', 'stik', function(response) {
             // убираем прелоадер
-            $('.ajax-loader').removeClass('enabled');
-            $('.ajax-loader-block').removeClass('loading');
+            hideLoading();
         });
         
         miniShop2.Callbacks.add('Order.getcost.response.success', 'stik', function(response) {
             // убираем прелоадер
-            $('.ajax-loader').removeClass('enabled');
-            $('.ajax-loader-block').removeClass('loading');
+            hideLoading();
             
             // var countryLower = $('#country').val().toLowerCase();
             
@@ -189,7 +208,8 @@ $(document).ready(function() {
                 $('.ms2_delivery_cost').text(miniShop2.Utils.formatPrice(response.data.delivery_cost) + " " + ms2_frontend_currency);
                 // $('#city, #index').removeClass('error');
             } else {
-                $('.ms2_delivery_cost').text(stik_order_delivery_not_calculated);
+                let delivery_id = $('input[name="delivery"]:checked').val();
+                $('.ms2_delivery_cost').text(delivery_id == 6 ? stik_order_delivery_free : stik_order_delivery_not_calculated);
                 // $('#city, #index').addClass('error');
             }
             
@@ -214,7 +234,19 @@ $(document).ready(function() {
             setOrderDiscount();
         });
         
+        miniShop2.Callbacks.add('Order.submit.before', 'stik', function(response) {
+            // показываем прелоадер
+            showLoading();
+        });
+        
+        miniShop2.Callbacks.add('Order.submit.response.success', 'stik', function(response) {
+            // убираем прелоадер
+            hideLoading();
+        });
+        
         miniShop2.Callbacks.add('Order.submit.response.error', 'stik', function(response) {
+            // убираем прелоадер
+            hideLoading();
             if (response.data.indexOf( 'point' ) != -1 ) {
                 $('#cdek2_map_ajax').addClass('error');
             } else {
@@ -327,8 +359,9 @@ $('#msProduct input.au-product__color-input').on('change', function () {
             $('#ajax_sizes').html(data);
         }
     });
-    $('.au-product__slider .au-product__card').hide();
-    $('.au-product__slider .au-product__card[data-color='+$($this).val()+']').show();
+    $('.au-product__add-entrance').removeClass('active');
+    $('.au-product__add-entrance').removeClass('end').prop('disabled', false);
+    reloadMsGallery($($this).val(), $($this).data('product'));
 });
 
 $(document).on('af_complete', function(event, response) {

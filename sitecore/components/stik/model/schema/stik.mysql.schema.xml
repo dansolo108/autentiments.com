@@ -8,6 +8,7 @@
         <field key="size" dbtype="varchar" phptype="string" precision="100" null="false" default="" />
         <field key="color" dbtype="varchar" phptype="string" precision="100" null="false" default="" />
         <field key="remains" dbtype="int" precision="10" phptype="integer" null="false" default="0" />
+        <field key="hide" dbtype="tinyint" precision="1" attributes="unsigned" phptype="integer" null="false" default="0" />
 
         <index alias="product_id" name="product_id" primary="false" unique="false" type="BTREE">
             <column key="product_id" length="" collation="A" null="false" />
@@ -23,6 +24,10 @@
 
         <index alias="color" name="color" primary="false" unique="false" type="BTREE">
             <column key="color" length="" collation="A" null="false" />
+        </index>
+        
+        <index alias="hide" name="hide" primary="false" unique="false" type="BTREE">
+            <column key="hide" length="" collation="A" null="false" />
         </index>
 
         <aggregate alias="Product" class="msProduct" local="product_id" foreign="id" cardinality="one" owner="foreign" />

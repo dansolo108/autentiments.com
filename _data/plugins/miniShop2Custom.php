@@ -123,7 +123,6 @@ switch ($modx->event->name) {
 	case 'msOnChangeOrderStatus':
 		//$order - объект msOrder
 		//$status - идентификатор статуса
-		$modx->log(1, $status);
 
 		if (empty($status) || ($status != 2 && $status != 4)) {
 			return;
@@ -135,7 +134,7 @@ switch ($modx->event->name) {
             'action' => 'status',
             'entry' => 2,
         ));
-        $modx->log(1, $paid);
+
         if ($paid > 1 && $status != 4) {
             return;
         }
@@ -151,7 +150,6 @@ switch ($modx->event->name) {
 				    $accrual_amount = $accrual_amount - $order->get('delivery_cost');
 				}
 				$accrual_amount = $accrual_amount > 0 ? $accrual_amount : 0;
-				$modx->log(1, $accrual_amount);
 				if ($status == 2) {
     				$profile->set('spent', $user_amount + $accrual_amount);
 				} elseif ($status == 4) {

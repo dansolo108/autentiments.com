@@ -24,6 +24,7 @@ if (!$color) {
 $remains = $modx->getCollection('stikRemains', array(
     'product_id' => $product_id,
     'color' => $color,
+    // 'hide:!=' => 1,
     // 'store_id:IN' => [$modx->getOption('stikpr_stores_ids')],
 ));
 
@@ -32,10 +33,16 @@ $pdoTools = $modx->getService('pdoTools');
 $options = $option = $rows = [];
 
 foreach ($remains as $remain) {
-    $option[trim($remain->get('size'))] += $remain->get('remains');
+    $size = trim($remain->get('size'));
+    if ($remain->get('hide') == 1) {
+        unset($resource_sizes[trim($remain->get('size'))]);
+        unset($resource_sizes[array_search($size, $resource_sizes)]);
+    } else {
+        $option[$size] += $remain->get('remains');
+    }
 }
 
-$sortSizes = $stikProductRemains->getSortSizes();
+$sortSizes = array_flip($stikProductRemains->getSortSizes());
 
 // восстанавливаем порядок сортировки размеров и добавляем недостающие
 foreach ($resource_sizes as $k => $v) {
@@ -44,7 +51,7 @@ foreach ($resource_sizes as $k => $v) {
 
 // сортируем, как указано в компоненте
 uksort($rows, function($a, $b) use ($sortSizes) {
-    return array_search($a, $sortSizes) - array_search($b, $sortSizes);
+    return $sortSizes[$a] - $sortSizes[$b];
 });
 
 return $pdoTools->getChunk($tpl, array(

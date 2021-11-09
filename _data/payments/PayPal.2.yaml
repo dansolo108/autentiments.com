@@ -1,6 +1,7 @@
 id: 2
 name: PayPal
 description: ''
+price: 3.8%
 logo: ''
 rank: 1
 class: PayPalCustom

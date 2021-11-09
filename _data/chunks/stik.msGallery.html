@@ -9,13 +9,12 @@ static_file: core/components/minishop2/elements/chunks/chunk.ms_gallery.tpl
 -----
 
 {set $pagetitle = $_modx->resource.pagetitle}
-{set $color = $_modx->resource.color[0] | lower}
 <div id="msGallery" class="au-product__gallery">
     {if $files?}
         <div class="au-product__slider  swiper-container">
             <div class="swiper-wrapper  au-product__gallery-row">
                 {foreach $files as $file}
-                    <div class="au-product__card  swiper-slide" {if $color != ($file['description'] | lower)}style="display:none;"{/if} data-color="{$file['description']}">
+                    <div class="au-product__card  swiper-slide">
                         <picture>
                             <source type="image/webp" srcset="{$file['category_webp']}">
                             <img width="437" height="583" class="au-product__img" src="{$file['category']}" alt="{$pagetitle}" title="{$pagetitle}">

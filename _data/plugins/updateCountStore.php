@@ -1,7 +1,7 @@
 id: 19
 source: 1
 name: updateCountStore
-description: mSync2
+description: mSync
 properties: 'a:0:{}'
 
 -----
@@ -90,6 +90,7 @@ switch ($modx->event->name) {
             $count = (int)str_replace('.0', '', $sklad['КоличествоНаСкладе']);
             $count = max($count, 0);
             
+            // $modx->log(1, 'product-'.$resource->get('id') . ' - ' . $count . ' - ' . $size . ' - ' . $color);
             if(!empty($size)){
                 $stikProductRemains->saveRemains([
                     'product_id' => $resource->get('id'),
@@ -119,13 +120,13 @@ switch ($modx->event->name) {
                         if ($options = $offer->getMany('Options')) {
                             foreach ($options as $option) {
                                 if ($option->get('option') == 'color') {
-                                    $color = $option->get('value');
+                                    $opt_color = $option->get('value');
                                 }
                             }
                         }
-                        if ($color) {
+                        if ($opt_color) {
                             $msProductFile = $modx->getObject('msProductFile', $object['id']);
-                            $msProductFile->set('description', $color);
+                            $msProductFile->set('description', $opt_color);
                             $msProductFile->save();
                         } else {
                             $modx->log(1, 'Не удалось определить цвет: ' . $object['id']);
@@ -159,6 +160,7 @@ switch ($modx->event->name) {
             }
         }
         
+        
         $sizes = array_unique($sizes);
         $colors = array_unique($colors);
         
@@ -184,10 +186,49 @@ switch ($modx->event->name) {
         foreach ($xml->Документ as $k => $doc) {
             $id = (int) $doc->Ид;
             $properties = $orders[$id]->get('properties');
+            $delivery_cost = $orders[$id]->get('delivery_cost');
+            
+            $doc->addChild("СтоимостьДоставки", $delivery_cost);
+            
             $amo_userid = isset($properties['amo_userid']) ? $properties['amo_userid'] : '';
             if ($amo_userid) {
                 $dom = dom_import_simplexml($doc);
                 $dom->parentNode->removeChild($dom);
+            }
+            
+            $products = $doc->Товары->children();
+            foreach ($products as $product) {
+                if ($product->Ид == 'ORDER_DELIVERY') continue;
+                $msProductData = $modx->getObject('msProductData', ['article' => (string)$product->Артикул]);
+                $msProduct = $msProductData->getOne('Product');
+                $msProductId = $msProduct->get('id');
+                
+                foreach ($product->ХарактеристикиТовара->children() as $req) {
+                    if ($req->Наименование == 'Размер') {
+                        $size = $req->Значение;
+                    }
+                    if ($req->Наименование == 'Цвет') {
+                        $color = $req->Значение;
+                    }
+                }
+                if (!$size || !$color) continue;
+                
+                
+                $mSyncProductData = $modx->getObject('mSyncProductData', ['product_id' => $msProductId]);
+                if (!$mSyncProductData) continue;
+                
+                $Offers = $mSyncProductData->getMany('Offers');
+                if (!$Offers) continue;
+                
+                foreach ($Offers as $offer) {
+                    $sMatch = $cMatch = false;
+                    $Options = $offer->getMany('Options');
+                    foreach ($Options as $option) {
+                        if ($option->get('value') == $size) $sMatch = true;
+                        if ($option->get('value') == $color) $cMatch = true;
+                    }
+                    if ($sMatch === true && $cMatch === true) $product->Ид = $offer->get('uuid_1c');
+                }
             }
         }
         break;

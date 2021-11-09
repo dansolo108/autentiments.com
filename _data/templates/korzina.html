@@ -51,11 +51,14 @@ properties: 'a:0:{}'
             'registerJs' => 'default',
             'cssSources' => '
                 /assets/components/stik_cdek/css/web/jquery.fancybox.min.css,
+                /assets/components/stik_cdek/css/web/auto-complete.css,
                 /assets/components/stik_cdek/css/web/cdek.css,
             ',
             'jsSources' => '
                 /assets/components/stik_cdek/js/web/deliveryPoints.js,
                 /assets/components/stik_cdek/js/web/cdek.default.js,
+                /assets/components/stik_cdek/js/web/autocomplete/auto-complete.min.js,
+                /assets/components/stik_cdek/js/web/autocomplete/init.js,
                 /assets/components/stik_cdek/js/web/jquery.fancybox.min.js,
             ',
         ]}
@@ -68,6 +71,7 @@ properties: 'a:0:{}'
             </div>
         </main>
     {/if}
+    <script>fbq('track', 'InitiateCheckout');</script>
 {/block}
 
 {block 'footer'}

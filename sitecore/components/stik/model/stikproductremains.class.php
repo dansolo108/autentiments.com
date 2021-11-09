@@ -184,8 +184,10 @@ class stikProductRemains {
         return [
             'XS',
             'S',
+            'XS/S',
             'M',
             'L',
+            'М/L',
             'XL',
             'XXL',
             'XXXL',

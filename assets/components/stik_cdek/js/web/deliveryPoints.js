@@ -19,7 +19,9 @@ function init_map() {
 		pointsArr.push(tmp.reverse());
 	});
 
-	getMap(pointstart, pointsArr);
+    ymaps.ready(function () {
+    	getMap(pointstart, pointsArr);
+    });
 	
 	function getMap (center, arr) {
 		var center = center.split(',').reverse();
@@ -36,6 +38,7 @@ function init_map() {
 		    	var str = tmp[1]+','+tmp[0];
 		    	var $item = $('.cdek2_map_container').find('[data-coord="'+str+'"]');
 		    	$item.click();
+		    	$item.get(0).scrollIntoView();
 		    });
 	        map.geoObjects.add(placemark);
 	    });

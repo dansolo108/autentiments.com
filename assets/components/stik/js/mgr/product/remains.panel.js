@@ -9,6 +9,9 @@ msProductRemains.grid.ProductRemains = function(config) {
             ,product_id: MODx.request.id
         }
         ,fields: msProductRemains.config.product_grid_fields
+        ,save_action: 'mgr/remains/updatefromgrid'
+        ,autosave: true
+        ,save_callback: this.updateRow
         ,autoHeight: true
         ,paging: true
         ,remoteSort: true
@@ -23,11 +26,12 @@ Ext.extend(msProductRemains.grid.ProductRemains,MODx.grid.Grid,{
     ,getColumns: function() {
         var all = {
             id: {hidden: true, sortable: true, width: 40}
-            ,remains: {header: _('mspr_product_remains'), sortable: true, width: 50}
-            ,store_id: {header: _('ms2_product_store_id'), sortable: true, width: 50}
-            ,store_name: {header: _('ms2_product_store_name'), sortable: true, width: 50}
+            ,store_id: {hidden: true, header: _('ms2_product_store_id'), sortable: true, width: 50}
+            ,remains: {header: _('mspr_product_remains'), sortable: true, width: 50, editor: {xtype:'numberfield'}}
+            ,store_name: {header: 'Склад', sortable: true, width: 50}
             ,size: {header: _('mspr_product_size'), width: 100, renderer: msProductRemains.utils.defined}
             ,color: {header: _('mspr_product_color'), width: 100, renderer: msProductRemains.utils.defined}
+            ,hide: {header: 'Скрыть', sortable: true, width: 50, renderer: msProductRemains.utils.bool, editor: {xtype:'combo-boolean'}}
         };
 
         for (var i in msProductRemains.plugin) {
@@ -55,5 +59,17 @@ Ext.extend(msProductRemains.grid.ProductRemains,MODx.grid.Grid,{
         }
         return columns;
     }
+    
+    ,updateRow: function(response) {
+        var row = response.object;
+        var items = this.store.data.items;
+
+        for (var i = 0; i < items.length; i++) {
+            var item = items[i];
+            if (item.id == row.id)
+                item.data.instock = (item.data.remains > 0) ? 1 : 0;
+        }
+    }
+
 });
 Ext.reg('mspr-grid-productremains',msProductRemains.grid.ProductRemains);

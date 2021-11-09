@@ -146,7 +146,7 @@ properties: 'a:0:{}'
                     {include 'stik.orderInput' form=$form field='phone'}
                 </div>
                 
-                <div id="payments" class="au-ordering__row  au-ordering__row_payment">
+                <div id="payments" class="au-ordering__row  au-ordering__row_payment" {if $_modx->config['cultureKey'] == 'ru'}style="display:none;"{/if}>
                     <h2 class="au-h2  au-ordering__title">{'stik_order_payments_title' | lexicon}</h2>
                     <div class="au-ordering__delivery-box" id="payment_method">
                         {foreach $payments as $payment index=$index}
