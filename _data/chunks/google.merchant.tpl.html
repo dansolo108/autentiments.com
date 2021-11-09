@@ -17,12 +17,12 @@ properties: 'a:0:{}'
     <title>{$pagetitle}</title>
     <g:brand>Autentiments</g:brand>
     <g:availability>in stock</g:availability>
-    <description>{$content | strip_tags | strip | escape}</description>
+    <description>{($content ?: ($longtitle ?: $pagetitle)) | strip_tags | strip | escape}</description>
     <g:google_product_category>1604</g:google_product_category>
     {if $material}
         <g:material>{$material | join : '/'}</g:material>
     {/if}
-    <g:color>{$color | join : '/'}</g:color>
+    <g:color>{foreach $color as $item last=$last}{set $colorId = 'msoGetColor' | snippet : ['input' => $item, 'return_id' => true]}{('stik_color_'~$colorId) | lexicon | htmlent}{if !$last}/{/if}{/foreach}</g:color>
     <g:size>{$size | join : '/'}</g:size>
     <g:mpn>{$article}</g:mpn>
     <g:adult>no</g:adult>
