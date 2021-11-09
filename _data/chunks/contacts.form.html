@@ -7,6 +7,7 @@ properties: 'a:0:{}'
 -----
 
 <form id="contacts_form" class="au-contacts__col-form ajax_form" action="" method="post">
+    {$_modx->getPlaceholder('csrfField')}
     <input type="text" class="form-control" placeholder="Link" id="link" name="link" value="">
     <div class="custom-form__group">
         <input class="custom-form__input" type="text" name="name" id="name" value="" data-val=""> 

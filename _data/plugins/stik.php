@@ -408,7 +408,11 @@ switch ($modx->event->name) {
             $returned_values['newPrice'] = ceil($newPrice ?: $price);
         }
         break;
-        
+
+    case 'OnLoadWebDocument':
+        $modx->setPlaceholder('csrfField', csrf_field());
+    break;
+
     case 'OnHandleRequest':
         // $modx->log(1, print_r($_SESSION,1));
         $amoUserid = (int)$_GET['amo'];
