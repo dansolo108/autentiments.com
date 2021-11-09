@@ -7,9 +7,9 @@ properties: 'a:0:{}'
 -----
 
 <form id="contacts_form" class="au-contacts__col-form ajax_form" action="" method="post">
-    <input type="text" class="form-control" placeholder="Lnk" id="af_link" name="link" value="[[+fi.link]]">
+    <input type="text" class="form-control" placeholder="Link" id="link" name="link" value="">
     <div class="custom-form__group">
-        <input class="custom-form__input" type="text" name="name" id="name" value="[[+fi.name]]" data-val="[[+fi.name]]"> 
+        <input class="custom-form__input" type="text" name="name" id="name" value="" data-val=""> 
         <label class="custom-form__label" for="name">{'stik_form_pls_name' | lexicon}</label>
         <span class="error_field error_name">[[+fi.error.name]]</span>
     </div>
@@ -19,7 +19,7 @@ properties: 'a:0:{}'
         <span class="error_field error_email">[[+fi.error.email]]</span>
     </div>
     <div class="custom-form__group">
-        <textarea class="custom-form__input" cols="100" rows="1" name="message" id="message" data-val="[[+fi.message]]">[[+fi.message]]</textarea>
+        <textarea class="custom-form__input" cols="100" rows="1" name="message" id="message" data-val=""></textarea>
         <label class="custom-form__label" for="message">{'stik_form_pls_message' | lexicon}</label>
         <span class="error_field error_message">[[+fi.error.message]]</span>
     </div>
