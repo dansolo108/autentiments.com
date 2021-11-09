@@ -1,0 +1,28 @@
+id: 108
+source: 1
+name: google.merchant
+description: ''
+category: Фиды
+properties: 'a:0:{}'
+
+-----
+
+<rss xmlns:g="http://base.google.com/ns/1.0" version="2.0">
+<channel>
+<name>{$_modx->config.site_name}</name>
+<description>{$_modx->resource.description ?: 'Autentiments — это новое прочтение современной женственности'}</description>
+<link>{'site_url' | config}</link>
+{set $site_url = ('site_url' | option) | preg_replace : '#/$#' : ''}
+{$_modx->setPlaceholder('site_url_pls', $site_url)}
+{'!msProducts' | snippet : [
+    'parents' => 7,
+    'level' => 10,
+    'limit' => 0,
+    'showUnpublished' => false,
+    'showDeleted' => false,
+    'showHidden' => false,
+    'includeContent' => true,
+    'tpl' => 'google.merchant.tpl',
+]}
+</channel>
+</rss>
