@@ -75,12 +75,6 @@ data:
         primary:
             - dashboard
             - widget
-    lexicons:
-        class: modLexiconEntry
-        primary: [id]
-        exclude_keys:
-            - createdon
-            - editedon
     migx_formtab:
         class: migxFormtab
         primary: [id, caption]
