@@ -2,13 +2,14 @@ id: 41
 source: 1
 name: AjaxForm
 category: AjaxForm
-properties: 'a:7:{s:4:"form";a:7:{s:4:"name";s:4:"form";s:4:"desc";s:18:"ajaxform_prop_form";s:4:"type";s:9:"textfield";s:7:"options";a:0:{}s:5:"value";s:20:"tpl.AjaxForm.example";s:7:"lexicon";s:19:"ajaxform:properties";s:4:"area";s:0:"";}s:7:"snippet";a:7:{s:4:"name";s:7:"snippet";s:4:"desc";s:21:"ajaxform_prop_snippet";s:4:"type";s:9:"textfield";s:7:"options";a:0:{}s:5:"value";s:6:"FormIt";s:7:"lexicon";s:19:"ajaxform:properties";s:4:"area";s:0:"";}s:12:"frontend_css";a:7:{s:4:"name";s:12:"frontend_css";s:4:"desc";s:26:"ajaxform_prop_frontend_css";s:4:"type";s:9:"textfield";s:7:"options";a:0:{}s:5:"value";s:29:"[[+assetsUrl]]css/default.css";s:7:"lexicon";s:19:"ajaxform:properties";s:4:"area";s:0:"";}s:11:"frontend_js";a:7:{s:4:"name";s:11:"frontend_js";s:4:"desc";s:25:"ajaxform_prop_frontend_js";s:4:"type";s:9:"textfield";s:7:"options";a:0:{}s:5:"value";s:27:"[[+assetsUrl]]js/default.js";s:7:"lexicon";s:19:"ajaxform:properties";s:4:"area";s:0:"";}s:9:"actionUrl";a:7:{s:4:"name";s:9:"actionUrl";s:4:"desc";s:23:"ajaxform_prop_actionUrl";s:4:"type";s:9:"textfield";s:7:"options";a:0:{}s:5:"value";s:24:"[[+assetsUrl]]action.php";s:7:"lexicon";s:19:"ajaxform:properties";s:4:"area";s:0:"";}s:12:"formSelector";a:7:{s:4:"name";s:12:"formSelector";s:4:"desc";s:26:"ajaxform_prop_formSelector";s:4:"type";s:9:"textfield";s:7:"options";a:0:{}s:5:"value";s:9:"ajax_form";s:7:"lexicon";s:19:"ajaxform:properties";s:4:"area";s:0:"";}s:10:"objectName";a:7:{s:4:"name";s:10:"objectName";s:4:"desc";s:24:"ajaxform_prop_objectName";s:4:"type";s:9:"textfield";s:7:"options";a:0:{}s:5:"value";s:8:"AjaxForm";s:7:"lexicon";s:19:"ajaxform:properties";s:4:"area";s:0:"";}}'
+properties: 'a:8:{s:4:"form";a:7:{s:4:"name";s:4:"form";s:4:"desc";s:18:"ajaxform_prop_form";s:4:"type";s:9:"textfield";s:7:"options";a:0:{}s:5:"value";s:20:"tpl.AjaxForm.example";s:7:"lexicon";s:19:"ajaxform:properties";s:4:"area";s:0:"";}s:7:"snippet";a:7:{s:4:"name";s:7:"snippet";s:4:"desc";s:21:"ajaxform_prop_snippet";s:4:"type";s:9:"textfield";s:7:"options";a:0:{}s:5:"value";s:6:"FormIt";s:7:"lexicon";s:19:"ajaxform:properties";s:4:"area";s:0:"";}s:12:"frontend_css";a:7:{s:4:"name";s:12:"frontend_css";s:4:"desc";s:26:"ajaxform_prop_frontend_css";s:4:"type";s:9:"textfield";s:7:"options";a:0:{}s:5:"value";s:29:"[[+assetsUrl]]css/default.css";s:7:"lexicon";s:19:"ajaxform:properties";s:4:"area";s:0:"";}s:11:"frontend_js";a:7:{s:4:"name";s:11:"frontend_js";s:4:"desc";s:25:"ajaxform_prop_frontend_js";s:4:"type";s:9:"textfield";s:7:"options";a:0:{}s:5:"value";s:27:"[[+assetsUrl]]js/default.js";s:7:"lexicon";s:19:"ajaxform:properties";s:4:"area";s:0:"";}s:9:"actionUrl";a:7:{s:4:"name";s:9:"actionUrl";s:4:"desc";s:23:"ajaxform_prop_actionUrl";s:4:"type";s:9:"textfield";s:7:"options";a:0:{}s:5:"value";s:24:"[[+assetsUrl]]action.php";s:7:"lexicon";s:19:"ajaxform:properties";s:4:"area";s:0:"";}s:12:"formSelector";a:7:{s:4:"name";s:12:"formSelector";s:4:"desc";s:26:"ajaxform_prop_formSelector";s:4:"type";s:9:"textfield";s:7:"options";a:0:{}s:5:"value";s:9:"ajax_form";s:7:"lexicon";s:19:"ajaxform:properties";s:4:"area";s:0:"";}s:10:"objectName";a:7:{s:4:"name";s:10:"objectName";s:4:"desc";s:24:"ajaxform_prop_objectName";s:4:"type";s:9:"textfield";s:7:"options";a:0:{}s:5:"value";s:8:"AjaxForm";s:7:"lexicon";s:19:"ajaxform:properties";s:4:"area";s:0:"";}s:20:"clearFieldsOnSuccess";a:7:{s:4:"name";s:20:"clearFieldsOnSuccess";s:4:"desc";s:34:"ajaxform_prop_clearFieldsOnSuccess";s:4:"type";s:13:"combo-boolean";s:7:"options";a:0:{}s:5:"value";b:1;s:7:"lexicon";s:19:"ajaxform:properties";s:4:"area";s:0:"";}}'
 static_file: core/components/ajaxform/elements/snippets/snippet.ajaxform.php
 
 -----
 
-/** @var array $scriptProperties */
+/** @var modX $modx */
 /** @var AjaxForm $AjaxForm */
+/** @var array $scriptProperties */
 if (!$modx->loadClass('ajaxform', MODX_CORE_PATH . 'components/ajaxform/model/ajaxform/', false, true)) {
     return false;
 }
@@ -63,8 +64,14 @@ if ((stripos($content, '</form>') !== false)) {
     $content = str_ireplace('</form>', "\n\t$action\n</form>", $content);
 }
 
-// Save settings to user`s session
-$_SESSION['AjaxForm'][$hash] = $scriptProperties;
+// Save snippet properties
+if (!empty(session_id())) {
+    // ... to user`s session
+    $_SESSION['AjaxForm'][$hash] = $scriptProperties;
+} else {
+    // ... to cache file
+    $modx->cacheManager->set('ajaxform/props_' . $hash, $scriptProperties, 3600);
+}
 
 // Call snippet for preparation of form
 $action = !empty($_REQUEST['af_action'])

@@ -80,14 +80,13 @@ class AjaxForm
             'actionUrl' => str_replace('[[+assetsUrl]]', $this->config['assetsUrl'], $this->config['actionUrl']),
             'closeMessage' => $this->config['closeMessage'],
             'formSelector' => "form.{$this->config['formSelector']}",
+            'clearFieldsOnSuccess' => $this->modx->getOption('clearFieldsOnSuccess', $this->config, 1, false),
             'pageId' => !empty($this->modx->resource)
                 ? $this->modx->resource->get('id')
                 : 0,
         ));
         $objectName = trim($objectName);
-        $this->modx->regClientScript(
-            "<script type=\"text/javascript\">{$objectName}.initialize({$config});</script>", true
-        );
+        $this->modx->regClientHTMLBlock("<script>{$objectName}.initialize({$config});</script>");
     }
 
 
@@ -101,12 +100,14 @@ class AjaxForm
      */
     public function process($action, array $fields = array())
     {
-        if (!isset($_SESSION['AjaxForm'][$action])) {
+        $scriptProperties = !empty(session_id())
+            ? @$_SESSION['AjaxForm'][$action]
+            : $this->modx->cacheManager->get('ajaxform/props_' . $action);
+        if (empty($scriptProperties)) {
             return $this->error('af_err_action_nf');
         }
         unset($fields['af_action'], $_POST['af_action']);
 
-        $scriptProperties = $_SESSION['AjaxForm'][$action];
         $scriptProperties['fields'] = $fields;
         $scriptProperties['AjaxForm'] = $this;
 

@@ -1,33 +1,51 @@
 var AjaxForm = {
-
     initialize: function (afConfig) {
+        var script;
         if (!jQuery().ajaxForm) {
-            document.write('<script src="' + afConfig['assetsUrl'] + 'js/lib/jquery.form.min.js"><\/script>');
-        }
-        if (!jQuery().jGrowl) {
-            document.write('<script src="' + afConfig['assetsUrl'] + 'js/lib/jquery.jgrowl.min.js"><\/script>');
+            script = document.createElement('script');
+            script.src = afConfig['assetsUrl'] + 'js/lib/jquery.form.min.js';
+            document.body.appendChild(script);
         }
 
-        $(document).ready(function () {
+        var jGrowlSetup = function () {
             $.jGrowl.defaults.closerTemplate = '<div>[ ' + afConfig['closeMessage'] + ' ]</div>';
-        });
+        };
+        if (!jQuery().jGrowl) {
+            script = document.createElement('script');
+            script.src = afConfig['assetsUrl'] + 'js/lib/jquery.jgrowl.min.js';
+            script.onload = jGrowlSetup;
+            document.body.appendChild(script);
+        } else {
+            $(document).ready(function () {
+                jGrowlSetup();
+            });
+        }
 
         $(document).off('submit', afConfig['formSelector']).on('submit', afConfig['formSelector'], function (e) {
+            var $submitter = undefined;
+
             $(this).ajaxSubmit({
                 dataType: 'json',
                 data: {pageId: afConfig['pageId']},
                 url: afConfig['actionUrl'],
                 beforeSerialize: function (form) {
-                    form.find(':submit').each(function () {
-                        if (!form.find('input[type="hidden"][name="' + $(this).attr('name') + '"]').length) {
-                            $(form).append(
-                                $('<input type="hidden">').attr({
-                                    name: $(this).attr('name'),
-                                    value: $(this).attr('value')
-                                })
-                            );
-                        }
-                    })
+                    if (e.originalEvent.submitter) {
+                        $submitter = $(e.originalEvent.submitter);
+                        $submitter.each(function () {
+                            var $submit = $(this);
+                            if (!$submit.attr('name')) {
+                                return;
+                            }
+                            if (!form.find('input[type="hidden"][name="' + $submit.attr('name') + '"]').length) {
+                                $(form).append(
+                                    $('<input type="hidden">').attr({
+                                        name: $submit.attr('name'),
+                                        value: $submit.attr('value'),
+                                    })
+                                );
+                            }
+                        });
+                    }
                 },
                 beforeSubmit: function (fields, form) {
                     //noinspection JSUnresolvedVariable
@@ -41,8 +59,22 @@ var AjaxForm = {
                 },
                 success: function (response, status, xhr, form) {
                     form.find('input,textarea,select,button').attr('disabled', false);
+
                     response.form = form;
                     $(document).trigger('af_complete', response);
+
+                    if ($submitter && $submitter.length) {
+                        $submitter.each(function () {
+                            var $submit = $(this);
+                            if (!$submit.attr('name')) {
+                                return;
+                            }
+                            let $hidden = form.find('input[type="hidden"][name="' + $submit.attr('name') + '"]');
+                            $hidden.length && $hidden.remove();
+                        });
+                        $submitter = undefined;
+                    }
+
                     if (!response.success) {
                         AjaxForm.Message.error(response.message);
                         if (response.data) {
@@ -63,7 +95,9 @@ var AjaxForm = {
                     else {
                         AjaxForm.Message.success(response.message);
                         form.find('.error').removeClass('error');
-                        form[0].reset();
+                        if (!!afConfig.clearFieldsOnSuccess) {
+                            form[0].reset();
+                        }
                         //noinspection JSUnresolvedVariable
                         if (typeof(grecaptcha) != 'undefined') {
                             //noinspection JSUnresolvedVariable
