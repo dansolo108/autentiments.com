@@ -1,0 +1,4 @@
+key: modhelpers_snippets_path
+value: '{core_path}elements/snippets'
+namespace: modhelpers
+area: modhelpers_main
