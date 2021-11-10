@@ -100,7 +100,7 @@ properties: 'a:0:{}'
                         <div class="au-contacts__form-box">
                             <p class="au-contacts__col-text">{'stik_contacts_feedback_text' | lexicon}</p>
                             {'!AjaxForm' | snippet : [
-                                'hooks' => 'spam,email,FormItSaveForm,amoCRMAddContact',
+                                'hooks' => 'csrf,spam,email,FormItSaveForm,amoCRMAddContact',
                                 'amoCRMmodxAmoFieldsEq' => 'name==contact_name||email==contact_email||message==Комментарий к заказу',
                                 'formFields' => 'name,email,message',
                                 'fieldNames' => 'name==Имя,email==Email,message==Сообщение',
