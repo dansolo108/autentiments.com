@@ -92,6 +92,21 @@ function reloadMsGallery(color, product) {
     }
 }
 
+// Переключение цветов в карточке товарв
+function changeCardColor(color, product) {
+    if ($('.js_card-img-'+product).length) {
+        $('.js_card-img-'+product).addClass('fade');
+        $.post("/assets/components/stik/getAjaxMsGallery.php", {color: color, product: product, mode: 'card'}, function(data) {
+            if (data) {
+                $('.js_card-img-'+product).html(data);
+            }
+            $('.js_card-img-'+product).removeClass('fade');
+        });
+    } else {
+        console.log('Не найден блок .js_card-img-'+product);
+    }
+}
+
 $(document).ready(function() {
     if (window.miniShop2) {
         
@@ -345,6 +360,7 @@ $(document).ready(function() {
     }
 });
 
+// переключение цвета на странице товара
 $('#msProduct input.au-product__color-input').on('change', function () {
     let id = $('#msProduct .ms2_form input[name=id]').val();
     let $this = this;
@@ -362,6 +378,18 @@ $('#msProduct input.au-product__color-input').on('change', function () {
     $('.au-product__add-entrance').removeClass('active');
     $('.au-product__add-entrance').removeClass('end').prop('disabled', false);
     reloadMsGallery($($this).val(), $($this).data('product'));
+});
+
+// Переключение цвета в карточке товара
+$(document).on('change', 'input.au-card__color-input', function () {
+    let $this = this,
+        color = $($this).val(),
+        product = $($this).data('product');
+    changeCardColor(color, product);
+    $($this).parents('.au-card').find('a').each(function(){
+        let href = $(this).attr('href').split('?')[0];
+        $(this).attr('href', href + '?color=' + color)
+    });
 });
 
 $(document).on('af_complete', function(event, response) {

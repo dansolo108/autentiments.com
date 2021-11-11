@@ -13,20 +13,24 @@ properties: 'a:0:{}'
     {/if}
 {/block}
 
+{set $availableColors = '!getAvailableColors' | snippet : [
+    'tpl' => 'stik.msOptions.card'
+    'id' => $id
+]}
+
 <div class="{$wrapper_classes}" id="product-{$id}">
     <a class="au-card__like msfavorites" href="" aria-label="Добавить в избранное" data-click data-data-list="default" data-data-type="resource" data-data-key="{$id}" {if $_modx->resource.template == 5}data-msfavorites-mode="list"{/if}></a>
     <a class="au-card__link" href="{$id | url}">
         <div class="au-card__img-box">
-            <picture>
-                <source type="image/webp" srcset="{$category | replace : ['.jpg', '/category/'] : ['.webp', '/category_webp/']}">
-                <img width="516" height="687" class="au-card__img" src="{$category}" alt="">
-            </picture>
-            {if $category_2}
-                <picture>
-                    <source type="image/webp" srcset="{$category_2 | replace : ['.jpg', '/category/'] : ['.webp', '/category_webp/']}">
-                    <img width="516" height="687" class="au-card__img  au-card__img_hover" src="{$category_2}" alt="">
-                </picture>
-            {/if}
+            <div class="au-card__gallery js_card-img-{$id}">
+                {'!msGallery' | snippet : [
+                    'product' => $id,
+                    'tpl' => 'stik.msGallery.card',
+                    'where' => [
+                        'description' => $_modx->getPlaceholder('first_color') ?: $color[0],
+                    ],
+                ]}
+            </div>
             {if $new || $sale || $soon}
                 <div class="au-card__marks">
                     {if $new?}
@@ -41,6 +45,7 @@ properties: 'a:0:{}'
                 </div>
             {/if}
         </div>
+        {$availableColors}
         <div class="au-card__description">
             <span class="au-card__title">{$pagetitle}</span>
             <div class="au-card__price-box">

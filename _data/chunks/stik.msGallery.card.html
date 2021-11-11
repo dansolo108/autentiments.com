@@ -1,0 +1,20 @@
+id: 107
+source: 1
+name: stik.msGallery.card
+description: 'Чанк вывода галереи товара miniShop2.'
+category: miniShop2
+properties: 'a:0:{}'
+static_file: core/components/minishop2/elements/chunks/chunk.ms_gallery.tpl
+
+-----
+
+{if $files?}
+    {foreach $files as $file index=$index}
+        {if $index < 2}
+            <picture>
+                <source type="image/webp" srcset="{$file['category_webp']}">
+                <img width="516" height="687" class="au-card__img{if $index > 0} au-card__img_hover{/if}" src="{$file['category']}" alt="{$pagetitle}" title="{$pagetitle}">
+            </picture>
+        {/if}
+    {/foreach}
+{/if}

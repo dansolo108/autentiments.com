@@ -13,23 +13,13 @@ properties: 'a:0:{}'
         'parents' => $_modx->resource.id
         'class' => 'msProduct',
         'element' => 'msProducts',
-        'limit' => 6,
+        'limit' => 9,
         'sortby' => '{"sortindex":"ASC", "menuindex":"ASC"}',
         'includeThumbs' => 'category',
         'tpl' => 'stik.msProducts.row',
         'tplOuter' => 'stik.mFilter2.outer',
         'suggestions' => false,
         'ajaxMode' => 'scroll',
-        'leftJoin' => [
-            "category_2" => [
-                "class" => "msProductFile",
-                "alias" => "category_2",
-                "on" => "category_2.product_id = msProduct.id  AND category_2.rank = 1 AND category_2.path LIKE '%/category/%'"
-            ]
-        ],
-        'select' => [
-            "category_2" => "category_2.url as category_2"
-        ],
         'where' => [
             'category.url:!=' => null,
         ],

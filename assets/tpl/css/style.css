@@ -1855,6 +1855,15 @@ input:-webkit-autofill:active {
   .au-card__row .au-card__price_old {
     margin-left: 15px; }
 
+.au-card__gallery {
+    opacity: 1;
+}
+
+.au-card__gallery.fade {
+    opacity: .5;
+    transition: all 0.2s ease-in-out;
+}
+
 .au-product__like svg * {
   fill: #CCCCCC;
   transition: all 0.2s ease-in-out; }
@@ -1865,8 +1874,14 @@ input:-webkit-autofill:active {
 .au-product__color-box,
 .au-product__colors,
 .au-product__size-box,
-.au-product__sizes {
+.au-product__sizes,
+.au-card__color-box,
+.au-card__colors {
   display: flex; }
+  
+.au-card__color-box {
+  padding-bottom: 4px;
+  justify-content: center; }
 
 .au-product__subtitle {
   display: inline-block;
@@ -1886,25 +1901,46 @@ input:-webkit-autofill:active {
   flex-wrap: wrap;
   margin-right: -20px;
   width: calc(100% + 20px); }
-.au-product__color-input {
-    position: absolute;
-    left: -99999px;
-}
-.au-product__color {
+  
+.au-card__colors {
+  flex-wrap: wrap;
+  margin-right: -20px;
+  margin-top: 12px;
+  height: 16px; }
+
+.au-card__color-item {
+  height: 16px; }
+  
+.au-product__color-input,
+.au-card__color-input {
+  position: absolute;
+  left: -99999px; }
+
+.au-product__color,
+.au-card__color {
   position: relative;
   display: inline-block;
   vertical-align: baseline;
   width: 30px;
   height: 30px; }
-  .au-product__color[data-color=white] {
+.au-card__color {
+  width: 16px;
+  height: 16px; }
+  .au-product__color[data-color=white],
+  .au-card__color[data-color=white] {
     box-shadow: inset 0 0 1px 0  #999999; }
-  .au-product__color-input:checked + .au-product__color::after {
+  .au-product__color-input:checked + .au-product__color::after,
+  .au-card__color-input:checked + .au-card__color::after {
     width: calc(100% + 4px); }
 
 .au-product__color,
 .au-product__size-item {
   margin-right: 20px;
   margin-bottom: 18px; }
+
+.au-card__color {
+  margin-right: 12px;
+  margin-bottom: 0; }
 
 .au-product__size-input {
   position: absolute;
@@ -1931,7 +1967,8 @@ input:-webkit-autofill:active {
       width: 100%; }
 
 .au-product__color::after,
-.au-product__size::after {
+.au-product__size::after,
+.au-card__color::after {
   content: "";
   position: absolute;
   bottom: -4px;
@@ -1943,6 +1980,12 @@ input:-webkit-autofill:active {
   background: #1A1714;
   transition: width .2s ease-in-out; }
   
+.au-card__color::after {
+  bottom: -3px;
+  height: 1px;
+  background: #1C1C1C;
+}
+
 .au-product__size-box {
     margin-bottom: 8px;
 }
@@ -2112,7 +2155,8 @@ input:-webkit-autofill:active {
     padding: 0 8px 8px 0; }
   .au-product__img {
     height: auto; }
-  .au-product__color:hover::after {
+  .au-product__color:hover::after,
+  .au-card__color:hover::after {
     width: calc(100% + 4px); }
   .au-product__size:hover::after {
     width: 100%; }

@@ -5,6 +5,7 @@ $modx = new modX();
 $modx->initialize('web');
 
 $color = htmlspecialchars($_POST['color']);
+$mode = htmlspecialchars($_POST['mode']);
 $product = (int) $_POST['product'];
 
 if (!$color || !$product) exit();
@@ -17,7 +18,7 @@ $modx->getService('error','error.modError');
 
 print $modx->runSnippet('msGallery', [
     'product' => $product,
-    'tpl' => 'stik.msGallery',
+    'tpl' => $mode == 'card' ? 'stik.msGallery.card' : 'stik.msGallery',
     'where' => [
         'description' => $color,
     ],
