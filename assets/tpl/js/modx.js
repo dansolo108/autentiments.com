@@ -133,20 +133,21 @@ $(document).ready(function() {
             $('.ms2_total_no_discount').text(miniShop2.Utils.formatPrice(msmcGetPrice(response.data.real_total_cost)));
             $('.ms2_total_discount_custom').text(miniShop2.Utils.formatPrice(msmcGetPrice(response.data.total_discount)));
             calcRealTotalCost();
-            if ($('#msOrder').length) {
+            if ($('.msOrder').length) {
                 miniShop2.Order.getcost();
             }
         });
     
-        miniShop2.Callbacks.add('Cart.remove.response.success', 'stik', function() {
+        miniShop2.Callbacks.add('Cart.remove.response.success', 'stik', function(response) {
             $('.ms2_total_no_discount').text(miniShop2.Utils.formatPrice(response.data.real_total_cost));
             calcRealTotalCost();
-            if ($('#msOrder').length) {
+            console.log('remove');
+            if ($('.msOrder').length) {
                 miniShop2.Order.getcost();
             }
         });
         
-        miniShop2.Callbacks.add('Cart.add.response.success', 'stik', function() {
+        miniShop2.Callbacks.add('Cart.add.response.success', 'stik', function(response) {
             showAjaxCart();
             // dataLayer.push({'event': 'add_cart'});
         });
@@ -184,7 +185,7 @@ $(document).ready(function() {
             }
         });
         
-        miniShop2.Callbacks.add('Order.getcost.before', 'stik', function() {
+        miniShop2.Callbacks.add('Order.getcost.before', 'stik', function(response) {
             // Перед расчетом стоимости, делаем блок с ценами, доставками, способами оплаты неактивным и показываем прелоадер
             showLoading();
         });
@@ -286,15 +287,15 @@ $(document).ready(function() {
     
     $('#join_loyalty_visible').on('click', function() {
         if($(this).prop('checked')) {
-            $('#msOrder #join_loyalty_order').prop('checked', true);
+            $('.msOrder #join_loyalty_order').prop('checked', true);
         } else {
-            $('#msOrder #join_loyalty_order').prop('checked', false);
+            $('.msOrder #join_loyalty_order').prop('checked', false);
         }
     });
     
     // Сохраняем поле в сессию при изменениии select
-    if ($('#msOrder').length) {
-        $(document).on('change', '#msOrder select', function () {
+    if ($('.msOrder').length) {
+        $(document).on('change', '.msOrder select', function () {
             var $this = $(this);
             var key = $this.attr('name');
             var value = $this.find('option:selected').val();

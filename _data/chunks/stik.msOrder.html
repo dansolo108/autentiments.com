@@ -31,7 +31,7 @@ properties: 'a:0:{}'
         </div>
     </div>*}
 {/if}
-<main class="au-ordering  page-container ajax-loader-block" id="msOrder">
+<main class="au-ordering  page-container ajax-loader-block">
     <h1 class="visually-hidden">{$_modx->resource.pagetitle}</h1>
     
     <div class="au-ordering__ordering">
@@ -46,7 +46,7 @@ properties: 'a:0:{}'
             'form' => $form,
         ]}
         
-        <form class="au-ordering__form ms2_form" method="post" autocomplete="off">
+        <form class="au-ordering__form ms2_form msOrder" method="post" autocomplete="off">
             <input type="hidden" name="order_rates">
             {*<input type="hidden" name="order_discount">*}
             <input type="hidden" name="point">
@@ -168,7 +168,7 @@ properties: 'a:0:{}'
             <button id="submitbtn" type="submit" name="ms2_action" value="order/submit" class="ms2_link" style="display:none;">submit</button>
         </form>
     </div>
-    <div class="au-ordering__total">
+    <div class="au-ordering__total msOrder">
         <div class="au-ordering__sticky">
             <h2 class="au-h2  au-ordering__total-title">{'stik_order_info_title' | lexicon}</h2>
             <table class="au-cart__modal-table">

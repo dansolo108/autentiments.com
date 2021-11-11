@@ -1,4 +1,4 @@
 key: ms2_frontend_js
-value: '[[+jsUrl]]web/default.js'
+value: '[[+jsUrl]]web/custom.js'
 namespace: minishop2
 area: ms2_frontend
