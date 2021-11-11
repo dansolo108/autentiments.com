@@ -24,16 +24,6 @@ properties: 'a:0:{}'
                 'resources' => '!msFavorites.ids' | snippet,
                 'tpl' => 'stik.msProducts.row',
                 'includeThumbs' => 'category',
-                'leftJoin' => [
-                    "category_2" => [
-                        "class" => "msProductFile",
-                        "alias" => "category_2",
-                        "on" => "category_2.product_id = msProduct.id  AND category_2.rank = 1 AND category_2.path LIKE '%/category/%'"
-                    ]
-                ],
-                'select' => [
-                    "category_2" => "category_2.url as category_2"
-                ],
                 'where' => [
                     'Data.image:!=' => null,
                 ],
@@ -62,16 +52,6 @@ properties: 'a:0:{}'
                 'tpl' => 'stik.msProducts.swiper.row',
                 'limit' => 8,
                 'includeThumbs' => 'category',
-                'leftJoin' => [
-                    "category_2" => [
-                        "class" => "msProductFile",
-                        "alias" => "category_2",
-                        "on" => "category_2.product_id = msProduct.id  AND category_2.rank = 1 AND category_2.path LIKE '%/category/%'"
-                    ]
-                ],
-                'select' => [
-                    "category_2" => "category_2.url as category_2"
-                ],
                 'sortby' => 'Rand()',
                 'where' => [
                     'Data.image:!=' => null,
