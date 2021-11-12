@@ -77,7 +77,14 @@ class msOrderCustom extends msOrderHandler implements msOrderInterface
         $cart_cost = $this->getCost(true, true, true) - $delivery_cost;
         $createdon = date('Y-m-d H:i:s');
         
-        if ($delivery_cost <= 0 && $this->order['delivery'] != 6) {
+        /** @var msDelivery $delivery */
+        $delivery = $this->modx->getObject('msDelivery', ['id' => $this->order['delivery']]);
+        
+        if (
+            $delivery_cost <= 0 &&
+            $this->order['delivery'] != 6 &&
+            ($delivery->get('free_delivery_rf') != 1 && !in_array(mb_strtolower($this->order['country']), ['россия','russian federation']))
+        ) {
             return $this->error('stik_delivery_error_text');
         }
         

@@ -7,3 +7,4 @@ properties: null
 requires: 'country,city,index,street,building,name,surname,phone,email'
 tariff: '137'
 slug: cdek_courier
+show_on_en: 0

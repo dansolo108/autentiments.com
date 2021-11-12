@@ -172,7 +172,13 @@ class msDeliveryHandlerDhl extends msDeliveryHandler implements msDeliveryInterf
                 if (isset($xml->GetQuoteResponse->BkgDetails->QtdShp->DeliveryDate->DlvyDateTime)) {
                     $date = $xml->GetQuoteResponse->BkgDetails->QtdShp->DeliveryDate->DlvyDateTime;
                 }
-                return [($cost + $xml->GetQuoteResponse->BkgDetails->QtdShp->ShippingCharge), $date];
+                // бесплатная доставка по РФ в зависимости от настройки
+                if ($delivery->get('free_delivery_rf') == 1 && in_array(mb_strtolower($country), ['россия','russian federation'])) {
+                    //
+                } else {
+                    $cost = $cost + $xml->GetQuoteResponse->BkgDetails->QtdShp->ShippingCharge;
+                }
+                return [$cost, $date];
             } else {
                 if($xml && isset($xml->GetQuoteResponse->Note->Condition->ConditionData)){
                     $modx->log(1, 'DHL Error: ' . $xml->GetQuoteResponse->Note->Condition->ConditionData . " Country: $country, City: $receiverCity, Index: $receiverPostCode");

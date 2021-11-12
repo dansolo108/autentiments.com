@@ -8,3 +8,4 @@ properties: null
 requires: 'country,city,index,name,surname,phone,email,point'
 tariff: '136'
 slug: cdek_pvz
+show_on_en: 0

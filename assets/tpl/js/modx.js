@@ -18,9 +18,12 @@ function declension(n, titles) {
     return titles[(n % 10 === 1 && n % 100 !== 11) ? 0 : n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 10 || n % 100 >= 20) ? 1 : 2];
 }
 
-function checkDeliveryFields(n, titles) {
+function checkDeliveryFields() {
     if ($('#country').val() && $('#city').val() && $('#index').val()) {
         miniShop2.Order.getcost();
+        $('.au-ordering').addClass('next-step');
+    } else {
+        $('.au-ordering').removeClass('next-step');
     }
 }
 
@@ -177,12 +180,6 @@ $(document).ready(function() {
             }
             
             chooseVisibleDelivery();
-            
-            if ($('#country').val() && $('#city').val() && $('#index').val()) {
-                $('.au-ordering').addClass('next-step');
-            } else {
-                $('.au-ordering').removeClass('next-step');
-            }
         });
         
         miniShop2.Callbacks.add('Order.getcost.before', 'stik', function(response) {
@@ -224,8 +221,8 @@ $(document).ready(function() {
                 $('.ms2_delivery_cost').text(miniShop2.Utils.formatPrice(response.data.delivery_cost) + " " + ms2_frontend_currency);
                 // $('#city, #index').removeClass('error');
             } else {
-                let delivery_id = $('input[name="delivery"]:checked').val();
-                $('.ms2_delivery_cost').text(delivery_id == 6 ? stik_order_delivery_free : stik_order_delivery_not_calculated);
+                let is_free = $('input[name="delivery"]:checked').hasClass('free-delivery');
+                $('.ms2_delivery_cost').text(is_free ? stik_order_delivery_free : stik_order_delivery_not_calculated);
                 // $('#city, #index').addClass('error');
             }
             
@@ -276,7 +273,9 @@ $(document).ready(function() {
             fbq('track', 'Purchase', { currency: "RUB", value: orderCost.toFixed(2) }, {eventID: response.data.msorder});
         });*/
         
-        // checkDeliveryFields();
+        setTimeout(function() {
+            checkDeliveryFields();
+        }, 2000);
     }
     
     

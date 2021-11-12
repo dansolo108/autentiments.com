@@ -81,14 +81,21 @@ class msDeliveryHandlerStikRp extends msDeliveryHandler implements msDeliveryInt
         // $this->modx->log(1, print_r($response,1));
         if ($success && isset($response['total-rate'])) {
             $delivery_cost = number_format($response['total-rate'] / 100, 0, '.', ''); // переводим копейки в рубли
-            $cost = $cost + $delivery_cost;
+            
+            // бесплатная доставка по РФ в зависимости от настройки
+            if ($delivery->get('free_delivery_rf') == 1 && in_array(mb_strtolower($receiverCountry), ['россия','russian federation'])) {
+                //
+            } else {
+                $cost = $cost + $delivery_cost;
+                // увеличиваем стоимость доставки на 150р.
+                $cost += 150;
+            }
+
             $min = $max = 0;
             if (isset($response['delivery-time'])) {
                 $min = $response['delivery-time']['min-days'];
                 $max = $response['delivery-time']['max-days'];
             }
-            // увеличиваем стоимость доставки на 150р.
-            $cost += 150;
             return [$cost, $min, $max];
         } else {
             $modx->log(1, 'EMS error. CURLINFO_HTTP_CODE: ' . $httpCode . ' response: ' . print_r($response, 1));

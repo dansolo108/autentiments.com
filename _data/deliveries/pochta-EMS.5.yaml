@@ -3,7 +3,6 @@ name: 'Почта EMS'
 description: ''
 logo: ''
 rank: 4
-active: 0
 class: msDeliveryHandlerStikRp
 properties: null
 requires: 'country,city,index,street,building,name,surname,phone,email'

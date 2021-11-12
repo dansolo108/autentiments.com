@@ -8,3 +8,4 @@ properties: null
 requires: 'country,city,index,street,building,name,surname,phone,email'
 tariff: null
 slug: dhl
+show_on_ru: 0

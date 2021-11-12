@@ -10,20 +10,21 @@ static_file: core/components/ms2deliverycost/elements/chunks/item.tpl
 
 {*$costs | print*}
 {*$order | print*}
+{set $russia_arr = ['россия','russian federation']}
+{set $country_lower = $order.country | lower}
 {foreach $costs as $delivery index=$index}
-    {if ($language != 'en' && $delivery.delivery.id != 3) || ($language == 'en' && $delivery.delivery.id == 3)}
-        {var $checked = !$order.delivery && $index == 0 || $delivery.delivery.id == $order.delivery}
-        {if $delivery.delivery.id == 3 && $language == 'en'}
-            {var $checked = true}
-        {/if}
+    {* Бесплатная доставка у самовывоза и если включена опция по РФ *}
+    {set $is_free = ($delivery.delivery.id == 6 || ($delivery.delivery.free_delivery_rf == 1 && $country_lower | in : $russia_arr)) ? true : false}
+    {var $checked = !$order.delivery && $index == 0 || $delivery.delivery.id == $order.delivery}
+    {if $delivery.delivery.free_delivery_rf && ($country_lower | in : $russia_arr) || $language == 'ru' && $delivery.delivery.show_on_ru || $language == 'en' && $delivery.delivery.show_on_en}
         <div class="au-ordering__delivery-row">
             <input type="radio" name="delivery" value="{$delivery.delivery.id}" id="delivery_{$delivery.delivery.id}"
-                    class="custom-form__radio" data-payments="{$delivery.payments | json_encode}"
+                    class="custom-form__radio {$is_free ? 'free-delivery' : ''}" data-payments="{$delivery.payments | json_encode}"
                     {$checked ? 'checked' : ''}>
             <label class="custom-form__radio-label" for="delivery_{$delivery.delivery.id}">
                 <span class="au-ordering__delivery-name">{('stik_order_delivery_' ~ $delivery.delivery.id) | lexicon}</span>
                 <span class="au-ordering__delivery-info">
-                    {if $delivery.delivery.id == 6}
+                    {if $is_free}
                         {'stik_order_delivery_free' | lexicon}
                     {elseif $delivery.cost !== false}
                         {if $delivery.cost !== 0}

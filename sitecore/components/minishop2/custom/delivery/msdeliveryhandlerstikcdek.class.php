@@ -40,6 +40,7 @@ class msDeliveryHandlerStikCdek extends msDeliveryHandler implements msDeliveryI
         $tariff_code = $delivery->get('tariff') ?: 1;
         $total = $this->ms2->cart->status();
         $cart = $this->ms2->cart->get();
+        $receiverCountry = $orderData['country'];
         $receiverCity = $orderData['city'];
         $receiverIndex = $orderData['index'];
         $receiverCityId = $orderData['cdek_id'];
@@ -75,7 +76,14 @@ class msDeliveryHandlerStikCdek extends msDeliveryHandler implements msDeliveryI
         
         /** @var \CdekSDK\Responses\CalculationResponse $response */
         $delivery_cost = $response->getPrice();
-        $cost = $cost + $delivery_cost;
+        
+        // бесплатная доставка по РФ в зависимости от настройки
+        if ($delivery->get('free_delivery_rf') == 1 && in_array(mb_strtolower($receiverCountry), ['россия','russian federation'])) {
+            //
+        } else {
+            $cost = $cost + $delivery_cost;
+        }
+        
         $min = $response->getDeliveryPeriodMin();
         $max = $response->getDeliveryPeriodMax();
         

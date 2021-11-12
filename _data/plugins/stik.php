@@ -268,6 +268,9 @@ switch ($modx->event->name) {
                         });                
                     </script>");
         }
+        if ($page == 'settings') {
+            $modx->controller->addLastJavascript(MODX_ASSETS_URL.'components/minishop2CustomFields/msdelivery.js');
+        }
     break;
 
     case 'msOnGetStatusCart':
