@@ -16,13 +16,20 @@ properties: 'a:0:{}'
             {foreach json_decode($_modx->resource.home_banner, true) as $row}
               <a href="{$row.link ?: 'javascript:;'}" class="au-home__slide  swiper-slide">
                 <div class="au-home__slide-img-box">
-                  {if $row.video}
-                    <video class="au-home__video" webkit-playsinline playsinline autoplay loop muted poster="{$row.img ?: ''}">
-                      <source src="/assets/uploads/{$row.video}" type="video/mp4">
-                    </video>
-                  {else}
-                    {include 'picture' img=$row.img imgmob=$row.img_mob height=802 width=1440 heightmob=607 widthmob=375 class='au-home__slide-img'}
-                  {/if}
+                    {if $row.video_mob}
+                      <video class="au-home__video au-home__video-mobile" webkit-playsinline playsinline autoplay loop muted poster="{$row.img_mob ?: ''}">
+                        <source src="/assets/uploads/{$row.video_mob}" type="video/mp4">
+                      </video>
+                    {else}
+                      {include 'picture' imgmob=$row.img_mob heightmob=607 widthmob=375 class='au-home__slide-img au-home__slide-img-mobile'}
+                    {/if}
+                    {if $row.video}
+                      <video class="au-home__video au-home__video-desktop" webkit-playsinline playsinline autoplay loop muted poster="{$row.img ?: ''}">
+                        <source src="/assets/uploads/{$row.video}" type="video/mp4">
+                      </video>
+                    {else}
+                      {include 'picture' img=$row.img height=802 width=1440 class='au-home__slide-img au-home__slide-img-desktop'}
+                    {/if}
                 </div>
                 <div class="au-home__slide-text {$row.position}">
                   {if $row.subtitle}

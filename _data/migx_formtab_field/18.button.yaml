@@ -3,5 +3,5 @@ config_id: 3
 formtab_id: 3
 field: button
 caption: 'Текст кнопки баннера'
-pos: 6
+pos: 7
 sourceFrom: config

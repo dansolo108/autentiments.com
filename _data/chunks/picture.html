@@ -5,7 +5,7 @@ properties: 'a:0:{}'
 
 -----
 
-{if $img}
+{if $img || $imgmob}
     {set $prefix = $noprefix ? '' : '/assets/uploads/'}
     {if $img}
         {set $thumb = ($prefix ~ $img) | pthumb : ('w='~($width * 2)~'&h='~($height * 2)~'&zc=1&f=jpg')}

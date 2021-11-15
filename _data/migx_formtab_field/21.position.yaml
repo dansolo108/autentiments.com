@@ -3,7 +3,7 @@ config_id: 3
 formtab_id: 3
 field: position
 caption: Позиция
-pos: 8
+pos: 9
 inputTVtype: listbox
 sourceFrom: config
 inputOptionValues: По-центру==center||Слева==left||Справа==right

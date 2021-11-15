@@ -3,5 +3,5 @@ config_id: 3
 formtab_id: 3
 field: title
 caption: 'Заголовок баннера'
-pos: 5
+pos: 6
 sourceFrom: config

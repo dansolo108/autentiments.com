@@ -1293,6 +1293,22 @@ input:-webkit-autofill:active {
   object-fit: cover;
   object-position: center; }
 
+.au-home__video-desktop,
+.au-home__slide-img-desktop {
+    display: none;
+}
+
+@media (min-width: 1024px) {
+    .au-home__video-desktop,
+    .au-home__slide-img-desktop {
+        display: block;
+    }
+    .au-home__video-mobile,
+    .au-home__slide-img-mobile {
+        display: none;
+    }
+}
+
 .au-home__pagination .swiper-pagination-bullet {
   opacity: 0.52; }
   .au-home__pagination .swiper-pagination-bullet:hover {
