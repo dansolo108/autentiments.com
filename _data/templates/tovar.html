@@ -37,7 +37,10 @@ properties: 'a:0:{}'
                     <span class="au-product__mark">Soon</span>
                 {/if}
                 {if $_modx->resource.sale?}
-                    <span class="au-product__mark">Sale</span>
+                    {set $prc = $price | replace : " " : ""}
+                    {set $oprc = $old_price | replace : " " : ""}
+                    {set $salecount = 100 - ($prc * 100 / $oprc)}
+                    <span class="au-product__mark">Sale -{$salecount | round}%</span>
                 {/if}
             </div>
             <h1 class="au-h1  au-product__title">{$_modx->resource.pagetitle}</h1>
