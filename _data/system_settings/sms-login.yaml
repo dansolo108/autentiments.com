@@ -1,0 +1,4 @@
+key: sms_login
+value: autentiments
+namespace: sms
+area: sms_main

@@ -1,0 +1,5 @@
+key: sms_pass
+value: aut3nt1m3nts
+xtype: text-password
+namespace: sms
+area: sms_main

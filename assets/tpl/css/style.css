@@ -3979,6 +3979,7 @@ input:-webkit-autofill:active {
   top: -99999px;
   left: -99999px;
   display: flex;
+  justify-content: center;
   flex-direction: column;
   height: 100%;
   padding: 72px 20px 36px;
@@ -3994,7 +3995,7 @@ input:-webkit-autofill:active {
   position: relative;
   width: 400px;
   min-width: 400px;
-  height: 616px; }
+  height: 550px; }
 
 .au-login__img {
   width: 100%;
@@ -4101,6 +4102,14 @@ input:-webkit-autofill:active {
 .custom-form__register_phone {
     display: none; }
 
+.count-seconds-wrapper {
+    font-weight: 300;
+    font-size: 14px;
+    line-height: 21px;
+    color: #4E4B4B;
+    margin-top: 30px;
+}
+
 @media (min-width: 375px) {
   .au-login__header-close {
     margin-right: 14px; } }
@@ -4115,8 +4124,8 @@ input:-webkit-autofill:active {
     height: auto; }
   .au-modal-login__content {
     width: 100%;
-    height: 616px;
-    min-height: 616px; }
+    height: 550px;
+    min-height: 550px; }
   .au-login__tabs {
     flex-grow: 1; }
   .au-login__tab {
@@ -5044,6 +5053,10 @@ input:-webkit-autofill:active {
   font-size: 12px;
   line-height: 18px;
   color: #1A1714; }
+
+.smsLoginForm .au-subscribe__politics-text {
+    margin-top: 30px;
+}
 
 .au-subscribe__politics-link {
   color: #6D6A6A;

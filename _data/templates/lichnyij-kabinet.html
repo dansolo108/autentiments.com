@@ -77,7 +77,7 @@ properties: 'a:0:{}'
                 {'!UpdateProfile' | snippet : [
                     'preHooks' => 'dobHook',
                     'useExtended' => '0',
-                    'allowedFields' => 'name,surname,email,mobilephone,dob,country,city,zip,address,building,corpus,entrance,room',
+                    'allowedFields' => 'name,surname,email,dob,country,city,zip,address,building,corpus,entrance,room',
                     'validate' => 'email:email:required',
                     'submitVar' => 'login-updprof-btn',
                 ]}
@@ -108,7 +108,7 @@ properties: 'a:0:{}'
                             <span class="error_field">{$_modx->getPlaceholder('error.email')}</span>
                         </div>
                         <div class="custom-form__group custom-form__group_tel">
-                            <input class="custom-form__input{if $_modx->getPlaceholder('error.mobilephone')} error{/if}" type="tel" name="mobilephone" id="mobilephone"
+                            <input class="custom-form__input" type="text" name="mobilephone" id="mobilephone" disabled
                                 value="{$_modx->getPlaceholder('mobilephone')}" data-val="{$_modx->getPlaceholder('mobilephone')}"> 
                             <label class="custom-form__label" for="mobilephone">{'stik_profile_form_mobilephone' | lexicon}</label>
                             <span class="error_field">{$_modx->getPlaceholder('error.mobilephone')}</span>

@@ -1,0 +1,4 @@
+key: sms_code_message_tpl
+value: sms_code
+namespace: sms
+area: sms_main

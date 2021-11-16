@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<model package="sms" baseClass="xPDOObject" platform="mysql" defaultEngine="MyISAM" phpdoc-package="sms"
+       version="1.1">
+
+    <object class="extSms" table="sms" extends="xPDOSimpleObject">
+        <field key="sms_id" dbtype="varchar" precision="250" phptype="string" null="true" default=""/>
+        <field key="user_id" dbtype="int" precision="10" phptype="integer" null="false" default="0"/>
+        <field key="phone" dbtype="varchar" precision="250" phptype="string" null="true" default=""/>
+        <field key="message" dbtype="text" phptype="string" null="true" default=""/>
+        <field key="send" dbtype="tinyint" precision="1" phptype="boolean" null="false" default="0"/>
+        <field key="status" dbtype="int" precision="10" phptype="integer" null="false" default="0"/>
+        <field key="count" dbtype="int" precision="10" phptype="integer" null="false" default="0"/>
+        <field key="service" dbtype="varchar" precision="50" phptype="string" null="true" default=""/>
+        <field key="info" dbtype="text" phptype="string" null="true" default=""/>
+        <field key="properties" dbtype="text" phptype="json" null="true" default="[]"/>
+        <field key="ip" dbtype="varchar" precision="20" phptype="string" null="true" default="0.0.0.0"/>
+        <field key="client" dbtype="text" phptype="string" null="true" default=""/>
+        <field key="createdon" dbtype="datetime" phptype="string" null="false" default="0000-00-00 00:00:00"/>
+
+        <index alias="user_id" name="user_id" primary="false" unique="false" type="BTREE">
+            <column key="user_id" length="" collation="A" null="false"/>
+        </index>
+
+        <index alias="service" name="service" primary="false" unique="false" type="BTREE">
+            <column key="service" length="" collation="A" null="false"/>
+        </index>
+
+        <index alias="send" name="send" primary="false" unique="false" type="BTREE">
+            <column key="send" length="" collation="A" null="false"/>
+        </index>
+
+        <index alias="status" name="status" primary="false" unique="false" type="BTREE">
+            <column key="status" length="" collation="A" null="false"/>
+        </index>
+    </object>
+
+    <object class="extSmsCode" table="sms_code" extends="xPDOSimpleObject">
+        <field key="phone" dbtype="varchar" precision="250" phptype="string" null="true" default=""/>
+        <field key="code" dbtype="text" phptype="string" null="true" default=""/>
+        <field key="service" dbtype="varchar" precision="50" phptype="string" null="true" default=""/>
+        <field key="mode" dbtype="varchar" precision="250" phptype="string" null="true" default=""/>
+        <field key="properties" dbtype="text" phptype="json" null="true" default="[]"/>
+        <field key="ip" dbtype="varchar" precision="20" phptype="string" null="true" default="0.0.0.0"/>
+        <field key="client" dbtype="text" phptype="string" null="true" default=""/>
+        <field key="createdon" dbtype="datetime" phptype="string" null="false" default="0000-00-00 00:00:00"/>
+        <field key="used" dbtype="tinyint" precision="1" phptype="boolean" null="false" default="0"/>
+        <field key="attempt" dbtype="int" precision="10" phptype="integer" null="false" default="0"/>
+
+        <index alias="mode" name="mode" primary="false" unique="false" type="BTREE">
+            <column key="mode" length="" collation="A" null="false"/>
+        </index>
+    </object>
+
+</model>

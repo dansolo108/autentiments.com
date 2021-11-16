@@ -335,12 +335,30 @@ switch ($modx->event->name) {
             $msOrder->set('properties', $orderProperties);
         }
         break;
-        
+
+    case "msOnBeforeGetOrderCustomer":
+        // $modx->log(1, print_r($modx->event->returnedValues,1));
+        // $modx->log(1, print_r($modx->event->params,1));
+        $data = $order->get();
+        if (!empty($data['phone'])) {
+            $stikSms = $modx->getService('stikSms', 'stikSms', $modx->getOption('core_path').'components/stik/model/', []);
+            $c = $modx->newQuery('modUser');
+            $c->leftJoin('modUserProfile', 'Profile');
+            $filter['Profile.mobilephone'] = $stikSms->preparePhone($data['phone']);
+            $c->where($filter);
+            if ($user = $modx->getObject('modUser', $c)) {
+                $modx->log(1, $user->get('id'));
+                $scriptProperties['customer'] = $user;
+            }
+        }
+        break;
+
     case "msOnCreateOrder":
         // При первом заказе
         $total_orders = $modx->getCount('msOrder', ['user_id' => $msOrder->get('user_id')]);
         if ($total_orders == 1) {
             // Сохраняем в профайл пользователя поля из заказа
+            $stikSms = $modx->getService('stikSms', 'stikSms', $modx->getOption('core_path').'components/stik/model/', []);
             $msAddress = $msOrder->getOne('Address');
             $user = $modx->getObject('modUser', $msOrder->get('user_id'));
             $profile = $user->getOne('Profile');
@@ -349,7 +367,9 @@ switch ($modx->event->name) {
             $profile->set('name', $msAddress->get('name'));
             $profile->set('surname', $msAddress->get('surname'));
             $profile->set('fullname', $fullname);
-            // $profile->set('mobilephone', preg_replace("/[^0-9+]/", "", $msAddress->get('phone')));
+            if ($stikSms) {
+                $profile->set('mobilephone', $stikSms->preparePhone($msAddress->get('phone')));
+            }
             $profile->save();
             
             // Авторизуем пользователя

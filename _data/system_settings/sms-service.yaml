@@ -1,0 +1,4 @@
+key: sms_service
+value: smsc.ru
+namespace: sms
+area: sms_main

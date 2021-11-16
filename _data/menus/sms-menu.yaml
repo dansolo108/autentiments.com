@@ -1,0 +1,6 @@
+text: sms_menu
+parent: components
+action: controllers/main
+description: sms_menu_desc
+permissions: sms_view
+namespace: sms

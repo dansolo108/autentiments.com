@@ -6,7 +6,7 @@ properties: 'a:0:{}'
 
 -----
 
-$stikProductRemains = $modx->getService('stik','stikProductRemains', $modx->getOption('core_path').'components/stik/model/', []);
+$stikProductRemains = $modx->getService('stikProductRemains','stikProductRemains', $modx->getOption('core_path').'components/stik/model/', []);
 if (!($stikProductRemains instanceof stikProductRemains) || !$stikProductRemains->active) return '';
 
 switch ( $modx->event->name ) {

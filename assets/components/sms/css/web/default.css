@@ -1,0 +1,15 @@
+.sms-message-success {
+    background-color: green !important;
+}
+
+.sms-message-error {
+    background-color: brown !important;
+}
+
+.sms-message-info {
+    background-color: black !important;
+}
+
+.sms_code, .sms_code_btn {
+    display: none;
+}

@@ -1,0 +1,4 @@
+key: sms_code_life
+value: '1'
+namespace: sms
+area: sms_main

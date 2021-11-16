@@ -725,6 +725,22 @@ $(document).ready(function() {
             addPhoneLoyalty();
         }
     });
+    
+    if ($('#sms_phone')) {
+        maskPhone('#sms_phone', '+7 ___ ___-__-__');
+    }
+    if ('input[type=tel]') {
+        maskPhone('input[type=tel]', '+7 ___ ___-__-__');
+    }
+    
+    // disabled sms login submit
+    $('#sms_phone').on('input', function() {
+        if ($(this).val().length > 0) {
+            $('.js_sms_code_send').prop('disabled', false);
+        } else {
+            $('.js_sms_code_send').prop('disabled', true);
+        }
+    });
 });
 
 

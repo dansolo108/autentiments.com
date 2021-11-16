@@ -1,0 +1,4 @@
+key: sms_code_attempt
+value: '5'
+namespace: sms
+area: sms_main

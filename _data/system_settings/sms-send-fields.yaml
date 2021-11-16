@@ -1,0 +1,4 @@
+key: sms_send_fields
+value: 'id,phone,message,status,count,service,ip,createdon'
+namespace: sms
+area: sms_main

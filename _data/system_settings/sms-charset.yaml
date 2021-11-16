@@ -1,0 +1,4 @@
+key: sms_charset
+value: utf-8
+namespace: sms
+area: sms_main
