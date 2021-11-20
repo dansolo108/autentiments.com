@@ -149,4 +149,23 @@ class stikLoyalty
         }
         return 0;
     }
+    
+    public function userHasFirstOrderDiscount()
+    {
+        if ($this->modx->user->isAuthenticated() && $this->modx->getOption('stik_first_order_discount') > 0) {
+            $total_orders = $this->modx->getCount('msOrder', [
+                'user_id' => $this->modx->user->get('id')
+            ]);
+            if ($total_orders == 0) {
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    public function getFirstOrderDiscount(int $cost)
+    {
+        $firstOrderDiscount = $this->modx->getOption('stik_first_order_discount');
+        return $cost - ($cost / 100) * $firstOrderDiscount;
+    }
 }

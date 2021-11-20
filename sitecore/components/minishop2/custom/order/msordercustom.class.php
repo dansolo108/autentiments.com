@@ -263,6 +263,10 @@ class msOrderCustom extends msOrderHandler implements msOrderInterface
         
         $loyaltyAccrual = $stikLoyalty->getLoyaltyBonusAccrual($cart['total_cost']);
 
+        // скидка авторизованным пользователям на первый заказ
+        if ($stikLoyalty->userHasFirstOrderDiscount() === true) {
+            $cost = $stikLoyalty->getFirstOrderDiscount($cost);
+        }
         
         /** @var msDelivery $delivery */
         if (!empty($this->order['delivery']) && $delivery = $this->modx->getObject('msDelivery',

@@ -176,6 +176,12 @@ properties: 'a:0:{}'
                     <td class="au-cart__modal-td">{'stik_order_info_cart_cost' | lexicon}</td>
                     <td class="au-cart__modal-td"><span class="ms2_total_no_discount">{'!msMultiCurrencyPrice' | snippet : ['price' => $_modx->getPlaceholder('cart_total_cost')]}</span> {$_modx->getPlaceholder('msmc.symbol_right')}</td>
                 </tr>
+                {if $_modx->runSnippet('!userHasFirstOrderDiscount')}
+                    <tr class="au-cart__modal-tr total_discount_wrapper">
+                        <td class="au-cart__modal-td">{'stik_order_info_first_order_discount' | lexicon}</td>
+                        <td class="au-cart__modal-td">-<span class="">{$_modx->config.stik_first_order_discount}</span>%</td>
+                    </tr>
+                {/if}
                 <tr class="au-cart__modal-tr total_discount_wrapper" {if !$_modx->getPlaceholder('cart_discount')} style="display:none;"{/if}>
                     <td class="au-cart__modal-td">{'stik_order_info_discount' | lexicon}</td>
                     <td class="au-cart__modal-td">-<span class="ms2_total_discount_custom">{'!msMultiCurrencyPrice' | snippet : ['price' => $_modx->getPlaceholder('cart_discount')]}</span> {$_modx->getPlaceholder('msmc.symbol_right')}</td>
