@@ -59,7 +59,7 @@ $out = ['costs' => [], 'order' => [], 'language' => $language];
 
 foreach ($col as $delivery) {
     // в английской версии расчитываем только DHL
-    if ($language == 'en' && $delivery->get('id') != 3) continue;
+    // if ($language == 'en' && $delivery->get('id') != 3) continue;
     
     $paymentsArr = array();
     $payments = $delivery->getMany('Payments');
