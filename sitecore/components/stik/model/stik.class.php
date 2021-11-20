@@ -78,6 +78,7 @@ class stik
             $this->modx->log(modX::LOG_LEVEL_ERROR,
                 'An error occurred while trying to send the email: ' . $mail->mailer->ErrorInfo
             );
+            $mail->reset();
             return false;
         }
         $mail->reset();
