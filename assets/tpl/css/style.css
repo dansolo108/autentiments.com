@@ -826,6 +826,11 @@ input:-webkit-autofill:active {
   background: #AA9D8D;
   border-radius: 50%; }
 
+.au-header__favorite-number[data-value="0"],
+.au-header__favorite-number[data-value=""] {
+    display: none;
+}
+
 .au-header__cart-number {
     display: none; }
     
