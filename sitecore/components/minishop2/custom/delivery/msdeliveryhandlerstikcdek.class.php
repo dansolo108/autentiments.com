@@ -7,6 +7,7 @@ require_once MODX_CORE_PATH . 'components/stik_cdek/vendor/autoload.php';
 
 use CdekSDK\Requests;
 use CdekSDK\CdekClient;
+use CdekSDK\Common\AdditionalService;
 
 class msDeliveryHandlerStikCdek extends msDeliveryHandler implements msDeliveryInterface {
     /** @var modX $modx */
@@ -51,12 +52,13 @@ class msDeliveryHandlerStikCdek extends msDeliveryHandler implements msDeliveryI
         $request = new Requests\CalculationAuthorizedRequest();
         $request->setSenderCityPostCode($this->config['fromIndex'])
             ->setReceiverCityPostCode($receiverIndex)
+            ->addAdditionalService(AdditionalService::SERVICE_INSURANCE, $total['total_cost'])
             ->setTariffId($tariff_code)
             ->addPackage([
-                'weight' => 1,
-                'length' => 32,
-                'width'  => 21,
-                'height' => 21,
+                'weight' => 2,
+                'length' => 48,
+                'width'  => 36,
+                'height' => 12,
             ]);
             
         if ($receiverCityId) {
