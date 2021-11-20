@@ -103,7 +103,7 @@ properties: 'a:0:{}'
                         </div>
                         <div class="custom-form__group">
                             <input class="custom-form__input{if $_modx->getPlaceholder('error.email')} error{/if}" type="email" name="email" id="email"
-                                value="{$_modx->getPlaceholder('email')}" data-val="{$_modx->getPlaceholder('email')}"> 
+                                value="{$_modx->getPlaceholder('email') | filterFakeEmail}" data-val="{$_modx->getPlaceholder('email') | filterFakeEmail}"> 
                             <label class="custom-form__label" for="email">Email</label>
                             <span class="error_field">{$_modx->getPlaceholder('error.email')}</span>
                         </div>

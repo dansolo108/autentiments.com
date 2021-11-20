@@ -19,7 +19,7 @@ properties: 'a:0:{}'
                 <div class="custom-form__group">
                     <p class="au-entrance__text">{'stik_ss_form_caption' | lexicon}</p>
                     <span class="au-entrance__size">{'stik_ss_size' | lexicon} <span class="selected-size_js">XS</span></span>
-                    <input class="custom-form__input  au-subscribe__input" type="email" name="email" placeholder="Введите e-mail" value="{$_modx->user.email}" data-val="{$_modx->user.email}"> 
+                    <input class="custom-form__input  au-subscribe__input" type="email" name="email" placeholder="Введите e-mail" value="{$_modx->user.email | filterFakeEmail}" data-val="{$_modx->user.email | filterFakeEmail}"> 
                     <span class="error_email"></span>
                     <button class="au-btn  au-entrance__submit" type="submit">{'stik_ss_form_submit' | lexicon}</button>
                     <p class="au-subscribe__politics-text">{'stik_ss_form_agree1' | lexicon} <a class="au-subscribe__politics-link au-text-tab_js" href="policy">{'stik_ss_form_policy_link' | lexicon}</a></p>

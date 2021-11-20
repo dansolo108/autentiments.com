@@ -498,6 +498,13 @@ switch ($modx->event->name) {
             return false;
         });
         
+        $fenom->addModifier('filterFakeEmail', function ($input) {
+            if (stripos($input, 'autentiments.com') !== false) {
+                return '';
+            }
+            return $input;
+        });
+        
         $fenom->addModifier('priceFormat', function ($input, $no_space = false) use ($modx) {
             $input = str_replace(" ", "", $input);
             if ($input > 0) {

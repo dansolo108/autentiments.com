@@ -15,7 +15,7 @@ properties: 'a:0:{}'
         <span class="error_field error_name">[[+fi.error.name]]</span>
     </div>
     <div class="custom-form__group">
-        <input class="custom-form__input" type="email" name="email" id="email" value="{$_modx->user.email}" data-val="{$_modx->user.email}"> 
+        <input class="custom-form__input" type="email" name="email" id="email" value="{$_modx->user.email | filterFakeEmail}" data-val="{$_modx->user.email | filterFakeEmail}"> 
         <label class="custom-form__label" for="email">{'stik_form_pls_email' | lexicon}</label>
         <span class="error_field error_email">[[+fi.error.email]]</span>
     </div>
