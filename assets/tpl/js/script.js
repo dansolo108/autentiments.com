@@ -860,45 +860,48 @@ $(document).ready(function() {
 
 /* International Telephone Input */
 
-var telInput = $("input[type=tel]"),
-    errorMsg = $(".int-tel-error"),
-    errorMap = ["Неправильный номер", "Неверный код страны", "Слишком короткий", "Слишком длинный", "Неправильный номер"];
-
-// initialise plugin
-var iti = telInput.intlTelInput({
-    nationalMode: false,
-    formatOnDisplay: true,
-    autoHideDialCode: false,
-    initialCountry: "auto",
-    preferredCountries: ["ru", "by", "kz", "az", "uz", "am", "ge", "kg"],
-    geoIpLookup: function(callback) {
-        $.get('//ipinfo.io', function() {}, "jsonp").always(function(resp) {
-            var countryCode = (resp && resp.country) ? resp.country : "";
-            callback(countryCode);
-        });
-    },
-    utilsScript: "/assets/tpl/js/vendor/intl-tel-input/utils.js"
-});
-
-var reset = function() {
-    telInput.removeClass("error");
-    errorMsg.html('');
-};
-
-// on blur: validate
-telInput.on('blur keyup change', function() {
-    if ($.trim(telInput.val())) {
-        if (telInput.intlTelInput("isValidNumber")) {
-            reset();
+$("input[type=tel]").each(function (index) {
+    let telInput = $(this),
+        errorMsg = $(".int-tel-error"),
+        errorMap = ["Неправильный номер", "Неверный код страны", "Слишком короткий", "Слишком длинный", "Неправильный номер"];
+    
+    // initialise plugin
+    let iti = telInput.intlTelInput({
+        nationalMode: false,
+        formatOnDisplay: true,
+        autoHideDialCode: false,
+        initialCountry: "auto",
+        preferredCountries: ["ru", "by", "kz", "az", "uz", "am", "ge", "kg"],
+        geoIpLookup: function(callback) {
+            $.get('//ipinfo.io', function() {}, "jsonp").always(function(resp) {
+                let countryCode = (resp && resp.country) ? resp.country : "";
+                callback(countryCode);
+            });
+        },
+        utilsScript: "/assets/tpl/js/vendor/intl-tel-input/utils.js"
+    });
+    
+    let reset = function() {
+        telInput.removeClass("error");
+        errorMsg.html('');
+    };
+    
+    // on blur: validate
+    telInput.on('blur keyup change', function() {
+        if ($.trim(telInput.val())) {
+            if (telInput.intlTelInput("isValidNumber")) {
+                reset();
+            } else {
+                telInput.addClass("error");
+                let errorCode = telInput.intlTelInput("getValidationError");
+                errorMsg.html(errorMap[errorCode]);
+            }
         } else {
-            telInput.addClass("error");
-            var errorCode = telInput.intlTelInput("getValidationError");
-            errorMsg.html(errorMap[errorCode]);
+            reset();
         }
-    } else {
-        reset();
-    }
+    });
+    
+    // on keyup / change flag: reset
+    // telInput.on("keyup change", reset);
 });
 
-// on keyup / change flag: reset
-// telInput.on("keyup change", reset);
