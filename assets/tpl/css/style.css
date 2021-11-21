@@ -341,6 +341,10 @@ textarea {
   color: #6D6A6A;
   transition: all 0.2s ease-in-out; }
 
+.iti + .custom-form__label {
+  left: 52px;
+}
+
 .custom-form__input:disabled {
   -webkit-appearance: none;
   -webkit-text-fill-color: #999999;
@@ -5058,6 +5062,10 @@ input:-webkit-autofill:active {
   font-size: 12px;
   line-height: 18px;
   color: #1A1714; }
+
+.iti {
+    width: 100%;
+}
 
 .smsLoginForm .au-subscribe__politics-text {
     margin-top: 30px;

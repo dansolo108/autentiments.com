@@ -143,7 +143,12 @@ properties: 'a:0:{}'
                     {include 'stik.orderInput' form=$form field='name'}
                     {include 'stik.orderInput' form=$form field='surname'}
                     {include 'stik.orderInput' form=$form field='email'}
-                    {include 'stik.orderInput' form=$form field='phone'}
+                    <div class="custom-form__group  custom-form__group_phone">
+                        <input class="custom-form__input{('phone' in list $errors) ? ' error' : ''}"
+                            type="tel" name="phone" id="phone" placeholder="{'ms2_frontend_phone' | lexicon}"
+                            value="{if $form['phone'] && !('+' | in : $form['phone'])}+{/if}{$form['phone']}" data-val="{$form['phone']}">
+                        <span class="int-tel-error error_field"></span>
+                    </div>
                 </div>
                 
                 <div id="payments" class="au-ordering__row  au-ordering__row_payment" {if $_modx->config['cultureKey'] == 'ru'}style="display:none;"{/if}>
