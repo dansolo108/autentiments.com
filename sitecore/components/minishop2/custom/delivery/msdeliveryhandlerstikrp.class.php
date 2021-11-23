@@ -80,7 +80,7 @@ class msDeliveryHandlerStikRp extends msDeliveryHandler implements msDeliveryInt
         $success = in_array($httpCode, [200, 201, 204]) ? true : false;
         // $this->modx->log(1, print_r($response,1));
         if ($success && isset($response['total-rate'])) {
-            $delivery_cost = number_format($response['total-rate'] / 100, 0, '.', ''); // переводим копейки в рубли
+            $delivery_cost = round(number_format($response['total-rate'] / 100, 0, '.', '')); // переводим копейки в рубли и округляем
             
             // бесплатная доставка по РФ в зависимости от настройки
             if ($delivery->get('free_delivery_rf') == 1 && in_array(mb_strtolower($receiverCountry), ['россия','russian federation'])) {

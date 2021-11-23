@@ -176,7 +176,7 @@ class msDeliveryHandlerDhl extends msDeliveryHandler implements msDeliveryInterf
                 if ($delivery->get('free_delivery_rf') == 1 && in_array(mb_strtolower($country), ['россия','russian federation'])) {
                     //
                 } else {
-                    $cost = $cost + $xml->GetQuoteResponse->BkgDetails->QtdShp->ShippingCharge;
+                    $cost = $cost + round($xml->GetQuoteResponse->BkgDetails->QtdShp->ShippingCharge);
                 }
                 return [$cost, $date];
             } else {
