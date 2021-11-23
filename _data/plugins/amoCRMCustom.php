@@ -3,6 +3,7 @@ source: 1
 name: amoCRMCustom
 category: amocrm
 properties: 'a:0:{}'
+disabled: 1
 
 -----
 
