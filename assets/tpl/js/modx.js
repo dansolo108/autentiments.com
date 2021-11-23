@@ -380,6 +380,32 @@ $('#msProduct input.au-product__color-input').on('change', function () {
     reloadMsGallery($($this).val(), $($this).data('product'));
 });
 
+// цена оффера
+$(document).on('change', '#msProduct input.au-product__size-input', function () {
+    let id = $('#msProduct .ms2_form input[name=id]').val(),
+        color = $('input[name="options[color]"]:checked').val();
+    let $this = this;
+    $.post(window.location.href, {
+        stikpr_action: 'price/get',
+        language: $('html').attr('lang'),
+        product_id: id,
+        selected_color: color,
+        selected_size: $(this).val()
+        
+    }, function(data) {
+        data = JSON.parse(data);
+        if (data) {
+            $('.js_card_price span').html(miniShop2.Utils.formatPrice(msmcGetPrice(data.price)));
+            if (data.old_price > 0) {
+                $('.js_card_old_price').show();
+                $('.js_card_old_price span').html(miniShop2.Utils.formatPrice(msmcGetPrice(data.old_price)));
+            } else {
+                $('.js_card_old_price').hide();
+            }
+        }
+    });
+});
+
 // Переключение цвета в карточке товара
 $(document).on('change', 'input.au-card__color-input', function () {
     let $this = this,

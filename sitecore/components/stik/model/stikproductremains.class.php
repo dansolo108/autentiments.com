@@ -148,6 +148,28 @@ class stikProductRemains {
         return true;
     }
     
+    public function getOfferPrices(int $product_id, string $color, $size, int $store_id = 1) {
+        $output = [
+            'price' => 0,
+            'old_price' => 0,
+        ];
+        $remainsObject = $this->modx->getObject('stikRemains', [
+            'product_id' => $product_id,
+            'size' => $size,
+            'color' => $color,
+            'store_id' => $store_id,
+        ]);
+        if ($remainsObject->get('price') > 0) {
+            $output['price'] = $remainsObject->get('price');
+            $output['old_price'] = $remainsObject->get('old_price');
+        } else {
+            $msProduct = $this->modx->getObject('msProduct', $product_id);
+            $output['price'] = $msProduct->get('price');
+            $output['old_price'] = $msProduct->get('old_price');
+        }
+        return $output;
+    }
+    
     public function getStoreIdByCity($data_city) {
         $cacheManager = $this->modx->getCacheManager();
         $pickup_shops_json = $cacheManager->get('pickup_shops_json_' . $this->modx->getOption('cultureKey'));

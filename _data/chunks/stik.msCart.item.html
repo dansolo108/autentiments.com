@@ -35,9 +35,7 @@ properties: 'a:0:{}'
         <p class="au-cart__card-title">{$pagetitle}</p>
         <div class="au-card__price-box  au-card__cart-price">
             <span class="au-card__price price"><span>{'!msMultiCurrencyPrice' | snippet : ['price' => $price]}</span> {$_modx->getPlaceholder('msmc.symbol_right')}</span>
-            {if $old_price?}
-                <span class="au-card__price  au-card__price_old old_price" {if !$old_price}style="display:none;"{/if}><span>{'!msMultiCurrencyPrice' | snippet : ['price' => $old_price]}</span> {$_modx->getPlaceholder('msmc.symbol_right')}</span>
-            {/if}
+            <span class="au-card__price  au-card__price_old old_price" {if !$options.old_price}style="display:none;"{/if}><span>{'!msMultiCurrencyPrice' | snippet : ['price' => $options.old_price]}</span> {$_modx->getPlaceholder('msmc.symbol_right')}</span>
         </div>
         <div class="au-cart__row">
             <div class="au-cart__sub-row">
