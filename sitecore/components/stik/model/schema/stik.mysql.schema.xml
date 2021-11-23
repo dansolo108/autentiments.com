@@ -8,6 +8,8 @@
         <field key="size" dbtype="varchar" phptype="string" precision="100" null="false" default="" />
         <field key="color" dbtype="varchar" phptype="string" precision="100" null="false" default="" />
         <field key="remains" dbtype="int" precision="10" phptype="integer" null="false" default="0" />
+        <field key="price" dbtype="decimal" precision="12,2" phptype="float" null="true" default="0"/>
+        <field key="old_price" dbtype="decimal" precision="12,2" phptype="float" null="true" default="0"/>
         <field key="hide" dbtype="tinyint" precision="1" attributes="unsigned" phptype="integer" null="false" default="0" />
 
         <index alias="product_id" name="product_id" primary="false" unique="false" type="BTREE">

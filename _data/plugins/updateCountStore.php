@@ -90,6 +90,35 @@ switch ($modx->event->name) {
             $count = (int)str_replace('.0', '', $sklad['КоличествоНаСкладе']);
             $count = max($count, 0);
             
+            // устанавливаем цену для оффера и товара
+            if(count($xml->Цены->Цена) == 1){
+                foreach($xml->Цены->Цена as $item){
+                    $offer_price = (int)$item->ЦенаЗаЕдиницу;
+                    $offer_old_price = 0;
+                    $resource->set('price', $offer_price);
+                    $resource->set('old_price', 0);
+                }
+            } else if(count($xml->Цены->Цена) == 2) {
+                foreach($xml->Цены->Цена as $item){
+                    if((string)$item->ИдТипаЦены == 'cbcf493b-55bc-11d9-848a-00112f43529a'){
+                        $price = (int)$item->ЦенаЗаЕдиницу;
+                    } else if((string)$item->ИдТипаЦены == 'dc9f4294-866f-45bb-8e9d-b589a7aee0ef'){
+                        $discount_price = (int)$item->ЦенаЗаЕдиницу;
+                    }
+                }
+                if ($discount_price > 0) {
+                    $offer_price = $discount_price;
+                    $offer_old_price = $price;
+                    $resource->set('price', $discount_price);
+                    $resource->set('old_price', $price);
+                } else {
+                    $offer_price = $price;
+                    $offer_old_price = 0;
+                    $resource->set('price', $price);
+                    $resource->set('old_price', 0);
+                }
+            }
+            
             // $modx->log(1, 'product-'.$resource->get('id') . ' - ' . $count . ' - ' . $size . ' - ' . $color);
             if(!empty($size)){
                 $stikProductRemains->saveRemains([
@@ -98,6 +127,8 @@ switch ($modx->event->name) {
                     'size' => $size,
                     'color' => $color,
                     'count' => $count,
+                    'price' => $offer_price,
+                    'old_price' => $offer_old_price,
                     'set' => true
                 ]);
             }
@@ -137,29 +168,6 @@ switch ($modx->event->name) {
                 }
             }
         }
-        
-        if(count($xml->Цены->Цена) == 1){
-            foreach($xml->Цены->Цена as $item){
-                $resource->set('price', (int)$item->ЦенаЗаЕдиницу);
-                $resource->set('old_price', 0);
-            }
-        } else if(count($xml->Цены->Цена) == 2) {
-            foreach($xml->Цены->Цена as $item){
-                if((string)$item->ИдТипаЦены == 'cbcf493b-55bc-11d9-848a-00112f43529a'){
-                    $price = (int)$item->ЦенаЗаЕдиницу;
-                } else if((string)$item->ИдТипаЦены == 'dc9f4294-866f-45bb-8e9d-b589a7aee0ef'){
-                    $discount_price = (int)$item->ЦенаЗаЕдиницу;
-                }
-            }
-            if ($discount_price > 0) {
-                $resource->set('price', $discount_price);
-                $resource->set('old_price', $price);
-            } else {
-                $resource->set('price', $price);
-                $resource->set('old_price', 0);
-            }
-        }
-        
         
         $sizes = array_unique($sizes);
         $colors = array_unique($colors);

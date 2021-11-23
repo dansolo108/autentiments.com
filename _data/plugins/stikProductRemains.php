@@ -88,6 +88,17 @@ switch ( $modx->event->name ) {
 		$count = $modx->getOption('count', $scriptProperties);
 		$remains = $stikProductRemains->getRemains(array_merge($options,array('id'=>$product->get('id'),'strong'=>true)));
         $values = $modx->event->returnedValues;
+        // устанавливаем цену оффера
+        $remainsObject = $modx->getObject('stikRemains', array(
+            'product_id' => $product->get('id'),
+            'size' => $options['size'],
+            'color' => $options['color'],
+            'store_id' => $options['store'] ?: 1,
+        ));
+        if ($remainsObject->get('price') > 0) {
+            $product->set('price', $remainsObject->get('price'));
+            $product->set('old_price', $remainsObject->get('old_price'));
+        }
         $values['options'] = array_merge($options, ['max_count' => $remains]);
         $modx->event->returnedValues = $values;
 		if ( $remains < $count )

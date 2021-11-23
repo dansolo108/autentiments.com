@@ -104,6 +104,8 @@ class stikProductRemains {
         $color = (string) $this->modx->getOption('color', $scriptProperties, null);
         $store = (int) $this->modx->getOption('store_id', $scriptProperties, 1); // id склада
         $count = (string) $this->modx->getOption('count', $scriptProperties, null);
+        $price = (float) $this->modx->getOption('price', $scriptProperties, 0);
+        $old_price = (float) $this->modx->getOption('old_price', $scriptProperties, 0);
         $set = (bool) $this->modx->getOption('set', $scriptProperties, false);
         if (empty($product_id) || is_null($count)) return false;
         $where = array();
@@ -113,15 +115,19 @@ class stikProductRemains {
             'color' => $color,
             'store_id' => $store,
         ));
-        if (isset($rem)) {
+        if (!empty($rem)) {
             $rem->set('remains', ($set ? intval($count) : $rem->get('remains')+intval($count)));
+            $rem->set('price', $price);
+            $rem->set('old_price', $old_price);
         } else {
             $rem = $this->modx->newObject('stikRemains', array(
                 'product_id' => $product_id,
                 'size' => $size,
                 'color' => $color,
                 'store_id' => $store,
-                'remains' => intval($count)
+                'remains' => intval($count),
+                'price' => $price,
+                'old_price' => $old_price,
             ));
         }
         $mode = ( $rem->get('id') > 0 ) ? 'upd' : 'new';
