@@ -870,7 +870,7 @@ $("input[type=tel]").each(function (index) {
         nationalMode: false,
         formatOnDisplay: true,
         autoHideDialCode: false,
-        initialCountry: "auto",
+        initialCountry: "ru",
         preferredCountries: ["ru", "by", "kz", "az", "uz", "am", "ge", "kg"],
         geoIpLookup: function(callback) {
             $.get('//ipinfo.io', function() {}, "jsonp").always(function(resp) {

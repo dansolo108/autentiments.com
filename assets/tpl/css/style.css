@@ -5067,7 +5067,7 @@ input:-webkit-autofill:active {
     width: 100%;
 }
 
-.smsLoginForm .custom-form__group {
+.smsLoginForm .custom-form__group.js_sms_phone {
     display: flex;
 }
 
