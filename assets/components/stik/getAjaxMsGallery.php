@@ -15,13 +15,27 @@ if (!$color || !$product) exit();
 $modx->setLogLevel(modX::LOG_LEVEL_ERROR);
 $modx->getService('error','error.modError');
 
-
-print $modx->runSnippet('msGallery', [
+$output = $modx->runSnippet('msGallery', [
     'product' => $product,
     'tpl' => $mode == 'card' ? 'stik.msGallery.card' : 'stik.msGallery',
     'where' => [
         'description' => $color,
     ],
 ]);
+
+if ($mode == 'card') {
+    $tmp = $output;
+    $prices = $modx->runSnippet('getColorPrice', [
+        'id' => $product,
+        'color' => $color,
+        'tpl' => 'stik.cardPrices.tpl'
+    ]);
+    $output = json_encode([
+        'gallery' => $tmp,
+        'prices' => $prices,
+    ]);
+}
+
+print $output;
 
 @session_write_close(); exit();

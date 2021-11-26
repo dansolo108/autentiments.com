@@ -46,8 +46,10 @@ properties: 'a:0:{}'
             <h1 class="au-h1  au-product__title">{$_modx->resource.pagetitle}</h1>
             <div class="au-card__row">
                 <div class="au-card__price-box">
-                    <span class="au-card__price js_card_price"><span>{'!msMultiCurrencyPrice' | snippet : ['price' => $price]}</span> {$_modx->getPlaceholder('msmc.symbol_right')}</span>
-                    <span class="au-card__price  au-card__price_old js_card_old_price" {if !$old_price}style="display:none;"{/if}><span>{'!msMultiCurrencyPrice' | snippet : ['price' => $old_price]}</span> {$_modx->getPlaceholder('msmc.symbol_right')}</span>
+                    {'!getColorPrice' | snippet : [
+                        'id' => $id
+                        'tpl' => 'stik.productPrices.tpl'
+                    ]}
                 </div>
                 <a class="au-product__like msfavorites" href="" aria-label="Добавить в избранное" data-click="" data-data-list="default" data-data-type="resource" data-data-key="{$_modx->resource.id}">
                     <svg width="24" height="21" viewBox="0 0 24 21" fill="none" xmlns="http://www.w3.org/2000/svg">

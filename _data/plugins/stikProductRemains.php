@@ -317,7 +317,9 @@ switch ( $modx->event->name ) {
 			    $id = (int)$_POST['product_id'];
 			    $color = htmlspecialchars($_POST['selected_color']);
 			    $size = htmlspecialchars($_POST['selected_size']);
-                $response = json_encode($stikProductRemains->getOfferPrices($id, $color, $size));
+			    if ($id && $color && $size) {
+                    $response = json_encode($stikProductRemains->getOfferPrices($id, $color, $size));
+			    }
 				break;
 		}
 		if ($isAjax) {

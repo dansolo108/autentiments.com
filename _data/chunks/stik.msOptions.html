@@ -20,11 +20,19 @@ static_file: core/components/minishop2/elements/chunks/chunk.ms_options.tpl
                         {$_modx->setPlaceholder('first_color', $value)}
                     {/if}
                     <div class="au-product__color-item">
-                        <input class="au-product__color-input" type="radio" name="options[{$name}]" value="{$value}" data-product="{$_modx->resource.id}" id="color_{$colorId}" {if $index == 0}checked{/if}>
-                        <label class="au-product__color  {if $index == 0}active{/if}" for="color_{$colorId}" style="background: {$hex};" {if $hex == '#ffffff'}data-color="white"{/if} title="{('stik_color_'~$colorId) | lexicon}"></label>
+                        <input class="au-product__color-input" type="radio" name="options[{$name}]"
+                            value="{$value}" data-product="{$_modx->resource.id}" id="color_{$colorId}"
+                            {if ($index == 0 && !$.get['color']) || ($.get['color'] == $value)}checked{/if}>
+                        <label class="au-product__color  {if $index == 0}active{/if}" for="color_{$colorId}"
+                            style="background: {$hex};" {if $hex == '#ffffff'}data-color="white"{/if}
+                                title="{('stik_color_'~$colorId) | lexicon}">
+                        </label>
                     </div>
                 {/foreach}
             </div>
         </div>
     {/if}
 {/foreach}
+{if $.get['color']}
+    {$_modx->setPlaceholder('first_color', $.get['color'])}
+{/if}

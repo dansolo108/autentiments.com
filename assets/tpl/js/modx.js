@@ -83,6 +83,12 @@ function hideLoading() {
     $('.ajax-loader-block').removeClass('loading');
 }
 
+function selectFirstSize() {
+    if ($('#msProduct label.au-product__size')) {
+        $('#msProduct label.au-product__size').first().trigger('click');
+    }
+}
+
 // Переключение цветов в галерее товара
 function reloadMsGallery(color, product) {
     if ($('#msGallery').length) {
@@ -100,8 +106,14 @@ function changeCardColor(color, product) {
     if ($('.js_card-img-'+product).length) {
         $('.js_card-img-'+product).addClass('fade');
         $.post("/assets/components/stik/getAjaxMsGallery.php", {color: color, product: product, mode: 'card'}, function(data) {
+            data = $.parseJSON(data);
             if (data) {
-                $('.js_card-img-'+product).html(data);
+                if (data.gallery) {
+                    $('.js_card-img-'+product).html(data.gallery);
+                }
+                if (data.prices) {
+                    $('.js_card-prices-'+product).html(data.prices);
+                }
             }
             $('.js_card-img-'+product).removeClass('fade');
         });
@@ -144,7 +156,6 @@ $(document).ready(function() {
         miniShop2.Callbacks.add('Cart.remove.response.success', 'stik', function(response) {
             $('.ms2_total_no_discount').text(miniShop2.Utils.formatPrice(response.data.real_total_cost));
             calcRealTotalCost();
-            console.log('remove');
             if ($('.msOrder').length) {
                 miniShop2.Order.getcost();
             }
@@ -373,6 +384,7 @@ $('#msProduct input.au-product__color-input').on('change', function () {
     }, function(data) {
         if (data) {
             $('#ajax_sizes').html(data);
+            selectFirstSize();
         }
     });
     $('.au-product__add-entrance').removeClass('active');
@@ -380,17 +392,21 @@ $('#msProduct input.au-product__color-input').on('change', function () {
     reloadMsGallery($($this).val(), $($this).data('product'));
 });
 
+$(document).ready(function() {
+    selectFirstSize();
+});
+
 // цена оффера
-$(document).on('change', '#msProduct input.au-product__size-input', function () {
+$(document).on('click', '#msProduct label.au-product__size', function () {
     let id = $('#msProduct .ms2_form input[name=id]').val(),
-        color = $('input[name="options[color]"]:checked').val();
-    let $this = this;
+        color = $('input[name="options[color]"]:checked').val(),
+        size = $(this).siblings('input').val();
     $.post(window.location.href, {
         stikpr_action: 'price/get',
         language: $('html').attr('lang'),
         product_id: id,
         selected_color: color,
-        selected_size: $(this).val()
+        selected_size: size
         
     }, function(data) {
         data = JSON.parse(data);
