@@ -14,6 +14,7 @@ properties: 'a:0:{}'
 <link>{'site_url' | config}</link>
 {set $site_url = ('site_url' | option) | preg_replace : '#/$#' : ''}
 {$_modx->setPlaceholder('site_url_pls', $site_url)}
+{$_modx->setPlaceholder('id_postfix_pls', $_modx->config['cultureKey'] == 'ru' ? '' : $_modx->config['cultureKey'])}
 {'!msProducts' | snippet : [
     'parents' => 7,
     'level' => 10,

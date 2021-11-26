@@ -8,7 +8,7 @@ properties: 'a:0:{}'
 -----
 
 <item>
-    <g:id>{$id}</g:id>
+    <g:id>{$id}{$_modx->getPlaceholder('id_postfix_pls')}</g:id>
     <g:item_group_id>{$article ?: $id}</g:item_group_id>
     <link>{$id | url : ["scheme" => "full"]}</link>
     <g:price>{$price | replace : " " : ""} RUB</g:price>
