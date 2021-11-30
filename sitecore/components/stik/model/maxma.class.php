@@ -8,13 +8,14 @@ class maxma {
     /* @var modX $modx */
     public $modx;
     public $namespace = 'stik';
-    public $config = array();
+    public $config = [];
+    public $userphone;
 
     /**
      * @param modX $modx
      * @param array $config
      */
-    function __construct (modX &$modx, array $config = array()) {
+    function __construct (modX &$modx, array $config = []) {
         $this->modx =& $modx;
         $this->namespace = $this->modx->getOption('namespace', $config, 'stik');
         $corePath = $this->modx->getOption('core_path') . 'components/stik/';
@@ -52,7 +53,7 @@ class maxma {
         if ($user = $this->modx->getUser()) {
             if ($profile = $user->getOne('Profile')) {
                 if ($profile->get('mobilephone') && $profile->get('join_loyalty')) {
-                    $this->userphone = preg_replace('/[^0-9+]/', '', $profile->get('mobilephone'));
+                    $this->userphone = $this->preparePhone($profile->get('mobilephone'));
                 }
             }
         }
@@ -60,32 +61,37 @@ class maxma {
 
     // Создание нового клиента
     public function createNewClient(array $data) {
-        $params = [
-            'client' => $data
-            // [
-            //     'phoneNumber' => '+79514877500',
-            //     'email' => 'ig0r74@yandex.com',
-            //     'surname' => 'Терентьев',
-            //     'name' => 'Игорь',
-            //     'externalId' => '5',
-            // ]
-        ];
+        if (!empty($params['phoneNumber'])) {
+            $client = $this->getClientInfo($data['phoneNumber'], 'phoneNumber');
+        }
+        if (!$client) {
+            $params = [
+                'client' => $data
+                // [
+                //     'phoneNumber' => '+79514877500',
+                //     'email' => 'ig0r74@yandex.com',
+                //     'surname' => 'Терентьев',
+                //     'name' => 'Игорь',
+                //     'externalId' => '5',
+                // ]
+            ];
+            
+            $response = $this->modRestClient->post('new-client', $params);
+            $client = $response->process();
+        }
         
-        $response = $this->modRestClient->post('new-client', $params);
-        $data = $response->process();
-        
-        if (isset($data['errorCode'])) {
-            $this->modx->log(1, 'Maxma createNewClient error: ' . print_r($data, 1));
+        if (isset($client['errorCode'])) {
+            $this->modx->log(1, 'Maxma createNewClient error: ' . print_r($client, 1));
             return false;
         } else {
-            return $data;
+            return $client;
         }
     }
 
     // Получает общую информацию о клиенте
     public function getClientInfo(string $input, string $type = 'phoneNumber') {
         if (!in_array($type, ['phoneNumber', 'externalId', 'card']) || !$input) return false;
-        if ($type == 'phoneNumber') $input = preg_replace('/[^0-9+]/', '', $input);
+        if ($type == 'phoneNumber') $input = $this->preparePhone($input);
         
         $params = [];
         $params[$type] = $input;
@@ -113,7 +119,18 @@ class maxma {
         return $data['client']['bonuses'] ?: 0;
     }
     
-    // Обновляет информацию о клиенте. Доступные параметры https://docs.maxma.com/api/#tag/Rabota-s-klientskoj-bazoj/paths/~1update-client/post
+    // Преобразование телефона к единому виду
+    public function preparePhone($phone) {
+        $phone = preg_replace('/[^0-9+]/', '', $phone);
+        return $phone;
+    }
+    
+    public function setUserphone($phone) {
+        $this->userphone = $this->preparePhone($phone);
+    }
+    
+    // Обновляет информацию о клиенте.
+    // Доступные параметры https://docs.maxma.com/api/#tag/Rabota-s-klientskoj-bazoj/paths/~1update-client/post
     public function updateClient(array $data) {
         $params['client'] = $data;
         $params['phoneNumber'] = $this->userphone;
@@ -162,15 +179,15 @@ class maxma {
     }
     
     // Создание/изменение заказа
-    public function setOrder(string $order_id, int $bonuses, string $action) {
+    public function setOrder(int $order_id, int $bonuses, string $action) {
         if (!in_array($action, ['collect', 'apply']) || !$this->userphone) return false;
         $order = $this->modx->getObject('msOrder', $order_id);
         if (!$order) return false;
-        
+
         $params = [];
         $params['client']['phoneNumber'] = $this->userphone;
         $params['order'] = [
-            'id' => $order_id,
+            'id' => (string) $order_id,
             'shopCode' => $this->config['shopCode'],
             'shopName' => $this->config['shopName'],
             'totalAmount' => $order->get('cost'),
@@ -230,10 +247,11 @@ class maxma {
     public function returnOrder(string $order_id) {
         $order = $this->modx->getObject('msOrder', $order_id);
         if (!$order) return false;
+        $address = $order->getOne('Address');
         
         $params = [];
         $params['transaction'] = [
-            'phoneNumber' => $this->userphone,
+            'phoneNumber' => $address->get('phone'),
             'id' => $order_id,
             'executedAt' => date("c"),
             'purchaseId' => $order_id,

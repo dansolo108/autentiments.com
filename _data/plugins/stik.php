@@ -347,7 +347,6 @@ switch ($modx->event->name) {
             $filter['Profile.mobilephone'] = $stikSms->preparePhone($data['phone']);
             $c->where($filter);
             if ($user = $modx->getObject('modUser', $c)) {
-                $modx->log(1, $user->get('id'));
                 $scriptProperties['customer'] = $user;
             }
         }

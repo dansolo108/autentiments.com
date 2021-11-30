@@ -65,6 +65,8 @@ switch($modx->event->name) {
         $user = $modx->getObject('modUser', $msOrder->get('user_id'));
         $profile = $user->getOne('Profile');
         
+        $maxmaClient = $maxma->getClientInfo($data['phone'], 'phoneNumber');
+        
         if (isset($_POST['join_loyalty']) && $_POST['join_loyalty'] == 1) {
             $properties['join_loyalty'] = 1;
             
@@ -82,8 +84,8 @@ switch($modx->event->name) {
                 ]);
             }
         }
-        if ($maxma->userphone) {
-            if ($data && !empty($data['msloyalty'])) {
+        if ($maxma->userphone || $maxmaClient) {
+            if ($data && !empty($data['msloyalty']) && $maxma->userphone) {
                 // $currency = (float)$modx->getPlaceholder('msmc.val');
                 // $data['msloyalty'] = ceil($data['msloyalty'] * $currency);
                 if ($maxma->checkBonuses($data['msloyalty']) === true) {
@@ -91,6 +93,9 @@ switch($modx->event->name) {
                     $maxma->setOrder($msOrder->get('id'), $data['msloyalty'], 'apply'); // создаем заказ и резервируем бонусы
                 }
             } else {
+                if (!empty($maxmaClient['client']['phoneNumber'])) {
+                    $maxma->setUserphone($maxmaClient['client']['phoneNumber']);
+                }
                 $stikLoyalty = $modx->getService('stik_loyalty', 'stikLoyalty', $modx->getOption('core_path').'components/stik/model/', []);
                 if (!($stikLoyalty instanceof stikLoyalty)) return '';
                 
