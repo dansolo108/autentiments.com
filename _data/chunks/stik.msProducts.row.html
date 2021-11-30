@@ -14,9 +14,11 @@ properties: 'a:0:{}'
 {/block}
 
 {set $availableColors = '!getAvailableColors' | snippet : [
-    'tpl' => 'stik.msOptions.card'
-    'id' => $id
+    'tpl' => 'stik.msOptions.card',
+    'id' => $id,
 ]}
+
+{set $firstColor = $_modx->getPlaceholder('first_color') ?: $color[0]}
 
 <div class="{$wrapper_classes}" id="product-{$id}">
     <a class="au-card__like msfavorites" href="" aria-label="Добавить в избранное" data-click data-data-list="default" data-data-type="resource" data-data-key="{$id}" {if $_modx->resource.template == 5}data-msfavorites-mode="list"{/if}></a>
@@ -27,7 +29,7 @@ properties: 'a:0:{}'
                     'product' => $id,
                     'tpl' => 'stik.msGallery.card',
                     'where' => [
-                        'description' => $_modx->getPlaceholder('first_color') ?: $color[0],
+                        'description' => $firstColor,
                     ],
                 ]}
             </div>
@@ -53,8 +55,9 @@ properties: 'a:0:{}'
             <span class="au-card__title">{$pagetitle}</span>
             <div class="au-card__price-box js_card-prices-{$id}">
                 {'!getColorPrice' | snippet : [
-                    'id' => $id
-                    'tpl' => 'stik.cardPrices.tpl'
+                    'id' => $id,
+                    'color' => $firstColor,
+                    'tpl' => 'stik.cardPrices.tpl',
                 ]}
             </div>
         </div>

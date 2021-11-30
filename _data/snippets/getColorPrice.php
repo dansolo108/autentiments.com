@@ -24,6 +24,8 @@ if (!$color) {
 $remain = $modx->getObject('stikRemains', array(
     'product_id' => $product_id,
     'color' => $color,
+    'price:>' => 0,
+    'hide' => 0,
 ));
 
 if ($remain) {
