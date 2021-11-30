@@ -105,6 +105,10 @@ data:
         primary:
             - name
             - id
+        exclude_keys:
+            - show_on_ru
+            - free_delivery_rf
+            - show_on_en
     payments:
         class: msPayment
         primary:

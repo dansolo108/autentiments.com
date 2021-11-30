@@ -8,4 +8,3 @@ properties: null
 requires: 'name,surname,phone,email'
 tariff: null
 slug: null
-show_on_en: 0
