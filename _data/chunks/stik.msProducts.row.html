@@ -39,10 +39,10 @@ properties: 'a:0:{}'
                         <span class="au-card__mark">New</span>
                     {/if}
                     {if $sale?}
-                        {set $prc = $price | replace : " " : ""}
-                        {set $oprc = $old_price | replace : " " : ""}
-                        {set $salecount = 100 - ($prc * 100 / $oprc)}
-                        <span class="au-card__mark">Sale -{$salecount | round}%</span>
+                        {set $discount = $old_price | discount : $price}
+                        {if $discount > 0}
+                            <span class="au-card__mark">Sale -{$discount}%</span>
+                        {/if}
                     {/if}
                     {if $soon?}
                         <span class="au-card__mark">Soon</span>

@@ -488,13 +488,15 @@ switch ($modx->event->name) {
         });
         
         $fenom->addModifier('discount', function ($old_price, $price) {
+            $discount = 0;
             if ($old_price && $price) {
                 $old_price = str_replace(' ', '', $old_price);
                 $price = str_replace(' ', '', $price);
-                $discount = (($old_price - $price)/$old_price)*100;
-                return round($discount);
+                if ($old_price > $price) {
+                    $discount = (($old_price - $price)/$old_price)*100;
+                }
             }
-            return false;
+            return round($discount);
         });
         
         $fenom->addModifier('filterFakeEmail', function ($input) {
