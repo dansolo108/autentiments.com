@@ -163,7 +163,7 @@ $(document).ready(function() {
         
         miniShop2.Callbacks.add('Cart.add.response.success', 'stik', function(response) {
             showAjaxCart();
-            // dataLayer.push({'event': 'add_cart'});
+            ym(86113805,'reachGoal','add_to_cart');
         });
 
         miniShop2.Callbacks.add('Order.add.response.success', 'stik', function(response) {
@@ -278,11 +278,12 @@ $(document).ready(function() {
             }
         });
         
-        /*miniShop2.Callbacks.add('Order.submit.response.success', 'stik', function(response) {
-            const orderCost = parseFloat($('.ms2_order_cost').first().text().replace(" ", ""));
-            dataLayer.push({'event': 'order'});
-            fbq('track', 'Purchase', { currency: "RUB", value: orderCost.toFixed(2) }, {eventID: response.data.msorder});
-        });*/
+        miniShop2.Callbacks.add('Order.submit.response.success', 'stik', function(response) {
+            // const orderCost = parseFloat($('.ms2_order_cost').first().text().replace(" ", ""));
+            ym(86113805,'reachGoal','do_zakaz');
+            fbq('track', 'Purchase', {value: 0.00, currency: 'RUB'}); 
+            // fbq('track', 'Purchase', { currency: "RUB", value: orderCost.toFixed(2) }, {eventID: response.data.msorder});
+        });
         
         setTimeout(function() {
             checkDeliveryFields();

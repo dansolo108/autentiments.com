@@ -42,3 +42,8 @@ static_file: core/components/minishop2/elements/chunks/chunk.ms_get_order.tpl
 <div class="au-payment-end__link-box">
     <a class="au-btn  au-payment-end__link" href="/">{'stik_order_home_link' | lexicon}</a>
 </div>
+{if $order.status == 2}
+    <script>
+        ym(86113805,'reachGoal','buyAndPay');
+    </script>
+{/if}
