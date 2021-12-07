@@ -83,7 +83,7 @@ class msOrderCustom extends msOrderHandler implements msOrderInterface
         if (
             $delivery_cost <= 0 &&
             $this->order['delivery'] != 6 &&
-            ($delivery->get('free_delivery_rf') != 1 && !in_array(mb_strtolower($this->order['country']), ['россия','russian federation']))
+            ($delivery->get('free_delivery_rf') != 1 || !in_array(mb_strtolower($this->order['country']), ['россия','russian federation']))
         ) {
             return $this->error('stik_delivery_error_text');
         }
