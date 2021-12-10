@@ -216,7 +216,7 @@ switch ($modx->event->name) {
                         $size = $req->Значение;
                     }
                     if ($req->Наименование == 'Цвет') {
-                        $color = $req->Значение;
+                        $color = str_replace(['ё','Ё'], ['е','Е'], $req->Значение);
                     }
                 }
                 if (!$size || !$color) continue;
@@ -233,7 +233,7 @@ switch ($modx->event->name) {
                     $Options = $offer->getMany('Options');
                     foreach ($Options as $option) {
                         if ($option->get('value') == $size) $sMatch = true;
-                        if ($option->get('value') == $color) $cMatch = true;
+                        if (str_replace(['ё','Ё'], ['е','Е'], $option->get('value')) == $color) $cMatch = true;
                     }
                     if ($sMatch === true && $cMatch === true) $product->Ид = $offer->get('uuid_1c');
                 }
