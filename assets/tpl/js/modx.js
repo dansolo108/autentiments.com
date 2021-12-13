@@ -266,6 +266,11 @@ $(document).ready(function() {
         miniShop2.Callbacks.add('Order.submit.response.success', 'stik', function(response) {
             // убираем прелоадер
             hideLoading();
+            
+            // const orderCost = parseFloat($('.ms2_order_cost').first().text().replace(" ", ""));
+            ym(86113805,'reachGoal','do_zakaz');
+            fbq('track', 'Purchase', {value: 0.00, currency: 'RUB'}); 
+            // fbq('track', 'Purchase', { currency: "RUB", value: orderCost.toFixed(2) }, {eventID: response.data.msorder});
         });
         
         miniShop2.Callbacks.add('Order.submit.response.error', 'stik', function(response) {
@@ -276,13 +281,6 @@ $(document).ready(function() {
             } else {
                 $('#cdek2_map_ajax').removeClass('error');
             }
-        });
-        
-        miniShop2.Callbacks.add('Order.submit.response.success', 'stik', function(response) {
-            // const orderCost = parseFloat($('.ms2_order_cost').first().text().replace(" ", ""));
-            ym(86113805,'reachGoal','do_zakaz');
-            fbq('track', 'Purchase', {value: 0.00, currency: 'RUB'}); 
-            // fbq('track', 'Purchase', { currency: "RUB", value: orderCost.toFixed(2) }, {eventID: response.data.msorder});
         });
         
         setTimeout(function() {
