@@ -1,6 +1,0 @@
-text: simplequeue
-parent: Администрирование
-action: '1'
-description: simplequeue_menu_desc
-icon: images/icons/plugin.gif
-menuindex: 6

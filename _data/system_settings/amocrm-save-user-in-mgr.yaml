@@ -1,4 +1,0 @@
-key: amocrm_save_user_in_mgr
-xtype: combo-boolean
-namespace: amocrm
-area: amocrm_main

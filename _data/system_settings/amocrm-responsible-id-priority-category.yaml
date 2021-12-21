@@ -1,5 +1,0 @@
-key: amocrm_responsible_id_priority_category
-value: '1'
-xtype: combo-boolean
-namespace: amocrm
-area: amocrm_fields

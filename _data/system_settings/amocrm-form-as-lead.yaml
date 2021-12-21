@@ -1,5 +1,0 @@
-key: amocrm_form_as_lead
-value: '1'
-xtype: combo-boolean
-namespace: amocrm
-area: amocrm_main

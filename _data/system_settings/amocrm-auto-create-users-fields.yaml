@@ -1,5 +1,0 @@
-key: amocrm_auto_create_users_fields
-value: '1'
-xtype: combo-boolean
-namespace: amocrm
-area: amocrm_fields

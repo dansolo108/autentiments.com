@@ -1,4 +1,0 @@
-key: amocrm_user_enum_fields
-value: '{"phone":"WORK","email":"WORK","телефон":"WORK"}'
-namespace: amocrm
-area: amocrm_fields

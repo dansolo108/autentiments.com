@@ -1,4 +1,0 @@
-key: amocrm_update_order_on_change_status
-xtype: combo-boolean
-namespace: amocrm
-area: amocrm_main

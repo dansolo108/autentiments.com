@@ -1,1 +1,0 @@
-<div id="simplequeue-panel-home-div"></div>
