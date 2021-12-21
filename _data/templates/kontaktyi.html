@@ -94,6 +94,16 @@ properties: 'a:0:{}'
                         {$_modx->config.map}
                     </div>
                 </div>
+                {if $_modx->config.address_msk}
+                    <div class="au-contacts__map-box">
+                        {if $_modx->config.address_msk}
+                            <p class="au-contacts__map-text">{$_modx->config['cultureKey'] == 'ru' ? $_modx->config.address_msk : $_modx->config.address_msk_en}</p>
+                        {/if}
+                        <div class="au-contacts__map" id="mymap">
+                            {$_modx->config.map_msk}
+                        </div>
+                    </div>
+                {/if}
                 <div class="au-contacts__row">
                     <h2 class="au-h2  au-contacts__title">{'stik_contacts_title_feedback' | lexicon}</h2>
                     <div class="au-contacts__message">
