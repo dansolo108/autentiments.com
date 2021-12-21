@@ -1,0 +1,4 @@
+key: stikamocrm_fields_id
+value: '{"EMAIL":13271,"PHONE":13269,"address.building":415689,"address.city":415685,"address.comment":416089,"address.phone":415683,"address.room":415691,"address.street":415687,"contact_email":425635,"contact_name":425633,"delivery_cost":415707,"goods":415681,"num":302795,"websiteId":298767}'
+namespace: stikamocrm
+area: stikamocrm_config
