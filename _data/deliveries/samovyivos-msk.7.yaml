@@ -1,8 +1,8 @@
-id: 6
-name: Самовывоз
+id: 7
+name: 'Самовывос МСК'
 description: ''
 logo: ''
-rank: 5
+rank: 6
 class: ''
 properties: null
 requires: 'name,surname,phone,email'
