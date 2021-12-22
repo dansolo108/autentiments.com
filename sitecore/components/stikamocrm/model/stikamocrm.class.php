@@ -12,7 +12,7 @@ class stikAmoCRM
     public $modRest;
     /** @var stikAmoCRMQueue $queue */
     public $queue;
-    protected $header_token;
+    private $header_token;
 
     /**
      * @param modX $modx
@@ -44,7 +44,7 @@ class stikAmoCRM
             'fieldsId' => $this->modx->getOption('stikamocrm_fields_id'),
             'statusesId' => $this->modx->getOption('stikamocrm_statuses_id'),
             'orderPipelineId' => $this->modx->getOption('stikamocrm_order_pipeline_id'),
-            'catalogId' => $this->modx->getOption('stikamocrm_stikamocrm_catalog_id'),
+            'catalogId' => $this->modx->getOption('stikamocrm_catalog_id'),
         ], $config);
 
         // $this->modx->addPackage('stikamocrm', $this->config['modelPath']);
@@ -249,19 +249,19 @@ class stikAmoCRM
             ];
         }
 
-        $response = $this->modRest->post('api/v4/leads', $params, $this->header_token);
+        $response = $this->modRest->post('api/v4/leads/complex', $params, $this->header_token);
         $result = $response->process();
 
-        if (isset($result['errorCode']) || !isset($result['_embedded']['leads'][0]['id'])) {
+        if (isset($result['errorCode']) || !isset($result[0]['id'])) {
             $this->modx->log(MODX_LOG_LEVEL_ERROR, 'stikAmoCRM createOrder error: ' . print_r($result, 1));
         } else {
             $orderProperties = $msOrder->get('properties');
             if (!is_array($orderProperties)) $orderProperties = [];
-            $orderProperties['amo_lead_id'] = $result['_embedded']['leads'][0]['id'];
+            $orderProperties['amo_lead_id'] = $result[0]['id'];
             $msOrder->set('properties', $orderProperties);
             $msOrder->save();
             
-            return $result['_embedded']['leads'][0]['id'];
+            return $result[0]['id'];
         }
         return false;
     }
@@ -280,20 +280,23 @@ class stikAmoCRM
                 $msProductData = $this->modx->getObject('msProductData', $orderProduct->get('product_id'));
                 $article = $msProductData->get('article');
                 if ($article) {
-                    $result = $this->modRest->get('api/v2/catalog_elements?catalog_id='.$catalog_id.'&term=' . $article, [], $this->header_token);
-                    $products = $result['_embedded']['items'];
-                    $links = [];
-                    foreach ($products as $product) {
-                        if (mb_stripos($product['name'], $options['size']) !== false && mb_stripos($product['name'], $options['color']) !== false) {
-                            $links[] = [
-                                'to_entity_id' => $product['id'],
-                                'to_entity_type' => 'catalog_elements',
-                                'metadata' => [
-                                    'quantity' => $orderProduct->get('count'),
-                                    'catalog_id' => $catalog_id,
-                                ]
-                            ];
-                            // $this->modx->log(1, $product['id']);
+                    $response = $this->modRest->get('api/v2/catalog_elements?catalog_id='.$catalog_id.'&term=' . $article, [], $this->header_token);
+                    $result = $response->process();
+        
+                    if (isset($result['_embedded']['items'])) {
+                        $products = $result['_embedded']['items'];
+                        $links = [];
+                        foreach ($products as $product) {
+                            if (mb_stripos($product['name'], $options['size']) !== false && mb_stripos($product['name'], $options['color']) !== false) {
+                                $links[] = [
+                                    'to_entity_id' => (int)$product['id'],
+                                    'to_entity_type' => 'catalog_elements',
+                                    'metadata' => [
+                                        'quantity' => (int)$orderProduct->get('count'),
+                                        'catalog_id' => (int)$catalog_id,
+                                    ]
+                                ];
+                            }
                         }
                     }
                 }
@@ -301,7 +304,9 @@ class stikAmoCRM
         }
         
         if (count($links)) {
-            $result = $this->modRest->post('api/v4/leads/'.$amoLeadId.'/link', $links, $this->header_token);
+            $response = $this->modRest->post('api/v4/leads/'.$amoLeadId.'/link', $links, $this->header_token);
+            $result = $response->process();
+            return $result;
         }
     }
     

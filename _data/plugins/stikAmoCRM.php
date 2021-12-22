@@ -13,12 +13,12 @@ if (!$stikAmoCRM) {
     return;
 }
 switch ($modx->event->name) {
-    case "msOnCreateOrder":
-        /** @var msOrder $msOrder */
-        $stikAmoCRM->queue->push($msOrder->get('id'), 'order_create');
-        break;
     case 'msOnChangeOrderStatus':
         /** @var msOrder $order */
-        $stikAmoCRM->queue->push($order->get('id'), 'order_change_status');
+        if ($status == 1) {
+            $stikAmoCRM->queue->push($order->get('id'), 'order_create');
+        } else {
+            $stikAmoCRM->queue->push($order->get('id'), 'order_change_status');
+        }
         break;
 }

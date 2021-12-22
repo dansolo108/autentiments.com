@@ -5,7 +5,7 @@ $modx = new modX();
 $modx->initialize('mgr');
 
 // Load main services
-$modx->setLogTarget(XPDO_CLI_MODE ? 'ECHO' : 'HTML');
+$modx->setLogTarget('FILE');
 $modx->setLogLevel(modX::LOG_LEVEL_ERROR);
 $modx->getService('error','error.modError');
 
