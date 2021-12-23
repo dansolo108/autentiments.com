@@ -82,11 +82,14 @@ switch ($modx->event->name) {
                 }
             }
         }
+
+        // массив складов ['1c_id' => id]
+        $stores = $stikProductRemains->getPreparedStores();
         
         // остатки для каждого склада
         foreach($xml->Склад as $sklad){
             $id_sklad = trim((string)$sklad['ИдСклада']);
-            if($id_sklad != 'jtv4DfrCgwf8axwPSQQFw2') continue; // пропускаем, если нет такого склада
+            if(!array_key_exists($id_sklad, $stores)) continue; // пропускаем, если нет такого склада
             $count = (int)str_replace('.0', '', $sklad['КоличествоНаСкладе']);
             $count = max($count, 0);
             
@@ -123,7 +126,7 @@ switch ($modx->event->name) {
             if(!empty($size)){
                 $stikProductRemains->saveRemains([
                     'product_id' => $resource->get('id'),
-                    'store_id' => 1,
+                    'store_id' => $stores[$id_sklad],
                     'size' => $size,
                     'color' => $color,
                     'count' => $count,
