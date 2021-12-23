@@ -34,7 +34,7 @@ class stikAmoCRM
             'assetsUrl' => $assetsUrl,
             'cssUrl' => $assetsUrl . 'css/',
             'jsUrl' => $assetsUrl . 'js/',
-            'redirectUri' => $this->modx->getOption('site_url'),
+            'redirectUri' => str_replace('http:', 'https:', $this->modx->getOption('site_url')),
             'account' => $this->modx->getOption('stikamocrm_account'),
             'authCode' => $this->modx->getOption('stikamocrm_auth_code'),
             'clientId' => $this->modx->getOption('stikamocrm_client_id'),
@@ -94,7 +94,7 @@ class stikAmoCRM
         $response = $this->modRest->post('oauth2/access_token', $params);
         $result = $response->process();
 
-        if (isset($result['errorCode'])) {
+        if (isset($result['errorCode']) || isset($result['status']) && $result['status'] != 200) {
             $this->modx->log(MODX_LOG_LEVEL_ERROR, 'stikAmoCRM refreshAccessToken error: ' . print_r($result, 1));
         } else {
             $this->saveTokens($result);
