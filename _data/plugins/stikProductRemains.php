@@ -183,16 +183,18 @@ switch ( $modx->event->name ) {
 		break;
 
 	case 'msOnChangeOrderStatus':
+	    // списываем остатки при оплате
 		$status = $modx->getOption('status', $scriptProperties, 0);
-		if ( $stikProductRemains->order_status != $status ) break;
+		if ($status != 2) break;
 		$order = $modx->getOption('order', $scriptProperties);
-		if ( !is_object($order) ) break;
-// 		foreach ( $order->getMany('Products') as $product ) {
-// 			$stikProductRemains->saveRemains(array_merge($product->get('options')?:array(), array(
-// 				'product_id' => $product->get('product_id')
-// 				,'count' => -$product->get('count')
-// 			)));
-// 		}
+		if (!is_object($order)) break;
+		foreach ($order->getMany('Products') as $product) {
+			$stikProductRemains->saveRemains(array_merge($product->get('options') ?: [], [
+			    'store_id' => 1,
+				'product_id' => $product->get('product_id')
+				,'count' => -$product->get('count')
+			]));
+		}
 		break;
 
 	case 'msOnSubmitOrder':

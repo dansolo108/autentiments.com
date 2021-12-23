@@ -107,20 +107,25 @@ class stikProductRemains {
         $price = (float) $this->modx->getOption('price', $scriptProperties, 0);
         $old_price = (float) $this->modx->getOption('old_price', $scriptProperties, 0);
         $set = (bool) $this->modx->getOption('set', $scriptProperties, false);
-        if (empty($product_id) || is_null($count)) return false;
-        $where = array();
-        $rem = $this->modx->getObject('stikRemains', array(
+        if (empty($product_id) || empty($size) || empty($color) || is_null($count)) return false;
+        
+        if (!$set && $count < 0) {
+            $this->writeOffRemains($scriptProperties);
+            return true;
+        }
+        
+        $rem = $this->modx->getObject('stikRemains', [
             'product_id' => $product_id,
             'size' => $size,
             'color' => $color,
             'store_id' => $store,
-        ));
+        ]);
         if (!empty($rem)) {
             $rem->set('remains', ($set ? intval($count) : $rem->get('remains')+intval($count)));
-            $rem->set('price', $price);
-            $rem->set('old_price', $old_price);
+            if (isset($scriptProperties['price'])) $rem->set('price', $price);
+            if (isset($scriptProperties['old_price'])) $rem->set('old_price', $old_price);
         } else {
-            $rem = $this->modx->newObject('stikRemains', array(
+            $rem = $this->modx->newObject('stikRemains', [
                 'product_id' => $product_id,
                 'size' => $size,
                 'color' => $color,
@@ -128,24 +133,43 @@ class stikProductRemains {
                 'remains' => intval($count),
                 'price' => $price,
                 'old_price' => $old_price,
-            ));
+            ]);
         }
         $mode = ( $rem->get('id') > 0 ) ? 'upd' : 'new';
-        $response = $this->modx->invokeEvent('stikprOnBeforeChangeRemains', array(
+        $response = $this->modx->invokeEvent('stikprOnBeforeChangeRemains', [
             'mode' => $mode,
             'data' => $rem->toArray(),
             'id' => $rem->get('id'),
             'stikRemains' => $rem,
             'object' => $rem
-        ));
+        ]);
         $rem->save();
-        $response = $this->modx->invokeEvent('stikprOnChangeRemains', array(
+        $response = $this->modx->invokeEvent('stikprOnChangeRemains', [
             'mode' => $mode,
             'id' => $rem->get('id'),
             'stikRemains' => $rem,
             'object' => $rem
-        ));
+        ]);
         return true;
+    }
+
+    // перебираем все склады, отсортированные по id и списываем остатки
+    public function writeOffRemains($params) {
+        $stores = $this->getPreparedStores();
+        $count = $params['count'];
+        asort($stores);
+        foreach ($stores as $k => $v) {
+            $rem = $this->modx->getObject('stikRemains', [
+                'product_id' => $params['product_id'],
+                'size' => $params['size'],
+                'color' => $params['color'],
+                'store_id' => $v,
+            ]);
+            $count = $rem->get('remains')+intval($count);
+            $rem->set('remains', max($count, 0));
+            $rem->save();
+            if ($count >= 0) break;
+        }
     }
     
     public function getOfferPrices(int $product_id, string $color, $size, int $store_id = 1) {
@@ -239,6 +263,24 @@ class stikProductRemains {
         }
 
         return $stores_array;
+    }
+    
+    public function getPreparedStores() {
+        // кэшируем список складов
+        $cacheManager = $this->modx->getCacheManager();
+        if (!$stores = $cacheManager->get('stik_stores')) {
+            $stikStores = $this->getStoresArray();
+            
+            $stores = [];
+            
+            if ($stikStores) {
+                foreach ($stikStores as $stikStore) {
+                   $stores[$stikStore['1c_id']] = $stikStore['id'];
+                }
+            }
+            $cacheManager->set('stik_stores', $stores, 3600);
+        }
+        return $stores;
     }
     
     public function arrayUniqueKey($array, $key) {
