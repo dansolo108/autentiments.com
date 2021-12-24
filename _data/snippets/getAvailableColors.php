@@ -32,25 +32,36 @@ $product_id = $product->get('id');
 
 $colors = $product->get('color');
 $colors_flipped = array_flip($colors);
-$colors = [];
-$available = [];
+$colors = $available = $hidden = [];
 
 foreach ($colors_flipped as $k => $v) {
     $colors[replace_e_chars($k)] = $v;
 }
 
-$remains = $modx->getCollection('stikRemains', array(
+// активные остатки
+$remains = $modx->getCollection('stikRemains', [
     'product_id' => $product_id,
     'hide:!=' => 1,
-));
+]);
 
 foreach ($remains as $remain) {
     $available[replace_e_chars($remain->get('color'))] = 0;
 }
 
+// скрытые остатки
+$hidden_remains = $modx->getCollection('stikRemains', [
+    'product_id' => $product_id,
+    'hide' => 1,
+]);
+
+foreach ($hidden_remains as $hidden_remain) {
+    $hidden[replace_e_chars($hidden_remain->get('color'))] = 0;
+}
+
 foreach ($colors as $k => $v) {
     $k = replace_e_chars($k);
-    if (!isset($available[$k])) {
+    // удаляем, если нет в активных остатках или если скрыт хотя бы у одного склада
+    if (!isset($available[$k]) || isset($hidden[$k])) {
         unset($colors[$k]);
     }
 }
