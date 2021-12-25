@@ -10,7 +10,7 @@ properties: 'a:0:{}'
 
 {block 'main'}
     {set $availableColors = '!getAvailableColors' | snippet : [
-        'tpl' => 'stik.msOptions'
+        'tpl' => 'stik.msOptions.colors'
     ]}
     <main id="msProduct" class="au-product" itemtype="http://schema.org/Product" itemscope>
         <meta itemprop="name" content="{$_modx->resource.pagetitle}">
@@ -81,6 +81,7 @@ properties: 'a:0:{}'
                     </button>
                     <div class="au-btn-light  au-product__add-size">{'stik_product_select_size' | lexicon}</div>
                 </div>
+                <button type="button" class="au-product__info-remains">{'stik_modal_remains_info_link' | lexicon}</button>
             </form>
             <div class="au-product__description-text">
                 {$_modx->resource.content}
@@ -92,7 +93,7 @@ properties: 'a:0:{}'
             {set $measurements = $_modx->resource.measurements | strip}
             {set $model_params = $_modx->resource.model_params | strip}
             {set $care = $_modx->resource.care | strip}
-            
+
             <div class="au-product__info">
                 <div class="au-product__accordeon">
                     {if $measurements}
@@ -309,14 +310,25 @@ properties: 'a:0:{}'
                         'id' => 547,
                         'field' => 'content',
                     ]}
-                    {*<p class="au-info-size__text">Таблица поможет вам определиться с размером, но для более точной информации также обращайте внимание на индивидуальные параметры изделия в описании товара.</p>
-                    <strong class="au-info-size__strong">Как снять мерки</strong>
-                    <span class="au-info-size__subtitle">Обхват груди:</span>
-                    <p class="au-info-size__text">Измерьте обхват в самой широкой части груди.</p>
-                    <span class="au-info-size__subtitle">Обхват талии:</span>
-                    <p class="au-info-size__text">Измерьте талию в самой узкой ее части.</p>
-                    <span class="au-info-size__subtitle">Обхват бедер:</span>
-                    <p class="au-info-size__text">Измерьте обхват в самой широкой части бедер.</p>*}
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="au-modal  au-modal-remains  modal">
+        <div class="au-info-size__wrapper">
+            <button class="au-close au-modal-size__close" aria-label="{'stik_modal_close' | lexicon}"></button>
+            <div class="au-modal__content  au-info-size__content">
+                <h3 class="au-info-size__title">{'stik_modal_remains_title' | lexicon}</h3>
+                <div class="au-info-size__group">
+                    <div class="au-info-size__table-box">
+                        {'!pdoResources' | snippet: [
+                            'class' => 'stikStore',
+                            'sortby' => 'id',
+                            'sortdir' => 'ASC',
+                            'tpl' => 'stik.stikStore.availability.city',
+                        ]}
+                    </div>
                 </div>
             </div>
         </div>

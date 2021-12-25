@@ -2021,7 +2021,8 @@ input:-webkit-autofill:active {
     }
 }
 
-.au-product__info-size {
+.au-product__info-size,
+.au-product__info-remains {
   font-size: 16px;
   line-height: 20px;
   color: #868383;
@@ -5423,6 +5424,32 @@ input:-webkit-autofill:active {
     }
 }
 
+.au-modal-remains {
+    width: 100%;
+    max-width: 750px;
+    height: 100%;
+}
+
+.au-modal-remains .au-info-size__group {
+    display: block;
+    margin-bottom: 60px;
+}
+
+.modal-location__name {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.au-location-remains__table.au-info-size__table {
+    width: auto;
+}
+
+.au-location-remains__table .au-info-size__td:nth-child(2n - 1) {
+    background: #ffffff;
+}
+.au-location-remains__table .au-info-size__td:nth-child(2n - 2) {
+    background: #f7f7f7;
+}
 
 input[name="link"] {
     display: none;

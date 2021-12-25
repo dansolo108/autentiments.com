@@ -244,6 +244,19 @@ function toggleModalInfoSize() {
     }
 }
 
+// модалка info-remains
+function toggleModalInfoRemains() {
+    if ($('.au-product__info-remains').length) {
+        $('.au-product__info-remains').click(function() {
+
+            $('.modal').removeClass('active');
+            $('.au-modal-remains').addClass('active');
+            openModalАdditionally($('.au-modal-overlay'));
+            $('.au-header__lang-box').removeClass('active');
+        });
+    }
+}
+
 
 // модалка авторизация/регистрация
 function openModalLogin() {
@@ -839,6 +852,7 @@ $(document).ready(function() {
     toggleSubMenu();
     toggleModalFilter();
     toggleModalInfoSize();
+    toggleModalInfoRemains();
     // startUpRangeUiCost();
     openModalLogin();
     openModalCart();
