@@ -17,7 +17,7 @@ static_file: core/components/minishop2/elements/chunks/chunk.ms_options.tpl
                     {set $hex = 'msoGetColor' | snippet : ['input' => $value]}
                     {set $colorId = 'msoGetColor' | snippet : ['input' => $value, 'return_id' => true]}
                     {if $index == 0}
-                        {$_modx->setPlaceholder('first_color', $value)}
+                        {$_modx->setPlaceholder('first_color_' ~ $_modx->resource.id, $value)}
                     {/if}
                     <div class="au-product__color-item">
                         <input class="au-product__color-input" type="radio" name="options[{$name}]"
@@ -34,5 +34,5 @@ static_file: core/components/minishop2/elements/chunks/chunk.ms_options.tpl
     {/if}
 {/foreach}
 {if $.get['color']}
-    {$_modx->setPlaceholder('first_color', $.get['color'])}
+    {$_modx->setPlaceholder('first_color_' ~ $_modx->resource.id, $.get['color'])}
 {/if}

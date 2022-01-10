@@ -17,7 +17,7 @@ static_file: core/components/minishop2/elements/chunks/chunk.ms_options.tpl
                     {set $colorId = 'msoGetColor' | snippet : ['input' => $value, 'return_id' => true]}
                     {set $unique_id = 'color_'~$colorId~'_'~$id}
                     {if $index == 0}
-                        {$_modx->setPlaceholder('first_color', $value)}
+                        {$_modx->setPlaceholder('first_color_' ~ $id, $value)}
                     {/if}
                     <div class="au-card__color-item">
                         <input class="au-card__color-input" type="radio" name="color_{$id}" value="{$value}" data-product="{$id}" id="{$unique_id}" {if $index == 0}checked{/if}>

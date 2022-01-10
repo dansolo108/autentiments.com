@@ -18,7 +18,7 @@ properties: 'a:0:{}'
     'id' => $id,
 ]}
 
-{set $firstColor = $_modx->getPlaceholder('first_color') ?: $color[0]}
+{set $firstColor = $_modx->getPlaceholder('first_color_' ~ $id) ?: $color[0]}
 
 <div class="{$wrapper_classes}" id="product-{$id}">
     <a class="au-card__like msfavorites" href="" aria-label="Добавить в избранное" data-click data-data-list="default" data-data-type="resource" data-data-key="{$id}" {if $_modx->resource.template == 5}data-msfavorites-mode="list"{/if}></a>

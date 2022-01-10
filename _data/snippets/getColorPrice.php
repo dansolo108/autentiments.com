@@ -15,8 +15,9 @@ $color = (string) $modx->getOption('color', $scriptProperties, null);
 
 if ( empty($product_id) ) $product_id = $modx->resource->get('id');
 
+$msProduct = $modx->getObject('msProduct', $product_id);
+
 if (!$color) {
-    $msProduct = $modx->getObject('msProduct', $product_id);
     $resource_colors = $msProduct->get('color');
     $color = $resource_colors[0];
 }

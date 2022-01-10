@@ -20,7 +20,7 @@ properties: 'a:0:{}'
         {'!msGallery' | snippet : [
             'tpl' => 'stik.msGallery',
             'where' => [
-                'description' => $_modx->getPlaceholder('first_color') ?: $_modx->resource.color[0],
+                'description' => $_modx->getPlaceholder('first_color_' ~ $_modx->resource.id) ?: $_modx->resource.color[0],
             ],
         ]}
         <div class="au-product__description" itemtype="http://schema.org/AggregateOffer" itemprop="offers" itemscope>
@@ -68,7 +68,7 @@ properties: 'a:0:{}'
                     <div id="ajax_sizes" class="au-product__sizes">
                         {'!getRemainsWithAmount' | snippet : [
                             'tpl' => 'stik.msOptions.size.n.amount',
-                            'color' => $_modx->getPlaceholder('first_color')
+                            'color' => $_modx->getPlaceholder('first_color_' ~ $_modx->resource.id)
                         ]}
                     </div>
                 </div>

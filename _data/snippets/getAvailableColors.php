@@ -9,8 +9,6 @@ static_file: core/components/minishop2/elements/snippets/snippet.ms_options.php
 
 /** @var modX $modx */
 /** @var array $scriptProperties */
-/** @var miniShop2 $miniShop2 */
-$miniShop2 = $modx->getService('miniShop2');
 
 $product = (int) $modx->getOption('id', $scriptProperties, null);
 $tpl = $modx->getOption('tpl', $scriptProperties, 'tpl.msOptions');
