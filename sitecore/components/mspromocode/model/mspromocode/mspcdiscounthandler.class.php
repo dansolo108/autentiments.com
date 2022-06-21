@@ -48,7 +48,7 @@ class mspcDiscountHandler implements mspcDiscountInterface
     /** @inheritdoc} */
     public function initialize($ctx = 'web')
     {
-        // $this->mspc->setError('mspcDiscountHandler', true); // отладка подключения
+        //$this->mspc->setError('mspcDiscountHandler', true); // отладка подключения
 
         // if ($this->mspc->coupon->getCurrentCoupon()) {
         //     // $this->current = array();
@@ -97,41 +97,49 @@ class mspcDiscountHandler implements mspcDiscountInterface
      *
      * @return bool
      */
-    public function setDiscountForCart($coupon_id, $refresh = false)
+    public function setDiscountForCart($coupon, $refresh = false)
     {
-        if ($coupon_id) {
+        if ($coupon) {
             $this->mspc->cleanSuccess();
             $this->mspc->cleanWarning();
             $this->mspc->cleanError();
-
-            if ($applied = $this->mspc->condition->followingConditions($coupon_id)) {
-                // Если раньше у нас купон не срабатывал из-за несоблюдения условий - запишем успешное применение купона
-                if (empty($this->current)) {
-                    // $this->modx->log(1, $this->modx->lexicon('mspromocode_ok_code_apply'));
-                    $this->mspc->setSuccess($this->modx->lexicon('mspromocode_ok_code_apply'), true);
-                }
-            }
-
-            // if (!$refresh) {
-            //     $this->mspc->invokeEvent('mspcOnSetCoupon', array(
-            //         'coupon' => $this->mspc->coupon->getCurrentCoupon(),
-            //         'status' => $applied,
-            //         'mspc' => $this->mspc,
-            //     ));
-            // }
-
+            $this->mspc->setSuccess($this->modx->lexicon('mspromocode_ok_code_apply'), true);
             $this->current = $_SESSION['mspc']['discount_amount'] = array();
+            $calculated = $this->mspc->maxma->calculatePurchase($coupon);
+            $this->modx->log(3,'setDiscountForCart response '.var_export($calculated,1));
+            $i = 0;
+            foreach ($this->mspc->cart as $key => &$product) {
+                $calcDiscount = $calculated['calculationResult']['rows'][$i];
+                if($calcDiscount['id'] !== $key)
+                    continue;
+                $discount = $calcDiscount['discounts']['promocode'] /$product['count'];
+                $this->modx->log(3,'setDiscountForCart discount '.var_export($discount,1));
+                $this->modx->log(3,'setDiscountForCart qty '.var_export($product['count'],1));
 
-            if ($applied) {
-                foreach ($this->mspc->cart as $key => $product) {
-                    $this->setDiscountForProduct($coupon_id, $key, $product, $refresh);
-                }
+                // Пишем в старую корзину, чтобы потом всё вернуть при отвязке купона
+                $_SESSION['mspc']['cart'][$key] = array(
+                    'discount' => $discount,
+                    'id' => $product['id'],
+                    'price' => $product['price'],
+                    'old_price'=>$product['old_price'],
+                    'options' => $product['options'],
+                    'ctx' => $product['ctx'],
+                );
+                $product['options']['old_price'] = $product['old_price'] = max($product['price'],$product['old_price']);
+                $product['price'] = $product['price'] - $discount;
+                $this->modx->log(3,'setDiscountForCart price after discount '.var_export($product['price'],1));
+                $this->modx->log(3,'setDiscountForCart old_price after discount '.var_export($product['old_price'],1));
 
-                if (!$refresh) {
-                    $this->mspc->ms2->cart->set($this->mspc->cart);
-                }
-            } else {
-                return false;
+                //$this->setDiscountForProduct($coupon_id, $key, $product, $refresh);
+                $this->current[$key] = $_SESSION['mspc']['discount_amount'][$key] = array(
+                    'discount' => $discount,
+                    'count' => $product['count'],
+                );
+                $i++;
+            }
+            $this->modx->log(3,'setDiscountForCart old cart '.var_export($_SESSION['mspc']['cart'],1));
+            if (!$refresh) {
+                $this->mspc->ms2->cart->set($this->mspc->cart);
             }
         }
 
@@ -252,9 +260,10 @@ class mspcDiscountHandler implements mspcDiscountInterface
         foreach ($this->mspc->cart as $key => $p) {
             if (!empty($_SESSION['mspc']['cart'][$key])) {
                 $this->mspc->cart[$key]['price'] = $_SESSION['mspc']['cart'][$key]['price'];
+                $this->modx->log(1,'removeDiscountFromCart old_price'.var_export($_SESSION['mspc']['cart'][$key]['old_price'],1));
+                $this->modx->log(1,'removeDiscountFromCart price'.var_export($_SESSION['mspc']['cart'][$key]['price'],1));
 
-                $tmp = $this->mspc->getProductData($p['id'], 'old_price');
-                $this->mspc->cart[$key]['old_price'] = $tmp['old_price'];
+                $this->mspc->cart[$key]['old_price'] = $_SESSION['mspc']['cart'][$key]['old_price'];
             }
         }
 
@@ -273,15 +282,15 @@ class mspcDiscountHandler implements mspcDiscountInterface
     /**
      * Обновляет скидку для корзины.
      *
-     * @param int $coupon_id ID купона, который будет применён для корзины
+     * @param string $coupon ID купона, который будет применён для корзины
      *
      * @return bool
      */
-    public function refreshDiscountForCart($coupon_id)
+    public function refreshDiscountForCart($coupon)
     {
-        if ($coupon_id) {
+        if ($coupon) {
             $this->removeDiscountFromCart(true);
-            $this->setDiscountForCart($coupon_id, true);
+            $this->setDiscountForCart($coupon, true);
 
             $this->mspc->ms2->cart->set($this->mspc->cart);
         }
@@ -616,7 +625,7 @@ class mspcDiscountHandler implements mspcDiscountInterface
         }
 
         $price = $this->roundUp($price, 2);
-        
+
         $this->mspc->cache['products']['price']['new'][$coupon_id][$key][$price] = $price;
 
         return $price;

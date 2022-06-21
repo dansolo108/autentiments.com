@@ -156,6 +156,9 @@ pdoPage.loadPage = function (href, config, mode) {
     $.post(config['connectorUrl'], params, function (response) {
         if (response && response['total']) {
             wrapper.find(pagination).html(response['pagination']);
+            if(countEvents > 0){
+                PageInfo['products'] = {};
+            }
             if (mode == 'append') {
                 wrapper.find(rows).append(response['output']);
                 if (config['mode'] == 'button') {
@@ -178,7 +181,9 @@ pdoPage.loadPage = function (href, config, mode) {
             else {
                 wrapper.find(rows).html(response['output']);
             }
-
+            if(countEvents > 0){
+                setEvent('view_item_list',PageInfo);
+            }
             if (pdoPage.callbacks['after'] && typeof(pdoPage.callbacks['after']) == 'function') {
                 pdoPage.callbacks['after'].apply(this, [config, response]);
             }

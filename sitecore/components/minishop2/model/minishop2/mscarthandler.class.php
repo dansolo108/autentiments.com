@@ -207,7 +207,6 @@ class msCartHandler implements msCartInterface
             $options = $response['data']['options'];
             $discount_price = $oldPrice > 0 ? $oldPrice - $price : 0;
             $discount_cost = $discount_price * $count;
-
             $key = md5($id . $price . $weight . (json_encode($options)));
             if (array_key_exists($key, $this->cart)) {
                 return $this->change($key, $this->cart[$key]['count'] + $count);

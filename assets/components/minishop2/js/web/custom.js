@@ -252,16 +252,42 @@
         },
         add: function () {
             var callbacks = miniShop2.Cart.callbacks;
+            let id = miniShop2.sendData.formData[0]['value'];
             callbacks.add.response.success = function (response) {
                 this.Cart.status(response.data);
+                $.ajax({
+                    type:'POST',
+                    url:'',
+                    data:{id:id,action:'getPageInfo'},
+                    dataType:"json",
+                    success:(response)=>{
+                        if(response.success){
+                            setEvent('add_to_cart',response.info);
+                        }
+                    }
+                });
             };
+
             miniShop2.send(miniShop2.sendData.formData, miniShop2.Cart.callbacks.add, miniShop2.Callbacks.Cart.add);
         },
         remove: function () {
             var callbacks = miniShop2.Cart.callbacks;
+            let key = miniShop2.sendData.formData[0]['value'];
+            let id = $('#'+key).attr('data-product');
             callbacks.remove.response.success = function (response) {
                 this.Cart.remove_position(miniShop2.Utils.getValueFromSerializedArray('key'));
                 this.Cart.status(response.data);
+                $.ajax({
+                    type:'POST',
+                    url:'',
+                    data:{id:id,action:'getPageInfo'},
+                    dataType:"json",
+                    success:(response)=>{
+                        if(response.success){
+                            setEvent('remove_from_cart',response.info);
+                        }
+                    }
+                });
             };
             miniShop2.send(miniShop2.sendData.formData, miniShop2.Cart.callbacks.remove, miniShop2.Callbacks.Cart.remove);
         },
@@ -457,6 +483,7 @@
             callbacks.getcost.response.success = function (response) {
                 $(miniShop2.Order.orderCost, miniShop2.Order.order).text(miniShop2.Utils.formatPrice(response.data['cost']));
                 $(miniShop2.Order.cartCost, miniShop2.Order.order).text(miniShop2.Utils.formatPrice(response.data['cart_cost']));
+                console.log('test')
                 $(miniShop2.Order.deliveryCost, miniShop2.Order.order).text(miniShop2.Utils.formatPrice(response.data['delivery_cost']));
             };
             var data = {};
@@ -492,6 +519,15 @@
                 $(':button, a', miniShop2.Order.order).attr('disabled', true).prop('disabled', true);
             };
             callbacks.submit.response.success = function (response) {
+                Object.keys(PageInfo.products).map(item=>{
+                    let $card = $('input[name=key][value='+item+']').parents('.au-cart__card');
+                    PageInfo.products[item].quantity = parseInt($card.find('input[name="count"]').val());
+                    PageInfo.products[item].price = parseInt($card.find('.price span').html().replace(' ',''));
+                    PageInfo.products[item].old_price = parseInt($card.find('.old_price span').html().replace(' ',''));
+                });
+                PageInfo.cost = parseInt($('.ms2_order_cost').html().replace(/[^+\d]/g,''));
+                PageInfo.delivery_cost = parseInt($('.ms2_delivery_cost').html().replace(/[^+\d]/g,''));
+                setEvent('purchase',PageInfo);
                 if (response.data['redirect']) {
                     document.location.href = response.data['redirect'];
                 } else if (response.data['msorder']) {

@@ -102,24 +102,29 @@ function reloadMsGallery(color, product) {
 }
 
 // Переключение цветов в карточке товарв
-function changeCardColor(color, product) {
-    if ($('.js_card-img-'+product).length) {
-        $('.js_card-img-'+product).addClass('fade');
-        $.post("/assets/components/stik/getAjaxMsGallery.php", {color: color, product: product, mode: 'card'}, function(data) {
-            data = $.parseJSON(data);
-            if (data) {
-                if (data.gallery) {
-                    $('.js_card-img-'+product).html(data.gallery);
+function changeCardColor(color, $input) {
+    let $card = $input.parents('.au-card');
+    if($card.length){
+        let $img = $card.find('.js_card-img');
+        if ($img.length) {
+            $img.addClass('fade');
+            $.post("/assets/components/stik/getAjaxMsGallery.php", {color: color, product: $input.attr('data-product'), mode: 'card'}, function(data) {
+                data = $.parseJSON(data);
+                if (data) {
+                    if (data.gallery) {
+                        $img.html(data.gallery);
+                    }
+                    if (data.prices) {
+                        $card.find('js_card-prices').html(data.prices);
+                    }
                 }
-                if (data.prices) {
-                    $('.js_card-prices-'+product).html(data.prices);
-                }
-            }
-            $('.js_card-img-'+product).removeClass('fade');
-        });
-    } else {
-        console.log('Не найден блок .js_card-img-'+product);
+                $img.removeClass('fade');
+            });
+        } else {
+            console.log('Не найден блок .js_card-img');
+        }
     }
+
 }
 
 $(document).ready(function() {
@@ -423,10 +428,9 @@ $(document).on('click', '#msProduct label.au-product__size', function () {
 
 // Переключение цвета в карточке товара
 $(document).on('change', 'input.au-card__color-input', function () {
-    let $this = this,
-        color = $($this).val(),
-        product = $($this).data('product');
-    changeCardColor(color, product);
+    let $this = $(this),
+        color = $($this).val();
+    changeCardColor(color, $this);
     $($this).parents('.au-card').find('a').each(function(){
         let href = $(this).attr('href').split('?')[0];
         $(this).attr('href', href + '?color=' + color)

@@ -88,7 +88,8 @@ function toggleModalSearsh() {
         if ($(window).width() >= 1024) {
             $('.modal').removeClass('active');
             openModalАdditionally($('.au-modal-overlay'));
-            $('.au-header').addClass('z-index');
+            $('.au-header__wrapper').addClass('z-index');
+
         } else {
             $('.au-header__sub-box').toggleClass('top');
         }
@@ -358,7 +359,7 @@ function openModalАdditionally(overlay) {
     $('body').addClass('no-scroll');
     $('body').css("padding-right", `${widthScroll()}px`);
     $('.au-header').css("padding-right", `${paddingRightHeader + widthScroll()}px`);
-
+    $('.loyality-discount').css("padding-right", `${ parseInt($('.loyality-discount').css("padding-right")) + widthScroll()}px`);
     if (overlay) {
         $('.au-modal-overlay').addClass('active');
     }
@@ -370,9 +371,11 @@ function closeForModal() {
     $('body').removeClass('no-scroll');
     $('body').css("padding-right", "");
     $('.au-header').css("padding-right", "");
+    $('.loyality-discount').css("padding-right", "");
     $('.au-modal-overlay').removeClass('active');
     $('.modal').removeClass('active');
     $('.au-header').removeClass('z-index');
+    $('.au-header__wrapper').removeClass('z-index');
     $('.au-login__img_register').fadeOut();
 
     $('.au-login__tab').removeClass('active');
@@ -438,51 +441,56 @@ function addProductCart() {
     const btnSize = $('.au-product__add-size');
     const size = $('.au-product__size');
     const notSize = $('.not-size');
+    if(btnSize.length > 0){
+        if ($('.au-product__size-input').is(':checked')) {
+            btnBasket.css('visibility', 'visible');
+            btnBasket.css('opacity', '1');
+            $('.au-product__add-size').css('visibility', 'hidden');
+            $('.au-product__add-size').css('opacity', '0');
+        }
     
-    if ($('.au-product__size-input').is(':checked')) {
-        btnBasket.css('visibility', 'visible');
-        btnBasket.css('opacity', '1');
-        $('.au-product__add-size').css('visibility', 'hidden');
-        $('.au-product__add-size').css('opacity', '0');
+        btnBasket.mouseenter(function() {
+            $(this).removeClass('active');
+            btnSize.addClass('active');
+        });
+        btnSize.mouseleave(function() {
+            $(this).removeClass('active');
+            btnBasket.addClass('active');
+        });
+        $(document).on('click', '.au-product__size', function() {
+            btnBasket.css('visibility', 'visible');
+            btnBasket.css('opacity', '1');
+            $('.au-product__add-size').css('visibility', 'hidden');
+            $('.au-product__add-size').css('opacity', '0');
+            $('.not-size').removeClass('active');
+            $('.au-product__add-entrance').removeClass('active');
+            $('.au-product__add-entrance').removeClass('end').prop('disabled', false);
+        }); 
+    
+        $(document).on('click', '.not-size', function() {
+            $(this).addClass('active');
+            $('.au-product__add-entrance').addClass('active');
+            $('.au-product__size-input').prop('checked', false);
+            $('.au-product__add-entrance').removeClass('end').prop('disabled', false);
+        });
+    
+        $(document).on('click', '.au-product__add-entrance', function() {
+            let size = $('.au-product__size.not-size.active').attr('for'),
+                color = $('.au-product__color-input:checked').val();;
+            $('#size_subscribe_form input[name="size"]').val(size);
+            $('#size_subscribe_form input[name="color"]').val(color);
+            $('#size_subscribe_form .selected-size_js').text(size);
+            
+            $('.modal').removeClass('active');
+            $('.au-modal-entrance').addClass('active');
+            openModalАdditionally($('.au-modal-overlay'));
+            $('.au-header__lang-box').removeClass('active');
+        });
+    }
+    else{
+        
     }
 
-    btnBasket.mouseenter(function() {
-        $(this).removeClass('active');
-        btnSize.addClass('active');
-    });
-    btnSize.mouseleave(function() {
-        $(this).removeClass('active');
-        btnBasket.addClass('active');
-    });
-    $(document).on('click', '.au-product__size', function() {
-        btnBasket.css('visibility', 'visible');
-        btnBasket.css('opacity', '1');
-        $('.au-product__add-size').css('visibility', 'hidden');
-        $('.au-product__add-size').css('opacity', '0');
-        $('.not-size').removeClass('active');
-        $('.au-product__add-entrance').removeClass('active');
-        $('.au-product__add-entrance').removeClass('end').prop('disabled', false);
-    }); 
-
-    $(document).on('click', '.not-size', function() {
-        $(this).addClass('active');
-        $('.au-product__add-entrance').addClass('active');
-        $('.au-product__size-input').prop('checked', false);
-        $('.au-product__add-entrance').removeClass('end').prop('disabled', false);
-    });
-
-    $(document).on('click', '.au-product__add-entrance', function() {
-        let size = $('.au-product__size.not-size.active').attr('for'),
-            color = $('.au-product__color-input:checked').val();;
-        $('#size_subscribe_form input[name="size"]').val(size);
-        $('#size_subscribe_form input[name="color"]').val(color);
-        $('#size_subscribe_form .selected-size_js').text(size);
-        
-        $('.modal').removeClass('active');
-        $('.au-modal-entrance').addClass('active');
-        openModalАdditionally($('.au-modal-overlay'));
-        $('.au-header__lang-box').removeClass('active');
-    });
 }
 
 
@@ -738,9 +746,9 @@ $(document).ready(function() {
             addPhoneLoyalty();
         }
     });
-    
     // disabled sms login submit
-    $('#sms_phone').on('input', function() {
+    
+    $('.sms_phone_input').on('input', function() {
         if ($(this).val().length > 0) {
             $('.js_sms_code_send').prop('disabled', false);
         } else {
@@ -918,4 +926,302 @@ $("input[type=tel]").each(function (index) {
     // on keyup / change flag: reset
     // telInput.on("keyup change", reset);
 });
-
+if($('.coupon-form').length){
+    $('.coupon-form button').click(function(e){
+        var values = $('.coupon-form').serializeArray();
+        values['action'] = 'activateCoupon';
+      $.ajax({
+        url: "",
+        method: "POST",
+        data: { action: 'activateCoupon', values: values },
+        dataType: "JSON",
+        success: function (response) {
+          if (response.success) {
+            if($('.au-bonuses__count span').length){
+                $.jGrowl(response.msg, {theme: 'af-message-success'});
+                $('.au-bonuses__count span').html(miniShop2.Utils.formatPrice(response.balance));
+            }
+            console.log(response);
+          }
+          else {
+            $.jGrowl(response.msg, {theme: 'af-message-error'});
+          }
+        }
+      })
+        return false;
+    });
+};
+let pageInfoTest = {
+    'alias': "kozhanyij-remen-korset-589",
+    'alias_visible': true,
+    'article': "T7725858",
+    'cacheable': true,
+    'care': "100% кожа\r\n\r\n\r\nСтирка запрещена, отбеливание запрещено, не использовать барабанную сушку, глажка запрещена",
+    'class_key': "msProduct",
+    'color': ['Черный'],
+    'content': "<p>Кожаный ремень-корсет одновременно подчеркнет женственность своей обладательницы и ее внутреннюю силу. Широкий и без излишних деталей, из жесткой кожи - данная модель выглядит довольно строго и подойдет для делового лука. Завершите ваш образ с жакетом или рубашкой оверсайз этим аксессуаром для создания трендового уверенного образа.</p>",
+    'contentType': "text/html",
+    'content_dispo': 0,
+    'content_type': 1,
+    'context_key': "web",
+    'createdby': 19,
+    'createdon': "2021-11-19 18:51:58",
+    'currency_id': 0,
+    'currency_set_id': 1,
+    'deleted': false,
+    'deletedby': 0,
+    'deletedon': 0,
+    'description': "",
+    'donthit': false,
+    'editedby': 19,
+    'editedon': "2022-06-18 15:37:07",
+    'favorite': false,
+    'hexcolor': 0,
+    'hide_children_in_tree': 0,
+    'hidemenu': false,
+    'id': 589,
+    'image': "/assets/images/products/589/img-1015.jpg",
+    'introtext': "",
+    'isfolder': false,
+    'link_attributes': "",
+    'longtitle': "",
+    'made_in': "",
+    'material': null,
+    'measurements': "",
+    'menuindex': 27,
+    'menutitle': "",
+    'model_params': "Рост 165,5 см; Обхват груди 88 см; Обхват талии 62 см; Обхват бедер 90 см",
+    'msmc_old_price': 0,
+    'msmc_price': 0,
+    'new': false,
+    'og_description': "",
+    'og_image': "",
+    'og_title': "",
+    'old_price': 13500,
+    'pagetitle': "Кожаный ремень-корсет",
+    'parent': 47,
+    'popular': false,
+    'price': 9450,
+    'privatemgr': false,
+    'privateweb': false,
+    'properties': null,
+    'pub_date': 0,
+    'published': true,
+    'publishedby': 30,
+    'publishedon': "2021-11-30 12:45:00",
+    'richtext': true,
+    'sale': true,
+    'searchable': true,
+    'show_in_tree': 0,
+    'size': ['one size'],
+    'soon': false,
+    'sortindex': 0,
+    'source': 2,
+    'tags': null,
+    'template': 3,
+    'thumb': "/assets/images/products/589/small/img-1015.jpg",
+    'type': "document",
+    'unpub_date': 0,
+    'uri': "catalog/sumki/kozhanyij-remen-korset-589",
+    'uri_override': 0,
+    'vendor': 0,
+    'vendor.address': null,
+    'vendor.country': null,
+    'vendor.description': null,
+    'vendor.email': null,
+    'vendor.fax': null,
+    'vendor.id': null,
+    'vendor.logo': null,
+    'vendor.name': null,
+    'vendor.phone': null,
+    'vendor.properties': null,
+    'vendor.resource': 0,
+    'video': null,
+    'weight': 0,
+}
+let countEvents = 0;
+function setEvent(event, props){
+    //console.log(event,props);
+    countEvents++;
+    switch (event) {
+        case "add_to_cart":
+            gtag("event", "add_to_cart", {
+                currency: "RUB",
+                items: [{
+                    id: props.id,
+                    name: props.pagetitle,
+                    category: props.category,
+                    price: props.price,
+                    quantity: props.quantity,
+                    variant: props.color,
+                }],
+                value: props.price * props.quantity,
+            });
+            VK.Retargeting.ProductEvent(PRICE_LIST_ID,'add_to_cart',{
+                'products':[
+                    {
+                        id: props.id,
+                        price: props.price,
+                        price_old: props.old_price,
+                    }
+                ],
+                'currency_code':'RUR',
+            });
+            ClTrack("addToCart", {
+                product: {
+                    id: props.id,
+                },
+                price: props.price,
+            });
+            break;
+        case "remove_from_cart":
+            gtag("event", "remove_from_cart", {
+                currency: "USD",
+                items: [{
+                    id: props.id,
+                    name: props.pagetitle,
+                    category: props.category,
+                    price: props.price,
+                    quantity: props.quantity,
+                    variant: props.color,
+                }],
+                value: props.price * props.quantity,
+            });
+            ClTrack("removeFromCart", {
+                product: {
+                    id: props.id
+                }
+            });
+            VK.Retargeting.ProductEvent(PRICE_LIST_ID,'remove_from_cart',{
+                'products':[
+                    {
+                        id: props.id,
+                        price: props.price,
+                        price_old: props.old_price,
+                    }
+                ],
+                'currency_code':'RUR',
+            });
+            break;
+        case "purchase":
+            gtag("event", "purchase", {
+                items: Object.keys(props.products).map((item)=>{
+                    item = props.products[item];
+                    return {
+                        id: item.id,
+                        name: item.pagetitle,
+                        category: item.category,
+                        price: item.price,
+                        variant: item.color,
+                    };
+                }),
+                shipping: props.delivery_cost,
+                value: props.cost,
+            });
+            VK.Retargeting.ProductEvent(PRICE_LIST_ID,'purchase',{
+                products: Object.keys(props.products).map((item)=>{
+                    item = props.products[item];
+                    return {
+                        id:item.id,
+                        item:item.price,
+                        price_old:item.old_price,
+                    };
+                }),
+                'currency_code':'RUR',
+            });
+            break;
+        case "view_item":
+            VK.Retargeting.ProductEvent(PRICE_LIST_ID,'view_product',{
+                'products':[{
+                    id: props.id,
+                    price: props.price,
+                    price_old: props.old_price,
+                }],
+                'currency_code':'RUR',
+            });
+            gtag('event','view_item',[{
+                id: props.id,
+                name: props.pagetitle,
+                category: props.category,
+                price: props.price,
+                variant: props.color,
+            }]);
+            ClTrack("productView", {
+                id: props.id,
+            });
+            break;
+        case "add_to_wishlist":
+            gtag("event", "add_to_wishlist", {
+                currency: "RUB",
+                value: props.price,
+                items: [{
+                    id: props.id,
+                    name: props.pagetitle,
+                    category: props.category,
+                    price: props.price,
+                    quantity: 1,
+                }]
+            });
+            VK.Retargeting.ProductEvent(PRICE_LIST_ID,'add_to_wishlist',{
+                'products':[
+                    {
+                        id: props.id,
+                        price: props.price,
+                        price_old: props.old_price,
+                    }
+                ],
+                'currency_code':'RUR',
+            });
+            ClTrack("addToFav", {
+                product: {
+                    id: props.id
+                },
+                price: props.price
+            });
+            break;
+        case "remove_from_wishlist":
+            ClTrack("removeFromFav", {
+                product: {
+                    id: props.id
+                }
+            });
+            VK.Retargeting.ProductEvent(PRICE_LIST_ID, "remove_from_wishlist", {
+                'products':[
+                    {
+                        id: props.id,
+                        price: props.price,
+                        price_old: props.old_price,
+                    }
+                ],
+            });
+            break;
+        case "view_item_list":
+            gtag("event", "view_item_list", {
+                items: Object.keys(props.products).map((item)=>{
+                    item = props.products[item];
+                    return {
+                        id: item.id,
+                        name: item.pagetitle,
+                        category: item.category,
+                        price: item.price,
+                        variant: item.color,
+                    };
+                }),
+            });
+            VK.Retargeting.ProductEvent(PRICE_LIST_ID,'view_category',{
+                products: Object.keys(props.products).map((item)=>{
+                    item = props.products[item];
+                    return {
+                        id:item.id,
+                        item:item.price,
+                        price_old:item.old_price,
+                    };
+                }),
+                'currency_code':'RUR',
+            });
+            ClTrack('categoryView', {
+                id: props.id,
+            });
+            break;
+    }
+}

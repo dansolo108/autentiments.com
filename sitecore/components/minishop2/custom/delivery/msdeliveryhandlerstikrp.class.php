@@ -38,7 +38,7 @@ class msDeliveryHandlerStikRp extends msDeliveryHandler implements msDeliveryInt
         // $receiverCity = $orderData['city'];
         $receiverIndex = $orderData['index'];
         
-        if (empty($receiverIndex)) return [$cost, 0, 0];;
+        if (empty($receiverIndex)) return [$cost, 0, 0];
         
         $orderData = [
             "index-from" => (string)$this->config['fromIndex'],
@@ -53,7 +53,7 @@ class msDeliveryHandlerStikRp extends msDeliveryHandler implements msDeliveryInt
             ],
             "fragile" => false,
         ];
-        
+        $this->modx->log(1,print_r($orderData,1));
         $url = 'https://otpravka-api.pochta.ru/1.0/tariff';   
         $method = 'POST';
         $headers = [
@@ -82,15 +82,15 @@ class msDeliveryHandlerStikRp extends msDeliveryHandler implements msDeliveryInt
         if ($success && isset($response['total-rate'])) {
             $delivery_cost = round(number_format($response['total-rate'] / 100, 0, '.', '')); // переводим копейки в рубли и округляем
             
-            // бесплатная доставка по РФ в зависимости от настройки
-            if ($delivery->get('free_delivery_rf') == 1 && in_array(mb_strtolower($receiverCountry), ['россия','russian federation'])) {
-                //
-            } else {
-                $cost = $cost + $delivery_cost;
-                // увеличиваем стоимость доставки на 150р.
-                $cost += 150;
-            }
-
+//            // бесплатная доставка по РФ в зависимости от настройки
+//            if ($delivery->get('free_delivery_rf') == 1 && in_array(mb_strtolower($receiverCountry), ['россия','russian federation'])) {
+//                //
+//            } else {
+//                $cost = $cost + $delivery_cost;
+//                // увеличиваем стоимость доставки на 150р.
+//                $cost += 150;
+//            }
+            $cost = $cost + $delivery_cost;
             $min = $max = 0;
             if (isset($response['delivery-time'])) {
                 $min = $response['delivery-time']['min-days'];
@@ -100,7 +100,7 @@ class msDeliveryHandlerStikRp extends msDeliveryHandler implements msDeliveryInt
         } else {
             $modx->log(1, 'EMS error. CURLINFO_HTTP_CODE: ' . $httpCode . ' response: ' . print_r($response, 1));
         }
-        return [$cost, 0, 0];;
+        return [$cost, 0, 0];
     }
 }
 ?>

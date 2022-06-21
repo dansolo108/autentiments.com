@@ -81,7 +81,7 @@ class msOrderCustom extends msOrderHandler implements msOrderInterface
         $delivery = $this->modx->getObject('msDelivery', ['id' => $this->order['delivery']]);
         
         if (
-            $delivery_cost <= 0 &&
+            !$this->noDelivery && $delivery_cost <= 0 &&
             ($delivery->get('price') > 0 || $delivery->get('class')) &&
             ($delivery->get('free_delivery_rf') != 1 || !in_array(mb_strtolower($this->order['country']), ['россия','russian federation']))
         ) {
@@ -245,7 +245,7 @@ class msOrderCustom extends msOrderHandler implements msOrderInterface
         // $this->modx->log(1, print_r($this->order,1));
 
         $cart = $this->ms2->cart->status();
-        $msloyalty = $this->order['msloyalty'] ?: 0;
+        $msloyalty = $this->order['msloyalty'] ?  $this->order['msloyalty']: 0;
         
         if (!empty($with_cart) && !empty($cart)) {
             if (!empty($msloyalty)) {
@@ -264,12 +264,23 @@ class msOrderCustom extends msOrderHandler implements msOrderInterface
         $loyaltyAccrual = $stikLoyalty->getLoyaltyBonusAccrual($cart['total_cost']);
 
         // скидка авторизованным пользователям на первый заказ
+        
         if ($stikLoyalty->userHasFirstOrderDiscount() === true) {
+            $cuponCost = 0;
             $cost = $stikLoyalty->getFirstOrderDiscount($cost);
         }
         
+        $items = $this->ms2->cart->get();
+        $this->noDelivery = true;
+        foreach($items as $item){
+            $product = $this->modx->getObject('msProduct',$item['id']);
+            //$this->modx->log(1,print_r($product->get('template'),1));
+            if($product->get('template') != 23 && $item['count'] != 0 && $item['options']['max_count'] != 0){
+                $this->noDelivery = false;
+            }
+        }
         /** @var msDelivery $delivery */
-        if (!empty($this->order['delivery']) && $delivery = $this->modx->getObject('msDelivery',
+        if (!$this->noDelivery && !empty($this->order['delivery']) && $delivery = $this->modx->getObject('msDelivery',
                 array('id' => $this->order['delivery']))
         ) {
             $cost = $delivery->getCost($this, $cost);
@@ -279,10 +290,19 @@ class msOrderCustom extends msOrderHandler implements msOrderInterface
             $cost = $cost[0];
         }
         $cost = $cost > 0 ? $cost : 0;
-        
-        if (!$delivery_cost && isset($delivery)) {
-            $delivery_cost = $delivery->getCost($this, 0);
+    
+        if($cuponCost){
+            $cost = $cuponCost;
         }
+        if($this->noDelivery){
+            $delivery_cost = 0;
+        }
+        else{
+            if (!$delivery_cost && isset($delivery)) {
+                $delivery_cost = $delivery->getCost($this, 0);
+            } 
+        }
+        
         
         if (is_array($delivery_cost)) {
             $delivery_cost = $delivery_cost[0];
@@ -326,7 +346,6 @@ class msOrderCustom extends msOrderHandler implements msOrderInterface
         if ($userCurrencyId != 1 && $backend === false) {
             $cost = $msmc->getPrice($cost, 0, 0, 0.0, false);
         }
-
         return $only_cost
             ? $cost
             : $this->success('', array(

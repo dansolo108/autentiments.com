@@ -96,9 +96,14 @@ class msPromoCode
 
             return false;
         }
+        // Загружаем класс maxma
+        if (!$this->maxma = $this->modx->getService('maxma', 'maxma', $modx->getOption('core_path').'components/stik/model/', [])) {
+            $this->modx->log(modX::LOG_LEVEL_ERROR, '[msPromoCode] Error load maxma.');
+            return false;
+        }
         $this->ms2->initialize($ctx, array('json_response' => $this->config['isAjax']));
         $this->ms24 = isset($this->ms2->version);
-
+        $this->maxma->ms2 = &$this->ms2;
         if ($ctx != 'mgr') {
             // Пишем корзину в свойство
             $this->cart = $this->getFullCart();
@@ -502,7 +507,7 @@ class msPromoCode
                     $resp['ms2']['cart'] = $this->cart;
                     $resp['ms2']['status'] = $ms2->cart->status();
                     $resp['mspc']['coupon'] = $this->coupon->current['code'];
-                    $resp['mspc']['coupon_description'] = $this->coupon->current['description'];
+                    $resp['mspc']['coupon_description'] = '';
                     $resp['mspc']['discount_amount'] = $this->discount->getDiscountAmount();
                     $resp['mspc']['cart'] = $_SESSION['mspc']['cart'];
                     $resp['mspc']['success'] = $this->getSuccess();
@@ -530,12 +535,14 @@ class msPromoCode
             case 'coupon/set':
                 $resp['success'] = false;
                 $resp['mspc']['coupon'] = trim($_REQUEST['mspc_coupon']);
-
-                if ($coupon = $this->coupon->setCurrentCoupon($resp['mspc']['coupon'])) {
+                if($this->modx->getAuthenticatedUser('web') === null){
+                    $this->setError('Для использования промо-кода необходимо авторизоваться на сайте');
+                }
+                if ($coupon = $this->coupon->setCurrentCoupon($resp['mspc']['coupon']) && $this->modx->getAuthenticatedUser('web')) {
                     $resp['success'] = true;
                     $resp['mspc']['coupon'] = $coupon['code'];
 
-                    $this->discount->setDiscountForCart($this->coupon->current['id']);
+                    $this->discount->setDiscountForCart($this->coupon->current['code']);
 
                     if ($this->getError()) {
                         $resp['success'] = false;
@@ -546,7 +553,7 @@ class msPromoCode
                         $resp['ms2']['status'] = $ms2->cart->status();
                         $resp['mspc']['success'] = $this->getSuccess();
                         $resp['mspc']['warning'] = $this->getWarning();
-                        $resp['mspc']['coupon_description'] = $this->coupon->current['description'];
+                        $resp['mspc']['coupon_description'] = '';
                         $resp['mspc']['discount_amount'] = $this->discount->getDiscountAmount();
                         $resp['mspc']['cart'] = $_SESSION['mspc']['cart'];
                     }
@@ -630,11 +637,10 @@ class msPromoCode
             return;
         }
 
-        if ($mspcCoupon = $this->modx->getObject('mspcCoupon', array('code' => $coupon['code']))) {
+        if ($coupon) {
             $mspcOrder = $this->modx->newObject('mspcOrder');
             $mspcOrder->fromArray(array(
                 'code' => $coupon['code'],
-                'coupon_id' => $coupon['id'],
                 'createdon' => date('Y-m-d H:i:s'),
                 'discount_amount' => $this->discount->getDiscountAmount(),
             ));
@@ -645,34 +651,9 @@ class msPromoCode
                     'mspc' => $this,
                     'msOrder' => $msOrder,
                     'mspcOrder' => $mspcOrder,
-                    'mspcCoupon' => $mspcCoupon,
                     'coupon' => $coupon,
                     'discount_amount' => $this->discount->getDiscountAmount(),
                 ));
-
-                // Получаем акцию, если она есть
-                $isref = false;
-                if ($mspcAction = $mspcCoupon->Action) {
-                    // Проверяем, реферальная ли акция
-                    $isref = $mspcAction->get('ref');
-                }
-
-                if ($coupon['count']) {
-                    if (empty($isref)) {
-                        $count = $coupon['count'] - 1;
-                        if (!$count) {
-                            // выключим активность, если купон закончился
-                            $mspcCoupon->set('active', false);
-
-                            // заморозим, если купон для акции и он активирован
-                            if ($coupon['action_id']) {
-                                $mspcCoupon->set('freeze', true);
-                            }
-                        }
-                        $mspcCoupon->set('count', $count);
-                    }
-                    $mspcCoupon->save();
-                }
             }
         }
 
@@ -695,7 +676,7 @@ class msPromoCode
             $this->discount->removeDiscountFromCart();
             $this->coupon->removeCurrentCoupon();
         } else {
-            $this->discount->refreshDiscountForCart($this->coupon->current['id']);
+            $this->discount->refreshDiscountForCart($this->coupon->current['code']);
 
             if ($this->getError()) {
                 $this->setError($this->getError(), true, true);
@@ -1084,7 +1065,7 @@ class msPromoCode
                         $return = '';
 
                         for ($i = 0; $i < $strlen; ++$i) {
-                            $return .= $symbs{rand(0, $maxpos)};
+                            $return .= $symbs[rand(0, $maxpos)];
                         }
                     }
 

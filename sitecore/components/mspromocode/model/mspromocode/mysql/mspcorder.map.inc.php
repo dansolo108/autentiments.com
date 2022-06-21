@@ -11,7 +11,7 @@ $xpdo_meta_map['mspcOrder']= array (
   'fields' => 
   array (
     'order_id' => NULL,
-    'coupon_id' => NULL,
+    'coupon_id' => 0,
     'code' => '',
     'discount_amount' => 0.0,
     'createdon' => NULL,
@@ -33,6 +33,8 @@ $xpdo_meta_map['mspcOrder']= array (
       'attributes' => 'unsigned',
       'phptype' => 'integer',
       'null' => false,
+      'default' => 0,
+
     ),
     'code' => 
     array (

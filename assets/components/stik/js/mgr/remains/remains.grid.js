@@ -118,6 +118,7 @@ Ext.extend(msProductRemains.grid.Remains,MODx.grid.Grid,{
 		var all = {
 			id: {hidden: true, sortable: true, width: 40}
 			,product_id: {hidden: true, header: _('mspr_product_id'), sortable: true, width: 40}
+			,image: {header:'image', sortable: false, width: 100}
 			,options: {hidden: true, width: 100}
 			,remains: {header: _('mspr_product_remains'), sortable: true, width: 50, editor: {xtype:'numberfield'}}
 			,pagetitle: {header: _('mspr_product_name'), sortable: true, width: 100, renderer: msProductRemains.utils.productLink}

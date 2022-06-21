@@ -36,14 +36,14 @@ var SMS = {
             $('.custom-code-link-box').hide();
             $('.js_sms_buttons_group').hide();
         });
-        $('#sms_phone').keydown(function(e){
+        $('.sms_phone_input').keydown(function(e){
             if(e.keyCode == 13){
                 e.preventDefault();
                 $this.codeSend(this);
                 return false;
             }
         });
-        $('#sms_code').keyup(function(e){
+        $('.sms_code_input').keyup(function(e){
             if ($(this).val().length == $this.config.codeLength) {
                 $this.codeCheck(this);
             }
@@ -89,6 +89,7 @@ var SMS = {
                 return false;
             }
             if (response.success) {
+                
                 $($this.config.btnCodeSend).hide();	
                 $($this.config.phone).hide();
                 $($this.config.code).show();
@@ -112,6 +113,7 @@ var SMS = {
             $this.getMessage(response);
             $(document).trigger('smsCodeCheck', {response: response, form: form, values: values});
             if (response.success) {
+                fbq('track', 'CompleteRegistration');
                 document.location.reload();
             }
         });
