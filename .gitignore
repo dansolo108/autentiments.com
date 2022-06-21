@@ -12,7 +12,6 @@ assets/components/gallery/cache/
 import/
 sitecore/cache/
 sitecore/packages/
-sitecore/config/config.inc.php
 sitecore/components/msync/logs/
 sitecore/components/stik_loyalty/cron/1c/
 sitecore/components/stik/cron/cities.zip
