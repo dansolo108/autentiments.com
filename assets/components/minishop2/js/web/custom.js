@@ -483,7 +483,6 @@
             callbacks.getcost.response.success = function (response) {
                 $(miniShop2.Order.orderCost, miniShop2.Order.order).text(miniShop2.Utils.formatPrice(response.data['cost']));
                 $(miniShop2.Order.cartCost, miniShop2.Order.order).text(miniShop2.Utils.formatPrice(response.data['cart_cost']));
-                console.log('test')
                 $(miniShop2.Order.deliveryCost, miniShop2.Order.order).text(miniShop2.Utils.formatPrice(response.data['delivery_cost']));
             };
             var data = {};
@@ -525,6 +524,7 @@
                     PageInfo.products[item].price = parseInt($card.find('.price span').html().replace(' ',''));
                     PageInfo.products[item].old_price = parseInt($card.find('.old_price span').html().replace(' ',''));
                 });
+                PageInfo.transaction_id = response.data['msorder'];
                 PageInfo.cost = parseInt($('.ms2_order_cost').html().replace(/[^+\d]/g,''));
                 PageInfo.delivery_cost = parseInt($('.ms2_delivery_cost').html().replace(/[^+\d]/g,''));
                 setEvent('purchase',PageInfo);

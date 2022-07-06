@@ -746,15 +746,7 @@ $(document).ready(function() {
             addPhoneLoyalty();
         }
     });
-    // disabled sms login submit
-    
-    $('.sms_phone_input').on('input', function() {
-        if ($(this).val().length > 0) {
-            $('.js_sms_code_send').prop('disabled', false);
-        } else {
-            $('.js_sms_code_send').prop('disabled', true);
-        }
-    });
+
 });
 
 
@@ -902,7 +894,7 @@ $("input[type=tel]").each(function (index) {
         },
         utilsScript: "/assets/tpl/js/vendor/intl-tel-input/utils.js"
     });
-    
+
     let reset = function() {
         telInput.removeClass("error");
         errorMsg.html('');
@@ -912,8 +904,10 @@ $("input[type=tel]").each(function (index) {
     telInput.on('blur keyup change', function() {
         if ($.trim(telInput.val())) {
             if (telInput.intlTelInput("isValidNumber")) {
+                $('.js_sms_code_send').prop('disabled', false);
                 reset();
             } else {
+                $('.js_sms_code_send').prop('disabled', true);
                 telInput.addClass("error");
                 let errorCode = telInput.intlTelInput("getValidationError");
                 errorMsg.html(errorMap[errorCode]);
@@ -951,111 +945,22 @@ if($('.coupon-form').length){
         return false;
     });
 };
-let pageInfoTest = {
-    'alias': "kozhanyij-remen-korset-589",
-    'alias_visible': true,
-    'article': "T7725858",
-    'cacheable': true,
-    'care': "100% кожа\r\n\r\n\r\nСтирка запрещена, отбеливание запрещено, не использовать барабанную сушку, глажка запрещена",
-    'class_key': "msProduct",
-    'color': ['Черный'],
-    'content': "<p>Кожаный ремень-корсет одновременно подчеркнет женственность своей обладательницы и ее внутреннюю силу. Широкий и без излишних деталей, из жесткой кожи - данная модель выглядит довольно строго и подойдет для делового лука. Завершите ваш образ с жакетом или рубашкой оверсайз этим аксессуаром для создания трендового уверенного образа.</p>",
-    'contentType': "text/html",
-    'content_dispo': 0,
-    'content_type': 1,
-    'context_key': "web",
-    'createdby': 19,
-    'createdon': "2021-11-19 18:51:58",
-    'currency_id': 0,
-    'currency_set_id': 1,
-    'deleted': false,
-    'deletedby': 0,
-    'deletedon': 0,
-    'description': "",
-    'donthit': false,
-    'editedby': 19,
-    'editedon': "2022-06-18 15:37:07",
-    'favorite': false,
-    'hexcolor': 0,
-    'hide_children_in_tree': 0,
-    'hidemenu': false,
-    'id': 589,
-    'image': "/assets/images/products/589/img-1015.jpg",
-    'introtext': "",
-    'isfolder': false,
-    'link_attributes': "",
-    'longtitle': "",
-    'made_in': "",
-    'material': null,
-    'measurements': "",
-    'menuindex': 27,
-    'menutitle': "",
-    'model_params': "Рост 165,5 см; Обхват груди 88 см; Обхват талии 62 см; Обхват бедер 90 см",
-    'msmc_old_price': 0,
-    'msmc_price': 0,
-    'new': false,
-    'og_description': "",
-    'og_image': "",
-    'og_title': "",
-    'old_price': 13500,
-    'pagetitle': "Кожаный ремень-корсет",
-    'parent': 47,
-    'popular': false,
-    'price': 9450,
-    'privatemgr': false,
-    'privateweb': false,
-    'properties': null,
-    'pub_date': 0,
-    'published': true,
-    'publishedby': 30,
-    'publishedon': "2021-11-30 12:45:00",
-    'richtext': true,
-    'sale': true,
-    'searchable': true,
-    'show_in_tree': 0,
-    'size': ['one size'],
-    'soon': false,
-    'sortindex': 0,
-    'source': 2,
-    'tags': null,
-    'template': 3,
-    'thumb': "/assets/images/products/589/small/img-1015.jpg",
-    'type': "document",
-    'unpub_date': 0,
-    'uri': "catalog/sumki/kozhanyij-remen-korset-589",
-    'uri_override': 0,
-    'vendor': 0,
-    'vendor.address': null,
-    'vendor.country': null,
-    'vendor.description': null,
-    'vendor.email': null,
-    'vendor.fax': null,
-    'vendor.id': null,
-    'vendor.logo': null,
-    'vendor.name': null,
-    'vendor.phone': null,
-    'vendor.properties': null,
-    'vendor.resource': 0,
-    'video': null,
-    'weight': 0,
-}
 let countEvents = 0;
 function setEvent(event, props){
-    //console.log(event,props);
+    console.log(event,props);
     countEvents++;
     switch (event) {
         case "add_to_cart":
             gtag("event", "add_to_cart", {
                 currency: "RUB",
                 items: [{
-                    id: props.id,
-                    name: props.pagetitle,
-                    category: props.category,
+                    item_name: props.pagetitle,
+                    item_category: props.category.split("/")[0],
+                    item_category2: props.category.split("/")[1],
                     price: props.price,
-                    quantity: props.quantity,
-                    variant: props.color,
+                    quantity: props.quantity ?? 1,
                 }],
-                value: props.price * props.quantity,
+                value: props.price * (props.quantity ?? 1),
             });
             VK.Retargeting.ProductEvent(PRICE_LIST_ID,'add_to_cart',{
                 'products':[
@@ -1076,16 +981,15 @@ function setEvent(event, props){
             break;
         case "remove_from_cart":
             gtag("event", "remove_from_cart", {
-                currency: "USD",
+                currency: "RUB",
                 items: [{
-                    id: props.id,
-                    name: props.pagetitle,
-                    category: props.category,
+                    item_name: props.pagetitle,
+                    item_category: props.category.split("/")[0],
+                    item_category2: props.category.split("/")[1],
                     price: props.price,
-                    quantity: props.quantity,
-                    variant: props.color,
+                    quantity: props.quantity ?? 1,
                 }],
-                value: props.price * props.quantity,
+                value: props.price * (props.quantity ?? 1),
             });
             ClTrack("removeFromCart", {
                 product: {
@@ -1108,22 +1012,25 @@ function setEvent(event, props){
                 items: Object.keys(props.products).map((item)=>{
                     item = props.products[item];
                     return {
-                        id: item.id,
-                        name: item.pagetitle,
-                        category: item.category,
+                        item_name: item.pagetitle,
+                        item_category: item.category.split("/")[0],
+                        item_category2: item.category.split("/")[1],
                         price: item.price,
-                        variant: item.color,
+                        quantity: item.quantity ?? 1,
                     };
                 }),
+                currency: "RUB",
                 shipping: props.delivery_cost,
                 value: props.cost,
+                transaction_id:props.transaction_id,
             });
             VK.Retargeting.ProductEvent(PRICE_LIST_ID,'purchase',{
                 products: Object.keys(props.products).map((item)=>{
                     item = props.products[item];
                     return {
-                        id:item.id,
-                        item:item.price,
+                        id:''+item.id,
+                        price:item.price,
+                        group_id:''+item.parent,
                         price_old:item.old_price,
                     };
                 }),
@@ -1139,13 +1046,17 @@ function setEvent(event, props){
                 }],
                 'currency_code':'RUR',
             });
-            gtag('event','view_item',[{
-                id: props.id,
-                name: props.pagetitle,
-                category: props.category,
-                price: props.price,
-                variant: props.color,
-            }]);
+            gtag('event','view_item',{
+                currency: "RUB",
+                items: [{
+                    item_name: props.pagetitle,
+                    item_category: props.category.split("/")[0],
+                    item_category2: props.category.split("/")[1],
+                    price: props.price,
+                    quantity: props.quantity ?? 1,
+                }],
+                value: props.price * (props.quantity ?? 1),
+            });
             ClTrack("productView", {
                 id: props.id,
             });
@@ -1153,14 +1064,14 @@ function setEvent(event, props){
         case "add_to_wishlist":
             gtag("event", "add_to_wishlist", {
                 currency: "RUB",
-                value: props.price,
                 items: [{
-                    id: props.id,
-                    name: props.pagetitle,
-                    category: props.category,
+                    item_name: props.pagetitle,
+                    item_category: props.category.split("/")[0],
+                    item_category2: props.category.split("/")[1],
                     price: props.price,
-                    quantity: 1,
-                }]
+                    quantity: props.quantity ?? 1,
+                }],
+                value: props.price * (props.quantity ?? 1),
             });
             VK.Retargeting.ProductEvent(PRICE_LIST_ID,'add_to_wishlist',{
                 'products':[
@@ -1200,11 +1111,11 @@ function setEvent(event, props){
                 items: Object.keys(props.products).map((item)=>{
                     item = props.products[item];
                     return {
-                        id: item.id,
-                        name: item.pagetitle,
-                        category: item.category,
+                        item_name: item.pagetitle,
+                        item_category: item.category.split("/")[0],
+                        item_category2: item.category.split("/")[1],
                         price: item.price,
-                        variant: item.color,
+                        quantity: item.quantity ?? 1,
                     };
                 }),
             });
@@ -1212,7 +1123,7 @@ function setEvent(event, props){
                 products: Object.keys(props.products).map((item)=>{
                     item = props.products[item];
                     return {
-                        id:item.id,
+                        id:''+item.id,
                         item:item.price,
                         price_old:item.old_price,
                     };
@@ -1223,5 +1134,6 @@ function setEvent(event, props){
                 id: props.id,
             });
             break;
+            return true;
     }
 }

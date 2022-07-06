@@ -132,6 +132,7 @@ AjaxForm.Message = {
             if (!sticky) {
                 sticky = false;
             }
+            console.log(message);
             $.jGrowl(message, {theme: 'af-message-success', sticky: sticky});
         }
     },

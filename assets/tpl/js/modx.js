@@ -274,7 +274,6 @@ $(document).ready(function() {
             
             // const orderCost = parseFloat($('.ms2_order_cost').first().text().replace(" ", ""));
             ym(86113805,'reachGoal','do_zakaz');
-            fbq('track', 'Purchase', {value: 0.00, currency: 'RUB'}); 
             // fbq('track', 'Purchase', { currency: "RUB", value: orderCost.toFixed(2) }, {eventID: response.data.msorder});
         });
         

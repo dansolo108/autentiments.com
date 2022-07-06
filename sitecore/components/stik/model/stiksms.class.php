@@ -54,7 +54,6 @@ class stikSms {
         $profile->set('fullname', $phone);
         $profile->set('email', $phone.'@'.$this->modx->getOption('http_host'));
         $profile->set('mobilephone', $phone);
-        
         // сохраняем id пользователя перешедшего по специальной ссылке в AMO
         $amoUserid = $_SESSION['amo_userid'];
         if ($amoUserid) {

@@ -53,8 +53,7 @@ class msDeliveryHandlerStikRp extends msDeliveryHandler implements msDeliveryInt
             ],
             "fragile" => false,
         ];
-        $this->modx->log(1,print_r($orderData,1));
-        $url = 'https://otpravka-api.pochta.ru/1.0/tariff';   
+        $url = 'https://otpravka-api.pochta.ru/1.0/tariff';
         $method = 'POST';
         $headers = [
             'Content-Type: application/json;charset=UTF-8',

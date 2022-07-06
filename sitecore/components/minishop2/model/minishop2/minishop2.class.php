@@ -1067,7 +1067,7 @@ class miniShop2
     {
         $response = array(
             'success' => true,
-            'message' => $this->modx->lexicon($message, $placeholders),
+            'message' => empty($message) ? '' :$this->modx->lexicon($message, $placeholders),
             'data' => $data,
         );
 

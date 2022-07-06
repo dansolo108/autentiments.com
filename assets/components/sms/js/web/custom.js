@@ -113,7 +113,6 @@ var SMS = {
             $this.getMessage(response);
             $(document).trigger('smsCodeCheck', {response: response, form: form, values: values});
             if (response.success) {
-                fbq('track', 'CompleteRegistration');
                 document.location.reload();
             }
         });
