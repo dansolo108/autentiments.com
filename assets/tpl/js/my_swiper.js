@@ -4,7 +4,7 @@ if (document.querySelector('.au-home__slider')) {
     const homeSlider = new Swiper('.au-home__slider', {
         speed: 600,
         loop: true,
-        autoplay: true,
+        autoplay: false,
         delay: 4000,
         spaceBetween: 0,
         slidesPerView: 1,

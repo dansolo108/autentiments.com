@@ -6,7 +6,8 @@
  * to Data Base as static templates
  */
 define("MODX_API_MODE",true);
-require_once dirname(dirname(dirname(dirname(dirname(__FILE__))))) . '/index.php';
+require_once dirname(dirname(dirname(dirname(__DIR__)))) . '/index.php';
+/** @var $modx gitModx */
 
 $modx->setLogTarget('ECHO');
 $modx->setLogLevel(MODX_LOG_LEVEL_INFO);

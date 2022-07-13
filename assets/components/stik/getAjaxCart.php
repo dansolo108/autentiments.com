@@ -34,7 +34,6 @@ $tools->setLanguage($PolylangLanguage);
 $modx->setLogLevel(modX::LOG_LEVEL_ERROR);
 $modx->getService('error','error.modError');
 
-
 print $modx->runSnippet('msCart', [
     'tpl' => 'stik.msCart.ajax',
     'includeThumbs' => 'cart',

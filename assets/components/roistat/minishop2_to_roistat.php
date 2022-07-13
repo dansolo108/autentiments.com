@@ -1,7 +1,4 @@
 <?php
-global $modx;
-
-
 if ($modx->event->name == 'msOnBeforeCreateOrder') {
 
     $start = microtime(true);
