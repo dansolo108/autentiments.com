@@ -6,8 +6,7 @@
     "formit"
   ],
   "require": {
-    "php": ">=5.6",
-    "ext-json": "*"
+    "php": ">=5.6"
   },
   "autoload": {
     "psr-4": {

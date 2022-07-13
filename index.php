@@ -1,7 +1,7 @@
 <?php
-ini_set('error_reporting', E_ALL);
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
+// ini_set('error_reporting', E_ALL);
+// ini_set('display_errors', 1);
+// ini_set('display_startup_errors', 1);
 /*
  * This file is part of MODX Revolution.
  *
@@ -45,6 +45,7 @@ if (!is_object($modx) || !($modx instanceof modX)) {
     echo "<html><title>Error 503: Site temporarily unavailable</title><body><h1>Error 503</h1><p>{$errorMessage}</p></body></html>";
     exit();
 }
+
 /* Set the actual start time */
 $modx->startTime= $tstart;
 

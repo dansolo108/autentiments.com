@@ -370,21 +370,4 @@ class maxma {
             return $data;
         }
     }
-    public function setCertificate($name){
-        if(!key_exists($name,json_decode($this->modx->getOption('maxma_certificates',null,[]),true))){
-            return $this->modx->lexicon('stik_loyalty_err_certificate_not_found');
-        }
-        $params = [
-            'code'=>$name,
-        ];
-        $response = $this->modRestClient->post('generate-gift-card', $params);
-        $data = $response->process();
-        if (isset($data['errorCode'])) {
-            $this->modx->log(1, 'Maxma setCertificate error: ' . print_r($data, 1));
-            return false;
-        } else {
-            return $data;
-        }
-
-    }
 }

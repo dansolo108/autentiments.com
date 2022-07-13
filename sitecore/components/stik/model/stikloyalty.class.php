@@ -152,7 +152,9 @@ class stikLoyalty
     
     public function userHasFirstOrderDiscount()
     {
-        if ($this->modx->user->isAuthenticated() && $this->modx->getOption('stik_first_order_discount') > 0) {
+        $path = MODX_CORE_PATH . 'components/mspromocode/model/mspromocode/';
+        $mspc = $this->modx->getService('mspromocode', 'msPromoCode', $path, array('ctx' => 'web'));
+        if ($this->modx->user->isAuthenticated() && $this->modx->getOption('stik_first_order_discount') > 0 && !$mspc->coupon->getCurrentCoupon()) {
             $total_orders = $this->modx->getCount('msOrder', [
                 'user_id' => $this->modx->user->get('id')
             ]);

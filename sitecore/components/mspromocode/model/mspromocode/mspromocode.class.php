@@ -537,10 +537,15 @@ class msPromoCode
                 $resp['mspc']['coupon'] = trim($_REQUEST['mspc_coupon']);
                 if($this->modx->getAuthenticatedUser('web') === null){
                     $this->setError('Для использования промо-кода необходимо авторизоваться на сайте');
+                    // Проверка на ошибки
+                    $resp['mspc']['error'] = $this->getError();
+                    $this->cleanError();
+                    break;
                 }
                 if ($coupon = $this->coupon->setCurrentCoupon($resp['mspc']['coupon']) && $this->modx->getAuthenticatedUser('web')) {
                     $resp['success'] = true;
                     $resp['mspc']['coupon'] = $coupon['code'];
+                    
 
                     $this->discount->setDiscountForCart($this->coupon->current['code']);
 

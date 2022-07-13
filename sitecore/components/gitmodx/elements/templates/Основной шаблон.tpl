@@ -84,7 +84,7 @@
           window.dataLayer = window.dataLayer || [];
           function gtag(){dataLayer.push(arguments);}
           gtag('js', new Date());
-        
+
           gtag('config', 'G-HRY09800NV');
     </script>
     {/ignore}
@@ -132,7 +132,7 @@
     </div>
     {/if}
     {/block}
-    
+
     <div class="au-header__wrapper" {($_modx->isAuthenticated('web') && $_modx->user.join_loyalty)?'style="top:0;"' :''}>
         {block 'header'}
         <header class="au-header container">
@@ -298,7 +298,7 @@
                     <input type="hidden" name="is_v5" value="1">
                     <input type="hidden" name="language" value="{'cultureKey' | option}">
                     <div class="custom-form__group  au-subscribe__input-group">
-                        <input class="custom-form__input  au-subscribe__input" type="text" name="email" _validator="email" _required="1" placeholder="{'stik_form_pls_email' | lexicon}" value="{$_modx->user.email | filterFakeEmail}"> 
+                        <input class="custom-form__input  au-subscribe__input" type="text" name="email" _validator="email" _required="1" placeholder="{'stik_form_pls_email' | lexicon}" value="{$_modx->user.email | filterFakeEmail}">
                         <button href="javascript:" target="_blank" class="au-subscribe__submit">
                             <svg width="19" height="9" viewBox="0 0 19 9" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path fill-rule="evenodd" clip-rule="evenodd" d="M13.3322 0L18.2526 4.3737L13.3322 8.74741L12.6678 8L16.1849 4.8737H0V3.8737H16.1849L12.6678 0.747409L13.3322 0Z" fill="#1A1714"/>
