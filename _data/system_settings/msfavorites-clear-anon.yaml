@@ -1,5 +1,0 @@
-key: msfavorites_clear_anon
-value: '1'
-xtype: combo-boolean
-namespace: msfavorites
-area: msfavorites_main

@@ -1,4 +1,0 @@
-key: msync_publish_by_quantity
-xtype: combo-boolean
-namespace: msync
-area: msync_main

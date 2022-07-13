@@ -1,5 +1,0 @@
-key: msmulticurrency.cart_user_currency
-value: '0'
-xtype: combo-boolean
-namespace: msmulticurrency
-area: msmulticurrency.setting_main

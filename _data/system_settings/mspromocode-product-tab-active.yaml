@@ -1,5 +1,0 @@
-key: mspromocode_product_tab_active
-value: '1'
-xtype: combo-boolean
-namespace: mspromocode
-area: mspromocode_functions

@@ -1,5 +1,0 @@
-key: polylang_show_translate_btn
-value: '0'
-xtype: combo-boolean
-namespace: polylang
-area: polylang_translate

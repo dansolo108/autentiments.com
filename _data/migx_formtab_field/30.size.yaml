@@ -1,9 +1,0 @@
-id: 30
-config_id: 4
-formtab_id: 4
-field: size
-caption: Размер
-pos: 5
-inputTVtype: listbox
-sourceFrom: config
-inputOptionValues: Большой==||Маленький==category-col

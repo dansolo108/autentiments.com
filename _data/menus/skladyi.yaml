@@ -1,6 +1,0 @@
-text: Склады
-parent: minishop2
-action: index
-menuindex: 5
-params: '&configs=stikStores'
-namespace: migx

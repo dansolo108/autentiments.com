@@ -1,8 +1,0 @@
-id: 80
-config_id: 3
-formtab_id: 3
-field: video_mob
-caption: 'Видео моб. версия'
-pos: 4
-inputTVtype: file
-sourceFrom: config

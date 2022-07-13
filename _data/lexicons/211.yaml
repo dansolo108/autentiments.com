@@ -1,5 +1,0 @@
-id: 211
-name: stik_register_success_msg
-value: 'You need to confirm your registration. An email with instructions was sent to the specified Email address.'
-topic: site
-namespace: polylang

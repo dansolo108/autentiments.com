@@ -1,9 +1,0 @@
-id: 16
-config_id: 3
-formtab_id: 3
-field: img_mob
-caption: 'Изображение мобильная версия'
-pos: 2
-inputTVtype: image
-sourceFrom: migx
-sources: '[{"MIGX_id":1,"context":"web","sourceid":3}]'

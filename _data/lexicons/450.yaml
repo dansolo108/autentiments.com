@@ -1,5 +1,0 @@
-id: 450
-name: stik_order_delivery_local_courier_max_count_err
-value: 'For delivery by courier in the city, you can order no more than [[+count]] products.'
-topic: site
-namespace: polylang

@@ -1,3 +1,0 @@
-pluginid: 10
-event: OnWebPagePrerender
-priority: 1000

@@ -1,8 +1,0 @@
-id: 66
-config_id: 11
-formtab_id: 11
-field: amount
-caption: 'Сумма покупок'
-description: 'Больше или равна'
-pos: 1
-sourceFrom: config

@@ -1,5 +1,0 @@
-id: 901
-name: stik_order_loyalty_amount_error
-value: 'You can pay with bonuses only [[+percent]]% ([[+allowable_amount_text]]) of the basket amount.'
-topic: site
-namespace: polylang

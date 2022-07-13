@@ -1,6 +1,0 @@
-text: 'Система лояльности'
-parent: minishop2
-action: index
-menuindex: 7
-params: '&configs=stikLoyalty||msCustomerProfile'
-namespace: migx

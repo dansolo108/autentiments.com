@@ -1,6 +1,0 @@
-id: 720
-name: stik_loyalty_join_text
-value: "Участвуйте в <a class=\"au-ordering__loyalty-link  au-text-tab_js\" href=\"loyalty\">программе лояльности</a> для\_накопления и\_списания бонусов"
-topic: site
-namespace: polylang
-language: ru

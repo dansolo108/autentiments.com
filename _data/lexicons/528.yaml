@@ -1,6 +1,0 @@
-id: 528
-name: stik_profile_sms_code_resend
-value: 'Отправить код повторно'
-topic: site
-namespace: polylang
-language: ru

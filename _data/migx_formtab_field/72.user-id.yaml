@@ -1,7 +1,0 @@
-id: 72
-config_id: 13
-formtab_id: 13
-field: user_id
-caption: 'ID пользователя'
-pos: 3
-sourceFrom: config

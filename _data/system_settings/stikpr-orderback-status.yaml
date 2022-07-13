@@ -1,5 +1,0 @@
-key: stikpr_orderback_status
-value: '99'
-xtype: numberfield
-namespace: stik
-area: Остатки

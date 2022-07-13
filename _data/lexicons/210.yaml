@@ -1,6 +1,0 @@
-id: 210
-name: stik_register_success_msg
-value: 'Вам нужно подтвердить свою регистрацию. Письмо с инструкцией отправлено на указанный Email.'
-topic: site
-namespace: polylang
-language: ru

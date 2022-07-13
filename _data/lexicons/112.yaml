@@ -1,6 +1,0 @@
-id: 112
-name: stik_order_delivery_pickup_address
-value: 'Получение заказа в бутике по адресу'
-topic: site
-namespace: polylang
-language: ru

@@ -1,9 +1,0 @@
-id: 54
-config_id: 8
-formtab_id: 8
-field: image
-caption: Картинка
-pos: 1
-inputTVtype: image
-sourceFrom: migx
-sources: '[{"MIGX_id":1,"context":"web","sourceid":3}]'

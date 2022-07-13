@@ -1,5 +1,0 @@
-key: polylang_set_currency_for_language
-value: '0'
-xtype: combo-boolean
-namespace: polylang
-area: polylang_msmulticurrency

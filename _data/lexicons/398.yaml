@@ -1,6 +1,0 @@
-id: 398
-name: stik_register_activate_email
-value: "<p>[[+username]],</p>\r\n<p>Благодарим за регистрацию! Чтобы активировать новую учетную запись, нажмите следующую ссылку: </p>\r\n<p><a href=\"[[+confirmUrl]]\">[[+confirmUrl]]</a></p>\r\n<p> После активации вы можете войти в систему со своим паролем и именем пользователя:</p>\r\n<p>Имя пользователя: <strong>[[+username]]</strong><br>\r\nПароль:<strong>[[+password]]</strong></p>\r\n<p>Если вы не запрашивали это сообщение, проигнорируйте его.</p>\r\n<p> Спасибо, \r\n<em> Администрация интернет-магазина [[++site_name]] </em> </p>"
-topic: site
-namespace: polylang
-language: ru

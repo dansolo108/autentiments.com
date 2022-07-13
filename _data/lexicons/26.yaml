@@ -1,6 +1,0 @@
-id: 26
-name: stikpr_not_enough
-value: 'Недостаточно товаров для добавления в корзину'
-topic: site
-namespace: polylang
-language: ru

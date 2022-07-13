@@ -1,5 +1,0 @@
-key: polylang_post_processing_translation
-value: '0'
-xtype: combo-boolean
-namespace: polylang
-area: polylang_translate

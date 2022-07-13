@@ -1,6 +1,0 @@
-id: 255
-name: stik_change_pw_success
-value: 'Пароль успешно изменен.'
-topic: site
-namespace: polylang
-language: ru

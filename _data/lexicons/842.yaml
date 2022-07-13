@@ -1,6 +1,0 @@
-id: 842
-name: stik_register_mobilephone_error
-value: 'Телефон необходим для участия в программе лояльности'
-topic: site
-namespace: polylang
-language: ru

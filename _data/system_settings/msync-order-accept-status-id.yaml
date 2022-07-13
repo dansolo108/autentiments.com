@@ -1,4 +1,0 @@
-key: msync_order_accept_status_id
-xtype: numberfield
-namespace: msync
-area: msync_main

@@ -1,5 +1,0 @@
-id: 483
-name: stik_order_delivery_local_not_enough
-value: 'Selected products:<br> [[+products]] not in the required quantity in the warehouse of [[+city]] for the selected delivery method'
-topic: site
-namespace: polylang

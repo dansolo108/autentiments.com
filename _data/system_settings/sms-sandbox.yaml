@@ -1,5 +1,0 @@
-key: sms_sandbox
-value: '0'
-xtype: combo-boolean
-namespace: sms
-area: sms_main

@@ -1,7 +1,0 @@
-id: 27
-config_id: 4
-formtab_id: 4
-field: title
-caption: 'Заголовок баннера'
-pos: 3
-sourceFrom: config

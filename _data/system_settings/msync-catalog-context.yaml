@@ -1,5 +1,0 @@
-key: msync_catalog_context
-value: web
-xtype: modx-combo-context
-namespace: msync
-area: msync_main

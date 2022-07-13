@@ -1,5 +1,0 @@
-id: 721
-name: stik_loyalty_join_text
-value: 'Participate in the <a class="au-ordering__loyalty-link  au-text-tab_js" href="loyalty">loyalty program</a> to accumulate and deduct bonuses'
-topic: site
-namespace: polylang

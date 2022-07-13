@@ -1,6 +1,0 @@
-text: MIGX
-parent: Администрирование
-action: index
-menuindex: 2
-params: '&configs=migxconfigs||packagemanager||setup'
-namespace: migx

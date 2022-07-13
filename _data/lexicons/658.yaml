@@ -1,6 +1,0 @@
-id: 658
-name: stik_catalog_reset_button
-value: 'Сбросить<span>&nbsp;фильтры</span>'
-topic: site
-namespace: polylang
-language: ru

@@ -1,5 +1,0 @@
-id: 399
-name: stik_register_activate_email
-value: "<p>[[+username]],</p>\n<p>Thank you for registering! To activate a new account, click the following link:</p>\n<p><a href=\"[[+confirmUrl]]\">[[+confirmUrl]]</a></p>\n<p>After activation, you can log in with your password and username:</p>\n<p>Username: <strong>[[+username]]</strong><br>\nPassword:<strong>[[+password]]</strong></p>\n<p>If you didn't request this message, ignore it.</p>\n<p>Thanks, \n<em>Administration of the online store [[++site_name]]</em></p>"
-topic: site
-namespace: polylang

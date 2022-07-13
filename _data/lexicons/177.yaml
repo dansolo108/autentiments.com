@@ -1,6 +1,0 @@
-id: 177
-name: stik_newsletter_err_noemail
-value: 'Не указан Email'
-topic: site
-namespace: polylang
-language: ru

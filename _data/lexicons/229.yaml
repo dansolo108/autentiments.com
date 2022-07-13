@@ -1,5 +1,0 @@
-id: 229
-name: stik_reset_password_caption
-value: 'Enter the email address to which the password recovery link will be sent'
-topic: site
-namespace: polylang

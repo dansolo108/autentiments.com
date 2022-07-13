@@ -1,5 +1,0 @@
-id: 805
-name: login.user_err_nf_username
-value: 'An email with a link to restore your password was sent to the specified email address'
-topic: forgotpassword
-namespace: login
