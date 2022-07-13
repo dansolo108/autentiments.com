@@ -1,3 +1,4 @@
+/.htaccess
 assets/cache_image/
 assets/gallery/
 assets/images/
@@ -20,4 +21,3 @@ sitecore/components/stik/cron/extracted/
 errorlog.txt
 _backup/
 .idea
-.htaccess
