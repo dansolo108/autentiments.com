@@ -19,7 +19,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
     <meta name="format-detection" content="telephone=no">
-    <title>TEST{$_modx->resource.longtitle ?: $_modx->resource.pagetitle}</title>
+    <title>{$_modx->resource.longtitle ?: $_modx->resource.pagetitle}</title>
     <meta name="description" content="{$_modx->resource.description}" />
     <base href="{$_modx->config.site_url}">
     {'!PolylangCanonical' | snippet : [
