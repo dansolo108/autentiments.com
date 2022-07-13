@@ -20,3 +20,4 @@ sitecore/components/stik/cron/extracted/
 errorlog.txt
 _backup/
 .idea
+.htaccess
