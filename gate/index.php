@@ -29,7 +29,7 @@ if (!defined('MODX_CORE_PATH')) {
 }
 
 /* include modX class - return error on failure */
-if (!include_once(MODX_CORE_PATH . 'model/modx/modx.class.php')) {
+if (!include_once(MODX_CORE_PATH . 'components/gitmodx/model/gitmodx/gitmodx.class.php')) {
     header("Content-Type: application/json; charset=UTF-8");
     header($_SERVER['SERVER_PROTOCOL'] . ' 404 Not Found');
     echo json_encode(array(
@@ -40,7 +40,7 @@ if (!include_once(MODX_CORE_PATH . 'model/modx/modx.class.php')) {
 }
 
 /* load modX instance */
-$modx = new modX('', array(xPDO::OPT_CONN_INIT => array(xPDO::OPT_CONN_MUTABLE => true)));
+$modx = new gitModx('', array(xPDO::OPT_CONN_INIT => array(xPDO::OPT_CONN_MUTABLE => true)));
 
 /* initialize the proper context */
 $ctx = isset($_REQUEST['ctx']) && !empty($_REQUEST['ctx']) && is_string($_REQUEST['ctx']) ? $_REQUEST['ctx'] : 'mgr';
