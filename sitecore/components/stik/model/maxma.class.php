@@ -385,5 +385,6 @@ class maxma {
         } else {
             return $data;
         }
+
     }
 }
