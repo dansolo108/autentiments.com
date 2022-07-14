@@ -102,7 +102,7 @@ class gitModParser extends middleParser {
                 /* @var modChunk $chunk */
                 $chunk = $this->modx->newObject('modChunk');
                 $chunk->set('name', $name);
-                $chunk->set('source', 0); //media source id
+                $chunk->set('source', 3); //media source id
                 //$chunk->set('static', 1); //create chunk as static file
                 $chunk->set('static_file', $foundFilePath);
                 $chunk->set('snippet', file_get_contents($foundFilePath));
@@ -182,7 +182,7 @@ class gitModParser extends middleParser {
                 /* @var modChunk $chunk */
                 $chunk = $this->modx->newObject('modChunk');
                 $chunk->set('name', $name);
-                $chunk->set('source', 0); //media source id
+                $chunk->set('source', 3); //media source id
                 //$chunk->set('static', 1); //create chunk as static file
                 $chunk->set('static_file', $foundFilePath);
                 $chunk->set('snippet', file_get_contents($foundFilePath));
