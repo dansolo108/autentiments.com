@@ -9,7 +9,9 @@ $request = $_REQUEST[$alias];
 $tmp = explode('/', $request);
 
 if ($tmp[0] == 'github') {
-    $modx->log(1,'test');
+    $output = shell_exec('git -C "'.MODX_BASE_PATH.'" pull');
+    $modx->log(1,print_r($output,1));
+    $modx->cacheManager->refresh();
 
 }
 else{
