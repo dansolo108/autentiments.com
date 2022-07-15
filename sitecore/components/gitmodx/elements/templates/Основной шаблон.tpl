@@ -44,7 +44,7 @@
 
     <link rel="preload" href="/assets/tpl/fonts/Circe-Regular.woff2" as="font" crossorigin="">
     <link rel="preload" href="/assets/tpl/fonts/Circe-Light.woff2" as="font" crossorigin="">
-
+    <!--test-->
     {'!MinifyX' | snippet : [
     'minifyCss' => 1,
     'minifyJs' => 1,
