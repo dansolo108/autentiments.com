@@ -95,6 +95,15 @@ class msOrderCustom extends msOrderHandler implements msOrderInterface
         
         /** @var msOrder $order */
         $order = $this->modx->newObject('msOrder');
+        //utm метки
+        $utmsKeys = ['utm_content','utm_medium','utm_campaign','utm_source','utm_term'];
+        $utms = [];
+        foreach ($utmsKeys as $key){
+            if(isset($_COOKIE[$key])){
+                $utms[$key] = $_COOKIE[$key];
+            }
+        }
+
         $order->fromArray(array(
             'user_id' => $user_id,
             'createdon' => $createdon,
@@ -107,8 +116,8 @@ class msOrderCustom extends msOrderHandler implements msOrderInterface
             'cost' => $cart_cost + $delivery_cost,
             'status' => 0,
             'context' => $this->ms2->config['ctx'],
+            'comment'=> json_encode($utms),
         ));
-
         // Adding address
         /** @var msOrderAddress $address */
         $address = $this->modx->newObject('msOrderAddress');
@@ -170,7 +179,6 @@ class msOrderCustom extends msOrderHandler implements msOrderInterface
             
             // Reload order object after changes in changeOrderStatus method
             $order = $this->modx->getObject('msOrder', array('id' => $order->get('id')));
-            
             /** @var msPayment $payment */
             if ($payment = $this->modx->getObject('msPayment',
                 array('id' => $order->get('payment'), 'active' => 1))
@@ -242,8 +250,6 @@ class msOrderCustom extends msOrderHandler implements msOrderInterface
         $msmc = $this->modx->getService('msmulticurrency', 'MsMC');
         $userCurrencyId = $msmc->getUserCurrency();
 
-        // $this->modx->log(1, print_r($this->order,1));
-
         $cart = $this->ms2->cart->status();
         $msloyalty = $this->order['msloyalty'] ?  $this->order['msloyalty']: 0;
         
@@ -254,21 +260,12 @@ class msOrderCustom extends msOrderHandler implements msOrderInterface
                 $cost_loyalty = $cost_loyalty ?: 0;
             }
         }
-        
 		$cost = $with_cart
 			? ($msloyalty > 0
 				? $cost_loyalty
 				: $cart['total_cost'])
 			: 0;
-        
         $loyaltyAccrual = $stikLoyalty->getLoyaltyBonusAccrual($cart['total_cost']);
-
-        // скидка авторизованным пользователям на первый заказ
-        
-        if ($stikLoyalty->userHasFirstOrderDiscount() === true) {
-            $cuponCost = 0;
-            $cost = $stikLoyalty->getFirstOrderDiscount($cost);
-        }
         
         $items = $this->ms2->cart->get();
         $this->noDelivery = true;
@@ -314,7 +311,19 @@ class msOrderCustom extends msOrderHandler implements msOrderInterface
         ) {
             $cost = $payment->getCost($this, $cost);
         }
-
+        // скидка авторизованным пользователям на первый заказ
+        
+        if ($stikLoyalty->userHasFirstOrderDiscount() === true) {
+            $cuponCost = 0;
+            $noDisc = true;
+            $cart = $this->ms2->cart->get();
+            foreach($cart as $item){
+                if($item['price'] < $item['old_price'])
+                    $noDisc = false;
+            }
+            if($noDisc)
+                $cost = $stikLoyalty->getFirstOrderDiscount($cost);
+        }
         $response = $this->ms2->invokeEvent('msOnGetOrderCost', array(
             'order' => $this,
             'cart' => $this->ms2->cart,

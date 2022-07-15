@@ -1,5 +1,0 @@
-id: 233
-name: stik_reset_password_sent_text
-value: 'Your registration information was sent to the email address [[+email]].'
-topic: site
-namespace: polylang

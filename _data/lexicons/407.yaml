@@ -1,6 +1,0 @@
-id: 407
-name: stik_check_email_hook
-value: 'Пользователя с таким Email не существует!'
-topic: site
-namespace: polylang
-language: ru

@@ -1,5 +1,0 @@
-text: profile
-parent: user
-action: security/profile
-description: profile_desc
-permissions: change_profile

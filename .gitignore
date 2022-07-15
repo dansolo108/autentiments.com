@@ -21,4 +21,7 @@ sitecore/components/stik/cron/cities.zip
 sitecore/components/stik/cron/extracted/
 errorlog.txt
 _backup/
+_data/
 .idea
+
+

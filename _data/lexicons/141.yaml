@@ -1,6 +1,0 @@
-id: 141
-name: stik_reviews_form_agree
-value: 'Нажимая кнопку Опубликовать, я даю согласие на обработку и передачу моих <a href="[[+link]]">персональных данных</a>'
-topic: site
-namespace: polylang
-language: ru

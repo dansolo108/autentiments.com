@@ -1,5 +1,0 @@
-key: stikpr_active_before_order
-value: '1'
-xtype: combo-boolean
-namespace: stik
-area: Остатки

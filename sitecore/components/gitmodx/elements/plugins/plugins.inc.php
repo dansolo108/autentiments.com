@@ -1,5 +1,6 @@
 <?php
 return array(
-    'OnHandleRequest' => array(
-    )
+    'OnHandleRequest'=>[
+        'gitWebhook'
+    ],
 );

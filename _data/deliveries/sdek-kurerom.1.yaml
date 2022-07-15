@@ -1,9 +1,0 @@
-id: 1
-name: 'СДЭК курьером'
-description: ''
-logo: ''
-class: msDeliveryHandlerStikCdek
-properties: null
-requires: 'country,city,index,street,building,name,surname,phone,email'
-tariff: '137'
-slug: cdek_courier

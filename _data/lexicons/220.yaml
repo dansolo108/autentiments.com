@@ -1,6 +1,0 @@
-id: 220
-name: stik_register_agree
-value: "Нажимая кнопку Зарегистрироваться, я\_даю согласие на\_обработку и\_передачу моих <a href=\"[[+link]]\">персональных данных</a>"
-topic: site
-namespace: polylang
-language: ru

@@ -285,9 +285,7 @@ body.au-ordering-home {
     padding-top:118px;
   }
 }
-.amo-button-holder.amo-horisontal{
-  display:none;
-}
+
 @media (max-width: 1024px) {
   body.padding-loyality{
     padding-top:104px;
@@ -329,7 +327,8 @@ body.au-ordering-home {
   .container,
   .page-container {
     padding-left: 34px;
-    padding-right: 34px; } }
+    padding-right: 34px; }
+}
 
 @media (min-width: 1440px) {
   .container {
@@ -5676,7 +5675,7 @@ div.jGrowl > .ui-state-highlight {
 
 @media(max-width: 767px){
   .fixed-buttons {
-    display: flex;
+    display: none;
     justify-content: space-between;
   }
 }

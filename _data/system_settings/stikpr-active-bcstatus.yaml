@@ -1,5 +1,0 @@
-key: stikpr_active_bcstatus
-value: '0'
-xtype: combo-boolean
-namespace: stik
-area: Остатки

@@ -1,6 +1,0 @@
-id: 212
-name: stik_register_activation_email_subject
-value: 'Подтверждение регистрации'
-topic: site
-namespace: polylang
-language: ru

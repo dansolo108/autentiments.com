@@ -27,7 +27,7 @@ $excludedCategories = array(
 );
 
 $savePath = MODX_CORE_PATH.'components/gitmodx/elements/templates/';
-$staticFilePath = 'core/components/gitmodx/elements/templates/';
+$staticFilePath = 'sitecore/components/gitmodx/elements/templates/';
 $templates = $modx->getCollection('modTemplate');
 /**
  * @var modTemplate[] $templates
@@ -51,7 +51,7 @@ foreach($templates as $template)
             continue;
         }
         $template->set('static',1);
-        $template->set('source',1);
+        $template->set('source',3);
         $template->set('static_file',$staticFilePath.$name);
         if($template->save()){
             $modx->log(MODX_LOG_LEVEL_INFO, "Template was imported: \"{$name}\"");

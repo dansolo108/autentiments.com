@@ -1,5 +1,0 @@
-id: 928
-name: stik_delivery_error_text
-value: 'The delivery cost is not calculated, check the correctness of the entered data.'
-topic: site
-namespace: polylang

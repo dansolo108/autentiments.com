@@ -183,7 +183,19 @@ class stikAmoCRM
                 ],
             ],
         ];
-
+        $utms = ['utm_content'=>143127,'utm_medium'=>143129,'utm_campaign'=>143131,'utm_source'=>143133,'utm_term'=>143135];
+        foreach ($utms as $utm => $id){
+            if(isset($_COOKIE[$utm])){
+                $customFields[] = [
+                    'field_id' => (int)$id,
+                    'values' => [
+                        [
+                            'value' => $_COOKIE[$utm],
+                        ],
+                    ],
+                ];
+            }
+        }
         $params = [
             [
                 'name' => $this->modx->lexicon('stikamocrm_order_name', ['num' => $order['num']]),
@@ -251,6 +263,8 @@ class stikAmoCRM
 
         $response = $this->modRest->post('api/v4/leads/complex', $params, $this->header_token);
         $result = $response->process();
+
+
 
         if (isset($result['errorCode']) || !isset($result[0]['id'])) {
             $this->modx->log(MODX_LOG_LEVEL_ERROR, 'stikAmoCRM createOrder error: ' . print_r($result, 1));
@@ -343,6 +357,19 @@ class stikAmoCRM
                     ],
                 ],
             ];
+        }
+        $utms = ['utm_content'=>143127,'utm_medium'=>143129,'utm_campaign'=>143131,'utm_source'=>143133,'utm_term'=>143135];
+        foreach ($utms as $utm => $id){
+            if(isset($_COOKIE[$utm])){
+                $customFields[] = [
+                    'field_id' => (int)$id,
+                    'values' => [
+                        [
+                            'value' => $_COOKIE[$utm],
+                        ],
+                    ],
+                ];
+            }
         }
         $params = [
             [

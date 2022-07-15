@@ -1,5 +1,0 @@
-id: 13
-name: setting_stik_cdek_calc_city_desc
-value: 'Если опция включена, то получатель ищется не только по индексу, но и по названию города'
-namespace: stik
-language: ru

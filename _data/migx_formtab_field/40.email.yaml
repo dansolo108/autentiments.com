@@ -1,7 +1,0 @@
-id: 40
-config_id: 6
-formtab_id: 6
-field: email
-caption: Email
-pos: 1
-sourceFrom: config

@@ -1,4 +1,0 @@
-key: mspromocode_regexp_gen_code
-value: 'prefix-/([a-zA-Z0-9]{4-10})-([a-zA-Z0-9]{4})/'
-namespace: mspromocode
-area: mspromocode_main

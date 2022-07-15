@@ -16,6 +16,8 @@ class mspcConditionTypesGetListProcessor extends modProcessor
             'to_total_cost',
             'from_total_count',
             'to_total_count',
+            'first_buy',
+            'no_discount_products',
             // 'user_group',
         );
 

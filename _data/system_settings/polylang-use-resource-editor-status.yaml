@@ -1,5 +1,0 @@
-key: polylang_use_resource_editor_status
-value: '1'
-xtype: combo-boolean
-namespace: polylang
-area: polylang_editor

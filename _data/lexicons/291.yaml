@@ -1,6 +1,0 @@
-id: 291
-name: stik_first_order_register_after_login
-value: 'После входа <a href="[[+link]]">на сайт</a>, Вы сможете сменить пароль.'
-topic: site
-namespace: polylang
-language: ru

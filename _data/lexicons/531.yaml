@@ -1,5 +1,0 @@
-id: 531
-name: stik_profile_sms_not_approved
-value: 'To save the phone number, you need to confirm it by SMS'
-topic: site
-namespace: polylang

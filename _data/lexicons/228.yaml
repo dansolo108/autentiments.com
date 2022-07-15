@@ -1,6 +1,0 @@
-id: 228
-name: stik_reset_password_caption
-value: 'Введите почту, на которую придёт ссылка на восстановление пароля'
-topic: site
-namespace: polylang
-language: ru

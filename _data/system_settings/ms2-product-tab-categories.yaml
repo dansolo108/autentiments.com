@@ -1,5 +1,0 @@
-key: ms2_product_tab_categories
-value: '1'
-xtype: combo-boolean
-namespace: minishop2
-area: ms2_product

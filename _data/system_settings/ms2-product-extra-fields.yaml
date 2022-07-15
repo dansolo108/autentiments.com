@@ -1,5 +1,0 @@
-key: ms2_product_extra_fields
-value: 'price,old_price,sortindex,article,material,new,color,soon,size,sale'
-xtype: textarea
-namespace: minishop2
-area: ms2_product

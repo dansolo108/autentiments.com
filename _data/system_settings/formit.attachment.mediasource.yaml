@@ -1,5 +1,0 @@
-key: formit.attachment.mediasource
-value: '1'
-xtype: modx-combo-source
-namespace: formit
-area: formit

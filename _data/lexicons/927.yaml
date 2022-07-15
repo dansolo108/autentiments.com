@@ -1,6 +1,0 @@
-id: 927
-name: stik_delivery_error_text
-value: 'Стоимость доставки не рассчитана, проверьте корректность введенных данных.'
-topic: site
-namespace: polylang
-language: ru

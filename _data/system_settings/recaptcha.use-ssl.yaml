@@ -1,5 +1,0 @@
-key: recaptcha.use_ssl
-value: 'false'
-xtype: combo-boolean
-namespace: login
-area: recaptcha

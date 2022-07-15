@@ -1,7 +1,0 @@
-id: 70
-config_id: 13
-formtab_id: 13
-field: product_id
-caption: 'ID товара'
-pos: 1
-sourceFrom: config

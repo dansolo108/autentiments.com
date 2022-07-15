@@ -1,4 +1,0 @@
-key: ms2_frontend_message_css
-value: '[[+cssUrl]]web/lib/jquery.jgrowl.min.css'
-namespace: minishop2
-area: ms2_frontend

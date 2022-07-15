@@ -1,7 +1,0 @@
-id: 69
-config_id: 12
-formtab_id: 12
-field: createdon
-caption: 'Дата первой покупки'
-pos: 2
-sourceFrom: config

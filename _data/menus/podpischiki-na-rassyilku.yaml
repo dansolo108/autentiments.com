@@ -1,6 +1,0 @@
-text: 'Подписчики на рассылку'
-parent: minishop2
-action: index
-menuindex: 7
-params: '&configs=stikSubscribers'
-namespace: migx

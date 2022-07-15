@@ -1,6 +1,0 @@
-id: 521
-name: stik_profile_sms_not_approved
-value: 'Для сохранения номера телефона необходимо подтверждение по SMS'
-topic: site
-namespace: polylang
-language: ru

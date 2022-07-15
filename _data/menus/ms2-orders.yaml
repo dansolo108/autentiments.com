@@ -1,5 +1,0 @@
-text: ms2_orders
-parent: minishop2
-action: mgr/orders
-description: ms2_orders_desc
-namespace: minishop2

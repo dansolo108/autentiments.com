@@ -1,6 +1,0 @@
-text: ms2_settings
-parent: minishop2
-action: mgr/settings
-description: ms2_settings_desc
-menuindex: 1
-namespace: minishop2

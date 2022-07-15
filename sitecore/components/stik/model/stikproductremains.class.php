@@ -183,7 +183,7 @@ class stikProductRemains {
             'color' => $color,
             'store_id' => $store_id,
         ]);
-        if ($remainsObject && $remainsObject->get('price') > 0) {
+        if ($remainsObject->get('price') > 0) {
             $output['price'] = $remainsObject->get('price');
             $output['old_price'] = $remainsObject->get('old_price');
         } else {

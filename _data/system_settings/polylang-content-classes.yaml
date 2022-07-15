@@ -1,5 +1,0 @@
-key: polylang_content_classes
-value: '{"PolylangContent":"modResource","PolylangProduct":"msProduct"}'
-xtype: textarea
-namespace: polylang
-area: polylang_main

@@ -1,5 +1,0 @@
-id: 540
-name: stik_intltel_errors_js
-value: '["Wrong number", "Wrong country code", "Too short", "Too long", "Wrong number"]'
-topic: site
-namespace: polylang

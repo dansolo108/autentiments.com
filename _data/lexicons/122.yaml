@@ -1,6 +1,0 @@
-id: 122
-name: stik_order_agree
-value: 'Оформляя заказ, я принимаю условия <a href="[[+link]]" target="_blank">пользовательского соглашения</a>'
-topic: site
-namespace: polylang
-language: ru

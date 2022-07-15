@@ -1,4 +1,0 @@
-key: mail_smtp_auth
-value: '1'
-xtype: combo-boolean
-area: mail

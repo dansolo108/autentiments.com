@@ -1,9 +1,0 @@
-id: 67
-config_id: 11
-formtab_id: 11
-field: discount
-caption: Скидка
-description: '%'
-pos: 2
-validation: number
-sourceFrom: config

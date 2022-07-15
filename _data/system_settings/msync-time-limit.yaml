@@ -1,4 +1,0 @@
-key: msync_time_limit
-value: '60'
-namespace: msync
-area: msync_main

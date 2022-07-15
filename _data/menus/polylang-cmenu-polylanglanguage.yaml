@@ -1,7 +1,0 @@
-text: polylang_cmenu_polylanglanguage
-parent: components
-action: mgr/polylanglanguage
-description: polylang_cmenu_polylanglanguage_desc
-menuindex: 1
-permissions: polylanglanguage
-namespace: polylang

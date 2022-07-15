@@ -1,5 +1,0 @@
-key: ms2_plugins
-value: '{"msplcolor":"{core_path}components\/minishop2CustomFields\/index.php","msmulticurrency":"{core_path}components\/msmulticurrency\/ms2\/index.php","msplhexcolor":"{core_path}components\/msoptionhexcolor\/model\/ms_plugin\/"}'
-xtype: textarea
-namespace: minishop2
-area: ms2_main

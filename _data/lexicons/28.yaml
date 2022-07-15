@@ -1,6 +1,0 @@
-id: 28
-name: stikpr_error_before_order
-value: 'Для товара "[[+product]]" недостаточно остатков'
-topic: site
-namespace: polylang
-language: ru

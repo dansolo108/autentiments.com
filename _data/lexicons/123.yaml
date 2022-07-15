@@ -1,6 +1,0 @@
-id: 123
-name: stik_order_without_manager_calling
-value: 'Оформить заказ без звонка менеджера'
-topic: site
-namespace: polylang
-language: ru

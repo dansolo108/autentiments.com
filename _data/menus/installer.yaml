@@ -1,5 +1,0 @@
-text: installer
-parent: Администрирование
-action: workspaces
-description: installer_desc
-permissions: packages

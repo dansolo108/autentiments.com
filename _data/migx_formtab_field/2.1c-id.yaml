@@ -1,7 +1,0 @@
-id: 2
-config_id: 1
-formtab_id: 1
-field: 1c_id
-caption: '1С ID'
-pos: 2
-sourceFrom: config

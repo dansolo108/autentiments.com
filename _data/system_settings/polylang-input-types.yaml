@@ -1,5 +1,0 @@
-key: polylang_input_types
-value: 'polylang-field,textarea,polylang-text-editor,polylang-code-editor,polylang-combo,polylang-combo-auto-complete,polylang-combo-boolean'
-xtype: textarea
-namespace: polylang
-area: polylang_main

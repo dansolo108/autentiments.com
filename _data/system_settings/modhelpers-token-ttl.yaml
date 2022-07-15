@@ -1,5 +1,0 @@
-key: modhelpers_token_ttl
-value: '0'
-xtype: numberfield
-namespace: modhelpers
-area: modhelpers_main

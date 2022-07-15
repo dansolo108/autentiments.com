@@ -1,6 +1,0 @@
-id: 526
-name: stik_profile_sms_code_error
-value: 'Неверный код. Попробуйте снова'
-topic: site
-namespace: polylang
-language: ru

@@ -10,7 +10,7 @@ class mspcOrderGetProcessor extends modObjectProcessor
     //public $permission = 'view';
     public $checkViewPermission = true;
 
-    /**
+    /** 
      * {@inheritDoc}
      * @return boolean
      */
