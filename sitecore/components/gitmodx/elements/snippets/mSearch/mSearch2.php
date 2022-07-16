@@ -177,7 +177,7 @@ elseif (!empty($rows) && is_array($rows)) {
 		$modx->setPlaceholders($output, $toSeparatePlaceholders);
 	}
 	else {
-		$output = mSearch2 . phpimplode($outputSeparator, $output);
+		$output = implode($outputSeparator, $output) . $log;
 	}
 }
 else {
