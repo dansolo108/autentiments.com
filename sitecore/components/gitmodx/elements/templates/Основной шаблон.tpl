@@ -44,7 +44,7 @@
 
     <link rel="preload" href="/assets/tpl/fonts/Circe-Regular.woff2" as="font" crossorigin="">
     <link rel="preload" href="/assets/tpl/fonts/Circe-Light.woff2" as="font" crossorigin="">
-    <!--test-->
+    <script src="/assets/tpl/js/vendor/jquery-3.6.0.min.js"></script>
     {'!MinifyX' | snippet : [
     'minifyCss' => 1,
     'minifyJs' => 1,
@@ -58,7 +58,7 @@
             /assets/tpl/css/style.css
         ',
     'jsSources' => '
-            /assets/tpl/js/vendor/jquery-3.6.0.min.js,
+            ,
             /assets/tpl/js/vendor/jquery.cookie.js,
             /assets/tpl/js/vendor/jquery-ui.min.js,
             /assets/tpl/js/vendor/jquery.ui.touch-punch.min.js,
