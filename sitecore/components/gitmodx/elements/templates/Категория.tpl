@@ -3,7 +3,7 @@
 {block 'main'}
     {set $options = [
         'parents' => $_modx->resource.id,
-        'element' => ($_modx->resource.id != 709? 'msProducts.stik':'msProducts'),
+        'element' => 'msProducts.stik',
         'limit' => 9,
         'tpl' => 'stik.msProducts.row',
         'tplOuter' => 'stik.mFilter2.outer',
