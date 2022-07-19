@@ -210,14 +210,14 @@
 <!-- End Google Tag Manager (noscript) -->
 <div class="au-modal-overlay"></div>
 {block 'loyality-discount'}
-    {if !$_modx->user.join_loyalty || !$_modx->isAuthenticated('web')}
+    {if false && (!$_modx->user.join_loyalty || !$_modx->isAuthenticated('web'))}
         <div class="loyality-discount" onClick="openModalАdditionally($('.au-modal-overlay'));$('.au-modal-sale').addClass('active');">
             ДАРИМ СКИДКУ 10% НА ПЕРВУЮ ПОКУПКУ | ПОДРОБНЕЕ
         </div>
     {/if}
 {/block}
 
-<div class="au-header__wrapper" {($_modx->isAuthenticated('web') && $_modx->user.join_loyalty)?'style="top:0;"' :''}>
+<div class="au-header__wrapper" {($_modx->isAuthenticated('web') && $_modx->user.join_loyalty || true)?'style="top:0;"' :''}>
     {block 'header'}
         <header class="au-header container">
             <div class="au-header__head">
@@ -234,7 +234,7 @@
                             <path d="M14.0659 3.28239L13.3588 2.57529L5.93414 9.99992L13.3588 17.4246L14.0659 16.7175L7.34837 9.99991L14.0659 3.28239Z" fill="#1A1714"/>
                         </svg>
                     </button>
-                    <button class="au-header__btn au-header__btn-lang au-mobile" aria-label="Переключить язык/валюту">{$_modx->config['cultureKey'] | upper} <span>|</span> {$_pls['msmc.symbol_right']}...</button>
+                    <button class="au-header__btn au-header__btn-lang au-mobile" aria-label="Переключить язык/валюту">{$_modx->config['cultureKey'] | upper}<span>|</span>{$_pls['msmc.symbol_right']}...</button>
                     <div class="au-header__lang-box">
                         {'!PolylangLinks' | snippet : [
                         'tpl' => 'stik.PolylangLinks',
