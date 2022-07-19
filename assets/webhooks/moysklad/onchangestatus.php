@@ -6,6 +6,9 @@ $modx->setLogTarget('HTML');
 $modx->setLogLevel(MODX_LOG_LEVEL_INFO);
 $input = json_decode(file_get_contents('php://input'),1);
 $myCurl = curl_init();
+if(empty($input['auditContext']['meta']['href'])){
+    return;
+}
 curl_setopt_array($myCurl, array(
     CURLOPT_URL => $input['auditContext']['meta']['href'].'/events',
     CURLOPT_RETURNTRANSFER => true,
