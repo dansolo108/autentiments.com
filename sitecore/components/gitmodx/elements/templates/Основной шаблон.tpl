@@ -171,11 +171,13 @@
 <!-- END WHATSAPP INTEGRATION WITH ROISTAT -->
 <script>
 
-    (function(a,m,o,c,r,m) { a[m]= { id:"219369",hash:"f374012a78a33ad18113daf19457f2b36f92cf971518baab729e376206cd569b",locale:"ru",inline:true,setMeta:function(p) { this.params=(this.params||[]).concat([p]) }  } ;a[o]=a[o]||function() { (a[o].q=a[o].q||[]).push(arguments) } ;var d=a.document,s=d.createElement('script');s.async=true;s.id=m+'_script';s.src='https://gso.amocrm.ru/js/button.js?1656691793';d.head&&d.head.appendChild(s) } (window,0,'amoSocialButton',0,0,'amo_social_button'));
+    //(function(a,m,o,c,r,m) { a[m]= { id:"186111",hash:"d0802b42752e87dd4c003ffa54348e41f2eb084a414f31afceaa978207b8488d",locale:"ru",inline:true,setMeta:function(p){ this.params=(this.params||[]).concat([p])}};a[o]=a[o]||function(){ (a[o].q=a[o].q||[]).push(arguments)};var d=a.document,s=d.createElement('script');s.async=true;s.id=m+'_script';s.src='https://gso.amocrm.ru/js/button.js?1657957902';d.head&&d.head.appendChild(s)}(window,0,'amoSocialButton',0,0,'amo_social_button'));
 </script>
 
 <!--ROISTAT CODE END -->
-
+<script>
+    (function(a,m,o,c,r,m){ a[m]= { id:"186111",hash:"d0802b42752e87dd4c003ffa54348e41f2eb084a414f31afceaa978207b8488d",locale:"ru",inline:false,setMeta:function(p){ this.params=(this.params||[]).concat([p])}};a[o]=a[o]||function(){ (a[o].q=a[o].q||[]).push(arguments)};var d=a.document,s=d.createElement('script');s.async=true;s.id=m+'_script';s.src='https://gso.amocrm.ru/js/button.js?1657957902';d.head&&d.head.appendChild(s)}(window,0,'amoSocialButton',0,0,'amo_social_button'));
+</script>
 <script>
     if(sessionStorage.history){
         let history = JSON.parse(sessionStorage.history);
