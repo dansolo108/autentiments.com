@@ -18,12 +18,10 @@ class stikMoySklad {
             'action_url' => $assetsUrl . 'action.php',
             'connector_url' => $assetsUrl . 'connector.php',
             'apiKey' => $this->modx->getOption('stik_moySklad_api_key'),
-            'serverAddress' => $this->modx->getOption('stik_moySklad_url'), // api-test.cloudloyalty.ru
-            'shopCode' => $this->modx->getOption('stik_maxma_shop_code'),
-            'shopName' => $this->modx->getOption('stik_maxma_shop_name'),
+            'serverAddress' => $this->modx->getOption('stik_moySklad_url'), //
         ), $config);
 
-        $this->modx->addPackage('stik', $this->config['modelPath']);
+        $this->modx->addPackage('stik', $this->config['model_path']);
 
         /* @var modRest $this->modRestClient */
         $this->modRestClient = $this->modx->getService('rest', 'rest.modRest');
@@ -31,18 +29,11 @@ class stikMoySklad {
         $this->modRestClient->setOption('format', 'json');
         $this->modRestClient->setOption('suppressSuffix', true);
         $this->modRestClient->setOption('headers', [
-            'Accept' => 'application/json',
             'Content-type' => 'application/json', // Сообщаем сервису что хотим получить ответ в json формате
-            'X-Processing-Key' => $this->config['apiKey']
+            'Authorization:' => "Bearer ".$this->config['apiKey'],
         ]);
+    }
+    public function getProduct(){
 
-        $this->userphone = '';
-        if ($user = $this->modx->getUser('web')) {
-            if ($profile = $user->getOne('Profile')) {
-                if ($profile->get('mobilephone') && $profile->get('join_loyalty')) {
-                    $this->userphone = $this->preparePhone($profile->get('mobilephone'));
-                }
-            }
-        }
     }
 }
