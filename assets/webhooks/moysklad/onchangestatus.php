@@ -4,32 +4,13 @@ require_once dirname(__DIR__, 3) . '/index.php';
 /** @var $modx gitModx */
 $modx->setLogTarget('HTML');
 $modx->setLogLevel(MODX_LOG_LEVEL_INFO);
-$input = json_decode(file_get_contents('php://input'),1);
-$myCurl = curl_init();
-if(empty($input['auditContext']['meta']['href'])){
-    return;
-}
-curl_setopt_array($myCurl, array(
-    CURLOPT_URL => $input['auditContext']['meta']['href'].'/events',
-    CURLOPT_RETURNTRANSFER => true,
-    CURLOPT_CUSTOMREQUEST => 'GET',
-    CURLOPT_HTTPHEADER => array("Authorization: Bearer 36f61839f3f41d0c14fc10f493a44139529be7ea",
-        "Content-Type: application/json"),
-));
-$response = json_decode(curl_exec($myCurl),1);
-curl_close($myCurl);
+$moySklad = $modx->getService('moysklad', 'moysklad', $modx->getOption('core_path').'components/stik/model/', []);
 
+$input = json_decode(file_get_contents('php://input'),1);
+
+$response = $moySklad->get($input['auditContext']['meta']['href'].'/events');
 if($response['rows'][0]['diff']['state']['newValue']['name'] == 'На выдаче'){
-    $myCurl = curl_init();
-    curl_setopt_array($myCurl, array(
-        CURLOPT_URL => $response['rows'][0]['entity']['meta']['href'],
-        CURLOPT_RETURNTRANSFER => true,
-        CURLOPT_CUSTOMREQUEST => 'GET',
-        CURLOPT_HTTPHEADER => array("Authorization: Bearer 36f61839f3f41d0c14fc10f493a44139529be7ea",
-            "Content-Type: application/json"),
-    ));
-    $response = json_decode(curl_exec($myCurl),1);
-    curl_close($myCurl);
+    $response = $moySklad->get($response['rows'][0]['entity']['meta']['href']);
     if($response['attributes'][3]['name'] == "Адрес доставки"){
         $adress = $response['attributes'][3]['value'];
     }
@@ -58,16 +39,7 @@ if($response['rows'][0]['diff']['state']['newValue']['name'] == 'На выдач
     $sum = $ms2->formatPrice($sum);
     $text = "Ваш заказ №{$name} на сумму {$sum} \nготов к выдаче по адресу \n{$adress} шоу рум AUTENTIMENTS. \nЧасы работы ежедневно с 11.00 до 22.00. \nСрок хранения 5 дней.";
     if(empty($phone)){
-        $myCurl = curl_init();
-        curl_setopt_array($myCurl, array(
-            CURLOPT_URL => $response['agent']['meta']['href'],
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_CUSTOMREQUEST => 'GET',
-            CURLOPT_HTTPHEADER => array("Authorization: Bearer 36f61839f3f41d0c14fc10f493a44139529be7ea",
-                "Content-Type: application/json"),
-        ));
-        $response = json_decode(curl_exec($myCurl),1);
-        curl_close($myCurl);
+        $response = $moySklad->get($response['agent']['meta']['href']);
         $phone = $response['phone'];
     }
     $stikSms = $modx->getService('stik', 'stikSms', $modx->getOption('core_path').'components/stik/model/', []);

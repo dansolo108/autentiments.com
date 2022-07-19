@@ -1,7 +1,9 @@
 <?php
 
 
-class stikMoySklad {
+class moysklad {
+    /* @var modRest $modRestClient */
+    public $modRestClient;
     function __construct (modX &$modx, array $config = []) {
         $this->modx =& $modx;
         $this->namespace = $this->modx->getOption('namespace', $config, 'stik');
@@ -23,17 +25,29 @@ class stikMoySklad {
 
         $this->modx->addPackage('stik', $this->config['model_path']);
 
-        /* @var modRest $this->modRestClient */
         $this->modRestClient = $this->modx->getService('rest', 'rest.modRest');
         $this->modRestClient->setOption('baseUrl', rtrim($this->config['serverAddress'], '/'));
         $this->modRestClient->setOption('format', 'json');
         $this->modRestClient->setOption('suppressSuffix', true);
         $this->modRestClient->setOption('headers', [
             'Content-type' => 'application/json', // Сообщаем сервису что хотим получить ответ в json формате
-            'Authorization:' => "Bearer ".$this->config['apiKey'],
+            'Authorization' => "Bearer ".$this->config['apiKey'],
         ]);
     }
-    public function getProduct(){
-
+    public function get($url){
+        $response = $this->modRestClient->get(str_replace($this->config['serverAddress'],'',$url));
+        return $response->process();
+    }
+    public function post($url,$params){
+        $response = $this->modRestClient->post(str_replace($this->config['serverAddress'],'',$url),$params);
+        return $response->process();
+    }
+    public function put($url,$params){
+        $response = $this->modRestClient->put(str_replace($this->config['serverAddress'],'',$url),$params);
+        return $response->process();
+    }
+    public function delete($url){
+        $response = $this->modRestClient->delete(str_replace($this->config['serverAddress'],'',$url));
+        return $response->process();
     }
 }
