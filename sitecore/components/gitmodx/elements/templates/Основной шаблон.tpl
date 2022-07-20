@@ -171,11 +171,13 @@
 <!-- END WHATSAPP INTEGRATION WITH ROISTAT -->
 <script>
 
-    (function(a,m,o,c,r,m) { a[m]= { id:"219369",hash:"f374012a78a33ad18113daf19457f2b36f92cf971518baab729e376206cd569b",locale:"ru",inline:true,setMeta:function(p) { this.params=(this.params||[]).concat([p]) }  } ;a[o]=a[o]||function() { (a[o].q=a[o].q||[]).push(arguments) } ;var d=a.document,s=d.createElement('script');s.async=true;s.id=m+'_script';s.src='https://gso.amocrm.ru/js/button.js?1656691793';d.head&&d.head.appendChild(s) } (window,0,'amoSocialButton',0,0,'amo_social_button'));
+    //(function(a,m,o,c,r,m) { a[m]= { id:"186111",hash:"d0802b42752e87dd4c003ffa54348e41f2eb084a414f31afceaa978207b8488d",locale:"ru",inline:true,setMeta:function(p){ this.params=(this.params||[]).concat([p])}};a[o]=a[o]||function(){ (a[o].q=a[o].q||[]).push(arguments)};var d=a.document,s=d.createElement('script');s.async=true;s.id=m+'_script';s.src='https://gso.amocrm.ru/js/button.js?1657957902';d.head&&d.head.appendChild(s)}(window,0,'amoSocialButton',0,0,'amo_social_button'));
 </script>
 
 <!--ROISTAT CODE END -->
-
+<script>
+    (function(a,m,o,c,r,m){ a[m]= { id:"186111",hash:"d0802b42752e87dd4c003ffa54348e41f2eb084a414f31afceaa978207b8488d",locale:"ru",inline:false,setMeta:function(p){ this.params=(this.params||[]).concat([p])}};a[o]=a[o]||function(){ (a[o].q=a[o].q||[]).push(arguments)};var d=a.document,s=d.createElement('script');s.async=true;s.id=m+'_script';s.src='https://gso.amocrm.ru/js/button.js?1657957902';d.head&&d.head.appendChild(s)}(window,0,'amoSocialButton',0,0,'amo_social_button'));
+</script>
 <script>
     if(sessionStorage.history){
         let history = JSON.parse(sessionStorage.history);
@@ -210,14 +212,14 @@
 <!-- End Google Tag Manager (noscript) -->
 <div class="au-modal-overlay"></div>
 {block 'loyality-discount'}
-    {if !$_modx->user.join_loyalty || !$_modx->isAuthenticated('web')}
+    {if false && (!$_modx->user.join_loyalty || !$_modx->isAuthenticated('web'))}
         <div class="loyality-discount" onClick="openModalАdditionally($('.au-modal-overlay'));$('.au-modal-sale').addClass('active');">
             ДАРИМ СКИДКУ 10% НА ПЕРВУЮ ПОКУПКУ | ПОДРОБНЕЕ
         </div>
     {/if}
 {/block}
 
-<div class="au-header__wrapper" {($_modx->isAuthenticated('web') && $_modx->user.join_loyalty)?'style="top:0;"' :''}>
+<div class="au-header__wrapper" {($_modx->isAuthenticated('web') && $_modx->user.join_loyalty || true)?'style="top:0;"' :''}>
     {block 'header'}
         <header class="au-header container">
             <div class="au-header__head">
@@ -234,7 +236,7 @@
                             <path d="M14.0659 3.28239L13.3588 2.57529L5.93414 9.99992L13.3588 17.4246L14.0659 16.7175L7.34837 9.99991L14.0659 3.28239Z" fill="#1A1714"/>
                         </svg>
                     </button>
-                    <button class="au-header__btn au-header__btn-lang au-mobile" aria-label="Переключить язык/валюту">{$_modx->config['cultureKey'] | upper} <span>|</span> {$_pls['msmc.symbol_right']}...</button>
+                    <button class="au-header__btn au-header__btn-lang au-mobile" aria-label="Переключить язык/валюту">{$_modx->config['cultureKey'] | upper}<span>|</span>{$_pls['msmc.symbol_right']}...</button>
                     <div class="au-header__lang-box">
                         {'!PolylangLinks' | snippet : [
                         'tpl' => 'stik.PolylangLinks',
