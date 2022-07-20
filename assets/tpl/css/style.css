@@ -3,14 +3,14 @@
   font-family: 'Circe';
   font-style: normal;
   font-weight: 400;
-  src: url("../fonts/Circe-Light.woff2") format("woff2");
+  src: url("/assets/tpl/fonts/Circe-Light.woff2") format("woff2");
   font-display: block; }
 
 @font-face {
   font-family: 'Circe-Regular';
   font-style: normal;
   font-weight: 400;
-  src: url("../fonts/Circe-Regular.woff2") format("woff2");
+  src: url("/assets/tpl/fonts/Circe-Regular.woff2") format("woff2");
   font-display: block; }
 
 html {
@@ -552,7 +552,7 @@ input:-webkit-autofill:active {
 .custom-form__check:checked + .custom-form__check-label::before {
   border-color: #1A1714;
   background-color: #1A1714;
-  background-image: url("../img/icon-check.svg");
+  background-image: url("/assets/tpl/img/icon-check.svg");
   transition: all 0.2s ease-in-out; }
 
 .au-btn {
@@ -670,13 +670,13 @@ input:-webkit-autofill:active {
   transition: all 0.2s ease-in-out; }
 
 .au-swiper-button-prev.swiper-button-prev::before {
-  background: url("../img/au-swiper-button-prev-arrow.svg") center/cover no-repeat; }
+  background: url("/assets/tpl/img/au-swiper-button-prev-arrow.svg") center/cover no-repeat; }
 
 .au-swiper-button-prev.swiper-button-prev:hover::before {
   transform: translateX(-4px) scale(1.1); }
 
 .au-swiper-button-next.swiper-button-next::before {
-  background: url("../img/au-swiper-button-next-arrow.svg") center/cover no-repeat; }
+  background: url("/assets/tpl/img/au-swiper-button-next-arrow.svg") center/cover no-repeat; }
 
 .au-swiper-button-next.swiper-button-next:hover::before {
   transform: translateX(4px) scale(1.1); }
@@ -1114,7 +1114,7 @@ input:-webkit-autofill:active {
   bottom: 0;
   left: 0;
   z-index: -4;
-  background: rgba(46, 41, 35, 0.96) url("../img/sub-menu_arrow.svg") center/13px no-repeat;
+  background: rgba(46, 41, 35, 0.96) url("/assets/tpl/img/sub-menu_arrow.svg") center/13px no-repeat;
   width: 100%;
   height: 30px;
   opacity: 0;
@@ -1413,12 +1413,12 @@ input:-webkit-autofill:active {
 .au-home__prev.swiper-button-prev {
   left: 4px; }
 .au-home__prev.swiper-button-prev::before {
-  background: url("../img/au-home__prev-arrow.svg") center/cover no-repeat; }
+  background: url("/assets/tpl/img/au-home__prev-arrow.svg") center/cover no-repeat; }
 
 .au-home__next.swiper-button-next {
   right: 4px; }
 .au-home__next.swiper-button-next::before {
-  background: url("../img/au-home__next-arrow.svg") center/cover no-repeat; }
+  background: url("/assets/tpl/img/au-home__next-arrow.svg") center/cover no-repeat; }
 
 .au-home__categories {
   padding-top: 36px;
@@ -1522,10 +1522,10 @@ input:-webkit-autofill:active {
   width: 40px;
   height: 40px;
   z-index: 10;
-  background: url("../img/au-card__no_like.svg") center/20px no-repeat;
+  background: url("/assets/tpl/img/au-card__no_like.svg") center/20px no-repeat;
   transition: all 0.2s ease-in-out; }
 .au-card__like.voted {
-  background: url("../img/au-card__like.svg") center/20px no-repeat; }
+  background: url("/assets/tpl/img/au-card__like.svg") center/20px no-repeat; }
 
 .au-card__img-box {
   position: relative; }
@@ -1649,7 +1649,7 @@ input:-webkit-autofill:active {
   width: 16px;
   height: 16px;
   margin-right: 9px;
-  background: url("../img/filters-icon.svg") center/cover no-repeat; }
+  background: url("/assets/tpl/img/filters-icon.svg") center/cover no-repeat; }
 
 .au-category__filter-count {
   font-family: 'Circe-Regular';
@@ -2308,7 +2308,7 @@ input:-webkit-autofill:active {
   width: 15px;
   height: 15px;
   margin-right: 8px;
-  background: url("../img/ordering__login.svg") center/cover no-repeat; }
+  background: url("/assets/tpl/img/ordering__login.svg") center/cover no-repeat; }
 
 .au-ordering__login-link {
   position: relative;
@@ -2448,7 +2448,7 @@ input:-webkit-autofill:active {
   display: block; }
 
 .applied-code .au-promo-code__input {
-  background-image: url("../img/promo-code__applied.svg"); }
+  background-image: url("/assets/tpl/img/promo-code__applied.svg"); }
 
 .disabled-code .au-promo-code__title,
 .disabled-bonuses .au-bonuses__count{
@@ -4577,12 +4577,12 @@ label.au-filter__cost:last-child input {
   margin-bottom: 44px; }
 
 .au-text-page__tab-input {
-  background-image: url("../img/text-page__tab_arrow.svg");
+  background-image: url("/assets/tpl/img/text-page__tab_arrow.svg");
   background-position: center right;
   background-size: 13px;
   background-repeat: no-repeat; }
 .au-text-page__tab-input.open {
-  background-image: url("../img/text-page__tab_arrow_open.svg"); }
+  background-image: url("/assets/tpl/img/text-page__tab_arrow_open.svg"); }
 
 .au-text-page__nav {
   position: absolute;
@@ -5119,7 +5119,7 @@ label.au-filter__cost:last-child input {
   position: absolute;
   top: 8.5px;
   right: 0;
-  background: url("../img/subscribe_submit_end.svg") right/cover no-repeat;
+  background: url("/assets/tpl/img/subscribe_submit_end.svg") right/cover no-repeat;
   opacity: 0;
   transition: all 0.2s ease-in-out; }
 
