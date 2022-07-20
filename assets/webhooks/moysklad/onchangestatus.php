@@ -45,9 +45,9 @@ if($response['rows'][0]['diff']['state']['newValue']['name'] == 'На выдач
     $stikSms = $modx->getService('stik', 'stikSms', $modx->getOption('core_path').'components/stik/model/', []);
     $phone = $stikSms->preparePhone($phone);
     if($phone){
-        $modx->getService("sms", "sms", MODX_CORE_PATH . "components/sms/model/sms/");
-        $modx->sms->initialize();
-        $modx->sms->mode = "user";
-        $modx->sms->sendSms(urlencode($text),$phone);
+        $sms = $modx->getService("sms", "sms", MODX_CORE_PATH . "components/sms/model/sms/");
+        $sms->initialize();
+        $sms->mode = "user";
+        $sms->sendSms(urlencode($text),$phone);
     }
 }
