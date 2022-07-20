@@ -113,12 +113,10 @@
                         ]}
                     </div>
                 </div>
-                
                 <div id="cdek2_map_ajax">
                     {* при изменении параметров вызова, также изменить здесь assets/components/stik_cdek/cdekDeliveryPointsAjax.php *}
                 	{'!cdekDeliveryPoints' | snippet}
                 </div>
-
                 <div class="au-ordering__row">
                     {include 'stik.orderInput' form=$form field='street'}
                     {include 'stik.orderInput' form=$form field='building'}
