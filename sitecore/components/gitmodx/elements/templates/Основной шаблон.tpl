@@ -91,7 +91,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 </head>
 
-<body {block 'body-padding'}{*(!$_modx->user.join_loyalty || !$_modx->isAuthenticated('web'))? 'class="padding-loyality"':''*}"{/block}>
+<body {block 'body-padding'}{((!$_modx->user.join_loyalty || !$_modx->isAuthenticated('web')) && false) ? 'class="padding-loyality"':''}"{/block}>
 
 <!--ROISTAT CODE BEGIN -->
 <script>
@@ -219,7 +219,7 @@
     {/if}
 {/block*}
 
-<div class="au-header__wrapper" {*($_modx->isAuthenticated('web') && $_modx->user.join_loyalty)?'style="top:0;"' :''*}>
+<div class="au-header__wrapper" {(($_modx->isAuthenticated('web') && $_modx->user.join_loyalty) || true)?'style="top:0;"' :''}>
     {block 'header'}
         <header class="au-header container">
             <div class="au-header__head">
