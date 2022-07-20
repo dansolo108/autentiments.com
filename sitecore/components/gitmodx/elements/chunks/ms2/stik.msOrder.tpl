@@ -44,7 +44,7 @@
             <input type="hidden" name="point">
             <input type="hidden" name="cdek_id">
             
-            {if $_modx->user.join_loyalty}
+            {*if $_modx->user.join_loyalty}
                 <div class="au-ordering__bonuses {if $_modx->getPlaceholder('coupon')}disabled-bonuses{/if}">
                     <div class="au-bonuses__form {if $form.msloyalty}used-bonuses{/if}">
                         <h2 class="au-h2  au-bonuses__title">
@@ -84,7 +84,7 @@
                         </div>
                     </div>
                 </div>
-            {/if}
+            {/if*}
 
             <h2 class="au-h2  au-ordering__title">{'stik_order_delivery_title' | lexicon}</h2>
             <div class="au-ordering__row">
