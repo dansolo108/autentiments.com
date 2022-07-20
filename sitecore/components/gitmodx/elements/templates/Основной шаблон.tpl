@@ -91,7 +91,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 </head>
 
-<body {block 'body-padding'}{(!$_modx->user.join_loyalty || !$_modx->isAuthenticated('web'))? 'class="padding-loyality"':''}"{/block}>
+<body {block 'body-padding'}{((!$_modx->user.join_loyalty || !$_modx->isAuthenticated('web')) && false)? 'class="padding-loyality"':''}"{/block}>
 
 <!--ROISTAT CODE BEGIN -->
 <script>
