@@ -5,8 +5,8 @@
 <div class="au-payment-end__col">
     <h1 class="au-h1  au-payment-end__title">{$_modx->resource.pagetitle}</h1>
     <p class="au-payment-end__text">{'stik_order_end_text1' | lexicon}</p>
-    <p class="au-payment-end__text">{'stik_order_end_text2' | lexicon}</p>
-    <p class="au-payment-end__text">Благодарим за оформление заказа! Как только товар будет готов к выдаче в шоу-руме, вы получаете смс-сообщение на номер, указанный при оформлении заказа.</p>
+    <p class="au-payment-end__text">{'stik_order_end_text2' | lexicon}</p><br>
+    <p class="au-payment-end__text">Благодарим за оформление заказа!<br>Как только товар будет готов к выдаче в шоу-руме, вы получаете смс-сообщение на номер, указанный при оформлении заказа.</p>
 </div>
 <div class="au-payment-end__col  au-payment-end__col_order">
     <h2 class="au-payment-end__subtitle">{'stik_order_list_number' | lexicon} № {$order.num}</h2>
