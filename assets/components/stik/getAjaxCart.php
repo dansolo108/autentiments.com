@@ -8,8 +8,8 @@
 // if (!$isAjax) @session_write_close(); exit;
 
 require_once dirname(dirname(dirname(dirname(__FILE__)))) . '/config.core.php';
-require_once MODX_CORE_PATH . 'model/modx/modx.class.php';
-$modx = new modX();
+require_once MODX_CORE_PATH . 'components/gitmodx/model/gitmodx/gitmodx.class.php';
+$modx = new gitModx();
 $modx->initialize('web');
 
 $language = htmlspecialchars($_POST['language']);
