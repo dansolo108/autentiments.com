@@ -22,6 +22,7 @@ sitecore/components/stik/cron/extracted/
 errorlog.txt
 _backup/
 _data/
+gulp
 .idea
 
 
