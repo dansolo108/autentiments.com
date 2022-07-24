@@ -44,7 +44,6 @@ class msDeliveryHandlerStikRp extends msDeliveryHandler implements msDeliveryInt
             "index-to" => (string)$receiverIndex,
             "mail-category" => "ORDINARY",
             "mail-type" => (string)$delivery->get('tariff'),
-            "entries-type"=> "SALE_OF_GOODS",
             "sms-notice-recipient"=>1,
             "mass" => 1000,
             "dimension" => [
@@ -54,7 +53,6 @@ class msDeliveryHandlerStikRp extends msDeliveryHandler implements msDeliveryInt
             ],
             "fragile" => false,
         ];
-        $this->modx->log(1,var_export($orderData,1));
 
         $url = 'https://otpravka-api.pochta.ru/1.0/tariff';
         $method = 'POST';
