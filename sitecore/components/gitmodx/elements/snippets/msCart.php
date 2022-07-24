@@ -14,7 +14,6 @@ if ($pdoClass = $modx->loadClass($fqn, $path, false, true)) {
 }
 $pdoFetch->addTime('pdoTools loaded.');
 
-
 $tpl = $modx->getOption('tpl', $scriptProperties, 'tpl.msCart');
 $cart = $miniShop2->cart->get();
 $status = $miniShop2->cart->status();
