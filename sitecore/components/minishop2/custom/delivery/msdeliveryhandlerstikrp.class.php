@@ -39,12 +39,13 @@ class msDeliveryHandlerStikRp extends msDeliveryHandler implements msDeliveryInt
         $receiverIndex = $orderData['index'];
         
         if (empty($receiverIndex)) return [$cost, 0, 0];
-        
         $orderData = [
             "index-from" => (string)$this->config['fromIndex'],
             "index-to" => (string)$receiverIndex,
             "mail-category" => "ORDINARY",
             "mail-type" => (string)$delivery->get('tariff'),
+            "entries-type"=> "SALE_OF_GOODS",
+            "sms-notice-recipient"=>1,
             "mass" => 1000,
             "dimension" => [
                 "height" => 32,
@@ -53,6 +54,8 @@ class msDeliveryHandlerStikRp extends msDeliveryHandler implements msDeliveryInt
             ],
             "fragile" => false,
         ];
+        $this->modx->log(1,var_export($orderData,1));
+
         $url = 'https://otpravka-api.pochta.ru/1.0/tariff';
         $method = 'POST';
         $headers = [
@@ -90,6 +93,8 @@ class msDeliveryHandlerStikRp extends msDeliveryHandler implements msDeliveryInt
 //                $cost += 150;
 //            }
             $cost = $cost + $delivery_cost;
+            // увеличиваем стоимость доставки вдвое.
+            $cost *= 2;
             $min = $max = 0;
             if (isset($response['delivery-time'])) {
                 $min = $response['delivery-time']['min-days'];
