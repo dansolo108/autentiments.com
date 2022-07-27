@@ -148,7 +148,9 @@
         </div>
     </div>
 {/if}
+{if $_modx->isAuthenticated('web')}
 
+{/if}
 <div class="au-modal au-modal-cart  modal" id="ms2_cart_modal">
     {* содержимое в чанке stik.msCart.ajax *}
 </div>

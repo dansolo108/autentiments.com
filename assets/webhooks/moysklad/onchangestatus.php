@@ -2,11 +2,10 @@
 define('MODX_API_MODE', true);
 require_once dirname(__DIR__, 3) . '/index.php';
 /** @var $modx gitModx */
-$modx->setLogTarget('HTML');
-$modx->setLogLevel(MODX_LOG_LEVEL_INFO);
 $moySklad = $modx->getService('moysklad', 'moysklad', $modx->getOption('core_path').'components/stik/model/', []);
 
 $input = json_decode(file_get_contents('php://input'),1);
+$modx->log(1,var_export($input,1));
 
 $response = $moySklad->get($input['auditContext']['meta']['href'].'/events');
 if($response['rows'][0]['diff']['state']['newValue']['name'] == 'На выдаче'){
