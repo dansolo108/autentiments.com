@@ -5,10 +5,11 @@ require_once dirname(__DIR__, 3) . '/index.php';
 $moySklad = $modx->getService('moysklad', 'moysklad', $modx->getOption('core_path').'components/stik/model/', []);
 
 $input = json_decode(file_get_contents('php://input'),1);
-$modx->log(1,var_export($input,1));
 
 $response = $moySklad->get($input['auditContext']['meta']['href'].'/events');
 if($response['rows'][0]['diff']['state']['newValue']['name'] == 'На выдаче'){
+    $modx->log(1,var_export($response,1));
+
     $response = $moySklad->get($response['rows'][0]['entity']['meta']['href']);
     if($response['attributes'][3]['name'] == "Адрес доставки"){
         $adress = $response['attributes'][3]['value'];
