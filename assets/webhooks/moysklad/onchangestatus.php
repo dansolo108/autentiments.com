@@ -8,7 +8,6 @@ $input = json_decode(file_get_contents('php://input'),1);
 
 $response = $moySklad->get($input['auditContext']['meta']['href'].'/events');
 if($response['rows'][0]['diff']['state']['newValue']['name'] == 'На выдаче'){
-    $modx->log(1,var_export($response,1));
 
     $response = $moySklad->get($response['rows'][0]['entity']['meta']['href']);
     if($response['attributes'][3]['name'] == "Адрес доставки"){
@@ -37,7 +36,7 @@ if($response['rows'][0]['diff']['state']['newValue']['name'] == 'На выдач
     $ms2 = $modx->getService('minishop2');
     $sum = floatval($response['sum']) / 100;
     $sum = $ms2->formatPrice($sum);
-    $text = "Ваш заказ №{$name} на сумму {$sum} \nготов к выдаче по адресу \n{$adress} шоу рум AUTENTIMENTS. \nЧасы работы ежедневно с 11.00 до 22.00. \nСрок хранения 5 дней.";
+    $text = "Ваш dev заказ №{$name} на сумму {$sum} \nготов к выдаче по адресу \n{$adress} шоу рум AUTENTIMENTS. \nЧасы работы ежедневно с 11.00 до 22.00. \nСрок хранения 5 дней.";
     if(empty($phone)){
         $response = $moySklad->get($response['agent']['meta']['href']);
         $phone = $response['phone'];
