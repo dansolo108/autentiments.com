@@ -36,7 +36,7 @@ if($response['rows'][0]['diff']['state']['newValue']['name'] == 'На выдач
     $ms2 = $modx->getService('minishop2');
     $sum = floatval($response['sum']) / 100;
     $sum = $ms2->formatPrice($sum);
-    $text = "Ваш заказ №{$name} на сумму {$sum} \nготов к выдаче по адресу \n{$adress} шоу рум AUTENTIMENTS. \nЧасы работы ежедневно с 11.00 до 22.00. \nСрок хранения 5 дней.";
+    $text = "Ваш заказ №{$name} на сумму {$sum} \nготов к выдаче по адресу \n{$adress} шоу рум AUTENTIMENTS. \nЧасы работы ежедневно с 11.00 до 22.00.";
     if(empty($phone)){
         $response = $moySklad->get($response['agent']['meta']['href']);
         $phone = $response['phone'];
@@ -44,9 +44,11 @@ if($response['rows'][0]['diff']['state']['newValue']['name'] == 'На выдач
     $stikSms = $modx->getService('stik', 'stikSms', $modx->getOption('core_path').'components/stik/model/', []);
     $phone = $stikSms->preparePhone($phone);
     if($phone){
+
+        /* @var $sms sms*/
         $sms = $modx->getService("sms", "sms", MODX_CORE_PATH . "components/sms/model/sms/");
         $sms->initialize();
-        $sms->mode = "user";
+
         $sms->sendSms(urlencode($text),$phone);
     }
 }
