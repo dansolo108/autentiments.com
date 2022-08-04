@@ -212,7 +212,7 @@
 <!-- End Google Tag Manager (noscript) -->
 <div class="au-modal-overlay"></div>
 {block 'loyality-discount'}
-    {if false && (!$_modx->user.join_loyalty || !$_modx->isAuthenticated('web'))}
+    {if (!$_modx->user.join_loyalty || !$_modx->isAuthenticated('web'))}
         <div class="loyality-discount" onClick="openModalАdditionally($('.au-modal-overlay'));$('.au-modal-sale').addClass('active');">
             ДАРИМ СКИДКУ 10% НА ПЕРВУЮ ПОКУПКУ | ПОДРОБНЕЕ
         </div>
