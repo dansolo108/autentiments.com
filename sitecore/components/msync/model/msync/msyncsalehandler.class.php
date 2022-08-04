@@ -331,23 +331,21 @@ class msyncSaleHandler implements msyncSaleInterface
             "Статус заказа" => $order_ext['statusName'],
             "Способ оплаты" => $order_ext['payment.name'],
             "Способ доставки" => $order_ext['delivery.name'],
-            "Адрес доставки" => $order_ext['address.full']
+            "Адрес доставки" => $order_ext['address.full'],
+            'Источник' => 'Сайт'
         );
-        $this->addDetails($doc, $status);
-        $utms = [];
         if(!empty($order_ext['comment'])){
             $comment = json_decode($order_ext['comment'],true);
             if(is_array($comment)){
                 foreach($comment as $key => $utm){
                     if(!empty($utm)){
-                        $utms[$key] = $utm;
+                        $status[$key] = $utm;
                     }
                     
                 }
             }
         }
-        $this->addDetails($doc, $utms);
-        $this->addDetails($doc, ['Источник' => 'Сайт']);
+        $this->addDetails($doc, $status);
         if ($order_ext['status'] == 1) $_SESSION['sale_order_ids'][$order_ext['id']] = $order_ext['id'];
     }
 
