@@ -416,7 +416,11 @@ function closeModal() {
         }
     });
 }
-
+document.addEventListener('DOMContentLoaded',function (e){
+    if(e.target.closest('.au-cart__resume')){
+        closeForModal();
+    }
+})
 // theiaStickySidebar
 function addStickySidebar() {
     $('.sidebar').theiaStickySidebar({
