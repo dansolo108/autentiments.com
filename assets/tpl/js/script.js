@@ -406,7 +406,9 @@ function closeModal() {
             closeForModal();
             $(window).scroll();
         }
-
+        if(e.target.closest('.au-modal-cart')){
+            closeForModal();
+        }
         if ($('.au-lookbook__gallery').length) {
             $('.au-lookbooks__gallery-img').attr('src', '');
             $('.au-lookbook__gallery').removeClass('active');
@@ -826,9 +828,6 @@ document.addEventListener("DOMContentLoaded", function() {
             $('.au-profile__loyalty-box').hide();
         } 
     }
-    $('.au-cart__resume').click(e=>{
-        closeForModal();
-    });
 });
 
 
