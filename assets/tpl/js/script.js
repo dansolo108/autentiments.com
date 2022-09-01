@@ -414,9 +414,6 @@ function closeModal() {
         }
     });
 }
-$('.au-cart__resume').click(e=>{
-    closeForModal();
-});
 
 // theiaStickySidebar
 function addStickySidebar() {
@@ -829,6 +826,9 @@ document.addEventListener("DOMContentLoaded", function() {
             $('.au-profile__loyalty-box').hide();
         } 
     }
+    $('.au-cart__resume').click(e=>{
+        closeForModal();
+    });
 });
 
 
