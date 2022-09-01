@@ -414,7 +414,9 @@ function closeModal() {
         }
     });
 }
-$('.au-cart__resume').click(closeForModal);
+$('.au-cart__resume').click(e=>{
+    closeForModal();
+});
 
 // theiaStickySidebar
 function addStickySidebar() {
