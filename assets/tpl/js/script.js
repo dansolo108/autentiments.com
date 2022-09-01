@@ -414,7 +414,7 @@ function closeModal() {
         }
     });
 }
-
+$('.au-cart__resume').click(closeForModal);
 
 // theiaStickySidebar
 function addStickySidebar() {

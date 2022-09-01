@@ -421,7 +421,7 @@
         </ul>
         <ul class="au-footer__menu">
             <li class="au-footer__item">
-                <a class="au-footer__link" href="https://t.me/autentiments_bot" target="_blank">{'stik_link_telegram' | lexicon}</a>
+                <a class="au-footer__link" href="https://t.me/autentiments" target="_blank">{'stik_link_telegram' | lexicon}</a>
             </li>
             <li class="au-footer__item">
                 <a class="au-footer__link" href="https://wa.me/{$_modx->config.whatsapp | preg_replace : '/[^0-9]/' : ''}" target="_blank">{'stik_link_whatsapp' | lexicon}</a>

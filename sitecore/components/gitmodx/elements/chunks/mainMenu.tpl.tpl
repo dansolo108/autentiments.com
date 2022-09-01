@@ -4,7 +4,7 @@
         {if $id == 7}
             <div class="au-header__sub-box  sub-catalog">
                 <button class="au-header__btn-back  au-mobile_xl  au-header__sub-close">{'stick_sub_close' | lexicon}</button>
-                <span class="au-header__sub-title">Одежда</span>
+                <a href="{$link}" class="au-header__sub-title">Одежда</a>
                 <div class="au-header__sub-wrapper sub-wrapper__bottom-arrow">
                     <ul class="au-header__sub-list">
                         <li class="au-header__sub-item">
