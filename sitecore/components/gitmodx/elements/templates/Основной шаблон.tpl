@@ -29,7 +29,7 @@
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="Autentiments">
     <meta property="og:title" content="{$_modx->resource.og_title ?: $_modx->resource.pagetitle}">
-    <meta property="og:description" content="{$_modx->resource.og_description ?: $_modx->resource.description}">
+    <meta property="og:description" content="{$_modx->resource.og_description ?$_modx->resource.og_description: $_modx->resource.description}">
     <meta property="og:url" content="{$_modx->resource.id | url : ['scheme' => 'full']}">
     {if $_modx->resource.img}
         {set $tv_img = '/assets/uploads/' ~ $_modx->resource.img}
@@ -421,7 +421,7 @@
         </ul>
         <ul class="au-footer__menu">
             <li class="au-footer__item">
-                <a class="au-footer__link" href="https://t.me/autentiments" target="_blank">{'stik_link_telegram' | lexicon}</a>
+                <a class="au-footer__link" href="https://t.me/autentiments_bot" target="_blank">{'stik_link_telegram' | lexicon}</a>
             </li>
             <li class="au-footer__item">
                 <a class="au-footer__link" href="https://wa.me/{$_modx->config.whatsapp | preg_replace : '/[^0-9]/' : ''}" target="_blank">{'stik_link_whatsapp' | lexicon}</a>
