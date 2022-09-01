@@ -1,6 +1,6 @@
 {if $id in list [7,57]}
     <li class="au-header__item  au-header__sub-open">
-        <span class="au-header__link {$classnames}">{$menutitle}</span>
+        <a href="{$link}" class="au-header__link {$classnames}">{$menutitle}</a>
         {if $id == 7}
             <div class="au-header__sub-box  sub-catalog">
                 <button class="au-header__btn-back  au-mobile_xl  au-header__sub-close">{'stick_sub_close' | lexicon}</button>
