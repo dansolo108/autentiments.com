@@ -19,8 +19,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
     <meta name="format-detection" content="telephone=no">
-    <title>{$_modx->resource.longtitle ?: $_modx->resource.pagetitle}</title>
-    <meta name="description" content="{$_modx->resource.description}" />
+    <title>{$_modx->resource.longtitle ? $_modx->resource.longtitle: $_modx->resource.pagetitle}</title>
+    <meta name="description" content="{$_modx->resource.og_description ? $_modx->resource.og_description: $_modx->resource.description}"" />
     <base href="{$_modx->config.site_url}">
     {'!PolylangCanonical' | snippet : [
     'tpl' => '@INLINE <link  rel="alternate" hreflang="{if $lang == "en"}en-us{else}{$lang}{/if}" href="{$url}"/>'
@@ -28,8 +28,8 @@
     <meta name="author" content="Autentiments">
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="Autentiments">
-    <meta property="og:title" content="{$_modx->resource.og_title ?: $_modx->resource.pagetitle}">
-    <meta property="og:description" content="{$_modx->resource.og_description ?: $_modx->resource.description}">
+    <meta property="og:title" content="{$_modx->resource.og_title ? $_modx->resource.og_title: $_modx->resource.pagetitle}">
+    <meta  property="og:description" content="{$_modx->resource.og_description ? $_modx->resource.og_description : $_modx->resource.description}">
     <meta property="og:url" content="{$_modx->resource.id | url : ['scheme' => 'full']}">
     {if $_modx->resource.img}
         {set $tv_img = '/assets/uploads/' ~ $_modx->resource.img}
