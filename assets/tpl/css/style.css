@@ -4402,7 +4402,6 @@ label.au-filter__cost:last-child input {
   text-align: right; }
 
 .au-cart__resume {
-  display: none;
   width: 100%;
   height: auto;
   padding: 14px;
