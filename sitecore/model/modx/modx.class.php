@@ -1934,7 +1934,7 @@ class modX extends xPDO {
     /**
      * Returns true if user has the specified policy permission.
      *
-     * @param string $pm Permission key to check.
+     * @param string|array $pm Permission key to check.
      * @return boolean
      */
     public function hasPermission($pm) {

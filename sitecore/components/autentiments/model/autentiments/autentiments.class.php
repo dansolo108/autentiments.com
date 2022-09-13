@@ -189,7 +189,7 @@ for (var i=0; i<tabs.length; i++) {
         $this->pdoFetch->setConfig([
             'class' => 'Modification',
             'where' => ['Modification.product_id' => $product->get('id')],
-            'leftJoin' => [
+            'innerJoin' => [
                 'ModificationDetail' => [
                     'class' => 'ModificationDetail',
                     'on' => 'ModificationDetail.modification_id = Modification.id'
@@ -204,11 +204,11 @@ for (var i=0; i<tabs.length; i++) {
             'return' => 'data'
         ]);
         $result = $this->pdoFetch->run();
-        $options = [];
+        $details = [];
         foreach ($result as $option) {
-            $options[] = $option;
+            $details[] = $option;
         }
-        return $options;
+        return $details;
     }
     public function getProductStores($id){
         if(!is_integer($id))

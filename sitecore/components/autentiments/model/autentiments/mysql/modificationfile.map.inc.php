@@ -1,8 +1,8 @@
 <?php
-$xpdo_meta_map['ModificationImage']= array (
+$xpdo_meta_map['ModificationFile']= array (
   'package' => 'autentiments',
   'version' => '1.1',
-  'table' => 'auten_product_modification_images',
+  'table' => 'auten_product_modification_files',
   'extends' => 'xPDOSimpleObject',
   'tableMeta' => 
   array (

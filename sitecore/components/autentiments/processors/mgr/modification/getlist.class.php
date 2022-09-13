@@ -34,6 +34,7 @@ class ModificationGetListProcessor extends modObjectGetListProcessor {
      * @param xPDOObject $object
      * @return array
      */
+
     public function prepareRow(xPDOObject $object) {
         $obj = $object->toArray();
         /** @var ModificationDetail $option */
@@ -43,6 +44,24 @@ class ModificationGetListProcessor extends modObjectGetListProcessor {
         /** @var ModificationRemain $remain */
         foreach($object->getMany('Remains') as $remain){
             $obj['store:'.$remain->get('store_id')] = $remain->get('remains');
+        }
+
+        $colors = $object->getMany('Details',['name'=>'Цвет']);
+        $color = $colors[array_keys($colors)[0]];
+        if($color) {
+            $product = $object->getOne('Product');
+            $files = $product->getOne('Data')->getMany('Files', ['description' => $color->get('value')]);
+            if($files){
+                $preview = array_keys($files)[0];
+                $min = $files[$preview]->get('rank');
+                foreach ($files as $key => $file){
+                    if(min($min,(int)$file->get('rank')) < $min){
+                        $min = $file->get('rank');
+                        $preview = $key;
+                    }
+                }
+                $obj['preview'] = $files[$preview]->get('url');
+            }
         }
         return $obj;
     }

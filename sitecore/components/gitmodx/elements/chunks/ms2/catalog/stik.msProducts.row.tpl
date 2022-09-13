@@ -50,14 +50,25 @@
                 </div>
             {/if}
         </div>
-        {$availableColors}
+        <div class="au-card__color-box">
+            <div class="au-card__colors">
+                {'!getModifications' | snippet : [
+                    'where'=>['Modification.product_id' => $id],
+                    'select'=>['DetailЦвет'=>'DetailЦвет.value as Цвет','Modification.id'],
+                    'groupby'=>'Modification.product_id, DetailЦвет.value',
+                    'details'=>['Цвет'],
+                    'tpl' =>'modification.row.color',
+                    'active'=>$color,
+                ]}
+            </div>
+        </div>
         <div class="au-card__description">
             <span class="au-card__title">{$pagetitle}</span>
             <div class="au-card__price-box js_card-prices">
                 {'!getColorPrice' | snippet : [
                     'id' => $id,
                     'color' => $activeColor,
-                    'tpl' => 'stik.cardPrices.tpl',
+                    'tpl' => 'stik.cardPrices',
                 ]}
             </div>
         </div>
