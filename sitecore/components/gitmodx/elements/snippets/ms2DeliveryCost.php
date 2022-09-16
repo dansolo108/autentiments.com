@@ -57,7 +57,7 @@ foreach ($col as $delivery) {
     foreach($payments as $item) {
         $paymentsArr[] = $item->get('payment_id');
     }
-    
+    $error = false;
     if ($_GET['deliveryGetCost'] == 'get') {
         $costDelivery = $delivery->getCost($order, $cost);
         if (is_array($costDelivery)) {
@@ -75,7 +75,9 @@ foreach ($col as $delivery) {
                     'delivery_id' => $delivery->get('id')
                 ]);
             }
-            $costDelivery = $costDelivery[0];
+            if($costDelivery[1] === 0 && $costDelivery[2] === 0)
+                $error = true;
+            $costDelivery = $costDelivery[0] - $cost;
         }
     } else {
         $costDelivery = $rates = false;
@@ -86,6 +88,7 @@ foreach ($col as $delivery) {
         'rates' => $rates,
         'delivery' => $delivery->toArray(),
         'payments' => $paymentsArr,
+        'error'=>$error
     ];
 }
 $out['order'] = $order->get();

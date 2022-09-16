@@ -32,10 +32,15 @@ $tools->setLanguage($PolylangLanguage);
 // $modx->setLogTarget('FILE');
 $modx->setLogLevel(modX::LOG_LEVEL_ERROR);
 $modx->getService('error','error.modError');
-
+/** @var miniShop2 $ms2 */
+$ms2 = $modx->getService('minishop2');
+$ms2->initialize('web');
+/** @var msCartHandlerCustom $cart */
+$cart = $ms2->cart;
+$cartStatus = $cart->status();
 print $modx->runSnippet('ms2DeliveryCost', [
     'language' => $language,
-    'cost' => 0,
+    'cost' => $cartStatus['total_cost'],
     'tpl' => 'tpl.ms2DeliveryCost',
     'required' => 'country,city,index',
 ]);

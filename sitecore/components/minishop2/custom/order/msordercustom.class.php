@@ -271,20 +271,22 @@ class msOrderCustom extends msOrderHandler implements msOrderInterface
         if (!empty($this->order['delivery']) && $delivery = $this->modx->getObject('msDelivery',
                 array('id' => $this->order['delivery']))
         ) {
-            $cost = $delivery->getCost($this, $cost);
-        }
-        
-        if (is_array($cost)) {
-            $cost = $cost[0];
-        }
-        $cost = max($cost, 0);
-
-        if (isset($delivery)) {
-            $delivery_cost = $delivery->getCost($this, 0);
-        }
-
-        if (is_array($delivery_cost)) {
-            $delivery_cost = $delivery_cost[0];
+            $deliveryOutput = $delivery->getCost($this, $cost);
+            if ($deliveryOutput[1] == 0 && $deliveryOutput[2] == 0) {
+                return $this->error('Доставка не рассчитана');
+            }
+            $delivery_cost = $deliveryOutput[0] - $cost;
+            if($cost > 30000){
+                $delivery_cost = 0;
+            }
+            $free_delivery = false;
+            if($delivery_cost == 0){
+                $free_delivery = true;
+            }
+            if (is_array($deliveryOutput)) {
+                $cost = $deliveryOutput[0];
+            }
+            $cost = max($cost, 0);
         }
         
         /** @var msPayment $payment */
@@ -341,6 +343,7 @@ class msOrderCustom extends msOrderHandler implements msOrderInterface
             : $this->success('', array(
                 'cost' => $cost,
                 'delivery_cost' => $msmc->getPrice($delivery_cost, 0, 0, 0.0, false),
+                'free_delivery' => $free_delivery,
 				'msloyalty' => $msloyalty,
 				'msloyalty_text' => $msloyalty_text,
 				'msloyalty_allowable_amount' => $this->modx->runSnippet('msMultiCurrencyPriceFloor', ['price' => $msloyalty_allowable_amount]),

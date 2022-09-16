@@ -236,10 +236,12 @@ $(document).ready(function() {
             if(response.data.delivery_cost > 0) {
                 $('.ms2_delivery_cost').text(miniShop2.Utils.formatPrice(response.data.delivery_cost) + " " + ms2_frontend_currency);
                 // $('#city, #index').removeClass('error');
-            } else {
-                let is_free = $('input[name="delivery"]:checked').hasClass('free-delivery');
-                $('.ms2_delivery_cost').text(is_free ? stik_order_delivery_free : stik_order_delivery_not_calculated);
+            } else if(response.data.free_delivery && response.data.delivery_cost == 0){
+                $('.ms2_delivery_cost').text(stik_order_delivery_free);
                 // $('#city, #index').addClass('error');
+            }else{
+                $('.ms2_delivery_cost').text(stik_order_delivery_not_calculated);
+
             }
             
             // бонусы
