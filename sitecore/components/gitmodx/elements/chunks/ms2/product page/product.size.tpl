@@ -1,6 +1,6 @@
 <div class="au-product__size-item">
-    <input class="au-product__size-input" type="radio" name="options[size]" value="{$Размер}" id="{$Размер}" {if $activeРазмер == $Размер}checked{/if}>
-    <label class="au-product__size" for="{$Размер}">
-        {$Размер | uppercase}
+    <input class="au-product__size-input" type="radio" name="id" value="{$id}" id="size_{$size}" data-value="{$size}" {if !($remains > 0)}disabled{/if} {if $activeSize == $size || (!($activeSize is set) && $idx == 0)}checked{/if}>
+    <label class="au-product__size {if !($remains > 0)}not-size{/if}" for="size_{$size}" >
+        {$size | uppercase}
     </label>
 </div>

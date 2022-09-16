@@ -16,26 +16,34 @@
         <field key="hide" dbtype="tinyint" precision="1" phptype="boolean" null="false" default="0"/>
         <field key="price" dbtype="decimal" precision="12,2" phptype="float" null="true" default="0"/>
         <field key="old_price" dbtype="decimal" precision="12,2" phptype="float" null="true" default="0"/>
-        <index alias="code" name="code" primary="false" unique="true" type="BTREE">
+        <index alias="code" name="code" primary="false" unique="false" type="BTREE">
             <column key="code" length="" collation="A" null="false"/>
         </index>
         <composite alias="Details" class="ModificationDetail" local="id" foreign="modification_id" cardinality="many" owner="local"/>
-        <composite alias="Images" class="ModificationImage" local="id" foreign="modification_id" cardinality="many" owner="local"/>
+        <composite alias="Files" class="ModificationFile" local="id" foreign="modification_id" cardinality="many" owner="local"/>
         <composite alias="Remains" class="ModificationRemain" local="id" foreign="modification_id" cardinality="many" owner="local"/>
+        <aggregate alias="Product" class="msProduct" local="product_id" foreign="id" cardinality="one" owner="foreign"/>
     </object>
     <object class="ModificationDetail" table="auten_product_modification_details" extends="xPDOSimpleObject">
-        <field key="name" dbtype="varchar" precision="255" phptype="string" null="false"/>
+        <field key="type_id" dbtype="varchar" precision="255" phptype="string" null="false"/>
         <field key="modification_id" dbtype="int" precision="10" phptype="integer" null="false"/>
         <field key="value" dbtype="varchar" precision="255" phptype="string" null="false"/>
-        <index alias="name" name="name" primary="false" unique="false" type="BTREE">
-            <column key="name" length="" collation="A" null="false"/>
-        </index>
-        <index alias="modification_id" name="modification_id" primary="false" unique="false" type="BTREE">
+        <index alias="unique_index" name="unique_index" primary="false" unique="true" type="BTREE">
+            <column key="type_id" length="" collation="A" null="false"/>
             <column key="modification_id" length="" collation="A" null="false"/>
+            <column key="value" length="" collation="A" null="false"/>
         </index>
         <aggregate alias="Modification" class="Modification" local="modification_id" foreign="id" cardinality="one" owner="foreign"/>
+        <aggregate alias="Type" class="DetailType" local="type_id" foreign="id" cardinality="one" owner="foreign"/>
     </object>
-    <object class="ModificationImage" table="auten_product_modification_images" extends="xPDOSimpleObject">
+    <object class="DetailType" table="auten_detail_types" extends="xPDOSimpleObject">
+        <field key="name" dbtype="varchar" precision="255" phptype="string" null="false"/>
+        <index alias="name" name="name" primary="false" unique="true" type="BTREE">
+            <column key="name" length="" collation="A" null="false"/>
+        </index>
+        <composite alias="Details" class="ModificationDetail" local="id" foreign="type_id" cardinality="many" owner="local"/>
+    </object>
+    <object class="ModificationFile" table="auten_product_modification_files" extends="xPDOSimpleObject">
         <field key="modification_id" dbtype="int" precision="10" phptype="integer" null="false"/>
         <field key="file" dbtype="varchar" precision="255" phptype="string" null="false"/>
         <field key="visible_index" dbtype="int" precision="10" phptype="integer" default="0" null="false"/>

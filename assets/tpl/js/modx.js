@@ -90,9 +90,9 @@ function selectFirstSize() {
 }
 
 // Переключение цветов в галерее товара
-function reloadMsGallery(color, product) {
+function reloadMsGallery(color, id) {
     if ($('#msGallery').length) {
-        $.post("/assets/components/stik/getAjaxMsGallery.php", {color: color, product: product}, function(data) {
+        $.post("/assets/components/autentiments/getAjaxMsGallery.php", {color: color, product_id: id}, function(data) {
             if (data) {
                 $('#msGallery').replaceWith(data);
                 productGalleryInit();
@@ -108,23 +108,23 @@ function changeCardColor(color, $input) {
         let $img = $card.find('.js_card-img');
         if ($img.length) {
             $img.addClass('fade');
-            $.post("/assets/components/stik/getAjaxMsGallery.php", {color: color, product: $input.attr('data-product'), mode: 'card'}, function(data) {
-                data = $.parseJSON(data);
+            let payload = {color: color, product_id: $card.attr('product-id'), mode: 'card'};
+            $.post("/assets/components/autentiments/getAjaxMsGallery.php", payload, function(data) {
                 if (data) {
-                    if (data.gallery) {
-                        $img.html(data.gallery);
-                    }
-                    if (data.prices) {
-                        $card.find('js_card-prices').html(data.prices);
-                    }
+                    $img.html(data);
                 }
                 $img.removeClass('fade');
+            });
+            $.post("/assets/components/autentiments/getAjaxColorPrice.php",payload, function(data) {
+                if (data) {
+                    $card.find('js_card-prices').html(data);
+                }
             });
         } else {
             console.log('Не найден блок .js_card-img');
         }
-    }
 
+    }
 }
 
 $(document).ready(function() {
@@ -376,14 +376,11 @@ $(document).ready(function() {
 
 // переключение цвета на странице товара
 $('#msProduct input.au-product__color-input').on('change', function () {
-    let id = $('#msProduct .ms2_form input[name=id]').val();
+    let product_id = $('#msProduct .ms2_form input[name=product_id]').val();
     let $this = this;
-    $.post(window.location.href, {
-        stikpr_action: 'sizes/get',
-        language: $('html').attr('lang'),
-        product_id: id,
-        selected_color: $(this).val()
-        
+    $.post("/assets/components/autentiments/getAjaxColorSizes.php", {
+        product_id: product_id,
+        color: $(this).val()
     }, function(data) {
         if (data) {
             $('#ajax_sizes').html(data);
@@ -392,25 +389,42 @@ $('#msProduct input.au-product__color-input').on('change', function () {
     });
     $('.au-product__add-entrance').removeClass('active');
     $('.au-product__add-entrance').removeClass('end').prop('disabled', false);
-    reloadMsGallery($($this).val(), $($this).data('product'));
+    reloadMsGallery($($this).val(),product_id);
+    let params = {'color': $($this).val()};
+    window.history.replaceState('', '', updateURLParameter(window.location.href, params));
 });
+function updateURLParameter(url, params){
+    var newAdditionalURL = "";
+    var tempArray = url.split("?");
+    var baseURL = tempArray[0];
+    var additionalURL = tempArray[1];
+    var temp = "";
+    if (additionalURL) {
+        tempArray = additionalURL.split("&");
+        for (var i=0; i<tempArray.length; i++){
+            if(params[tempArray[i].split('=')[0]] === undefined){
+                newAdditionalURL += temp + tempArray[i];
+                temp = "&";
+            }
+        }
+    }
+    var rows_txt = "";
+    for (let param in params){
+        rows_txt += temp + "" + param + "=" + params[param];
+        temp = "&";
+    }
 
-$(document).ready(function() {
-    selectFirstSize();
-});
-
+    return baseURL + "?" + newAdditionalURL + rows_txt;
+}
 // цена оффера
-$(document).on('click', '#msProduct label.au-product__size', function () {
-    let id = $('#msProduct .ms2_form input[name=id]').val(),
-        color = $('input[name="options[color]"]:checked').val(),
-        size = $(this).siblings('input').val();
-    $.post(window.location.href, {
-        stikpr_action: 'price/get',
-        language: $('html').attr('lang'),
-        product_id: id,
-        selected_color: color,
-        selected_size: size
-        
+$(document).on('click', '#msProduct .au-product__size', function () {
+    let active = $(`input.au-product__size-input[id="${$(this).attr('for')}"]`);
+    let id = active.val();
+    let size = active.data('value');
+    params = {'size': size};
+    window.history.replaceState('', '', updateURLParameter(window.location.href, params));
+    $.post('/assets/components/autentiments/getAjaxModificationPrice.php', {
+        'id': id,
     }, function(data) {
         data = JSON.parse(data);
         if (data) {
@@ -423,6 +437,7 @@ $(document).on('click', '#msProduct label.au-product__size', function () {
             }
         }
     });
+
 });
 
 // Переключение цвета в карточке товара

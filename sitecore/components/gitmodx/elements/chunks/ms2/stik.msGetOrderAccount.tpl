@@ -123,7 +123,7 @@
             </h2>
             <ul class="au-cart__cards  au-order__cards">
                 {foreach $products as $product}
-                    {$_modx->getChunk('stik.msCart.item', $product)}
+                    {$_modx->getChunk('cart.item', $product)}
                 {/foreach}
             </ul>
         </div>

@@ -19,24 +19,32 @@ class msCartHandlerCustom extends msCartHandler implements msCartInterface
             $options = array();
         }
 
-        $filter = array('id' => $id);
+        $modificationFilter = array('id' => $id);
+        $filter = [];
         if (!$this->config['allow_deleted']) {
             $filter['deleted'] = 0;
         }
         if (!$this->config['allow_unpublished']) {
             $filter['published'] = 1;
         }
+        if (!$this->config['allow_hidden_modification']) {
+            $modificationFilter['hide'] = 0;
+        }
+        /** @var Modification $modification */
+        $modification = $this->modx->getObject('Modification', $modificationFilter);
+        $filter['id']= $modification->get('product_id');
         /** @var msProduct $product */
-        if ($product = $this->modx->getObject('modResource', $filter)) {
+        if ($modification && $product = $this->modx->getObject('modResource',$filter)) {
+
             if (!($product instanceof msProduct)) {
                 return $this->error('ms2_cart_add_err_product', $this->status());
             }
             if ($count > $this->config['max_count'] || $count <= 0) {
                 return $this->error('ms2_cart_add_err_count', $this->status(), array('count' => $count));
             }
-
             $response = $this->ms2->invokeEvent('msOnBeforeAddToCart', array(
                 'product' => $product,
+                'modification'=>$modification,
                 'count' => $count,
                 'options' => $options,
                 'cart' => $this,
@@ -44,10 +52,14 @@ class msCartHandlerCustom extends msCartHandler implements msCartInterface
             if (!($response['success'])) {
                 return $this->error($response['message']);
             }
-            $price = $product->getPrice();
-            $oldPrice = $product->get('old_price');
+            $price = $modification->get('price');
+            $oldPrice = $modification->get('old_price');
             $weight = $product->getWeight();
             $count = $response['data']['count'];
+            $remains = $modification->getRemains();
+            if($count > $remains){
+                $count = $remains;
+            }
             $options = $response['data']['options'];
             $discount_price = $oldPrice > 0 ? $oldPrice - $price : 0;
             $discount_cost = $discount_price * $count;
@@ -62,6 +74,7 @@ class msCartHandlerCustom extends msCartHandler implements msCartInterface
                 }
                 $this->cart[$key] = array(
                     'id' => $id,
+                    'product_id' =>$product->get('id'),
                     'price' => $price,
                     'old_price' => $oldPrice,
                     'discount_price' => $discount_price,
@@ -71,6 +84,10 @@ class msCartHandlerCustom extends msCartHandler implements msCartInterface
                     'options' => $options,
                     'ctx' => $ctx_key,
                 );
+                $details = $modification->getMany('Details');
+                foreach ($details as $detail) {
+                    $this->cart[$key][$detail->getOne('Type')->get('name')] = $detail->get('value');
+                }
                 $response = $this->ms2->invokeEvent('msOnAddToCart', array('key' => $key, 'cart' => $this));
                 if (!$response['success']) {
                     return $this->error($response['message']);
@@ -128,8 +145,13 @@ class msCartHandlerCustom extends msCartHandler implements msCartInterface
                     if (!$response['success']) {
                         return $this->error($response['message']);
                     }
-
+                    /** @var Modification $modification */
+                    $modification = $this->modx->getObject('Modification',$this->cart[$key]['id']);
                     $count = $response['data']['count'];
+                    $remains = $modification->getRemains();
+                    if($count > $remains ){
+                        $count = $remains;
+                    }
                     $this->cart[$key]['count'] = $count;
                     $response = $this->ms2->invokeEvent('msOnChangeInCart',
                         array('key' => $key, 'count' => $count, 'cart' => $this));

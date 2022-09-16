@@ -62,7 +62,7 @@ Ext.extend(autentimentsPanel.grid.Modifications,MODx.grid.Grid,{
                 }}
             ,price: {width: 100, editor: {xtype:'numberfield'}}
             ,old_price: {width: 100, editor: {xtype:'numberfield'}}
-            ,hide: {sortable: true, width: 100,renderer: msProductRemains.utils.bool, editor: {xtype:'combo-boolean'}}
+            ,hide: {sortable: true, width: 100,renderer: this.renderers.bool, editor: {xtype:'combo-boolean'}}
         };
         var columns = [];
         for(let key in all){
@@ -73,13 +73,14 @@ Ext.extend(autentimentsPanel.grid.Modifications,MODx.grid.Grid,{
             columns.push(all[key]);
         }
         let options = autentimentsPanel.config.options;
+        console.log(options);
         if(options){
             options.forEach((value,key)=>{
                 columns.push({
-                    header:value['name'],
+                    header:_(value['name']),
                     width: 100,
                     sortable: true,
-                    dataIndex:'option:'+value['name'],
+                    dataIndex:'option:'+value['id'],
                     editor: {xtype:'textfield'},
                     renderer:(value)=>{
                         if (value == false || value == undefined) {
@@ -104,6 +105,21 @@ Ext.extend(autentimentsPanel.grid.Modifications,MODx.grid.Grid,{
         }
         console.log(columns);
         return columns;
+    },
+    renderers:{
+        bool: function(value) {
+            var color, text;
+            if (value == 0 || value == false || value == undefined) {
+                color = 'green';
+                text = _('no');
+            }
+            else {
+                color = 'red';
+                text = _('yes');
+            }
+
+            return String.format('<span class="{0}">{1}</span>', color, text);
+        }
     }
 
 });

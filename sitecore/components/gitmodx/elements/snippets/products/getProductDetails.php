@@ -2,12 +2,14 @@
 /** @var modX $modx */
 /** @var array $scriptProperties */
 
-$modification_id = (int) $modx->getOption('id', $scriptProperties, null);
 $details = $modx->getOption('details', $scriptProperties, []);
+$id = $modx->getOption('id', $scriptProperties, false);
+$tpl = $modx->getOption('tpl', $scriptProperties, false);
+$tplWrapper = $modx->getOption('tplWrapper', $scriptProperties, false);
 if(is_string($details)){
     $details = explode(',',$details);
 }
-if(count($details) == 0)
+if(count($details) == 0 || $id === false)
     return '';
 /** @var pdoFetch $pdoFetch */
 $fqn = $modx->getOption('pdoFetch.class', null, 'pdotools.pdofetch', true);
@@ -19,57 +21,68 @@ if ($pdoClass = $modx->loadClass($fqn, $path, false, true)) {
 }
 $output = [];
 foreach($details as $detail){
-    $tableName = 'Detail'.$detail;
-    $default = [
-        'class'=>'msProduct',
-        'where'=>[
-            'msProduct.class_key' => 'msProduct',
-            'Modification.hide:!='=>1,
-        ],
-        'leftJoin'=>[
-            'Modification'=>[
-                'class'=>'Modification',
-                'on'=>'Modification.product_id = msProduct.id',
+    if(is_numeric($detail))
+        $c = $detail;
+    else if(is_string($detail))
+        $c = ['name'=>$detail];
+    /** @var DetailType $detailType */
+    if($detailType = $modx->getObject('DetailType',$c)) {
+        $tableName = 'Detail' . ucfirst($detail);
+        $default = [
+            'class' => 'msProduct',
+            'where' => [
+                'msProduct.class_key' => 'msProduct',
+                'Modification.hide' => false,
+                'msProduct.id'=>$id,
             ],
-            $tableName=>[
-                'class'=>'ModificationDetail',
-                'on'=>"Modification.id = {$tableName}.modification_id AND {$tableName}.name = '{$detail}'"
-            ]
-        ],
-        'select'=>[
-            $tableName => $tableName.'.value as '.$detail,
-        ],
-        'groupby' => implode(', ', ['msProduct.id']),
-        'limit'=> 10,
-        'return'=>'data'
-    ];
-    $pdoFetch->setConfig(array_merge($default,$scriptProperties));
-    $result = $pdoFetch->run();
-    $result
+            'leftJoin' => [
+                'Modification' => [
+                    'class' => 'Modification',
+                    'on' => 'Modification.product_id = msProduct.id',
+                ],
+                $tableName => [
+                    'class' => 'ModificationDetail',
+                    'on' => "Modification.id = {$tableName}.modification_id AND {$tableName}.type_id = {$detailType->get('id')}"
+                ]
+            ],
+            'select' => [
+                $tableName => $tableName . '.value as value',
+            ],
+            'groupby' => implode(', ', ['msProduct.id','value']),
+            'limit' => 10,
+            'return' => 'data'
+        ];
+        $pdoFetch->setConfig(array_merge($default, $scriptProperties));
+        $fetchResult = $pdoFetch->run();
+        $output[$detail] = [];
+        foreach ($fetchResult as &$item) {
+            $item['idx'] = $pdoFetch->idx++;
+            $item['detail'] = $detail;
+            if($tpl){
+                $item = $pdoFetch->parseChunk($tpl, array_merge(array_diff_key($scriptProperties,$default),$item));
+            }
+            $output[$detail][] = $item;
+        }
+        if($tpl && $tplWrapper){
+            $output[$detail] = $pdoFetch->parseChunk($tplWrapper, ['output'=>implode('',$output[$detail])]);
+        }else if($tpl){
+            $output[$detail] = implode('',$output[$detail]);
+        }
+    }
 }
 
-foreach ($result as $key => &$item){
-    if(in_array('Цвет', $details)){
-        $pdoFetch->setConfig([
-            'class'=>'msProductFile',
-            'where'=>[
-                'product_id'=>$item['product_id'],
-                'description'=> $item['Цвет']
-            ],
-            'sortby'=>['rank'=>'ASC'],
-            'limit'=>0,
-        ],false);
-        $files = $pdoFetch->run();
-        $item['files'] = $files;
+if($tpl){
+    if(count($details) == 1){
+        return $output[array_keys($output)[0]];
     }
-    $item['idx'] = $key;
-    if(!empty($tpl)) {
-        $output .= $pdoFetch->getChunk($tpl, array_merge(array_diff_key($scriptProperties,$default),$item));
+    if($tplWrapper){
+        return implode('',$output);
     }
-}
-if(!empty($tpl)){
     return $output;
 }else{
-    return $result;
+    if(count($details) == 1){
+        return $output[array_keys($output)[0]];
+    }
+    return $output;
 }
 

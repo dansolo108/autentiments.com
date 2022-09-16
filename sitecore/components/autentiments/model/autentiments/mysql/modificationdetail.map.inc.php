@@ -10,13 +10,13 @@ $xpdo_meta_map['ModificationDetail']= array (
   ),
   'fields' => 
   array (
-    'name' => NULL,
+    'type_id' => NULL,
     'modification_id' => NULL,
     'value' => NULL,
   ),
   'fieldMeta' => 
   array (
-    'name' => 
+    'type_id' => 
     array (
       'dbtype' => 'varchar',
       'precision' => '255',
@@ -40,31 +40,27 @@ $xpdo_meta_map['ModificationDetail']= array (
   ),
   'indexes' => 
   array (
-    'name' => 
+    'unique_index' => 
     array (
-      'alias' => 'name',
+      'alias' => 'unique_index',
       'primary' => false,
-      'unique' => false,
+      'unique' => true,
       'type' => 'BTREE',
       'columns' => 
       array (
-        'name' => 
+        'type_id' => 
         array (
           'length' => '',
           'collation' => 'A',
           'null' => false,
         ),
-      ),
-    ),
-    'modification_id' => 
-    array (
-      'alias' => 'modification_id',
-      'primary' => false,
-      'unique' => false,
-      'type' => 'BTREE',
-      'columns' => 
-      array (
         'modification_id' => 
+        array (
+          'length' => '',
+          'collation' => 'A',
+          'null' => false,
+        ),
+        'value' => 
         array (
           'length' => '',
           'collation' => 'A',
@@ -79,6 +75,14 @@ $xpdo_meta_map['ModificationDetail']= array (
     array (
       'class' => 'Modification',
       'local' => 'modification_id',
+      'foreign' => 'id',
+      'cardinality' => 'one',
+      'owner' => 'foreign',
+    ),
+    'Type' => 
+    array (
+      'class' => 'DetailType',
+      'local' => 'type_id',
       'foreign' => 'id',
       'cardinality' => 'one',
       'owner' => 'foreign',

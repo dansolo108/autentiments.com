@@ -294,7 +294,7 @@ function openModalLogin() {
 // модалка корзина
 function showAjaxCart() {
     if ($('#ms2_cart_modal').length) {
-        $.post("/assets/components/stik/getAjaxCart.php", {language: $('html').attr('lang')}, function(data) {
+        $.post("/assets/components/autentiments/getAjaxCart.php", {language: $('html').attr('lang')}, function(data) {
             if (data) {
                 $('#ms2_cart_modal').html(data);
                 $('.modal').removeClass('active');

@@ -7,7 +7,7 @@
         {set $productIds = []}
         <ul class="au-cart__cards">
             {foreach $products as $product}
-                {$_modx->getChunk('stik.msCart.item', $product)}
+                {$_modx->getChunk('cart.item', $product)}
                 {set $productIds[] = $product.id}
             {/foreach}
         </ul>

@@ -8,3 +8,5 @@ $_lang['autentiments_modification_code'] = 'Артикул(код)';
 $_lang['autentiments_modification_remove'] = 'Удалить модификацию';
 $_lang['autentiments_modification_remove_confirm'] = 'Вы уверены в удалении модификации?';
 $_lang['autentiments_modification_preview'] = 'Превью';
+$_lang['color'] = 'Цвет';
+$_lang['size'] = 'Размер';

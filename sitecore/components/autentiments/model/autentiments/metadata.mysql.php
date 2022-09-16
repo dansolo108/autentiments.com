@@ -6,7 +6,8 @@ $xpdo_meta_map = array (
     0 => 'Store',
     1 => 'Modification',
     2 => 'ModificationDetail',
-    3 => 'ModificationFile',
-    4 => 'ModificationRemain',
+    3 => 'DetailType',
+    4 => 'ModificationFile',
+    5 => 'ModificationRemain',
   ),
 );

@@ -34,11 +34,9 @@ class ModificationUpdateFromGridProcessor extends modObjectUpdateProcessor {
                 $remain->save();
             }
             else if($keys[0] === 'option'){
-                $this->modx->log(1,print_r($key,1));
-                $this->modx->log(1,print_r($value,1));
-                $option = $this->modx->getObject('ModificationDetail',['modification_id'=>$this->object->get('id'),'name'=>$keys[1]]);
+                $option = $this->modx->getObject('ModificationDetail',['modification_id'=>$this->object->get('id'),'type_id'=>$keys[1]]);
                 if(empty($option)){
-                    $option = $this->modx->newObject('ModificationDetail',['modification_id'=>$this->object->get('id'),'name'=>$keys[1]]);
+                    $option = $this->modx->newObject('ModificationDetail',['modification_id'=>$this->object->get('id'),'type_id'=>$keys[1]]);
                 }
                 $option->set('value',$value);
                 $option->save();

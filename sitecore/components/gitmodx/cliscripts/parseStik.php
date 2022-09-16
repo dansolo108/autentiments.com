@@ -54,12 +54,12 @@ foreach($stikRemains as $stikRemain){
     $modification->addMany($remainsMsc);
     /** @var ModificationDetail $color */
     $color = $modx->newObject('ModificationDetail');
-    $color->set('name','Цвет');
+    $color->set('type_id','1');
     $color->set('value',$stikRemain['color']);
     $modification->addMany($color);
     /** @var ModificationDetail $size */
     $size = $modx->newObject('ModificationDetail');
-    $size->set('name','Размер');
+    $size->set('type_id','2');
     $size->set('value',$stikRemain['size']);
     $modification->addMany($size);
     if(!$modification->save()){

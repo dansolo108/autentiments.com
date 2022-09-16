@@ -34,20 +34,16 @@
         });
         
     </script>
-    {set $colors = 'getModifications' | snippet : [
-        'where'=>['Modification.product_id' => $_modx->resource.id],
-        'select'=>['DetailЦвет'=>'DetailЦвет.value as Цвет','Modification.id'],
-        'groupby'=>'Modification.product_id, DetailЦвет.value',
-        'details'=>['Цвет'],
+    {set $colors = 'getProductDetails' | snippet : [
+        'id'=>$_modx->resource.id,
+        'details'=>['color'],
     ]}
-    {set $activeЦвет = $.get['Цвет']?$.get['Цвет']:$colors[0]['Цвет']}
-    {set $sizes = 'getModifications' | snippet : [
-        'where'=>['Modification.product_id' => $_modx->resource.id],
-        'select'=>['DetailРазмер'=>'DetailРазмер.value as Размер','Modification.id'],
-        'groupby'=>'Modification.product_id, DetailРазмер.value',
-        'details'=>['Размер'],
+    {set $activeColor = $.get['color']?$.get['color']:$colors[0]['value']}
+    {set $sizes = 'getProductDetails' | snippet : [
+        'id'=>$_modx->resource.id,
+        'details'=>['size'],
     ]}
-    {set $activeРазмер = $.get['Размер']?$.get['Размер']:$sizes[0]['Размер']}
+    {set $activeSize = $.get['size']?$.get['size']:$sizes[0]['value']}
     <main id="msProduct" class="au-product" itemtype="http://schema.org/Product" itemscope>
         <meta itemprop="name" content="{$_modx->resource.pagetitle}">
         <meta itemprop="description" content="{$_modx->resource.description ? $_modx->resource.description : $_modx->resource.pagetitle}">
@@ -55,7 +51,7 @@
         {'!msGallery' | snippet : [
             'tpl' => 'stik.msGallery',
             'where' => [
-                'description' => $_modx->getPlaceholder('first_color_' ~ $_modx->resource.id) ?: $_modx->resource.color[0],
+                'description' => $activeColor,
             ],
         ]}
         <div class="au-product__description" itemtype="http://schema.org/AggregateOffer" itemprop="offers" itemscope>
@@ -81,14 +77,19 @@
             <h1 class="au-h1  au-product__title">{$_modx->resource.pagetitle}</h1>
             <div class="au-card__row">
                 <div class="au-card__price-box">
-                    <span class="au-card__price js_card_price">
-                        <span>{'!msMultiCurrencyPrice' | snippet : ['price' => $price]}</span>
-                        {$_modx->getPlaceholder('msmc.symbol_right')}
-                    </span>
-                    <span class="au-card__price  au-card__price_old js_card_old_price" {if !$old_price}style="display:none;"{/if}>
-                        <span>{'!msMultiCurrencyPrice' | snippet : ['price' => $old_price]}</span>
-                        {$_modx->getPlaceholder('msmc.symbol_right')}
-                    </span>
+                    {'!getModifications' | snippet : [
+                        'where'=>[
+                            'Modification.product_id' => $_modx->resource.id,
+                            'color'=>$activeColor,
+                            'size'=>$activeSize
+                        ],
+                        'details'=>[
+                            'color',
+                            'size'
+                        ],
+                        'groupby'=>['Modification.id'],
+                        'tpl'=>'product.row.price'
+                    ]}
                 </div>
                 <a class="au-product__like msfavorites" href="" aria-label="Добавить в избранное" data-click="" data-data-list="default" data-data-type="resource" data-data-key="{$_modx->resource.id}">
                     <svg width="24" height="21" viewBox="0 0 24 21" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -97,22 +98,33 @@
                 </a>
             </div>
             <form class="ms2_form" method="post">
-                <input type="hidden" name="id" value="{$_modx->resource.id}"/>
                 <input type="hidden" name="count" value="1"/>
+                <input type="hidden" name="product_id" value="{$_modx->resource.id}"/>
                 <div class="au-product__color-box">
                     <span class="au-product__subtitle">{('ms2_product_color') | lexicon}:</span>
                     <div class="au-product__colors">
                         {foreach $colors as $color}
-                            {include 'product.color' idx=$color['idx'] Цвет=$color['Цвет'] activeЦвет=$activeЦвет}
+                            {include 'product.color' idx=$color['idx'] value=$color['value'] activeColor=$activeColor}
                         {/foreach}
                     </div>
                 </div>
                 <div class="au-product__size-box">
                     <span class="au-product__subtitle">{'stik_product_size' | lexicon}:</span>
                     <div id="ajax_sizes" class="au-product__sizes">
-                        {foreach $sizes as $size}
-                            {include 'product.size' idx=$size['idx'] Размер=$size['Размер'] activeРазмер=$activeРазмер}
-                        {/foreach}
+                        {'getModifications' | snippet : [
+                            'where'=>[
+                                'Modification.product_id' => $_modx->resource.id,
+                                'color'=>$activeColor,
+                            ],
+                            'details'=>[
+                                'color',
+                                'size'
+                            ],
+                            'sortby'=>['size'=>'ASC'],
+                            'groupby'=>['Modification.product_id','size'],
+                            'tpl'=>'product.size',
+                            'activeSize'=>$activeSize,
+                        ]}
                     </div>
                 </div>
                 <button type="button" class="au-product__info-size">{'stik_modal_size_info_link' | lexicon}</button>

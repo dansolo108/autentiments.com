@@ -209,18 +209,21 @@ class maxma {
         if($bonuses){
             $params['calculationQuery']['applyBonuses'] = $bonuses;
         }
-        foreach ($cart as $key => $product) {
-            $msProduct = $this->modx->getObject('msProduct',$product['id']);
-            if(empty($product['price']) || empty($product['count']))
+        foreach ($cart as $key => $entry) {
+            /** @var Modification $modification */
+            $modification = $this->modx->getObject('Modification',$entry['id']);
+            /** @var msProduct $product */
+            $product = $modification->getOne('Product');
+            if(empty($entry['price']) || empty($entry['count']))
                 continue;
             $params['calculationQuery']['rows'][] = [
                 "id"=> (string)$key,
                 "product"=>[
-                    "sku"=> (string) $msProduct->get('article'),
-                    "title"=> $msProduct->get('pagetitle'),
-                    "blackPrice"=>$product['base_price'],
+                    "sku"=> (string) $modification->get('code')?:$product->get('article'),
+                    "title"=> $product->get('pagetitle'),
+                    "blackPrice"=>$modification->get('price'),
                 ],
-                "qty"=> (int)$product['count'],
+                "qty"=> (int)$entry['count'],
             ];
         }
         if(count($params['calculationQuery']['rows']) == 0){

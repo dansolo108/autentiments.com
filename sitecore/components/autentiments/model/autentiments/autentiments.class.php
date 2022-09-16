@@ -64,8 +64,8 @@ class Autentiments
             return;
         $this->modx->controller->addLexiconTopic('autentiments:manager');
         $config = array_intersect_key($this->defaultConfig, $this->config);
-        $config['options'] = $this->getProductDetails($res->get('id'));
-        $config['stores'] = $this->getProductStores($res->get('id'));
+        $config['options'] = $this->getProductDetailNames($res->get('id'));
+        $config['stores'] = $this->getProductStoreNames($res->get('id'));
         $this->modx->regClientStartupScript($this->config['js_url'] . 'mgr/product/modifications.panel.js?v=0.0.1');
         $this->modx->regClientStartupScript($this->config['js_url'] . 'mgr/product/modifications.grid.js?v=0.0.1');
         //$this->modx->regClientScript($this->config['js_url'] . 'mgr/misc/stikpr.utils.js?v=0.0.1');
@@ -179,7 +179,7 @@ for (var i=0; i<tabs.length; i++) {
             }
         }
     }
-    public function getProductDetails($id){
+    public function getProductDetailNames($id){
         if(!is_integer($id))
             return false;
         $product = $this->modx->getObject('msProduct',$id);
@@ -193,14 +193,17 @@ for (var i=0; i<tabs.length; i++) {
                 'ModificationDetail' => [
                     'class' => 'ModificationDetail',
                     'on' => 'ModificationDetail.modification_id = Modification.id'
-
-                ]
+                ],
+                'DetailType' => [
+                    'class' => 'DetailType',
+                    'on' => 'DetailType.id = ModificationDetail.type_id',
+                ],
             ],
             'limit' => 0,
             'select' => [
-                'ModificationDetail' => 'name',
+                'DetailType' => 'id,name',
             ],
-            'groupby' => 'ModificationDetail.name',
+            'groupby' => 'DetailType.id',
             'return' => 'data'
         ]);
         $result = $this->pdoFetch->run();
@@ -210,7 +213,7 @@ for (var i=0; i<tabs.length; i++) {
         }
         return $details;
     }
-    public function getProductStores($id){
+    public function getProductStoreNames($id){
         if(!is_integer($id))
             return false;
         $product = $this->modx->getObject('msProduct',$id);

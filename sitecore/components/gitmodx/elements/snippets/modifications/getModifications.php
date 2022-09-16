@@ -15,33 +15,105 @@ if ($pdoClass = $modx->loadClass($fqn, $path, false, true)) {
 } else {
     return false;
 }
-$where = [];
+$where = [
+    'Modification.hide'=>false,
+    'msProduct.deleted'=>0,
+    'msProduct.published'=>1,
+];
 $leftJoin = [
-    'msProduct'=>[
-        'class'=>'msProduct',
+    'Modification'=>[
+        'class'=>'Modification',
         'on'=>'Modification.product_id = msProduct.id',
+    ],
+    'msProductData'=>[
+        'class'=>'msProductData',
+        'on'=>'Modification.product_id = msProductData.id',
+    ],
+    'Remain'=>[
+        'class'=>'ModificationRemain',
+        'on'=>'Remain.modification_id = Modification.id'
+    ],
+    'Vendor' => [
+        'class' =>'msVendor',
+        'on' => 'msProductData.vendor=Vendor.id'
     ],
 ];
 $select = [
-    'Modification'=>'`Modification`.`id`, `Modification`.`product_id`,  `Modification`.`price`, `Modification`.`old_price`, `Modification`.`hide`',
+    'Modification'=>'`Modification`.`id`, `Modification`.`product_id`,  `Modification`.`price`, `Modification`.`old_price`',
     'msProduct' => !empty($includeContent)
         ? $modx->getSelectColumns('msProduct', 'msProduct','',['id'],true)
         : $modx->getSelectColumns('msProduct', 'msProduct', '', ['id','content'], true),
+    'msProductData' => $modx->getSelectColumns('msProductData', 'msProductData','',['id','price','old_price','color','size'],true),
+    'Remain'=>'SUM(Remain.remains) as remains',
+    'Vendor' => 'Vendor.name as vendor',
 ];
 $groupby = [
   'Modification.id'
 ];
+if(is_string($scriptProperties['groupby'])){
+    $scriptProperties['groupby'] = explode(',',$scriptProperties['groupby']);
+}
+foreach($details as $key=>$detail){
+    if(is_string($key)){
 
-foreach($details as $detail){
-    $tableName = 'Detail'.$detail;
-    $leftJoin[$tableName]= [
-        'class'=>'ModificationDetail',
-        'on'=>"Modification.id = {$tableName}.modification_id AND {$tableName}.name = '{$detail}'"
-    ];
-    $select[$tableName] = $tableName.'.value as '.$detail;
+    }
+    /** @var DetailType $detailType */
+    $detailType =  $modx->getObject('DetailType',['name'=>$detail]);
+    if($detailType){
+        $detailTable = 'Detail'.ucfirst($detail);
+        $leftJoin[$detailTable]= [
+            'class'=>'ModificationDetail',
+            'on'=>"Modification.id = {$detailTable}.modification_id AND {$detailTable}.type_id = '{$detailType->get('id')}'"
+        ];
+        $select[$detailTable] = $detailTable.'.value as '.$detail;
+        foreach (['where','having'] as $item) {
+            if(!empty($scriptProperties[$item]))
+                foreach ($scriptProperties[$item] as $key => $value) {
+                    $tmp = explode(':', $key);
+                    switch (count($tmp)) {
+                        case 3:
+                            $varName = $tmp[1];
+                            break;
+                        case 2:
+                            if ($tmp[0] === 'AND' || $tmp[0] === 'OR') {
+                                $varName = $tmp[1];
+                                break;
+                            }
+                        default:
+                            $varName = $tmp[0];
+                            break;
+                    }
+                    if ($varName === $detail) {
+                        $scriptProperties[$item][str_replace($detail, $detailTable . '.value', $key)] = $value;
+                        unset($scriptProperties[$item][$key]);
+                    }
+                }
+        }
+        if(!empty($scriptProperties['select']))
+            foreach ($scriptProperties['select'] as $key => $value) {
+                if (is_numeric($key) && $detail === $value) {
+                    $scriptProperties['select'][$key] = $detailTable . '.value as ' . $detail;
+                }
+            }
+        if(!empty($scriptProperties['groupby']))
+            foreach ($scriptProperties['groupby'] as $key => $value) {
+                if (is_numeric($key) && $detail === $value) {
+                    $scriptProperties['groupby'][$key] = $detailTable . '.value';
+                }
+            }
+
+    }
+    else{
+        if($modx->hasPermission(['edit_chunk','edit_template'])){
+            return $detail.' не найден в базе данных';
+        }
+    }
+}
+if(is_array($scriptProperties['groupby'])){
+    $scriptProperties['groupby'] = implode(',',$scriptProperties['groupby']);
 }
 $default = [
-    'class'=>'Modification',
+    'class'=>'msProduct',
     'where'=>$where,
     'leftJoin'=>$leftJoin,
     'select'=>$select,
@@ -51,22 +123,40 @@ $default = [
 ];
 $pdoFetch->setConfig(array_merge($default,$scriptProperties));
 $result = $pdoFetch->run();
+if($pdoFetch->config['return'] === 'sql')
+    return $result;
 $output = '';
 foreach ($result as $key => &$item){
-    if(in_array('Цвет', $details)){
-        $pdoFetch->setConfig([
+    if($item['product_id'] && $item['color'] && !empty($includeThumbs)){
+        $thumbs = array_map('trim', explode(',', $includeThumbs));
+        $leftJoin = [];
+        $select = [];
+        foreach ($thumbs as $thumb) {
+            $leftJoin[$thumb] = [
+                'class' => 'msProductFile',
+                'on' => "msProductFile.id = `{$thumb}`.parent AND `{$thumb}`.path LIKE '%/{$thumb}/%'",
+            ];
+            $select[$thumb] = "`{$thumb}`.url as '{$thumb}'";
+        }
+        $default = [
             'class'=>'msProductFile',
             'where'=>[
                 'product_id'=>$item['product_id'],
-                'description'=> $item['Цвет']
+                'description'=> $item['color'],
+                'active'=>true,
             ],
+            'leftJoin'=>$leftJoin,
+            'select'=>$select,
+            'groupby'=>'msProductFile.name',
             'sortby'=>['rank'=>'ASC'],
-            'limit'=>0,
-        ],false);
-        $files = $pdoFetch->run();
-        $item['files'] = $files;
+            'limit'=>1,
+            'return'=>'data'
+        ];
+        $pdoFetch->setConfig($default,false);
+        $thumbs = $pdoFetch->run();
+        $item = array_merge($thumbs[0],$item);
     }
-    $item['idx'] = $key;
+    $item['idx'] = $pdoFetch->idx++;;
     if(!empty($tpl)) {
         $output .= $pdoFetch->getChunk($tpl, array_merge(array_diff_key($scriptProperties,$default),$item));
     }

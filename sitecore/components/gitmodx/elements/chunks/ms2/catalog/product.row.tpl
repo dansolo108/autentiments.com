@@ -4,32 +4,19 @@
         {set $wrapper_classes = 'au-card'}
     {/if}
 {/block}
-
-
-{if is_array($color)}
-    {set $activeColor = $color[0]}
-{else}
-    {set $activeColor = $color}
-{/if}
-{set $availableColors = '!getAvailableColors' | snippet : [
-    'tpl' => 'stik.msOptions.card',
-    'id' => $id,
-    'idx'=>$idx,
-    'active'=>$activeColor,
-]}
 <script>
-    PageInfo.products['{$id}'] = {$id | getJSONPageInfo};
+    PageInfo.products['{$product_id}'] = {$product_id | getJSONPageInfo};
 </script>
-<form class="{$wrapper_classes}" id="product-{$id}-{$idx}">
-    <a class="au-card__like msfavorites" href="" aria-label="Добавить в избранное" data-click data-data-list="default" data-data-type="resource" data-data-key="{$id}" {if $_modx->resource.template == 5}data-msfavorites-mode="list"{/if}></a>
-    <a class="au-card__link" href="{$id | url}">
+<form class="{$wrapper_classes}" id="product-{$product_id}-{$idx}" product-id="{$product_id}">
+    <a class="au-card__like msfavorites" href="" aria-label="Добавить в избранное" data-click data-data-list="default" data-data-type="resource" data-data-key="{$product_id}" {if $_modx->resource.template == 5}data-msfavorites-mode="list"{/if}></a>
+    <a class="au-card__link" href="{$product_id | url}?{$color?'color='~$color:''}">
         <div class="au-card__img-box">
             <div class="au-card__gallery js_card-img">
                 {'!msGallery' | snippet : [
-                    'product' => $id,
+                    'product' => $product_id,
                     'tpl' => 'stik.msGallery.card',
                     'where' => [
-                        'description' => $activeColor,
+                        'description' => $color,
                     ],
                 ]}
             </div>
@@ -50,15 +37,15 @@
                 </div>
             {/if}
         </div>
+
         <div class="au-card__color-box">
             <div class="au-card__colors">
-                {'!getModifications' | snippet : [
-                    'where'=>['Modification.product_id' => $id],
-                    'select'=>['DetailЦвет'=>'DetailЦвет.value as Цвет','Modification.id'],
-                    'groupby'=>'Modification.product_id, DetailЦвет.value',
-                    'details'=>['Цвет'],
-                    'tpl' =>'modification.row.color',
+                {'!getProductDetails' | snippet : [
+                    'details'=>'color',
+                    'id'=>$product_id,
+                    'productidx'=>$idx,
                     'active'=>$color,
+                    'tpl'=>'product.row.color',
                 ]}
             </div>
         </div>
@@ -66,9 +53,9 @@
             <span class="au-card__title">{$pagetitle}</span>
             <div class="au-card__price-box js_card-prices">
                 {'!getColorPrice' | snippet : [
-                    'id' => $id,
-                    'color' => $activeColor,
-                    'tpl' => 'stik.cardPrices',
+                    'id' => $product_id,
+                    'color' => $color,
+                    'tpl' => 'product.row.price',
                 ]}
             </div>
         </div>

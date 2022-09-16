@@ -9,7 +9,7 @@
             {if $products?}
                 <ul class="au-cart__cards">
                     {foreach $products as $product}
-                        {$_modx->getChunk('stik.msCart.item', $product)}
+                        {$_modx->getChunk('cart.item', $product)}
                     {/foreach}
                 </ul>
             {/if}
@@ -18,15 +18,15 @@
                     <tr class="au-cart__modal-tr">
                         <td class="au-cart__modal-td">{'stik_order_info_cart_cost' | lexicon}</td>
                         {set $total_no_discount = ($total.cost | replace : ' ' : '') + ($total.discount | replace : ' ' : '')}
-                        <td class="au-cart__modal-td"><span class="ms2_total_no_discount">{'!msMultiCurrencyPrice' | snippet : ['price' => $total_no_discount]}</span> {$_modx->getPlaceholder('msmc.symbol_right')}</td>
+                        <td class="au-cart__modal-td"><span class="ms2_total_no_discount">{'!msMultiCurrencyPrice' | snippet : ['price' => $total_no_discount]}</span> {$_modx->getPlaceholder('msmc.symbol_right')}</td>
                     </tr>
                     <tr class="au-cart__modal-tr total_discount_wrapper"{if !$total.discount} style="display:none;"{/if}>
                         <td class="au-cart__modal-td">{'stik_order_info_discount' | lexicon}</td>
-                        <td class="au-cart__modal-td">- <span class="ms2_total_discount_custom">{'!msMultiCurrencyPrice' | snippet : ['price' => $total.discount]}</span> {$_modx->getPlaceholder('msmc.symbol_right')}</td>
+                        <td class="au-cart__modal-td">- <span class="ms2_total_discount_custom">{'!msMultiCurrencyPrice' | snippet : ['price' => $total.discount]}</span> {$_modx->getPlaceholder('msmc.symbol_right')}</td>
                     </tr>
                     <tr class="au-cart__modal-tr">
                         <td class="au-cart__modal-td">{'stik_order_info_total_cost' | lexicon}</td>
-                        <td class="au-cart__modal-td"><span class="ms2_total_cost">{'!msMultiCurrencyPrice' | snippet : ['price' => $total.cost]}</span> {$_modx->getPlaceholder('msmc.symbol_right')}</td>
+                        <td class="au-cart__modal-td"><span class="ms2_total_cost">{'!msMultiCurrencyPrice' | snippet : ['price' => $total.cost]}</span> {$_modx->getPlaceholder('msmc.symbol_right')}</td>
                     </tr>
                 </table>
                 <a class="au-btn" href="{15|url}">{'stik_basket_place_order' | lexicon}</a>

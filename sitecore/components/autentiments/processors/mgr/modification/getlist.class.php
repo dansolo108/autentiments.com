@@ -37,9 +37,9 @@ class ModificationGetListProcessor extends modObjectGetListProcessor {
 
     public function prepareRow(xPDOObject $object) {
         $obj = $object->toArray();
-        /** @var ModificationDetail $option */
-        foreach($object->getMany('Details') as $option){
-            $obj['option:'.$option->get('name')] = $option->get('value');
+        /** @var ModificationDetail $detail */
+        foreach($object->getMany('Details') as $detail){
+            $obj['option:'.$detail->get('type_id')] = $detail->get('value');
         }
         /** @var ModificationRemain $remain */
         foreach($object->getMany('Remains') as $remain){
