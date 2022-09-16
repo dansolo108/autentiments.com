@@ -411,17 +411,17 @@
                 <a class="au-footer__link" href="{2|url}">{$linkAbout}</a>
             </li>
             {'pdoMenu' | snippet : [
-            'parents' => 16,
-            'resources' => '20,17,18,19',
-            'sortby' => 'menuindex',
-            'level' => 1,
-            'tplOuter' => '@INLINE {$wrapper}',
-            'tpl' => '@INLINE <li class="au-footer__item"><a class="au-footer__link  au-text-tab_js" href="{$link}">{$menutitle}</a></li>',
+                'parents' => 16,
+                'resources' => '20,17,18,19',
+                'sortby' => 'menuindex',
+                'level' => 1,
+                'tplOuter' => '@INLINE {$wrapper}',
+                'tpl' => '@INLINE <li class="au-footer__item"><a class="au-footer__link  au-text-tab_js" href="{$link}">{$menutitle}</a></li>',
             ]}
         </ul>
         <ul class="au-footer__menu">
             <li class="au-footer__item">
-                <a class="au-footer__link" href="https://t.me/autentiments_bot" target="_blank">{'stik_link_telegram' | lexicon}</a>
+                <a class="au-footer__link" href="https://t.me/autentiments" target="_blank">{'stik_link_telegram' | lexicon}</a>
             </li>
             <li class="au-footer__item">
                 <a class="au-footer__link" href="https://wa.me/{$_modx->config.whatsapp | preg_replace : '/[^0-9]/' : ''}" target="_blank">{'stik_link_whatsapp' | lexicon}</a>
@@ -430,12 +430,12 @@
         <div class="au-footer__info-box">
             <div class="au-footer__box-link">
                 {'pdoMenu' | snippet : [
-                'parents' => 16,
-                'resources' => '31,30',
-                'sortby' => 'menuindex',
-                'level' => 1,
-                'tplOuter' => '@INLINE {$wrapper}',
-                'tpl' => '@INLINE <a class="au-footer__policy-link  au-text-tab_js" href="{$link}">{$menutitle}</a>',
+                    'parents' => 16,
+                    'resources' => '31,30',
+                    'sortby' => 'menuindex',
+                    'level' => 1,
+                    'tplOuter' => '@INLINE {$wrapper}',
+                    'tpl' => '@INLINE <a class="au-footer__policy-link  au-text-tab_js" href="{$link}">{$menutitle}</a>',
                 ]}
             </div>
             <div class="au-footer__year">
