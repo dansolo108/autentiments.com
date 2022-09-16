@@ -83,7 +83,8 @@ class msDeliveryHandlerStikCdek extends msDeliveryHandler implements msDeliveryI
         if ($delivery->get('free_delivery_rf') == 1 && in_array(mb_strtolower($receiverCountry), ['россия','russian federation'])) {
             //
         } else {
-            $cost = $cost + $delivery_cost;
+            //if($cost < 30000)
+                $cost += $delivery_cost;
         }
         
         $min = $response->getDeliveryPeriodMin();

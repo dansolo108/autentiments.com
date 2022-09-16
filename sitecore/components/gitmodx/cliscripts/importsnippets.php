@@ -15,14 +15,22 @@ $modx->setLogLevel(MODX_LOG_LEVEL_INFO);
 //Set categories to ignore import
 $excludedCategories = array(
     'AjaxForm',
-    'Articles',
+    'Login',
+    'Looked',
+    'MIGX',
+    'MinifyX',
+    'mSearch2',
+    'msFavorites',
+    'msMultiCurrency',
+    'msOptionHexColor',
+    'msPromoCode',
+    'pdoTools',
+    'Ploylang',
+    'pThumb',
+    'SMS',
     'miniShop2',
-    'Archivist',
     'BreadCrumb',
     'FormIt',
-    'pdoTools',
-    'Quip',
-    'tagLister',
     'ms2Gallery'
 );
 

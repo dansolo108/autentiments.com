@@ -81,7 +81,7 @@ class msOrderCustom extends msOrderHandler implements msOrderInterface
         $delivery = $this->modx->getObject('msDelivery', ['id' => $this->order['delivery']]);
         
         if (
-            !$this->noDelivery && $delivery_cost <= 0 &&
+            $delivery_cost <= 0 &&
             ($delivery->get('price') > 0 || $delivery->get('class')) &&
             ($delivery->get('free_delivery_rf') != 1 || !in_array(mb_strtolower($this->order['country']), ['россия','russian federation']))
         ) {
@@ -131,7 +131,7 @@ class msOrderCustom extends msOrderHandler implements msOrderInterface
         $cart = $this->ms2->cart->get();
         $products = array();
         foreach ($cart as $v) {
-            if ($tmp = $this->modx->getObject('msProduct', array('id' => $v['id']))) {
+            if ($tmp = $this->modx->getObject('msProduct', array('id' => $v['product_id']))) {
                 $name = $tmp->get('pagetitle');
             } else {
                 $name = '';
@@ -139,7 +139,7 @@ class msOrderCustom extends msOrderHandler implements msOrderInterface
             /** @var msOrderProduct $product */
             $product = $this->modx->newObject('msOrderProduct');
             $product->fromArray(array_merge($v, array(
-                'product_id' => $v['id'],
+                'product_id' => $v['product_id'],
                 'name' => $name,
                 'cost' => $v['price'] * $v['count'],
             )));
@@ -266,43 +266,27 @@ class msOrderCustom extends msOrderHandler implements msOrderInterface
 				: $cart['total_cost'])
 			: 0;
         $loyaltyAccrual = $stikLoyalty->getLoyaltyBonusAccrual($cart['total_cost']);
-        
-        $items = $this->ms2->cart->get();
-        $this->noDelivery = true;
-        foreach($items as $item){
-            $product = $this->modx->getObject('msProduct',$item['id']);
-            //$this->modx->log(1,print_r($product->get('template'),1));
-            if($product->get('template') != 23 && $item['count'] != 0 && $item['options']['max_count'] != 0){
-                $this->noDelivery = false;
-            }
-        }
+
         /** @var msDelivery $delivery */
-        if (!$this->noDelivery && !empty($this->order['delivery']) && $delivery = $this->modx->getObject('msDelivery',
+        if (!empty($this->order['delivery']) && $delivery = $this->modx->getObject('msDelivery',
                 array('id' => $this->order['delivery']))
         ) {
-            $cost = $delivery->getCost($this, $cost);
-        }
-        
-        if (is_array($cost)) {
-            $cost = $cost[0];
-        }
-        $cost = $cost > 0 ? $cost : 0;
-    
-        if($cuponCost){
-            $cost = $cuponCost;
-        }
-        if($this->noDelivery){
-            $delivery_cost = 0;
-        }
-        else{
-            if (!$delivery_cost && isset($delivery)) {
-                $delivery_cost = $delivery->getCost($this, 0);
-            } 
-        }
-        
-        
-        if (is_array($delivery_cost)) {
-            $delivery_cost = $delivery_cost[0];
+            $deliveryOutput = $delivery->getCost($this, $cost);
+            if ($deliveryOutput[1] == 0 && $deliveryOutput[2] == 0) {
+                return $this->error('Доставка не рассчитана');
+            }
+            $delivery_cost = $deliveryOutput[0] - $cost;
+            if($cost > 30000){
+                $delivery_cost = 0;
+            }
+            $free_delivery = false;
+            if($delivery_cost == 0){
+                $free_delivery = true;
+            }
+            if (is_array($deliveryOutput)) {
+                $cost = $deliveryOutput[0];
+            }
+            $cost = max($cost, 0);
         }
         
         /** @var msPayment $payment */
@@ -314,7 +298,6 @@ class msOrderCustom extends msOrderHandler implements msOrderInterface
         // скидка авторизованным пользователям на первый заказ
         
         if ($stikLoyalty->userHasFirstOrderDiscount() === true) {
-            $cuponCost = 0;
             $noDisc = true;
             $cart = $this->ms2->cart->get();
             foreach($cart as $item){
@@ -360,6 +343,7 @@ class msOrderCustom extends msOrderHandler implements msOrderInterface
             : $this->success('', array(
                 'cost' => $cost,
                 'delivery_cost' => $msmc->getPrice($delivery_cost, 0, 0, 0.0, false),
+                'free_delivery' => $free_delivery,
 				'msloyalty' => $msloyalty,
 				'msloyalty_text' => $msloyalty_text,
 				'msloyalty_allowable_amount' => $this->modx->runSnippet('msMultiCurrencyPriceFloor', ['price' => $msloyalty_allowable_amount]),

@@ -483,7 +483,6 @@
             callbacks.getcost.response.success = function (response) {
                 $(miniShop2.Order.orderCost, miniShop2.Order.order).text(miniShop2.Utils.formatPrice(response.data['cost']));
                 $(miniShop2.Order.cartCost, miniShop2.Order.order).text(miniShop2.Utils.formatPrice(response.data['cart_cost']));
-                console.log('test')
                 $(miniShop2.Order.deliveryCost, miniShop2.Order.order).text(miniShop2.Utils.formatPrice(response.data['delivery_cost']));
             };
             var data = {};

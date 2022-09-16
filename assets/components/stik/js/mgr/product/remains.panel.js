@@ -35,7 +35,6 @@ Ext.extend(msProductRemains.grid.ProductRemains,MODx.grid.Grid,{
             ,old_price: {header: _('ms2_product_old_price'), width: 100, renderer: msProductRemains.utils.defined}
             ,hide: {header: 'Скрыть', sortable: true, width: 50, renderer: msProductRemains.utils.bool, editor: {xtype:'combo-boolean'}}
         };
-
         for (var i in msProductRemains.plugin) {
             if (typeof(msProductRemains.plugin[i]['getColumns']) == 'function') {
                 var add = msProductRemains.plugin[i].getColumns();

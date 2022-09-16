@@ -155,7 +155,6 @@ class mspcCouponHandler implements mspcCouponInterface
             $row['code'] = $code;
         }
         else{
-            $this->modx->log(1,var_export($result,1));
             $this->mspc->setError($result['calculationResult']['promocode']['error']['description']);
         }
         // кешируем купон

@@ -149,7 +149,45 @@
     </div>
 {/if}
 {if $_modx->isAuthenticated('web')}
+    <div class="au-modal au-modal-mailSubs modal " style="max-width:510px">
+        <div class="au-info-size__wrapper">
+            <button class="au-close au-modal-size__close" onclick="localStorage.discountClose = true;" aria-label="Закрыть"></button>
+            <div class="au-modal__content  au-info-size__content">
+                <h3 class="au-info-discount__title">Секретное предложение!</h3>
+                <h2 class="au-info-discount__sub-title">Подпишитесь на рассылку акций и новостей, и мы отправим вам полезный подарок на почту!</h2>
+                <div style="margin-bottom:60px; display:flex;flex-direction:column;padding:0 20px;">
+                    {'!smsLoad' | snippet : ['js' => '/assets/components/sms/js/web/custom.js?v=0.1']}
+                    {$_modx->lexicon->load('sms:default')}
+                    <form method="post" class="email-po">
+                        <div class="custom-form__group js-mailSubs-email" style="flex-direction:column">
+                            <label for="emailSubs" class="au-info-discount__info-text">Введите email, чтобы получить подарок</label>
+                            <input type="email" class="custom-form__input" id="emailSubs" name="email" data-val="" placeholder="">
+                            <span class="error_field"></span>
+                        </div>
+                        <div class="js_sms_buttons_group">
+                            <button type="button" class="au-btn  au-login__submit  au-login__submit-register js_sms_code_send" disabled>Получить подарок</button>
+                            <span class="custom-code-link-box" style="display:none;">
+                            <a class="au-btn  au-login__submit  au-login__submit-register js_sms_resend_code" href="#">{'stik_profile_sms_code_resend' | lexicon}</a>
+                        </span>
+                            <button type="button" class="btn btn-primary sms_code_btn js_sms_code_check">{'sms_web_btn_code_check' | lexicon}</button>
+                        </div>
+                    </form>
+                    <button style="color:#999;margin-top:20px" onClick="closeForModal();localStorage.mailSubs = 1;">Продолжить без подарка</button>
+                </div>
 
+            </div>
+        </div>
+    </div>
+<script>
+    setTimeout(()=>{
+        if(localStorage.mailSubs){
+        }
+        else{
+            openModalАdditionally($('.au-modal-overlay'));
+            $('.au-modal-mailSubs').addClass('active');
+        }
+    },500);
+</script>
 {/if}
 <div class="au-modal au-modal-cart  modal" id="ms2_cart_modal">
     {* содержимое в чанке stik.msCart.ajax *}
