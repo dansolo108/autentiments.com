@@ -32,7 +32,8 @@ $rows = $modx->runSnippet('getModifications',array_merge($scriptProperties,
         'tpl'=>'',
         'details'=> ['color'],
         'groupby'=>['Modification.product_id','color'],
-        'having'=>['color:!='=>null]
+        'sortby'=>['Modification.id'=>'ASC'],
+        'having'=>['color:!='=>null],
     ]));
 $output = array();
 if (!empty($rows) && is_array($rows)) {

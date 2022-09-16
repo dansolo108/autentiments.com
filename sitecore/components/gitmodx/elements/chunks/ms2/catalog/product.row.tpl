@@ -52,11 +52,7 @@
         <div class="au-card__description">
             <span class="au-card__title">{$pagetitle}</span>
             <div class="au-card__price-box js_card-prices">
-                {'!getColorPrice' | snippet : [
-                    'id' => $product_id,
-                    'color' => $color,
-                    'tpl' => 'product.row.price',
-                ]}
+                {$_modx->getChunk('product.row.price',['old_price'=>$old_price,'price'=>$price])}
             </div>
         </div>
     </a>
