@@ -17,10 +17,10 @@
                 <label class="custom-form__radio-label" for="delivery_{$delivery.delivery.id}">
                     <span class="au-ordering__delivery-name">{('stik_order_delivery_' ~ $delivery.delivery.id) | lexicon}</span>
                     <span class="au-ordering__delivery-info">
-                        {if $delivery.cost == 0}
-                            {'stik_order_delivery_free' | lexicon}
-                        {elseif $delivery.cost != 0}
-                            {'!msMultiCurrencyPrice' | snippet : ['price' => $delivery.cost]} {$_modx->getPlaceholder('msmc.symbol_right')}{if $delivery.rates}, <span class="delivery_rate">{$delivery.rates}</span>{/if}
+                        {if $delivery.cost === 0}
+                            {'stik_order_delivery_free' | lexicon}{if $delivery.rates}, <span class="delivery_rate">{$delivery.rates}</span>{/if}
+                        {elseif $delivery.cost > 0}
+                            {'!msMultiCurrencyPrice' | snippet : ['price' => $delivery.cost]} {$_modx->getPlaceholder('msmc.symbol_right')}{if $delivery.rates}, <span class="delivery_rate">{$delivery.rates}</span>{/if}
                         {else}
                             {'stik_order_delivery_not_calculated' | lexicon}
                         {/if}

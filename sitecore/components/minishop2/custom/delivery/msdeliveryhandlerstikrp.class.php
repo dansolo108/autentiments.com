@@ -40,18 +40,11 @@ class msDeliveryHandlerStikRp extends msDeliveryHandler implements msDeliveryInt
         if (!$this->config['authToken'] || !$this->config['authKey'] || !$this->config['fromIndex']) {
             return [$cost, 0, 0];
         }
-        $modx = $this->modx;
         $orderData = $order->get('order');
-        // $tariff_code = $delivery->get('tariff') ?: 1;
-        // $total = $this->ms2->cart->status();
-        // $cart = $this->ms2->cart->get();
-        // $receiverCity = $orderData['city'];
-        $receiverIndex = $orderData['index'];
-        
-        if (empty($receiverIndex)) return [$cost, 0, 0];
+        if (empty($orderData['index'])) return false;
         $orderData = [
             "index-from" => (string)$this->config['fromIndex'],
-            "index-to" => (string)$receiverIndex,
+            "index-to" => (string)$orderData['index'],
             "mail-category" => "ORDINARY",
             "mail-type" => (string)$delivery->get('tariff'),
             "sms-notice-recipient"=>1,
@@ -70,7 +63,7 @@ class msDeliveryHandlerStikRp extends msDeliveryHandler implements msDeliveryInt
         if (isset($data['total-rate'])) {
             $delivery_cost = round(number_format($data['total-rate'] / 100, 0, '.', '')); // переводим копейки в рубли и округляем
             if($cost < 30000)
-                $cost = $cost + $delivery_cost * 2;
+                $cost += $delivery_cost * 2;
             // увеличиваем стоимость доставки вдвое.
             $min = $max = 0;
             if (isset($data['delivery-time'])) {
@@ -79,7 +72,7 @@ class msDeliveryHandlerStikRp extends msDeliveryHandler implements msDeliveryInt
             }
             return [$cost, $min, $max];
         }
-        return [$cost, 0, 0];
+        return false;
     }
 }
 ?>
