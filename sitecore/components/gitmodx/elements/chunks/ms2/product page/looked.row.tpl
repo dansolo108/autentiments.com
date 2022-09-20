@@ -1,13 +1,7 @@
-{block 'params'}
-    {set $wrapper_classes = 'au-card  au-scroll-animat'}
-    {if $_modx->resource.template == 3}
-        {set $wrapper_classes = 'au-card'}
-    {/if}
-{/block}
 <script>
     PageInfo.products['{$id}'] = {$id | getJSONPageInfo};
 </script>
-<form class="{$wrapper_classes}" id="product-{$id}-{$idx}" product-id="{$id}">
+<form class="au-card  swiper-slide" id="product-{$id}-{$idx}" product-id="{$id}">
     <a class="au-card__like msfavorites" href="" aria-label="Добавить в избранное" data-click data-data-list="default" data-data-type="resource" data-data-key="{$id}" {if $_modx->resource.template == 5}data-msfavorites-mode="list"{/if}></a>
     <a class="au-card__link" href="{$id | url}?{$color?'color='~$color:''}">
         <div class="au-card__img-box">
