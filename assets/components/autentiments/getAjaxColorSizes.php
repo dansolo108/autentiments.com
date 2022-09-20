@@ -10,6 +10,7 @@ $modifications = $modx->runSnippet('getModifications', [
     'where'=>[
         'Modification.product_id' => $product_id,
         'color'=>$color,
+        'Modification.hide'=>0,
     ],
     'details'=>[
         'color','size'
