@@ -23,7 +23,7 @@
     
     {block 'products'}
         {set $products = '!pdoPage' | snippet : [
-            'element' => 'getModifications',
+            'element' => 'getProducts',
             'ajaxMode' => 'scroll',
             'limit' => 6,
             'parents' => 7,
