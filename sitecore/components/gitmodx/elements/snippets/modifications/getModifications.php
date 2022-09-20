@@ -16,7 +16,7 @@ if ($pdoClass = $modx->loadClass($fqn, $path, false, true)) {
     return false;
 }
 $where = [
-    'Modification.hide'=>false,
+    '`Modification`.`hide`'=>0,
     'msProduct.deleted'=>0,
     'msProduct.published'=>1,
 ];
@@ -39,7 +39,7 @@ $leftJoin = [
     ],
 ];
 $select = [
-    'Modification'=>'`Modification`.`id`, `Modification`.`product_id`,  `Modification`.`price`, `Modification`.`old_price`',
+    'Modification'=>'`Modification`.`id`, `Modification`.`product_id`,  `Modification`.`price`, `Modification`.`old_price`, `Modification`.`hide`',
     'msProduct' => !empty($includeContent)
         ? $modx->getSelectColumns('msProduct', 'msProduct','',['id'],true)
         : $modx->getSelectColumns('msProduct', 'msProduct', '', ['id','content'], true),
