@@ -17,19 +17,18 @@
     {block 'params'}
         {set $where = [
             'Data.new' => 1,
-            'Data.image:!=' => null,
         ]}
         {set $wrapper_classes = ''}
     {/block}
     
     {block 'products'}
         {set $products = '!pdoPage' | snippet : [
-            'element' => 'msProducts',
+            'element' => 'getModifications',
             'ajaxMode' => 'scroll',
             'limit' => 6,
             'parents' => 7,
             'sortby' => '{"sortindex":"ASC", "menuindex":"ASC"}',
-            'tpl' => 'stik.msProducts.row',
+            'tpl' => 'product.row',
             'includeThumbs' => 'category',
             'where' => $where,
         ]}

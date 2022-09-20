@@ -19,7 +19,6 @@
 {block 'params'}
     {set $where = [
         'Data.sale' => 1,
-        'Data.image:!=' => null,
     ]}
     {set $wrapper_classes = ''}
 {/block}
