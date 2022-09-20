@@ -214,16 +214,14 @@
     {/if}
 
     {set $categories = $_modx->resource.parent | resource : 'categories'}
-    {set $also_like = 'msProducts' | snippet : [
+    {set $also_like = 'getModifications' | snippet : [
         'parents' => $categories ?: $_modx->resource.parent,
         'resources' => -$_modx->resource.id,
-        'tpl' => 'stik.msProducts.swiper.row',
+        'tpl' => 'swiper.row',
         'limit' => 8,
+        'details'=>['color'],
         'includeThumbs' => 'category',
         'sortby' => 'Rand()',
-        'where' => [
-            'Data.image:!=' => null,
-        ]
     ]}
 
     {if $also_like?}
@@ -242,7 +240,7 @@
         </section>
     {/if}
     {set $looked = '!looked' | snippet : [
-        'tpl' => 'stik.msProducts.swiper.row',
+        'tpl' => 'looked.row',
         'tplOuter'=>'@INLINE [[+output]]',
         'limit'=>12,
     ]}
