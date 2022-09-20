@@ -32,7 +32,7 @@ foreach($details as $detail){
             'class' => 'msProduct',
             'where' => [
                 'msProduct.class_key' => 'msProduct',
-                'Modification.hide' => false,
+                'Modification.hide' => 0,
                 'msProduct.id'=>$id,
             ],
             'leftJoin' => [

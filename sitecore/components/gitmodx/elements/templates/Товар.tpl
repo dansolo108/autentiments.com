@@ -115,6 +115,7 @@
                             'where'=>[
                                 'Modification.product_id' => $_modx->resource.id,
                                 'color'=>$activeColor,
+                                'Modification.hide'=>0,
                             ],
                             'details'=>[
                                 'color',
