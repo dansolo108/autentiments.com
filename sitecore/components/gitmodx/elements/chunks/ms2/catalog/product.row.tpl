@@ -12,6 +12,7 @@
     <a class="au-card__link" href="{$product_id | url}?{$color?'color='~$color:''}">
         <div class="au-card__img-box">
             <div class="au-card__gallery js_card-img">
+                {$product_id}
                 {'!msGallery' | snippet : [
                     'product' => $product_id,
                     'tpl' => 'stik.msGallery.card',

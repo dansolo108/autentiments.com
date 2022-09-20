@@ -25,9 +25,9 @@ $leftJoin = [
         'class'=>'Modification',
         'on'=>'Modification.product_id = msProduct.id',
     ],
-    'msProductData'=>[
+    'Data'=>[
         'class'=>'msProductData',
-        'on'=>'Modification.product_id = msProductData.id',
+        'on'=>'Modification.product_id = Data.id',
     ],
     'Remain'=>[
         'class'=>'ModificationRemain',
@@ -35,7 +35,7 @@ $leftJoin = [
     ],
     'Vendor' => [
         'class' =>'msVendor',
-        'on' => 'msProductData.vendor=Vendor.id'
+        'on' => 'Data.vendor=Vendor.id'
     ],
 ];
 $select = [
@@ -43,7 +43,7 @@ $select = [
     'msProduct' => !empty($includeContent)
         ? $modx->getSelectColumns('msProduct', 'msProduct','',['id'],true)
         : $modx->getSelectColumns('msProduct', 'msProduct', '', ['id','content'], true),
-    'msProductData' => $modx->getSelectColumns('msProductData', 'msProductData','',['id','price','old_price','color','size'],true),
+    'Data' => $modx->getSelectColumns('msProductData', 'Data','',['id','price','old_price','color','size'],true),
     'Remain'=>'SUM(Remain.remains) as remains',
     'Vendor' => 'Vendor.name as vendor',
 ];
@@ -126,7 +126,11 @@ $result = $pdoFetch->run();
 if($pdoFetch->config['return'] === 'sql')
     return $result;
 $output = '';
+$pdoFetch->setConfig(array_merge($default,$scriptProperties,['return'=>'sql']));
+$sql = $pdoFetch->run();
+
 foreach ($result as $key => &$item){
+    $item['idx'] = $pdoFetch->idx++;;
     if($item['product_id'] && $item['color'] && !empty($includeThumbs)){
         $thumbs = array_map('trim', explode(',', $includeThumbs));
         $leftJoin = [];
@@ -154,9 +158,10 @@ foreach ($result as $key => &$item){
         ];
         $pdoFetch->setConfig($default,false);
         $thumbs = $pdoFetch->run();
-        $item = array_merge($thumbs[0],$item);
+        if($thumbs[0]){
+            $item = array_merge($thumbs[0],$item);
+        }
     }
-    $item['idx'] = $pdoFetch->idx++;;
     if(!empty($tpl)) {
         $output .= $pdoFetch->getChunk($tpl, array_merge(array_diff_key($scriptProperties,$default),$item));
     }

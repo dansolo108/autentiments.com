@@ -26,15 +26,16 @@ if ($scriptProperties['return'] === 'ids') {
     $scriptProperties['returnIds'] = true;
 }
 
-
+$scriptProperties['where']['Modification.hide'] = 0;
+$scriptProperties['where']['msProduct.class_key'] = 'msProduct';
 $rows = $modx->runSnippet('getModifications',array_merge($scriptProperties,
     [
         'tpl'=>'',
         'details'=> ['color'],
         'groupby'=>['Modification.product_id','color'],
         'sortby'=>['Modification.id'=>'ASC'],
-        'having'=>['color:!='=>null],
     ]));
+//$modx->log(1,var_export($rows,1));
 $output = array();
 if (!empty($rows) && is_array($rows)) {
     $opt_time = 0;
