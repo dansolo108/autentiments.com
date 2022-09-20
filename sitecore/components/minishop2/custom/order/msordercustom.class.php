@@ -146,11 +146,12 @@ class msOrderCustom extends msOrderHandler implements msOrderInterface
             $products[] = $product;
         }
         $order->addMany($products);
-
+        $this->modx->log(1,'test');
         $response = $this->ms2->invokeEvent('msOnBeforeCreateOrder', array(
             'msOrder' => $order,
             'order' => $this,
         ));
+        $this->modx->log(1,'test2');
         if (!$response['success']) {
             return $this->error($response['message']);
         }
