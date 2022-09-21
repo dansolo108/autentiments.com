@@ -84,7 +84,7 @@ function hideLoading() {
 }
 
 function selectFirstSize() {
-    if ($('#msProduct label.au-product__size:not(.not-size)')) {
+    if ($('#msProduct label.au-product__size:not(.not-size)').length) {
         $('#msProduct label.au-product__size').first().trigger('click');
     }
     else{
@@ -93,7 +93,6 @@ function selectFirstSize() {
 }
 document.addEventListener('DOMContentLoaded',e=>{
     selectFirstSize();
-    console.log(e);
 })
 // Переключение цветов в галерее товара
 function reloadMsGallery(color, id) {
