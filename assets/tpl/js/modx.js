@@ -93,6 +93,7 @@ function selectFirstSize() {
 }
 document.addEventListener('DOMContentLoaded',e=>{
     selectFirstSize();
+    console.log(e);
 })
 // Переключение цветов в галерее товара
 function reloadMsGallery(color, id) {
