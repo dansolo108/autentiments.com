@@ -43,7 +43,33 @@
         'id'=>$_modx->resource.id,
         'details'=>['size'],
     ]}
-    {set $activeSize = $.get['size']?$.get['size']:$sizes[0]['value']}
+    {set $sizes = 'getModifications' | snippet : [
+        'where'=>[
+            'Modification.product_id' => $_modx->resource.id,
+            'color'=>$activeColor,
+            'Modification.hide'=>0,
+        ],
+        'details'=>[
+            'color',
+            'size'
+        ],
+        'sortby'=>['size'=>'ASC'],
+        'groupby'=>['Modification.product_id','size'],
+    ]}
+    {set $activeSize = $.get['size']?:false}
+    {set $sizesOutput = ''}
+    {set $remains = 0}
+    {foreach $sizes as $size}
+        {if !$activeSize && $size['remains'] > 0}
+            {set $activeSize = $size['size']}
+        {/if}
+        {set $size['activeSize'] = $activeSize}
+        {if $activeSize == $size['size']}
+            {$test}
+            {set $remains = $size['remains']}
+        {/if}
+        {set $sizesOutput = $sizesOutput ~ $_modx->getChunk('product.size',$size)}
+    {/foreach}
     <main id="msProduct" class="au-product" itemtype="http://schema.org/Product" itemscope>
         <meta itemprop="name" content="{$_modx->resource.pagetitle}">
         <meta itemprop="description" content="{$_modx->resource.description ? $_modx->resource.description : $_modx->resource.pagetitle}">
@@ -111,27 +137,13 @@
                 <div class="au-product__size-box">
                     <span class="au-product__subtitle">{'stik_product_size' | lexicon}:</span>
                     <div id="ajax_sizes" class="au-product__sizes">
-                        {'getModifications' | snippet : [
-                            'where'=>[
-                                'Modification.product_id' => $_modx->resource.id,
-                                'color'=>$activeColor,
-                                'Modification.hide'=>0,
-                            ],
-                            'details'=>[
-                                'color',
-                                'size'
-                            ],
-                            'sortby'=>['size'=>'ASC'],
-                            'groupby'=>['Modification.product_id','size'],
-                            'tpl'=>'product.size',
-                            'activeSize'=>$activeSize,
-                        ]}
+                        {$sizesOutput}
                     </div>
                 </div>
                 <button type="button" class="au-product__info-size">{'stik_modal_size_info_link' | lexicon}</button>
                 <div class="au-product__add-box">
                     <button class="au-btn  au-product__add-basket {if !$_modx->resource.soon}active{/if}" onclick="{*fbq('track', 'AddToCart',{ currency: 'RUB', content_type:'product', content_ids: {$_modx->resource.id}, content_name:'{$_modx->resource.pagetitle}',   value: {$_modx->resource.price|replace:',':'.'} });*}gtag('event', 'add_to_cart', { items: [ { id: {$_modx->resource.id}, name: '{$_modx->resource.pagetitle}', category: '{$_modx->resource.parent | resource : 'pagetitle'}', quantity: 1, price: {$_modx->resource.price|replace:',':'.'|replace:' ':''} } ] });" type="submit" name="ms2_action" value="cart/add">{'ms2_frontend_add_to_cart' | lexicon}</button>
-                    <button class="au-btn-light  au-product__add-entrance {if $_modx->resource.soon}active{/if}" type="button">
+                    <button class="au-btn-light  au-product__add-entrance {if $_modx->resource.soon || $remains == 0}active{/if}" type="button">
                         <span class="entrance">{'stik_product_subscribe_button' | lexicon}</span>
                         <span class="entrance_end">{'stik_product_subscribe_success' | lexicon}</span>
                     </button>
