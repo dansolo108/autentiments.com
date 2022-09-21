@@ -84,11 +84,14 @@ function hideLoading() {
 }
 
 function selectFirstSize() {
-    if ($('#msProduct label.au-product__size')) {
+    if ($('#msProduct label.au-product__size:not(.not-size)')) {
         $('#msProduct label.au-product__size').first().trigger('click');
     }
+    else{
+        $.jGrowl('Извините, товара нет в наличии', {theme: 'af-message-error'});
+    }
 }
-
+selectFirstSize();
 // Переключение цветов в галерее товара
 function reloadMsGallery(color, id) {
     if ($('#msGallery').length) {
