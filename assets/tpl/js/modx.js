@@ -88,8 +88,8 @@ function selectFirstSize() {
         $('#msProduct label.au-product__size:not(.not-size)').first().trigger('click');
     }
     else{
-        $.jGrowl('Извините, товара нет в наличии', {theme: 'af-message-error'});
         $('#msProduct label.au-product__size').first().trigger('click');
+        $.jGrowl('Извините, товара нет в наличии', {theme: 'af-message-error'});
     }
 }
 document.addEventListener('DOMContentLoaded',e=>{
