@@ -112,6 +112,12 @@ foreach($details as $key=>$detail){
 if(is_array($scriptProperties['groupby'])){
     $scriptProperties['groupby'] = implode(',',$scriptProperties['groupby']);
 }
+if(!empty($scriptProperties['sortby']['size'])){
+    $sortDir = $scriptProperties['sortby']['size'];
+    $sizes = ['XXS','XS','S','M','L','XL','XXL'];
+    unset($scriptProperties['sortby']['size']);
+    $scriptProperties['sortby']['FIELD(DetailSize.value,"'.implode('","',$sizes).'")'] = $sortDir;
+}
 $default = [
     'class'=>'msProduct',
     'where'=>$where,
@@ -126,9 +132,9 @@ $result = $pdoFetch->run();
 if($pdoFetch->config['return'] === 'sql')
     return $result;
 $output = '';
-$pdoFetch->setConfig(array_merge($default,$scriptProperties,['return'=>'sql']));
-$sql = $pdoFetch->run();
-
+//$pdoFetch->setConfig(array_merge($default,$scriptProperties,['return'=>'sql']));
+//$sql = $pdoFetch->run();
+//$modx->log(1,$sql);
 foreach ($result as $key => &$item){
     $item['idx'] = $pdoFetch->idx++;;
     if($item['product_id'] && $item['color'] && !empty($includeThumbs)){
