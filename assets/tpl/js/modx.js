@@ -91,7 +91,9 @@ function selectFirstSize() {
         $.jGrowl('Извините, товара нет в наличии', {theme: 'af-message-error'});
     }
 }
-selectFirstSize();
+document.addEventListener('DOMContentLoaded',e=>{
+    selectFirstSize();
+})
 // Переключение цветов в галерее товара
 function reloadMsGallery(color, id) {
     if ($('#msGallery').length) {
