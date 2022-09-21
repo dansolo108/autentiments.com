@@ -88,9 +88,6 @@ function selectFirstSize() {
         $('#msProduct label.au-product__size:not(.not-size)').first().trigger('click');
     }
 }
-document.addEventListener('DOMContentLoaded',e=>{
-    selectFirstSize();
-})
 // Переключение цветов в галерее товара
 function reloadMsGallery(color, id) {
     if ($('#msGallery').length) {
