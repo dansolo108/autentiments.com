@@ -1,6 +1,7 @@
 <?php
+/** @var $modx gitModx */
 if ($modx->event->name == 'msOnBeforeCreateOrder') {
-
+    /** @var msOrderCustom $msOrder */
     $start = microtime(true);
 
     $cart_status = $order->ms2->cart->status();
@@ -18,7 +19,7 @@ if ($modx->event->name == 'msOnBeforeCreateOrder') {
 
     foreach ($cart_items as $item){
 
-        $product = $modx->getObject('msProduct', $item['id']);
+        $product = $modx->getObject('msProduct', $item['product_id']);
         $product_name = $product->get('pagetitle');
         $product_count = $item['count'];
         $product_price = $item['price'];

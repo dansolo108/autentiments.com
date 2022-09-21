@@ -27,6 +27,8 @@ if ($scriptProperties['return'] === 'ids') {
 }
 
 $scriptProperties['where']['Modification.hide'] = 0;
+$scriptProperties['where']['msProduct.deleted'] = 0;
+$scriptProperties['where']['msProduct.published'] = 1;
 $scriptProperties['where']['msProduct.class_key'] = 'msProduct';
 $rows = $modx->runSnippet('getModifications',array_merge($scriptProperties,
     [

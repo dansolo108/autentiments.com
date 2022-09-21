@@ -6,4 +6,7 @@ return array(
     'OnLoadWebDocument'=>[
         'registerFrontVariables',
     ],
+    'msOnBeforeCreateOrder'=>[
+        'roistat'
+    ]
 );

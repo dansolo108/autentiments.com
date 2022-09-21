@@ -16,7 +16,7 @@ if ($pdoClass = $modx->loadClass($fqn, $path, false, true)) {
     return false;
 }
 $where = [
-    '`Modification`.`hide`'=>0,
+    'Modification.hide'=>0,
     'msProduct.deleted'=>0,
     'msProduct.published'=>1,
 ];
