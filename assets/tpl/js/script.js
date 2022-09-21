@@ -416,7 +416,7 @@ function closeModal() {
         }
     });
 }
-document.addEventListener('DOMContentLoaded',function (e){
+document.addEventListener('click',function (e){
     if(e.target.closest('.au-cart__resume')){
         closeForModal();
     }
