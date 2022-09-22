@@ -60,12 +60,6 @@ $xpdo_meta_map['ModificationDetail']= array (
           'collation' => 'A',
           'null' => false,
         ),
-        'value' => 
-        array (
-          'length' => '',
-          'collation' => 'A',
-          'null' => false,
-        ),
       ),
     ),
   ),

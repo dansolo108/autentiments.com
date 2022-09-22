@@ -41,15 +41,21 @@ $xpdo_meta_map['ModificationRemain']= array (
   ),
   'indexes' => 
   array (
-    'modification_id' => 
+    'remain' => 
     array (
-      'alias' => 'modification_id',
+      'alias' => 'remain',
       'primary' => false,
-      'unique' => false,
+      'unique' => true,
       'type' => 'BTREE',
       'columns' => 
       array (
         'modification_id' => 
+        array (
+          'length' => '',
+          'collation' => 'A',
+          'null' => false,
+        ),
+        'store_id' => 
         array (
           'length' => '',
           'collation' => 'A',

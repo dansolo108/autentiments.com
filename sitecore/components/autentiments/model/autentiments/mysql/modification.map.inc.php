@@ -12,6 +12,7 @@ $xpdo_meta_map['Modification']= array (
   array (
     'product_id' => NULL,
     'code' => NULL,
+    '1c_id' => NULL,
     'hide' => 0,
     'price' => 0.0,
     'old_price' => 0.0,
@@ -32,7 +33,7 @@ $xpdo_meta_map['Modification']= array (
       'phptype' => 'string',
       'null' => false,
     ),
-    '1c_id' =>
+    '1c_id' => 
     array (
       'dbtype' => 'varchar',
       'precision' => '255',
@@ -82,15 +83,15 @@ $xpdo_meta_map['Modification']= array (
         ),
       ),
     ),
-    '1c_id' =>
+    '1c_id' => 
     array (
       'alias' => '1c_id',
       'primary' => false,
       'unique' => true,
       'type' => 'BTREE',
-      'columns' =>
+      'columns' => 
       array (
-        '1c_id' =>
+        '1c_id' => 
         array (
           'length' => '',
           'collation' => 'A',
