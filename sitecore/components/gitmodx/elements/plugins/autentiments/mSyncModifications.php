@@ -185,6 +185,7 @@ switch ($modx->event->name) {
                 }
             }
         }
+        $modification->set('code',(string)$xml->Артикул);
         if(!$modification->save()){
             $modx->log(1, 'Ошибка сохранения модификации '.var_export($modification->toArray(),1));
         }
