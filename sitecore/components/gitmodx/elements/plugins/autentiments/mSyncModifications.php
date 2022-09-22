@@ -84,7 +84,7 @@ switch ($modx->event->name) {
                         continue;
                     }
                 }
-                $detail = $modx->newObject('Detail',[
+                $detail = $modx->newObject('ModificationDetail',[
                     'type_id'=>$type_id,
                     'value'=> $value
                 ]);
