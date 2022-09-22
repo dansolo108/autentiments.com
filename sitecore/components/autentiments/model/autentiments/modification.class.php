@@ -12,6 +12,15 @@ class Modification extends xPDOSimpleObject {
         }
         return null;
     }
+    function getDetails(){
+        $details = $this->getMany('Details');
+        $result = [];
+        foreach ($details as $detail){
+            $type = $detail->getOne('Type');
+            $result[$type->get('name')] = $detail->get('value');
+        }
+        return $result;
+    }
     function getRemains(){
         $remains = $this->getMany('Remains');
         $sum = 0;

@@ -136,6 +136,10 @@ class msOrderCustom extends msOrderHandler implements msOrderInterface
             } else {
                 $name = '';
             }
+            $modification = $this->modx->getObject('Modification',$v['id']);
+            if(!count($v['options']))
+                $v['options'] = [];
+            $v['options'] = array_merge($v['options'],$modification->getDetails());
             /** @var msOrderProduct $product */
             $product = $this->modx->newObject('msOrderProduct');
             $product->fromArray(array_merge($v, array(
