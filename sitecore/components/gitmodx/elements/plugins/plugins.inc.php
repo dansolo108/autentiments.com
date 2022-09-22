@@ -8,5 +8,17 @@ return array(
     ],
     'msOnBeforeCreateOrder'=>[
         'roistat'
+    ],
+    'mSyncOnPrepareProduct'=>[
+        'mSyncModifications'
+    ],
+    'mSyncOnProductImport'=>[
+        'mSyncModifications'
+    ],
+    'mSyncOnProductOffers'=>[
+        'mSyncModifications'
+    ],
+    'mSyncOnSalesExport'=>[
+        'mSyncModifications'
     ]
 );

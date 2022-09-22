@@ -32,6 +32,13 @@ $xpdo_meta_map['Modification']= array (
       'phptype' => 'string',
       'null' => false,
     ),
+    '1c_id' =>
+    array (
+      'dbtype' => 'varchar',
+      'precision' => '255',
+      'phptype' => 'string',
+      'null' => false,
+    ),
     'hide' => 
     array (
       'dbtype' => 'tinyint',
@@ -68,6 +75,22 @@ $xpdo_meta_map['Modification']= array (
       'columns' => 
       array (
         'code' => 
+        array (
+          'length' => '',
+          'collation' => 'A',
+          'null' => false,
+        ),
+      ),
+    ),
+    '1c_id' =>
+    array (
+      'alias' => '1c_id',
+      'primary' => false,
+      'unique' => true,
+      'type' => 'BTREE',
+      'columns' =>
+      array (
+        '1c_id' =>
         array (
           'length' => '',
           'collation' => 'A',
