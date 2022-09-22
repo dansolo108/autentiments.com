@@ -132,10 +132,10 @@ switch ($modx->event->name) {
             $count = (int)str_replace('.0', '', $storeXML['КоличествоНаСкладе']);
             $count = max($count, 0);
             if(!$modification->isNew()) {
-                $remains = $modification->getMany('Remains',['store_id'=>$store_id]);
+                $remains = $modification->getMany('Remains',['store_id'=>$store->get('id')]);
                 if(count($remains) !== 0) {
                     if(count($remains) > 1) {
-                        $modx->log(MODX_LOG_LEVEL_ERROR,'Remains find error. Count remain Objects > 1. Modification id:'.$modification->get('id').', store id:'.$store_id);
+                        $modx->log(MODX_LOG_LEVEL_ERROR,'Remains find error. Count remain Objects > 1. Modification id:'.$modification->get('id').', store id:'.$store->get('id'));
                     }
                     $remain = $remains[0];
                     $remain->set('remains',$count);
@@ -146,7 +146,7 @@ switch ($modx->event->name) {
                 }
             }
             $remain = $modx->newObject('ModificationRemain',[
-                'store_id'=>$store_id,
+                'store_id'=>$store->get('id'),
                 'remains'=> $count
             ]);
             $modification->addMany($remain);
