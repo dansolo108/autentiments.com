@@ -11,7 +11,7 @@ assets/components/minifyx/cache/
 assets/components/msync/1c_temp/
 assets/components/msync/export/
 assets/components/gallery/cache/
-import/
+/import/
 sitecore/config/config.inc.php
 sitecore/cache/
 sitecore/packages/
