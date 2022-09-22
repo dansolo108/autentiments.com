@@ -43,7 +43,7 @@ switch ($modx->event->name) {
         $product_id = $resource->get('id');
         /** @var Modification $modification */
         /** @var SimpleXMLElement $xml */
-        $modification = $modx->getObject('Modification',[ '1c_id'=> (string)$xml->Ид ]);
+        $modification = $modx->getObject('Modification',[ '1c_id'=> (string)$xml->Ид]);
         if(!$modification) {
             $modification = $modx->newObject('Modification',['1c_id'=> (string)$xml->Ид]);
         }
@@ -186,6 +186,7 @@ switch ($modx->event->name) {
             }
         }
         $modification->set('code',(string)$xml->Артикул);
+        $modification->set('product_id',$product_id);
         if(!$modification->save()){
             $modx->log(1, 'Ошибка сохранения модификации '.var_export($modification->toArray(),1));
         }
