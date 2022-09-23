@@ -11,7 +11,7 @@ if (empty($id) ) $id = $modx->resource->get('id');
 $modification = $modx->runSnippet('getModifications',[
     'where'=>[
         'Modification.product_id'=>$id,
-        'hide'=>false,
+        'Modification.hide'=>false,
     ],
     'having'=>[
         'color'=>$color
