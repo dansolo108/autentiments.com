@@ -76,5 +76,31 @@ function productGalleryInit() {
         document.querySelector('.au-product__slider').classList.remove('swiper-container');
     }
 }
-
+if (document.querySelector('.showroom__photos')) {
+    const sliderPhotos = new Swiper('.showroom__photos', {
+        speed: 400,
+        loop: false,
+        spaceBetween: 0,
+        slidesPerView: 1,
+        slidesPerGroup: 1,
+        pagination: {
+            el: '.photos__pagination',
+            clickable: true,
+        },
+        navigation: {
+            nextEl: '.au-liked__next',
+            prevEl: '.au-liked__prev',
+        },
+        breakpoints: {
+            1024: {
+                slidesPerView: 4,
+                slidesPerGroup: 4
+            },
+            600: {
+                slidesPerView: 2,
+                slidesPerGroup: 1
+            },
+        }
+    });
+}
 productGalleryInit();

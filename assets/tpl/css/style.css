@@ -6093,3 +6093,123 @@ h2.about-block__title{
     font-size: 20px;
   }
 }
+.showrooms{
+  display: flex;
+  flex-direction: column;
+  gap: 120px;
+  max-width: 1512px;
+  margin: 0 auto;
+  font-family: 'Circe';
+  font-style: normal;
+  font-weight: 350;
+  font-size: 18px;
+  line-height: 130%;
+}
+.showroom{
+  display: grid;
+  grid-template-columns: repeat(4,1fr);
+  grid-template-areas:
+          "address    ........ ...... ......"
+          "work-time  contacts ...... ......"
+          "photos     photos   photos photos"
+          "map        map      ...... ......";
+  grid-column-gap: 20px;
+}
+.showroom__address{
+  grid-area: address;
+  margin-bottom: 16px;
+}
+.showroom__city{
+  font-weight: 700;
+  margin: 0;
+}
+.showroom__work-time{
+  grid-area: work-time;
+}
+.showroom__contacts{
+  grid-area: contacts;
+}
+.showroom__contacts a{
+  color: black;
+  text-decoration: black underline;
+  transition: text-decoration-color .3s ease;
+}
+.showroom__contacts a:hover{
+  text-decoration-color: rgba(0, 0, 0, .1);
+}
+.showroom__photos{
+  grid-area: photos;
+  user-select: none;
+  margin: 40px -10px;
+}
+.showroom-photo{
+  padding: 0 10px;
+  width: 25%;
+}
+.showroom-photo img{
+  width: 100%;
+  height: auto;
+}
+.showroom__map{
+  grid-area: map;
+  width: 100%;
+  height: 383px;
+  background: #CECECE;
+}
+.photos__pagination{
+  display: none;
+}
+@media (max-width: 770px) {
+  .showrooms{
+    padding: 50px 20px;
+    gap: 90px;
+  }
+  .showroom{
+    display: flex;
+    flex-direction: column;
+    grid-gap: unset;
+  }
+  .showroom__address{
+    margin-bottom: 20px;
+  }
+  .showroom__work-time{
+    margin-bottom: 20px;
+  }
+  .showroom__contacts{
+    margin-bottom: 30px;
+  }
+  .showroom__photos{
+    margin:0 -20px;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    overflow:hidden;
+    width: 100vw;
+    margin-bottom: 10px;
+  }
+  .showroom-photo{
+    padding: 0;
+    width: 100%;
+  }
+  .photos__pagination{
+    display: block;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    margin-bottom: 40px;
+
+  }
+  .photos__pagination .swiper-pagination-bullet{
+    opacity: 1;
+    background: #D9D9D9;
+  }
+  .photos__pagination .swiper-pagination-bullet.swiper-pagination-bullet-active{
+    background:  #757575;
+  }
+  .showroom__map{
+    margin: 0 -20px;
+    width: calc(100% + 40px);
+  }
+}
