@@ -5681,7 +5681,7 @@ div.jGrowl > .ui-state-highlight {
   }
 }
 @media(max-width: 1024px){
-  .au-header__link{
+  .au-header__sub-open .au-header__link{
     pointer-events: none;
   }
 }
