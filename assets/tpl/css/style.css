@@ -5680,3 +5680,8 @@ div.jGrowl > .ui-state-highlight {
     justify-content: space-between;
   }
 }
+@media(max-width: 1024){
+  .au-header__link{
+    pointer-events: none;
+  }
+}
