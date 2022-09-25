@@ -20,5 +20,17 @@ return array(
     ],
     'mSyncOnSalesExport'=>[
         'mSyncModifications'
-    ]
+    ],
+    'SMSAfterCodeCheck'=>[
+        'loginAndRegister'
+    ],
+    'SMSCodeActivate'=>[
+        'loginAndRegister'
+    ],
+    'msOnCreateOrder'=>[
+        'loginAndRegister'
+    ],
+    'msOnBeforeGetOrderCustomer'=>[
+        'loginAndRegister'
+    ],
 );

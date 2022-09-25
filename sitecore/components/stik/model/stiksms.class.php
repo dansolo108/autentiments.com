@@ -45,15 +45,15 @@ class stikSms {
     }
     
     public function register(int $phone) {
+        /** @var modUser $user */
         $user = $this->modx->newObject('modUser');
         $user->set('username', $phone);
         $user->set('password', $user->generatePassword());
         $user->save();
-        
         $profile = $this->modx->newObject('modUserProfile');
-        $profile->set('fullname', $phone);
-        $profile->set('email', $phone.'@'.$this->modx->getOption('http_host'));
+        $profile->set('email', '');
         $profile->set('mobilephone', $phone);
+        $profile->set('internalKey', $user->get('id'));
         // сохраняем id пользователя перешедшего по специальной ссылке в AMO
         $amoUserid = $_SESSION['amo_userid'];
         if ($amoUserid) {
@@ -61,20 +61,15 @@ class stikSms {
             $contact = $this->modx->newObject('amoCRMUser', ['user' => $profile->get('internalKey'), 'user_id' => $amoUserid]);
             $contact->save();
         }
+        else{
+            $profile->set('amo_userid', null);
+        }
         
         if (is_object($user)) {
             $group = $this->modx->getObject('modUserGroup', ['name' => 'Users']);
-            $groupMember = $this->modx->newObject('modUserGroupMember');
-            $groupMember->set('user_group', $group->get('id'));
-            $groupMember->set('role', 1); // Member
-            $user->addMany($groupMember);
+            $user->joinGroup($group->get('id'));
         }
-        
-        $user->addOne($profile);
-        
         $profile->save();
-        $user->save();
-        
         return $user;
     }
     
