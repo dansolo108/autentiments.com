@@ -9,6 +9,7 @@ switch($modx->event->name){
         break;
 
     case "SMSCodeActivate":
+        /** @var array   $values */
         /** @var stikSms $stikSms */
         $stikSms = $modx->getService('stik', 'stikSms', $modx->getOption('core_path').'components/stik/model/', []);
         $phone = $stikSms->preparePhone($values['phone']);
