@@ -91,7 +91,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 </head>
 
-<body {block 'body-padding'}{((!$_modx->user.join_loyalty || !$_modx->isAuthenticated('web'))) ? 'class="padding-loyality"':''}"{/block}>
+<body {block 'body-padding'}{!$_modx->isAuthenticated('web') ? 'class="padding-loyality"':''}"{/block}>
 
 <!--ROISTAT CODE BEGIN -->
 <script>
@@ -212,14 +212,14 @@
 <!-- End Google Tag Manager (noscript) -->
 <div class="au-modal-overlay"></div>
 {block 'loyality-discount'}
-    {if (!$_modx->user.join_loyalty || !$_modx->isAuthenticated('web'))}
+    {if !$_modx->isAuthenticated('web')}
         <div class="loyality-discount" onClick="openModalАdditionally($('.au-modal-overlay'));$('.au-modal-sale').addClass('active');">
             ДАРИМ СКИДКУ 10% НА ПЕРВУЮ ПОКУПКУ | ПОДРОБНЕЕ
         </div>
     {/if}
 {/block}
 
-<div class="au-header__wrapper" {(($_modx->isAuthenticated('web') && $_modx->user.join_loyalty))?'style="top:0;"' :''}>
+<div class="au-header__wrapper" {($_modx->isAuthenticated('web'))?'style="top:0;"' :''}>
     {block 'header'}
         <header class="au-header container">
             <div class="au-header__head">
