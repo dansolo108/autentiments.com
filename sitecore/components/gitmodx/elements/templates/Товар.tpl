@@ -100,7 +100,7 @@
                     {/if}
                 {/if}
             </div>
-            <h1 class="au-h1  au-product__title">{$_modx->resource.pagetitle}</h1>
+            <h1 class="au-h1  au-product__title">{$_modx->resource.pagetitle} {$activeColor} {$activeSize}</h1>
             <div class="au-card__row">
                 <div class="au-card__price-box">
                     {'!getModifications' | snippet : [
@@ -111,9 +111,9 @@
                         ],
                         'details'=>[
                             'color',
-                            'size'
+                            'size',
                         ],
-                        'groupby'=>['Modification.id'],
+                        'groupby'=>['Modification.product_id','color','size'],
                         'tpl'=>'product.row.price'
                     ]}
                 </div>

@@ -10,3 +10,4 @@ $_lang['autentiments_modification_remove_confirm'] = 'Вы уверены в у�
 $_lang['autentiments_modification_preview'] = 'Превью';
 $_lang['color'] = 'Цвет';
 $_lang['size'] = 'Размер';
+$_lang['composition'] = 'Состав';

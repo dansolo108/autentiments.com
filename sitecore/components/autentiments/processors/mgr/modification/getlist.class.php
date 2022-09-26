@@ -31,7 +31,7 @@ class ModificationGetListProcessor extends modObjectGetListProcessor {
 	}
     /**
      * Prepare the row for iteration
-     * @param xPDOObject $object
+     * @param Modification $object
      * @return array
      */
 
@@ -45,10 +45,9 @@ class ModificationGetListProcessor extends modObjectGetListProcessor {
         foreach($object->getMany('Remains') as $remain){
             $obj['store:'.$remain->get('store_id')] = $remain->get('remains');
         }
-
-        $colors = $object->getMany('Details',['name'=>'Цвет']);
-        $color = $colors[array_keys($colors)[0]];
+        $color = $object->getDetail('color');
         if($color) {
+            $this->modx->log(1,var_export($color->get('value'),1));
             $product = $object->getOne('Product');
             $files = $product->getOne('Data')->getMany('Files', ['description' => $color->get('value')]);
             if($files){
