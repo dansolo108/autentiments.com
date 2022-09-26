@@ -77,10 +77,12 @@
                     'cid' => $cid,
                     'cource' => $cource
                 ]}
+                {if $order.status != 4}
                 <tr class="au-cart__modal-tr  au-cart__modal-tr_total">
                     <td class="au-cart__modal-td">{'stik_order_info_paid' | lexicon}</td>
-                    <td class="au-cart__modal-td">{$totalCost} {$currency}</td>
+                    <td class="au-cart__modal-td">{if $order.status == 2 || $order.status == 3}{$totalCost}{else}0{/if} {$currency}</td>
                 </tr>
+                {/if}
                 <tr class="au-cart__modal-tr">
                     <td class="au-cart__modal-td">{'stik_order_info_cart_cost' | lexicon}</td>
                     <td class="au-cart__modal-td">{$beforeDiscount} {$currency}</td>

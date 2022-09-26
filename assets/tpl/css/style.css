@@ -4943,8 +4943,9 @@ label.au-filter__cost:last-child input {
   border-bottom: 1px solid #CCCCCC; }
 .au-order__table .au-cart__modal-td:last-child {
   font-family: "Circe"; }
-.au-order__table .au-cart__modal-tr_total .au-cart__modal-td {
-  padding-top: 8px; }
+.au-order__table .au-cart__modal-tr:nth-child(2) .au-cart__modal-td{
+  padding-top: 8px;
+}
 .au-order__table .au-order__tr-status {
   border-bottom: 1px solid #CCCCCC; }
 .au-order__table .au-order__tr-status .au-cart__modal-td {

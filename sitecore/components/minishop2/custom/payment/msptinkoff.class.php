@@ -67,7 +67,7 @@ class mspTinkoff extends msPaymentHandler implements msPaymentInterface
     public function send(msOrder $order)
     {
         $link = $this->getPaymentLink($order);
-
+        $this->changeOrderStatus($order,5);
         return $this->success('', ['redirect' => $link]);
     }
 
@@ -433,6 +433,12 @@ class mspTinkoff extends msPaymentHandler implements msPaymentInterface
                 $this->changeOrderStatus($order, $this->modx->getOption('ms2_payment_tinkoff_status_paid', null, 2, true));
                 break;
             case 'REJECTED':
+                $this->changeOrderStatus($order, $this->modx->getOption('ms2_payment_tinkoff_status_cancel', null, 4, true));
+                break;
+            case 'DEADLINE_EXPIRED':
+                $this->changeOrderStatus($order, $this->modx->getOption('ms2_payment_tinkoff_status_cancel', null, 4, true));
+                break;
+            case 'CANCELED':
                 $this->changeOrderStatus($order, $this->modx->getOption('ms2_payment_tinkoff_status_cancel', null, 4, true));
                 break;
             //case 'RECEIPT':
