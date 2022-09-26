@@ -232,6 +232,7 @@
         'tpl' => 'swiper.row',
         'limit' => 8,
         'details'=>['color'],
+        'groupby'=>['Modification.product_id'],
         'includeThumbs' => 'category',
         'sortby' => 'Rand()',
     ]}
