@@ -84,19 +84,13 @@ switch ($modx->event->name) {
                 }
                 $type_id = $detailType->get('id');
                 if(!$modification->isNew()) {
-                    $details = $modification->getMany('Details',['type_id'=>$type_id],false);
-                    if(count($details) !== 0) {
-                        if(count($details) > 1) {
-                            $modx->log(MODX_LOG_LEVEL_ERROR,'detail find error count details > 1 modification id:'.$modification->get('id').', detail type id:'.$type_id);
-                        }
-                        $detail = array_pop($details);
-                        $mSync->log('Найдена опция :'.$detail->get('id'),1);
-                        $detail->set('value',$value);
-                        if(!$detail->save()){
-                            $modx->log(MODX_LOG_LEVEL_ERROR,'detail save error'.var_export($detail->toArray(),1));
-                        }
-                        continue;
+                    $detail = $modx->getObject('ModificationDetail',['modification_id'=>$modification->get('id'),'type_id'=>$type_id]);
+                    $mSync->log('Найдена опция :'.$detail->get('id'),1);
+                    $detail->set('value',$value);
+                    if(!$detail->save()){
+                        $modx->log(MODX_LOG_LEVEL_ERROR,'detail save error'.var_export($detail->toArray(),1));
                     }
+                    continue;
                 }
                 $detail = $modx->newObject('ModificationDetail',[
                     'type_id'=>$type_id,
@@ -149,19 +143,13 @@ switch ($modx->event->name) {
             $count = (int)str_replace('.0', '', $storeXML['КоличествоНаСкладе']);
             $count = max($count, 0);
             if(!$modification->isNew()) {
-                $remains = $modification->getMany('Remains',['store_id'=>$store->get('id')],false);
-                if(count($remains) !== 0) {
-                    if(count($remains) > 1) {
-                        $modx->log(MODX_LOG_LEVEL_ERROR,'Remains find error. Count remain Objects > 1. Modification id:'.$modification->get('id').', store id:'.$store->get('id'));
-                    }
-                    $remain = array_pop($remains);
-                    $remain->set('remains',$count);
-                    $mSync->log('Обновлены остатки:'.$remain->get('id'),1);
-                    if(!$remain->save()){
-                        $modx->log(MODX_LOG_LEVEL_ERROR,'Remain save error'.var_export($remain->toArray(),1));
-                    }
-                    continue;
+                $remain = $modx->getObject('ModificationRemain',['modification_id'=>$modification->get('id'),'store_id'=>$store->get('id')]);
+                $mSync->log('Обновлены остатки:'.$remain->get('id'),1);
+                $remain->set('remains',$count);
+                if(!$remain->save()){
+                    $modx->log(MODX_LOG_LEVEL_ERROR,'Remain save error'.var_export($remain->toArray(),1));
                 }
+                continue;
             }
             $remain = $modx->newObject('ModificationRemain',[
                 'store_id'=>$store->get('id'),
