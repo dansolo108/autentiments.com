@@ -39,6 +39,8 @@ switch ($modx->event->name) {
 
         break;
     case 'mSyncOnProductOffers':
+        /** @var mSync $mSync */
+        $mSync = $modx->getService('msync');
         /** @var msProduct $resource */
         $product_id = $resource->get('id');
         /** @var Modification $modification */
@@ -46,6 +48,10 @@ switch ($modx->event->name) {
         $modification = $modx->getObject('Modification',[ '1c_id'=> (string)$xml->Ид]);
         if(!$modification) {
             $modification = $modx->newObject('Modification',['1c_id'=> (string)$xml->Ид,'hide'=>true]);
+            $mSync->log('Создана новая модификация 1с_id:'.(string)$xml->Ид,1);
+        }
+        else{
+            $mSync->log('Найдена модификация id:'.$modification->get('id'),1);
         }
         // ищем характеристики модификации
         if (isset($xml->ХарактеристикиТовара->ХарактеристикаТовара)) {
@@ -78,6 +84,7 @@ switch ($modx->event->name) {
                         }
                         $detail = $details[0];
                         $detail->set('value',$value);
+                        $mSync->log('Обновлена опция :'.$detail->get('id'),1);
                         if(!$detail->save()){
                             $modx->log(MODX_LOG_LEVEL_ERROR,'detail save error'.var_export($detail->toArray(),1));
                         }
@@ -88,6 +95,7 @@ switch ($modx->event->name) {
                     'type_id'=>$type_id,
                     'value'=> $value
                 ]);
+                $mSync->log('Создана опция :'.$detail->toArray(),1);
                 $modification->addMany($detail);
             }
         }
@@ -119,7 +127,9 @@ switch ($modx->event->name) {
                 $resource->set('old_price', 0);
             }
         }
+        $mSync->log('Обновлена цена:'.$offer_price,1);
         $modification->set('price',$offer_price);
+        $mSync->log('Обновлена старая цена :'.$offer_old_price,1);
         $modification->set('old_price',$offer_old_price);
         // остатки для каждого склада
         foreach ($xml->Склад as $storeXML) {
@@ -139,6 +149,7 @@ switch ($modx->event->name) {
                     }
                     $remain = $remains[0];
                     $remain->set('remains',$count);
+                    $mSync->log('Обновлены остатки:'.$remain->get('id'),1);
                     if(!$remain->save()){
                         $modx->log(MODX_LOG_LEVEL_ERROR,'Remain save error'.var_export($remain->toArray(),1));
                     }
@@ -150,6 +161,7 @@ switch ($modx->event->name) {
                 'remains'=> $count
             ]);
             $modification->addMany($remain);
+            $mSync->log('Созданы остатки:'.$remain->toArray(),1);
         }
         // Привязка цвета оффера к изображению
         if ($xml->Картинка) {
@@ -158,7 +170,6 @@ switch ($modx->event->name) {
                 $full_url = MODX_ASSETS_PATH . 'components/msync/1c_temp/' . $v;
                 if (file_exists($full_url)) {
                     $file = array('id' => $product_id, 'name' => $v, 'file' => $full_url, 'description' => $color);
-
                     $response = $modx->runProcessor('mgr/gallery/upload', $file, array('processors_path' => MODX_CORE_PATH . 'components/minishop2/processors/'));
                     // не очень красиво, вероятно стоит проверять хеш
                     if ($response->isError() && $response->getMessage() != $modx->lexicon('ms2_err_gallery_exists')) {
@@ -186,7 +197,9 @@ switch ($modx->event->name) {
             }
         }
         $modification->set('code',(string)$xml->Артикул);
+        $mSync->log('обновлено поле code:'.(string)$xml->Артикул,1);
         $modification->set('product_id',$product_id);
+        $mSync->log('обновлено поле product_id:'.$product_id,1);
         if(!$modification->save()){
             $modx->log(1, 'Ошибка сохранения модификации '.var_export($modification->toArray(),1));
         }
