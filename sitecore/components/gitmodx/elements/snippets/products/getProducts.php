@@ -34,8 +34,8 @@ $rows = $modx->runSnippet('getModifications',array_merge($scriptProperties,
     [
         'tpl'=>'',
         'details'=> ['color'],
+        'sortby'=>['Modification.id','Modification.sort_index'=>"DESC"],
         'groupby'=>['Modification.product_id','color'],
-        'sortby'=>['Modification.id'=>'ASC'],
     ]));
 //$modx->log(1,var_export($rows,1));
 $output = array();

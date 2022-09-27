@@ -21,9 +21,9 @@
         'tplFilter.row.default' => 'stik.mFilter2.filter.checkbox',
         'showLog'=>0,
     ]}
-    {if $_modx->resource.id != 709}
-        {set $options['sortby'] = 'RAND()'}
-    {/if}
+{*    {if $_modx->resource.id != 709}*}
+{*        {set $options['sortby'] = 'RAND()'}*}
+{*    {/if}*}
     {'!mFilter2' | snippet : $options}
     <script>
         document.addEventListener('DOMContentLoaded',e=>{

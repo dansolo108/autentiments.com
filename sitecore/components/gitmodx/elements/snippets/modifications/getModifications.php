@@ -123,6 +123,7 @@ $default = [
     'where'=>$where,
     'leftJoin'=>$leftJoin,
     'select'=>$select,
+    'sortby'=>['Modification.id','Modification.sort_index'=>"DESC"],
     'groupby' => implode(', ', $groupby),
     'limit'=> 10,
     'return'=>'data'

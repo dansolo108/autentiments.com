@@ -20,7 +20,11 @@ autentimentsPanel.grid.Modifications = function(config) {
     autentimentsPanel.grid.Modifications.superclass.constructor.call(this,config);
 };
 Ext.extend(autentimentsPanel.grid.Modifications,MODx.grid.Grid,{
-    windows: {},
+    windows: {}
+    ,sorters: {
+    field: 'sort_index',
+        direction: 'ASC'
+    },
     getMenu: function() {
         return [{
             text: _('autentiments_modification_remove')
@@ -63,6 +67,7 @@ Ext.extend(autentimentsPanel.grid.Modifications,MODx.grid.Grid,{
             ,price: {width: 100, editor: {xtype:'numberfield'}}
             ,old_price: {width: 100, editor: {xtype:'numberfield'}}
             ,hide: {sortable: true, width: 100,renderer: this.renderers.bool, editor: {xtype:'combo-boolean'}}
+            ,sort_index: {sortable: true, width: 100, editor: {xtype:'numberfield'}},
         };
         var columns = [];
         for(let key in all){
