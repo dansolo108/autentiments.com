@@ -90,8 +90,8 @@ switch ($modx->event->name) {
                             $modx->log(MODX_LOG_LEVEL_ERROR,'detail find error count details > 1 modification id:'.$modification->get('id').', detail type id:'.$type_id);
                         }
                         $detail = array_pop($details);
+                        $mSync->log('Найдена опция :'.$detail->get('id'),1);
                         $detail->set('value',$value);
-                        $mSync->log('Обновлена опция :'.$detail->get('id'),1);
                         if(!$detail->save()){
                             $modx->log(MODX_LOG_LEVEL_ERROR,'detail save error'.var_export($detail->toArray(),1));
                         }
