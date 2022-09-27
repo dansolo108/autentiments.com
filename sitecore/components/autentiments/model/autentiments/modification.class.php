@@ -7,13 +7,13 @@ class Modification extends xPDOSimpleObject {
 
     function getDetail($name){
         $type = $this->xpdo->getObject('DetailType',['name'=>$name]);
-        if(!$type){
+        if(empty($type)){
             return null;
         }
         $details = $this->getMany('Details',['type_id'=>$type->get('id')]);
         if(count($details) !== 0) {
             if (count($details) > 1) {
-                $this->modx->log(MODX_LOG_LEVEL_ERROR, 'detail find error count details > 1 modification id:' . $this->get('id') . ', detail type id:' . $type->get('id'));
+                $this->xpdo->log(MODX_LOG_LEVEL_ERROR, 'detail find error count details > 1 modification id:' . $this->get('id') . ', detail type id:' . $type->get('id'));
             }
             return array_pop($details);
         }
