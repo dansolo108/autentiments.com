@@ -89,7 +89,7 @@ switch ($modx->event->name) {
                         if(count($details) > 1) {
                             $modx->log(MODX_LOG_LEVEL_ERROR,'detail find error count details > 1 modification id:'.$modification->get('id').', detail type id:'.$type_id);
                         }
-                        $detail = $details[0];
+                        $detail = array_pop($details);
                         $detail->set('value',$value);
                         $mSync->log('Обновлена опция :'.$detail->get('id'),1);
                         if(!$detail->save()){
@@ -154,7 +154,7 @@ switch ($modx->event->name) {
                     if(count($remains) > 1) {
                         $modx->log(MODX_LOG_LEVEL_ERROR,'Remains find error. Count remain Objects > 1. Modification id:'.$modification->get('id').', store id:'.$store->get('id'));
                     }
-                    $remain = $remains[0];
+                    $remain = array_pop($remains);
                     $remain->set('remains',$count);
                     $mSync->log('Обновлены остатки:'.$remain->get('id'),1);
                     if(!$remain->save()){
