@@ -84,7 +84,7 @@ switch ($modx->event->name) {
                 }
                 $type_id = $detailType->get('id');
                 if(!$modification->isNew()) {
-                    $details = $modification->getMany('Details',['type_id'=>$type_id],false);
+                    $details = $modification->getMany('Details',['type_id'=>$type_id]);
                     if(count($details) !== 0) {
                         if(count($details) > 1) {
                             $modx->log(MODX_LOG_LEVEL_ERROR,'detail find error count details > 1 modification id:'.$modification->get('id').', detail type id:'.$type_id);
@@ -149,7 +149,7 @@ switch ($modx->event->name) {
             $count = (int)str_replace('.0', '', $storeXML['КоличествоНаСкладе']);
             $count = max($count, 0);
             if(!$modification->isNew()) {
-                $remains = $modification->getMany('Remains',['store_id'=>$store->get('id')],false);
+                $remains = $modification->getMany('Remains',['store_id'=>$store->get('id')]);
                 if(count($remains) !== 0) {
                     if(count($remains) > 1) {
                         $modx->log(MODX_LOG_LEVEL_ERROR,'Remains find error. Count remain Objects > 1. Modification id:'.$modification->get('id').', store id:'.$store->get('id'));
