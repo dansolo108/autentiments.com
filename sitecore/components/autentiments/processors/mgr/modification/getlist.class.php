@@ -47,7 +47,6 @@ class ModificationGetListProcessor extends modObjectGetListProcessor {
         }
         $color = $object->getDetail('color');
         if($color) {
-            $this->modx->log(1,var_export($color->get('value'),1));
             $product = $object->getOne('Product');
             $files = $product->getOne('Data')->getMany('Files', ['description' => $color->get('value')]);
             if($files){
