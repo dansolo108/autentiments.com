@@ -102,7 +102,7 @@ switch ($modx->event->name) {
                     'type_id'=>$type_id,
                     'value'=> $value
                 ]);
-                $mSync->log('Создана опция :'.$detail->toArray(),1);
+                $mSync->log('Создана опция :'.var_export($detail->toArray(),1),1);
                 $modification->addMany($detail);
             }
         }
@@ -168,7 +168,7 @@ switch ($modx->event->name) {
                 'remains'=> $count
             ]);
             $modification->addMany($remain);
-            $mSync->log('Созданы остатки:'.$remain->toArray(),1);
+            $mSync->log('Созданы остатки:'.var_export($remain->toArray(),1),1);
         }
         // Привязка цвета оффера к изображению
         if ($xml->Картинка && $color) {
