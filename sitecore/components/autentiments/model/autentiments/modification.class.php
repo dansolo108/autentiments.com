@@ -9,7 +9,7 @@ class Modification extends xPDOSimpleObject {
         $q = $this->xpdo->newQuery('ModificationDetail');
         $q->where(['ModificationDetail.modification_id'=>$this->get('id'), 'DetailType'=>$name]);
         $q->leftJoin('DetailType','DetailType',['ModificationDetail.type_id = DetailType.id']);
-        return $this->xpdo->getObject('Details',$q);
+        return $this->xpdo->getObject('ModificationDetail',$q);
     }
     function getDetails(){
         $details = $this->getMany('Details');
