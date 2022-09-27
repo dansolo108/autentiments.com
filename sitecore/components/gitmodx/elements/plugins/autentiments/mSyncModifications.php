@@ -77,10 +77,10 @@ switch ($modx->event->name) {
                     if(!$detailType->save()) {
                         $modx->log(MODX_LOG_LEVEL_ERROR,'detailType save error'.var_export($detailType->toArray(),1));
                     }
-                    $mSync->log('Создан новый тип характеристик: '.$detailType->toArray(),1);
+                    $mSync->log('Создан новый тип характеристик: '.var_export($detailType->toArray(),1),1);
                 }
                 else{
-                    $mSync->log('Найден тип характеристик: '.$detailType->toArray(),1);
+                    $mSync->log('Найден тип характеристик: '.var_export($detailType->toArray(),1),1);
                 }
                 $type_id = $detailType->get('id');
                 if(!$modification->isNew()) {
