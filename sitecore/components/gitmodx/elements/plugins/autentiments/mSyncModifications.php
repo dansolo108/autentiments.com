@@ -57,7 +57,9 @@ switch ($modx->event->name) {
         // ищем характеристики модификации
         if (isset($xml->ХарактеристикиТовара->ХарактеристикаТовара)) {
             foreach ($xml->ХарактеристикиТовара->ХарактеристикаТовара as $feature) {
+                $mSync->log('Обработка характеристики'.$feature->Наименование,1);
                 $detailName = mb_strtolower($feature->Наименование);
+                $mSync->log('Значение характеристики'.str_replace('ё','е',trim((string)$feature->Значение)),1);
                 $value = str_replace('ё','е',trim((string)$feature->Значение));
                 if (preg_match('/размер/', mb_strtolower($feature->Наименование))) {
                     $detailName = "size";
