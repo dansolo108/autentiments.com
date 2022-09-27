@@ -10,12 +10,10 @@ class Modification extends xPDOSimpleObject {
         if(empty($type)){
             return null;
         }
-        $q = $this->xpdo->newQuery('ModificationDetail');
-        $q->where(['type_id'=>$type->get('id')]);
-        $details = $this->getMany('Details',$q);
+        $details = $this->getMany('Details',['type_id'=>$type->get('id')]);
         if(count($details) !== 0) {
             if (count($details) > 1) {
-                $this->xpdo->log(MODX_LOG_LEVEL_ERROR, 'detail find error count details > 1 modification id:' . $this->get('id') . ', detail type id:' . $type->get('id'));
+                $this->xpdo->log(MODX_LOG_LEVEL_ERROR, 'detail find error count details > 1 modification id:' . $this->get('id') . ', detail type id:' . $type->get('id') . 'name:'.$name);
                 foreach($details as $detail){
                     $this->xpdo->log(MODX_LOG_LEVEL_ERROR, 'detail'. var_export($detail->toArray(),1));
 
