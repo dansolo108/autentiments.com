@@ -10,7 +10,7 @@ class Modification extends xPDOSimpleObject {
         if(empty($type)){
             return null;
         }
-        $this->xpdo->log(MODX_LOG_LEVEL_ERROR, 'detail Type'. $type->get('id'),1);
+        $this->xpdo->log(MODX_LOG_LEVEL_ERROR, 'detail Type'. $type->get('id'));
         $details = $this->getMany('Details',['type_id'=>$type->get('id')],false);
         if(count($details) !== 0) {
             if (count($details) > 1) {
