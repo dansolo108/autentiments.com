@@ -45,7 +45,7 @@ switch ($modx->event->name) {
         /** @var SimpleXMLElement $xml */
         $modification = $modx->getObject('Modification',[ '1c_id'=> (string)$xml->Ид]);
         if(!$modification) {
-            $modification = $modx->newObject('Modification',['1c_id'=> (string)$xml->Ид]);
+            $modification = $modx->newObject('Modification',['1c_id'=> (string)$xml->Ид,'hide'=>true]);
         }
         // ищем характеристики модификации
         if (isset($xml->ХарактеристикиТовара->ХарактеристикаТовара)) {
