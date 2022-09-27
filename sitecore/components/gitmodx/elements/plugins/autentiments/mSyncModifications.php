@@ -57,9 +57,9 @@ switch ($modx->event->name) {
         // ищем характеристики модификации
         if (isset($xml->ХарактеристикиТовара->ХарактеристикаТовара)) {
             foreach ($xml->ХарактеристикиТовара->ХарактеристикаТовара as $feature) {
-                $mSync->log('Обработка характеристики'.$feature->Наименование,1);
+                $mSync->log('Обработка характеристики: '.$feature->Наименование,1);
                 $detailName = mb_strtolower($feature->Наименование);
-                $mSync->log('Значение характеристики'.str_replace('ё','е',trim((string)$feature->Значение)),1);
+                $mSync->log('Значение характеристики: '.str_replace('ё','е',trim((string)$feature->Значение)),1);
                 $value = str_replace('ё','е',trim((string)$feature->Значение));
                 if (preg_match('/размер/', mb_strtolower($feature->Наименование))) {
                     $detailName = "size";
@@ -77,6 +77,10 @@ switch ($modx->event->name) {
                     if(!$detailType->save()) {
                         $modx->log(MODX_LOG_LEVEL_ERROR,'detailType save error'.var_export($detailType->toArray(),1));
                     }
+                    $mSync->log('Создан новый тип характеристик: '.$detailType->toArray(),1);
+                }
+                else{
+                    $mSync->log('Найден тип характеристик: '.$detailType->toArray(),1);
                 }
                 $type_id = $detailType->get('id');
                 if(!$modification->isNew()) {
