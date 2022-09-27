@@ -53,6 +53,7 @@ switch ($modx->event->name) {
         else{
             $mSync->log('Найдена модификация id:'.$modification->get('id'),1);
         }
+        $color = false;
         // ищем характеристики модификации
         if (isset($xml->ХарактеристикиТовара->ХарактеристикаТовара)) {
             foreach ($xml->ХарактеристикиТовара->ХарактеристикаТовара as $feature) {
@@ -164,7 +165,7 @@ switch ($modx->event->name) {
             $mSync->log('Созданы остатки:'.$remain->toArray(),1);
         }
         // Привязка цвета оффера к изображению
-        if ($xml->Картинка) {
+        if ($xml->Картинка && $color) {
             foreach ($xml->Картинка as $k => $v) {
                 // $fileName = preg_replace('/\.\w+$/', '', $v);
                 $full_url = MODX_ASSETS_PATH . 'components/msync/1c_temp/' . $v;
