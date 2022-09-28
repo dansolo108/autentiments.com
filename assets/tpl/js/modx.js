@@ -87,6 +87,9 @@ function selectFirstSize() {
     if ($('#msProduct label.au-product__size:not(.not-size)').length) {
         $('#msProduct label.au-product__size:not(.not-size)').first().trigger('click');
     }
+    else{
+        $('#msProduct label.au-product__size').first().trigger('click');
+    }
 }
 // Переключение цветов в галерее товара
 function reloadMsGallery(color, id) {

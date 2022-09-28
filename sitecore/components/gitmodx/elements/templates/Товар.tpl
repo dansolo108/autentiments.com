@@ -59,14 +59,14 @@
     {set $activeSize = $.get['size']?:false}
     {set $sizesOutput = ''}
     {set $remains = 0}
-    {set $hide_remains = 0}
+    {set $hide_remains = $_modx->resource.soon}
     {foreach $sizes as $size}
-        {if !$activeSize && ($size['remains'] > 0 && !$size['hide_remains'])}
+        {if !$activeSize}
             {set $activeSize = $size['size']}
         {/if}
         {if $activeSize == $size['size']}
             {set $remains = $size['remains']}
-            {set $hide_remains = $size['hide_remains']}
+            {set $hide_remains = $_modx->resource.soon?:$size['hide_remains']}
         {/if}
         {set $sizesOutput = $sizesOutput ~ $_modx->getChunk('product.size',$size)}
     {/foreach}
