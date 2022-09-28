@@ -9,6 +9,7 @@ $_lang['autentiments_modification_remove'] = 'Удалить модификац�
 $_lang['autentiments_modification_remove_confirm'] = 'Вы уверены в удалении модификации?';
 $_lang['autentiments_modification_preview'] = 'Превью';
 $_lang['autentiments_modification_sort_index'] = 'Сортировка';
+$_lang['autentiments_modification_hide_remains'] = 'скрыть наличие';
 $_lang['color'] = 'Цвет';
 $_lang['size'] = 'Размер';
 $_lang['composition'] = 'Состав';

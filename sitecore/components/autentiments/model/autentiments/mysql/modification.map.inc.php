@@ -17,6 +17,7 @@ $xpdo_meta_map['Modification']= array (
     'price' => 0.0,
     'old_price' => 0.0,
     'sort_index' => 0,
+    'hide_remains' => 0,
   ),
   'fieldMeta' => 
   array (
@@ -70,6 +71,14 @@ $xpdo_meta_map['Modification']= array (
       'dbtype' => 'int',
       'precision' => '10',
       'phptype' => 'integer',
+      'null' => false,
+      'default' => 0,
+    ),
+    'hide_remains' => 
+    array (
+      'dbtype' => 'tinyint',
+      'precision' => '1',
+      'phptype' => 'boolean',
       'null' => false,
       'default' => 0,
     ),

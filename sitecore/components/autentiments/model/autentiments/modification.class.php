@@ -21,6 +21,8 @@ class Modification extends xPDOSimpleObject {
         return $result;
     }
     function getRemains(){
+        if ($this->get('hide_remains'))
+            return 0;
         $remains = $this->getMany('Remains');
         $sum = 0;
         foreach ($remains as $remain){

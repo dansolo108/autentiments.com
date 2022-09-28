@@ -18,6 +18,7 @@
         <field key="price" dbtype="decimal" precision="12,2" phptype="float" null="true" default="0"/>
         <field key="old_price" dbtype="decimal" precision="12,2" phptype="float" null="true" default="0"/>
         <field key="sort_index" dbtype="int" precision="10" phptype="integer" null="false" default="0"/>
+        <field key="hide_remains" dbtype="tinyint" precision="1" phptype="boolean" null="false" default="0"/>
         <index alias="code" name="code" primary="false" unique="false" type="BTREE">
             <column key="code" length="" collation="A" null="false"/>
         </index>

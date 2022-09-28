@@ -67,6 +67,7 @@ Ext.extend(autentimentsPanel.grid.Modifications,MODx.grid.Grid,{
             ,price: {width: 100, editor: {xtype:'numberfield'}}
             ,old_price: {width: 100, editor: {xtype:'numberfield'}}
             ,hide: {sortable: true, width: 100,renderer: this.renderers.bool, editor: {xtype:'combo-boolean'}}
+            ,hide_remains: {sortable: true, width: 100,renderer: this.renderers.bool, editor: {xtype:'combo-boolean'}}
             ,sort_index: {sortable: true, width: 100, editor: {xtype:'numberfield'}},
         };
         var columns = [];
