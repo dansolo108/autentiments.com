@@ -21,7 +21,7 @@ class Modification extends xPDOSimpleObject {
         return $result;
     }
     function getRemains(){
-        if ($this->get('hide_remains'))
+        if ($this->get('hide_remains') || $this->xpdo->getObject('msProduct',$this->get('product_id'))->get('soon'))
             return 0;
         $remains = $this->getMany('Remains');
         $sum = 0;
