@@ -39,7 +39,7 @@ $leftJoin = [
     ],
 ];
 $select = [
-    'Modification'=>'`Modification`.`id`, `Modification`.`product_id`,  `Modification`.`price`, `Modification`.`old_price`, `Modification`.`hide`',
+    'Modification'=>$modx->getSelectColumns('Modification', 'Modification',''),
     'msProduct' => !empty($includeContent)
         ? $modx->getSelectColumns('msProduct', 'msProduct','',['id'],true)
         : $modx->getSelectColumns('msProduct', 'msProduct', '', ['id','content'], true),
