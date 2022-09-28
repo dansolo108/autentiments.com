@@ -61,13 +61,19 @@
     {set $remains = 0}
     {set $hide_remains = $_modx->resource.soon}
     {foreach $sizes as $size}
-        {if !$activeSize}
+        {if $activeSize === false && $size['remains'] > 0 && !$size['soon'] && !$size['hide_remains']}
             {set $activeSize = $size['size']}
         {/if}
         {if $activeSize == $size['size']}
             {set $remains = $size['remains']}
             {set $hide_remains = $_modx->resource.soon?:$size['hide_remains']}
         {/if}
+    {/foreach}
+    {if $activeSize === false}
+        {set $activeSize = $sizes[0]['size']}
+    {/if}
+    {foreach $sizes as $size}
+        {set $size['activeSize'] = $activeSize}
         {set $sizesOutput = $sizesOutput ~ $_modx->getChunk('product.size',$size)}
     {/foreach}
     <main id="msProduct" class="au-product" itemtype="http://schema.org/Product" itemscope>
