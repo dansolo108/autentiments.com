@@ -57,4 +57,8 @@ jQuery(document).ready(function($) {
 		ms2DeliveryCost.init();
 	});
 	ms2DeliveryCost.init();
+	miniShop2.Callbacks.add('Cart.change.response.success', 'ms2DeliveryCost', function(response) {
+		ms2DeliveryCost.reload();
+		console.log("test");
+	});
 });
