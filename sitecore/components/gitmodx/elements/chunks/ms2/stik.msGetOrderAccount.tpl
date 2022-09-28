@@ -125,7 +125,7 @@
             </h2>
             <ul class="au-cart__cards  au-order__cards">
                 {foreach $products as $product}
-                    {$_modx->getChunk('cart.item', $product)}
+                    {$_modx->getChunk('order.item', $product)}
                 {/foreach}
             </ul>
         </div>
