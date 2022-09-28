@@ -59,14 +59,14 @@
     {set $activeSize = $.get['size']?:false}
     {set $sizesOutput = ''}
     {set $remains = 0}
+    {set $hide_remains = 0}
     {foreach $sizes as $size}
-        {if !$activeSize && $size['remains'] > 0}
+        {if !$activeSize && ($size['remains'] > 0 && !$size['hide_remains'])}
             {set $activeSize = $size['size']}
         {/if}
-        {set $size['activeSize'] = $activeSize}
         {if $activeSize == $size['size']}
-            {$test}
             {set $remains = $size['remains']}
+            {set $hide_remains = $size['hide_remains']}
         {/if}
         {set $sizesOutput = $sizesOutput ~ $_modx->getChunk('product.size',$size)}
     {/foreach}
@@ -142,8 +142,8 @@
                 </div>
                 <button type="button" class="au-product__info-size">{'stik_modal_size_info_link' | lexicon}</button>
                 <div class="au-product__add-box">
-                    <button class="au-btn  au-product__add-basket {if !$_modx->resource.soon}active{/if}" onclick="{*fbq('track', 'AddToCart',{ currency: 'RUB', content_type:'product', content_ids: {$_modx->resource.id}, content_name:'{$_modx->resource.pagetitle}',   value: {$_modx->resource.price|replace:',':'.'} });*}gtag('event', 'add_to_cart', { items: [ { id: {$_modx->resource.id}, name: '{$_modx->resource.pagetitle}', category: '{$_modx->resource.parent | resource : 'pagetitle'}', quantity: 1, price: {$_modx->resource.price|replace:',':'.'|replace:' ':''} } ] });" type="submit" name="ms2_action" value="cart/add">{'ms2_frontend_add_to_cart' | lexicon}</button>
-                    <button class="au-btn-light  au-product__add-entrance {if $_modx->resource.soon || $remains == 0}active{/if}" type="button">
+                    <button class="au-btn  au-product__add-basket {if !$hide_remains}active{/if}" onclick="{*fbq('track', 'AddToCart',{ currency: 'RUB', content_type:'product', content_ids: {$_modx->resource.id}, content_name:'{$_modx->resource.pagetitle}',   value: {$_modx->resource.price|replace:',':'.'} });*}gtag('event', 'add_to_cart', { items: [ { id: {$_modx->resource.id}, name: '{$_modx->resource.pagetitle}', category: '{$_modx->resource.parent | resource : 'pagetitle'}', quantity: 1, price: {$_modx->resource.price|replace:',':'.'|replace:' ':''} } ] });" type="submit" name="ms2_action" value="cart/add">{'ms2_frontend_add_to_cart' | lexicon}</button>
+                    <button class="au-btn-light  au-product__add-entrance {if $hide_remains || $remains == 0}active{/if}" type="button">
                         <span class="entrance">{'stik_product_subscribe_button' | lexicon}</span>
                         <span class="entrance_end">{'stik_product_subscribe_success' | lexicon}</span>
                     </button>
