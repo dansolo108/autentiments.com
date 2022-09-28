@@ -80,11 +80,8 @@ class msDeliveryHandlerStikCdek extends msDeliveryHandler implements msDeliveryI
         $delivery_cost = round($response->getPrice());
         
         // бесплатная доставка по РФ в зависимости от настройки
-        if ($delivery->get('free_delivery_rf') == 1 && in_array(mb_strtolower($receiverCountry), ['россия','russian federation'])) {
-            //
-        } else {
-            //if($cost < 30000)
-                $cost += $delivery_cost;
+        if ($cost < 20000 || !in_array(mb_strtolower($receiverCountry), ['россия','russian federation'])) {
+            $cost += $delivery_cost;
         }
         
         $min = $response->getDeliveryPeriodMin();

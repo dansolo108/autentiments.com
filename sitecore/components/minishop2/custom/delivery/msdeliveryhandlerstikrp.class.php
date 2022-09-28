@@ -40,7 +40,7 @@ class msDeliveryHandlerStikRp extends msDeliveryHandler implements msDeliveryInt
         if (!$this->config['authToken'] || !$this->config['authKey'] || !$this->config['fromIndex']) {
             return [$cost, 0, 0];
         }
-        $orderData = $order->get('order');
+        $orderData = $order->get();
         if (empty($orderData['index'])) return [$cost, 0, 0];
         $orderData = [
             "index-from" => (string)$this->config['fromIndex'],
@@ -62,7 +62,8 @@ class msDeliveryHandlerStikRp extends msDeliveryHandler implements msDeliveryInt
 
         if (isset($data['total-rate'])) {
             $delivery_cost = round(number_format($data['total-rate'] / 100, 0, '.', '')); // переводим копейки в рубли и округляем
-            if($cost < 30000)
+            $this->modx->log(1,var_export($order->get(),1));
+            if($cost < 20000 || !in_array(mb_strtolower($orderData['country']), ['россия','russian federation']))
                 $cost = $cost + $delivery_cost * 2;
             // увеличиваем стоимость доставки вдвое.
             $min = $max = 0;
