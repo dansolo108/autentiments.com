@@ -46,7 +46,6 @@ jQuery(document).ready(function($) {
             $(this.block).removeClass('loading');
 			//$(this.block).css('opacity', '1');
 		}
-		
 	}
 	ms2DeliveryCost.init = function() {
 		if (this.checkRequired()) {

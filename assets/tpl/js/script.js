@@ -951,9 +951,10 @@ if($('.coupon-form').length){
     });
 };
 let countEvents = 0;
-function setEvent(event, props){
+function setEvent(event, props = {}){
     console.log(event,props);
     countEvents++;
+    var _tmr = _tmr || [];
     switch (event) {
         case "add_to_cart":
             gtag("event", "add_to_cart", {
@@ -1065,6 +1066,13 @@ function setEvent(event, props){
             ClTrack("productView", {
                 id: props.id,
             });
+            // _tmr?.push({
+            //     type: 'itemView',
+            //     productid: props.id,
+            //     pagetype: 'product',
+            //     list: 'VALUE',
+            //     totalvalue: props.price
+            // });
             break;
         case "add_to_wishlist":
             gtag("event", "add_to_wishlist", {
@@ -1139,6 +1147,20 @@ function setEvent(event, props){
                 id: props.id,
             });
             break;
-            return true;
+        case 'maxma-registration':
+            gtag("event", "registration", {
+                category:"maxma"
+            });
+            ym(86113805,'reachGoal','maxma-reg')
+            roistat.event.send('maxma-reg')
+            break;
     }
+    return true;
 }
+$(document).on('smsCodeCheck',(e,response,form,values)=>{
+    if(response.isRegister){
+        setEvent("maxma-registration");
+    }
+});
+miniShop2.Callbacks.add('Order.submit.response.success', 'event', function(response) {
+})

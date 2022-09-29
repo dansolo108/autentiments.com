@@ -91,8 +91,7 @@
         </div>
     </div>
 </div>
-{*
-{'!AjaxForm' | snippet : [
+{*'!AjaxForm' | snippet : [
     'snippet' => 'newsletterSubscribe',
     'form' => 'welcomeSubscribe.form',
     'emailTo' => $_modx->config.ms2_email_manager,
@@ -101,9 +100,7 @@
     'tpl' => 'newsletterSubscribe.email',
     'tplConfirm' => 'newsletterSubscribeEmailTplConfirm',
     'submitVar' => 'welcomeform',
-]}
-*}
-
+]*}
 {if !$_modx->hasSessionContext('web')}
     <div class="au-modal  au-modal-login  modal">
         <div class="au-modal__wrapper  au-login__wrapper">
@@ -177,13 +174,13 @@
 {ignore}
 <script>
     setTimeout(()=>{
-        if(localStorage.mailSubs){
+        if(sessionStorage.mailSubs){
         }
         else{
             openModalАdditionally($('.au-modal-overlay'));
             $('.au-modal-mailSubs').addClass('active');
         }
-    },500);
+    },1000);
     let form = document.querySelector('.mailSubs__form');
     let input = form.querySelector('#emailSubs');
     input.addEventListener('input',e=>{

@@ -4,22 +4,21 @@ switch($modx->event->name){
     case "SMSAfterCodeCheck":
         $val = &$modx->event->returnedValues;
         if($response['success']){
+            /** @var array   $values */
+            /** @var stikSms $stikSms */
+            $stikSms = $modx->getService('stik', 'stikSms', $modx->getOption('core_path').'components/stik/model/', []);
+            $phone = $stikSms->preparePhone($phone);
+            // проверяем существование пользователя
+            $user = $stikSms->findUser($phone);
+            $val['response']['isRegister'] = false;
+            if (!$user) {
+                $user = $stikSms->register($phone);
+                $val['response']['isRegister'] = true;
+            }
+            // авторизуем
+            $stikSms->authenticate($user, 'web');
             $val['response']['message'] = $modx->lexicon('stik_profile_sms_approved');
         }
-        break;
-
-    case "SMSCodeActivate":
-        /** @var array   $values */
-        /** @var stikSms $stikSms */
-        $stikSms = $modx->getService('stik', 'stikSms', $modx->getOption('core_path').'components/stik/model/', []);
-        $phone = $stikSms->preparePhone($values['phone']);
-        // проверяем существование пользователя
-        $user = $stikSms->findUser($phone);
-        if (!$user) {
-            $user = $stikSms->register($phone);
-        }
-        // авторизуем
-        $stikSms->authenticate($user, 'web');
         break;
     case 'msOnCreateOrder':
         // Сохраняем в профайл пользователя поля из заказа
