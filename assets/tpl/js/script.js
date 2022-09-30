@@ -1162,5 +1162,3 @@ $(document).on('smsCodeCheck',(e,response,form,values)=>{
         setEvent("maxma-registration");
     }
 });
-miniShop2.Callbacks.add('Order.submit.response.success', 'event', function(response) {
-})
