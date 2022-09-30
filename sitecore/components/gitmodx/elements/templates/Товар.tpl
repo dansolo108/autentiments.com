@@ -210,16 +210,14 @@
         </div>
     </main>
 
-    {set $complete_look = 'msProducts' | snippet : [
+    {set $complete_look = 'getModifications' | snippet : [
         'parents' => 7,
         'link' => 1,
         'limit' => 4,
+        'details'=>['color'],
         'master' => $_modx->resource.id,
         'tpl' => 'swiper.row',
         'includeThumbs' => 'category',
-        'where' => [
-            'Data.image:!=' => null,
-        ]
     ]}
 
     {if $complete_look}

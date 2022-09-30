@@ -53,6 +53,22 @@ $groupby = [
 if(is_string($scriptProperties['groupby'])){
     $scriptProperties['groupby'] = explode(',',$scriptProperties['groupby']);
 }
+// Include linked products
+$innerJoin = array();
+if (!empty($link) && !empty($master)) {
+    $innerJoin['Link'] = [
+        'class' => 'msProductLink',
+        'on' => 'msProduct.id = Link.slave AND Link.link = ' . $link,
+    ];
+    $where['Link.master'] = $master;
+} elseif (!empty($link) && !empty($slave)) {
+    $innerJoin['Link'] = [
+        'class' => 'msProductLink',
+        'on' => 'msProduct.id = Link.master AND Link.link = ' . $link,
+    ];
+    $where['Link.slave'] = $slave;
+}
+
 foreach($details as $key=>$detail){
     if(is_string($key)){
 
@@ -122,6 +138,7 @@ $default = [
     'class'=>'msProduct',
     'where'=>$where,
     'leftJoin'=>$leftJoin,
+    'innerJoin'=>$innerJoin,
     'select'=>$select,
     'sortby'=>['Modification.id','Modification.sort_index'=>"DESC"],
     'groupby' => implode(', ', $groupby),
