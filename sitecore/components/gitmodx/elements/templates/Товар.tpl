@@ -215,7 +215,7 @@
         'link' => 1,
         'limit' => 4,
         'master' => $_modx->resource.id,
-        'tpl' => 'stik.msProducts.row',
+        'tpl' => 'swiper.row',
         'includeThumbs' => 'category',
         'where' => [
             'Data.image:!=' => null,
