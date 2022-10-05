@@ -130,7 +130,7 @@ if(is_array($scriptProperties['groupby'])){
 }
 if(!empty($scriptProperties['sortby']['size'])){
     $sortDir = $scriptProperties['sortby']['size'];
-    $sizes = ['XXS','XS','S','M','L','XL','XXL'];
+    $sizes = ['XS/S','M/L','L/XL','XXS','XS','S','M','L','XL','XXL'];
     unset($scriptProperties['sortby']['size']);
     $scriptProperties['sortby']['FIELD(DetailSize.value,"'.implode('","',$sizes).'")'] = $sortDir;
 }
@@ -143,7 +143,8 @@ $default = [
     'sortby'=>['Modification.id','Modification.sort_index'=>"DESC"],
     'groupby' => implode(', ', $groupby),
     'limit'=> 10,
-    'return'=>'data'
+    'return'=>'data',
+    'polyLang'=>false,
 ];
 $pdoFetch->setConfig(array_merge($default,$scriptProperties));
 $result = $pdoFetch->run();
@@ -153,8 +154,22 @@ $output = '';
 //$pdoFetch->setConfig(array_merge($default,$scriptProperties,['return'=>'sql']));
 //$sql = $pdoFetch->run();
 //$modx->log(1,$sql);
+$polylang = $modx->getService('polylang', 'Polylang');
+$polylangTools = $polylang->getTools();
 foreach ($result as $key => &$item){
-    $item['idx'] = $pdoFetch->idx++;;
+    $item['idx'] = $pdoFetch->idx++;
+    $options = array(
+        'class' => $pdoFetch->config['class'],
+        'tvPrefix' => !empty($pdoFetch->config['tvPrefix']) ? trim($pdoFetch->config['tvPrefix']) : '',
+        'includeTVs' => !empty($pdoFetch->config['includeTVs']) ? $pdoFetch->config['includeTVs'] : '',
+        'content_id'=>(int) $item['product_id'],
+    );
+    $polylangTools->prepareResourceData(function ($key, $value, $context) use (&$item,&$modx) {
+        if($key === "size")
+            return;
+        $item['polylang_original_' . $key] = $item[$key];
+        $item[$key] = $value;
+    }, $options);
     if($item['product_id'] && $item['color'] && !empty($includeThumbs)){
         $thumbs = array_map('trim', explode(',', $includeThumbs));
         $leftJoin = [];

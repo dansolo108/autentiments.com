@@ -56,6 +56,9 @@ class PolylangFetch extends pdoFetch
 
     public function prepareResourceRows(array $rows = array(), $config = array())
     {
+        if($this->config['polyLang'] === false){
+            return $rows;
+        }
         $options = array(
             'class' => $this->config['class'],
             'cultureKey' => $this->modx->getOption('cultureKey'),
@@ -70,7 +73,6 @@ class PolylangFetch extends pdoFetch
                 $row['polylang_original_' . $key] = $row[$key];
                 $row[$key] = $value;
             }, $options);
-
         }
         return $rows;
     }

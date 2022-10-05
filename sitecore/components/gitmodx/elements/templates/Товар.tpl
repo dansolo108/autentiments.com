@@ -39,10 +39,6 @@
         'details'=>['color'],
     ]}
     {set $activeColor = $.get['color']?$.get['color']:$colors[0]['value']}
-    {set $sizes = 'getProductDetails' | snippet : [
-        'id'=>$_modx->resource.id,
-        'details'=>['size'],
-    ]}
     {set $sizes = 'getModifications' | snippet : [
         'where'=>[
             'Modification.product_id' => $_modx->resource.id,
