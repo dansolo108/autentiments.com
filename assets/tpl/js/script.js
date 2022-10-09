@@ -1066,13 +1066,13 @@ function setEvent(event, props = {}){
             ClTrack("productView", {
                 id: props.id,
             });
-            // _tmr?.push({
-            //     type: 'itemView',
-            //     productid: props.id,
-            //     pagetype: 'product',
-            //     list: 'VALUE',
-            //     totalvalue: props.price
-            // });
+            _tmr?.push({
+                type: 'itemView',
+                productid: props.id,
+                pagetype: 'product',
+                list: 'VALUE',
+                totalvalue: props.price
+            });
             break;
         case "add_to_wishlist":
             gtag("event", "add_to_wishlist", {

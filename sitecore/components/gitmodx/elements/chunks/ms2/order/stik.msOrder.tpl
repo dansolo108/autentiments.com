@@ -88,6 +88,9 @@
 
             <h2 class="au-h2  au-ordering__title">{'stik_order_delivery_title' | lexicon}</h2>
             <div class="au-ordering__row">
+                <span style="margin-bottom: 30px;">
+                    Уважаемые клиенты, в некоторых регионах наблюдается недостаточное количество курьеров. Рекомендуем оформлять доставку до ближайшего склада ПВЗ
+                </span>
                 <div class="custom-form__group  custom-form__group_arrow">
                     <select id="country" name="country" class="custom-form__input{('country' in list $errors) ? ' error' : ''}">
                         {'!getCountry' | snippet : [
