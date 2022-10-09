@@ -346,6 +346,7 @@
         <field key="region" dbtype="varchar" precision="100" phptype="string" null="true"/>
         <field key="city" dbtype="varchar" precision="100" phptype="string" null="true"/>
         <field key="metro" dbtype="varchar" precision="255" phptype="string" null="true"/>
+        <field key="point" dbtype="varchar" precision="255" phptype="string" null="true"/>
         <field key="street" dbtype="varchar" precision="255" phptype="string" null="true"/>
         <field key="building" dbtype="varchar" precision="10" phptype="string" null="true"/>
         <field key="room" dbtype="varchar" precision="10" phptype="string" null="true"/>

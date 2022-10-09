@@ -164,7 +164,8 @@ Ext.extend(miniShop2.window.UpdateOrder, miniShop2.window.Default, {
             building: {},
             city: {},
             street: {},
-            room: {}
+            room: {},
+            point: {}
         };
         var fields = [], tmp = [];
         for (var i = 0; i < miniShop2.config['order_address_fields'].length; i++) {

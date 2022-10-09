@@ -20,6 +20,7 @@ $xpdo_meta_map['msOrderAddress']= array (
     'region' => NULL,
     'city' => NULL,
     'metro' => NULL,
+    'point' => NULL,
     'street' => NULL,
     'building' => NULL,
     'room' => NULL,
@@ -91,6 +92,13 @@ $xpdo_meta_map['msOrderAddress']= array (
       'null' => true,
     ),
     'metro' => 
+    array (
+      'dbtype' => 'varchar',
+      'precision' => '255',
+      'phptype' => 'string',
+      'null' => true,
+    ),
+    'point' =>
     array (
       'dbtype' => 'varchar',
       'precision' => '255',

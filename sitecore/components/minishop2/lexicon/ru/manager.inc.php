@@ -64,6 +64,7 @@ $_lang['ms2_metro'] = 'Станция метро';
 $_lang['ms2_street'] = 'Улица';
 $_lang['ms2_building'] = 'Здание';
 $_lang['ms2_room'] = 'Комната';
+$_lang['ms2_point'] = 'Точка ПВЗ';
 $_lang['ms2_comment'] = 'Комментарий';
 
 $_lang['ms2_email_user'] = 'Письмо покупателю';
