@@ -20,7 +20,7 @@
         {/if}
         <li>Тип оплаты: {$payment.name}</li>
         {if $address.comment}
-            <li>Комментрарий: {$address.comment}</li>
+            <li>Комментарий: {$address.comment}</li>
         {/if}
     </ul>
     <hr>
