@@ -69,5 +69,32 @@
                 <iframe src="https://yandex.ru/map-widget/v1/?um=constructor%3Ad2d55147c88bea7bd8ece5725d31554712700aad3a202ea97da0a73404050c66&amp;source=constructor" width="100%" height="400" frameborder="0"></iframe>
             </div>
         </div>
+        <div class="partners">
+            <div class="partners__title">
+                Адреса партнеров Autentiments, где можно приобрести наш товар:
+            </div>
+            <div class="partners__items">
+                <div class="partner">
+                    Онлайн-магазин Babochka <br>
+                    babochka.ru
+                </div>
+                <div class="partner">
+                    Petrovka 15 concept store <br>
+                    Москва ул. Петровка, 15
+                </div>
+                <div class="partner">
+                    Outfit <br>
+                    Екатеринбург, ул. Радищева, 24
+                </div>
+                <div class="partner">
+                    FrWL store <br>
+                    Казань, ул. Кремлёвская, 2а
+                </div>
+                <div class="partner">
+                    O DA BRANDS <br>
+                    г. Казань ТЦ KazanMall Павлюхина, 91, 2 этаж
+                </div>
+            </div>
+        </div>
     </main>
 {/block}

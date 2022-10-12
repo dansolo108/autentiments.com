@@ -6160,6 +6160,20 @@ h2.about-block__title{
 .photos__pagination{
   display: none;
 }
+.partners{
+  font-family: 'Circe';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 130%;
+}
+.partners__title{
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+.partner{
+  margin-top: 20px;
+}
 @media (max-width: 770px) {
   .showrooms{
     padding: 50px 20px;
