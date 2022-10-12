@@ -17,6 +17,9 @@
     <g:size>{$size}</g:size>
     <g:mpn>{$article}</g:mpn>
     <g:adult>no</g:adult>
+    <g:gender>female</g:gender>
+    <g:age_group>adult</g:age_group>
+    <g:google_product_category>{$parent}</g:google_product_category>
     {foreach 1..(count($thumbs)-1) as $i}
         <g:additional_image_link>{$_modx->getPlaceholder('site_url_pls') ~ $thumbs[$i]['category']}</g:additional_image_link>
     {/foreach}
