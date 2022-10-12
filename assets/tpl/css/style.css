@@ -6163,11 +6163,12 @@ h2.about-block__title{
 .partners{
   font-family: 'Circe';
   font-style: normal;
-  font-weight: 400;
+  font-weight: 350;
   font-size: 18px;
   line-height: 130%;
 }
 .partners__title{
+  font-weight: 400;
   font-size: 24px;
   margin-bottom: 30px;
 }
@@ -6226,5 +6227,8 @@ h2.about-block__title{
   .showroom__map{
     margin: 0 -20px;
     width: calc(100% + 40px);
+  }
+  .partners__title{
+    font-size: 18px;
   }
 }
