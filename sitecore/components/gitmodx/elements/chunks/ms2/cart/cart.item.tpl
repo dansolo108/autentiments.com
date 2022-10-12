@@ -8,8 +8,8 @@
     <input type="hidden" name="price" value="{$real_price = $product_id | resource : 'price'}">
     <div class="au-cart__img-box">
         <picture>
-            <source type="image/webp" srcset="{$cart | replace : ['.jpg', '/cart/'] : ['.webp', '/cart_webp/']}">
-            <img class="au-cart__img" src="{$cart}" width="81" height="109" alt="">
+            <source type="image/webp" srcset="{$thumbs[0]['cart'] | replace : ['.jpg', '/cart/'] : ['.webp', '/cart_webp/']}">
+            <img class="au-cart__img" src="{$thumbs[0]['cart']}" width="81" height="109" alt="">
         </picture>
     </div>
     <div class="au-cart__description">

@@ -43,7 +43,7 @@ $select = [
     'msProduct' => !empty($includeContent)
         ? $modx->getSelectColumns('msProduct', 'msProduct','',['id'],true)
         : $modx->getSelectColumns('msProduct', 'msProduct', '', ['id','content'], true),
-    'Data' => $modx->getSelectColumns('msProductData', 'Data','',['id','price','old_price','color','size'],true),
+    'Data' => $modx->getSelectColumns('msProductData', 'Data','',['id','price','old_price','color','size','image'],true),
     'Remain'=>'SUM(Remain.remains) as remains',
     'Vendor' => 'Vendor.name as vendor',
 ];
@@ -70,9 +70,6 @@ if (!empty($link) && !empty($master)) {
 }
 
 foreach($details as $key=>$detail){
-    if(is_string($key)){
-
-    }
     /** @var DetailType $detailType */
     $detailType =  $modx->getObject('DetailType',['name'=>$detail]);
     if($detailType){
@@ -192,13 +189,13 @@ foreach ($result as $key => &$item){
             'select'=>$select,
             'groupby'=>'msProductFile.name',
             'sortby'=>['rank'=>'ASC'],
-            'limit'=>1,
+            'limit'=>0,
             'return'=>'data'
         ];
         $pdoFetch->setConfig($default,false);
         $thumbs = $pdoFetch->run();
-        if($thumbs[0]){
-            $item = array_merge($thumbs[0],$item);
+        if(count($thumbs)){
+            $item['thumbs'] = $thumbs;
         }
     }
     if(!empty($tpl)) {
