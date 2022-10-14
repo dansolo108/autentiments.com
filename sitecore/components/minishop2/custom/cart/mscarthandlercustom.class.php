@@ -57,7 +57,7 @@ class msCartHandlerCustom extends msCartHandler implements msCartInterface
             $weight = $product->getWeight();
             $count = $response['data']['count'];
             $remains = $modification->getRemains();
-            if($count > $remains){
+            if($remains !== null && $count > $remains){
                 $count = $remains;
             }
             $options = $response['data']['options'];

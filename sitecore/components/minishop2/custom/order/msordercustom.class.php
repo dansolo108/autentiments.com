@@ -76,7 +76,6 @@ class msOrderCustom extends msOrderHandler implements msOrderInterface
         $delivery_cost = $this->getCost(false, true, true);
         $cart_cost = $this->getCost(true, true, true) - $delivery_cost;
         $createdon = date('Y-m-d H:i:s');
-        
         /** @var msDelivery $delivery */
         $delivery = $this->modx->getObject('msDelivery', ['id' => $this->order['delivery']]);
         
@@ -150,12 +149,10 @@ class msOrderCustom extends msOrderHandler implements msOrderInterface
             $products[] = $product;
         }
         $order->addMany($products);
-        $this->modx->log(1,'test');
         $response = $this->ms2->invokeEvent('msOnBeforeCreateOrder', array(
             'msOrder' => $order,
             'order' => $this,
         ));
-        $this->modx->log(1,'test2');
         if (!$response['success']) {
             return $this->error($response['message']);
         }
@@ -189,6 +186,9 @@ class msOrderCustom extends msOrderHandler implements msOrderInterface
                 array('id' => $order->get('payment'), 'active' => 1))
             ) {
                 $response = $payment->send($order);
+                if ($this->config['return_response']){
+                    return is_array($response) ? json_encode($response) : $response;
+                }
                 if ($this->config['json_response']) {
                     @session_write_close();
                     exit(is_array($response) ? json_encode($response) : $response);
@@ -277,11 +277,11 @@ class msOrderCustom extends msOrderHandler implements msOrderInterface
                 array('id' => $this->order['delivery']))
         ) {
             $deliveryOutput = $delivery->getCost($this, $cost);
-            if ($deliveryOutput[1] == 0 && $deliveryOutput[2] == 0) {
+            if (is_array($deliveryOutput) && $deliveryOutput[1] == 0 && $deliveryOutput[2] == 0) {
                 return $this->error('Доставка не рассчитана');
             }
             $delivery_cost = $deliveryOutput[0] - $cost;
-            if($cost > 30000){
+            if($cost > 20000){
                 $delivery_cost = 0;
             }
             $free_delivery = false;
@@ -293,7 +293,6 @@ class msOrderCustom extends msOrderHandler implements msOrderInterface
             }
             $cost = max($cost, 0);
         }
-        
         /** @var msPayment $payment */
         if (!empty($this->order['payment']) && $payment = $this->modx->getObject('msPayment',
                 array('id' => $this->order['payment']))
