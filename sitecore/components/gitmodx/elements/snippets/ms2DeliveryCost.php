@@ -61,8 +61,8 @@ foreach ($col as $delivery) {
     $error = false;
     if ($_GET['deliveryGetCost'] == 'get') {
         $costDelivery = $delivery->getCost($order, $cost);
+        $rates = '';
         if (is_array($costDelivery)) {
-            $rates = '';
             if ($costDelivery[1] && $costDelivery[2]) {
                 $rates = $modx->runSnippet('getRates', [
                     'periodMin' => $costDelivery[1],
@@ -80,10 +80,12 @@ foreach ($col as $delivery) {
                 $error = true;
             $costDelivery = $costDelivery[0] - $cost;
         }
+        else{
+            $costDelivery = $costDelivery - $cost;
+        }
     } else {
         $costDelivery = $rates = false;
     }
-    
     $out['costs'][] = [
         'cost' => $costDelivery,
         'rates' => $rates,
