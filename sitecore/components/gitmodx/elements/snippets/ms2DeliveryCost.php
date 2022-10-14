@@ -40,7 +40,8 @@ $modx->regClientHTMLBlock('
 
 $q = $modx->newQuery('msDelivery');
 $q->where([
-    'active' => 1,    
+    'active' => 1,
+    'id:!=' => 8,
 ]);
 $q->sortby('rank', 'ASC');
 $col = $modx->getCollection('msDelivery', $q);
