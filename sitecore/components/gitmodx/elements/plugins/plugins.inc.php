@@ -28,7 +28,8 @@ return array(
         'loginAndRegister'
     ],
     'msOnCreateOrder'=>[
-        'loginAndRegister'
+        'loginAndRegister',
+        'ModificationsRemains'
     ],
     'msOnBeforeGetOrderCustomer'=>[
         'loginAndRegister'
