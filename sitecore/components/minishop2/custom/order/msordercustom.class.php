@@ -143,6 +143,7 @@ class msOrderCustom extends msOrderHandler implements msOrderInterface
             $product = $this->modx->newObject('msOrderProduct');
             $product->fromArray(array_merge($v, array(
                 'product_id' => $v['product_id'],
+                'modification_id' => $v['id'],
                 'name' => $name,
                 'cost' => $v['price'] * $v['count'],
             )));

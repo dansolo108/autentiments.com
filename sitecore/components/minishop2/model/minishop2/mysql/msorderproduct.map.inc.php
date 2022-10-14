@@ -11,6 +11,7 @@ $xpdo_meta_map['msOrderProduct']= array (
   'fields' => 
   array (
     'product_id' => NULL,
+    'modification_id' => NULL,
     'order_id' => NULL,
     'name' => NULL,
     'count' => 1,
@@ -28,6 +29,15 @@ $xpdo_meta_map['msOrderProduct']= array (
       'phptype' => 'integer',
       'attributes' => 'unsigned',
       'null' => false,
+    ),
+      'modification_id' =>
+    array (
+      'dbtype' => 'int',
+      'precision' => '10',
+      'phptype' => 'integer',
+      'attributes' => 'unsigned',
+      'null' => true,
+        'default'=>null,
     ),
     'order_id' => 
     array (
