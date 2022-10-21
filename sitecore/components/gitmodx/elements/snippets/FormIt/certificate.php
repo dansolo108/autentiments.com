@@ -1,4 +1,5 @@
 <?php
+/** @var AjaxForm $AjaxForm */
 $require = ['name'=>'вы не заполнили имя','email'=>'вы не заполнили почту','phone'=>'вы не заполнили телефон','surname'=>'вы не заполнили фамилию','certificate'=>'вы не выбрали сертификат'];
 foreach ($require as $key => $message) {
     if (empty($_POST[$key])) {
@@ -22,9 +23,7 @@ $ms2->cart->add($_POST['certificate']);
 $ms2->order->set($_POST);
 $ms2->order->add('delivery',8);
 $ms2->order->add('payment',5);
-$modx->log(1,var_export($ms2->order->config,1));
 $response = $ms2->handleRequest('order/submit');
-$modx->log(1,var_export($response,1));
 $_SESSION['minishop2']['order'] = $oldOrder;
 $_SESSION['minishop2']['cart'] = $oldCart;
 

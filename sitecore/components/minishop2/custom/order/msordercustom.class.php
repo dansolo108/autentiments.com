@@ -236,17 +236,15 @@ class msOrderCustom extends msOrderHandler implements msOrderInterface
      */
      
     /* Параметр $backend - кастомный. Используется для исключения предварительного расчета всех способов доставок */
-    public function getCost($with_cart = true, $only_cost = false, $backend = false)
-    {
+    public function getCost($with_cart = true, $only_cost = false, $backend = false){
         $response = $this->ms2->invokeEvent('msOnBeforeGetOrderCost', array(
             'order' => $this,
             'cart' => $this->ms2->cart,
             'with_cart' => $with_cart,
             'only_cost' => $only_cost,
         ));
-        if (!$response['success']) {
+        if (!$response['success'])
             return $this->error($response['message']);
-        }
         
         $lang = $this->modx->getOption('cultureKey');
         $percent = $this->modx->getOption('stik_maxma_cart_percent');
@@ -257,47 +255,39 @@ class msOrderCustom extends msOrderHandler implements msOrderInterface
         $userCurrencyId = $msmc->getUserCurrency();
 
         $cart = $this->ms2->cart->status();
-        $msloyalty = $this->order['msloyalty'] ?  $this->order['msloyalty']: 0;
+        $msloyalty = $this->order['msloyalty'] ?: 0;
         
-        if (!empty($with_cart) && !empty($cart)) {
-            if (!empty($msloyalty)) {
-                $currency = (float)$this->modx->getPlaceholder('msmc.val');
-                $cost_loyalty = $cart['total_cost'] - ($msloyalty * $currency);
-                $cost_loyalty = $cost_loyalty ?: 0;
-            }
+        if (!empty($msloyalty)) {
+            $currency = (float)$this->modx->getPlaceholder('msmc.val');
+            $cost_loyalty = $cart['total_cost'] - ($msloyalty * $currency);
+            $cost_loyalty = $cost_loyalty ?: 0;
         }
-		$cost = $with_cart
-			? ($msloyalty > 0
-				? $cost_loyalty
-				: $cart['total_cost'])
-			: 0;
+		$cost = $msloyalty > 0 ? $cost_loyalty : $cart['total_cost'];
         $loyaltyAccrual = $stikLoyalty->getLoyaltyBonusAccrual($cart['total_cost']);
 
         /** @var msDelivery $delivery */
-        if (!empty($this->order['delivery']) && $delivery = $this->modx->getObject('msDelivery',
-                array('id' => $this->order['delivery']))
-        ) {
+        if (!empty($this->order['delivery']) && $delivery = $this->modx->getObject('msDelivery', ['id' => $this->order['delivery']])) {
             $deliveryOutput = $delivery->getCost($this, $cost);
-            if (is_array($deliveryOutput) && $deliveryOutput[1] == 0 && $deliveryOutput[2] == 0) {
+            if (is_array($deliveryOutput) && $deliveryOutput[1] == 0 && $deliveryOutput[2] == 0)
                 return $this->error('Доставка не рассчитана');
-            }
-            $delivery_cost = $deliveryOutput[0] - $cost;
-            if($cost > 20000){
+
+            if(is_array($deliveryOutput))
+                $costWithDelivery = $deliveryOutput[0];
+            else
+                $costWithDelivery = $deliveryOutput;
+
+            $delivery_cost = $costWithDelivery - $cost;
+            if($cost > 20000)
                 $delivery_cost = 0;
-            }
+
             $free_delivery = false;
-            if($delivery_cost == 0){
+            if($delivery_cost === 0)
                 $free_delivery = true;
-            }
-            if (is_array($deliveryOutput)) {
-                $cost = $deliveryOutput[0];
-            }
-            $cost = max($cost, 0);
+
+            $cost = $costWithDelivery;
         }
         /** @var msPayment $payment */
-        if (!empty($this->order['payment']) && $payment = $this->modx->getObject('msPayment',
-                array('id' => $this->order['payment']))
-        ) {
+        if (!empty($this->order['payment']) && $payment = $this->modx->getObject('msPayment', ['id' => $this->order['payment']])) {
             $cost = $payment->getCost($this, $cost);
         }
         // скидка авторизованным пользователям на первый заказ
@@ -343,6 +333,8 @@ class msOrderCustom extends msOrderHandler implements msOrderInterface
         if ($userCurrencyId != 1 && $backend === false) {
             $cost = $msmc->getPrice($cost, 0, 0, 0.0, false);
         }
+        if(!$with_cart)
+            $cost -= $cart['total_cost'];
         return $only_cost
             ? $cost
             : $this->success('', array(

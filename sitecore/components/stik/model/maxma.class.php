@@ -241,7 +241,6 @@ class maxma {
         }
     }
     public function setPromocode($promocode){
-
         $this->calculatePurchase($promocode);
     }
     public function canUsePromocode($promocode){
@@ -368,6 +367,19 @@ class maxma {
 
         if (isset($data['errorCode'])) {
             $this->modx->log(1, 'Maxma returnOrder error: ' . print_r($data, 1));
+            return false;
+        } else {
+            return $data;
+        }
+    }
+    public function createGiftCard(string $code){
+        $params = [
+            'code' => $code,
+        ];
+        $response = $this->modRestClient->post('generate-gift-card', $params);
+        $data = $response->process();
+        if (isset($data['errorCode'])) {
+            $this->modx->log(1, 'Maxma createGiftCard error: ' . print_r($data, 1));
             return false;
         } else {
             return $data;

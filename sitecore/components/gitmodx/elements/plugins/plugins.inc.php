@@ -34,4 +34,7 @@ return array(
     'msOnBeforeGetOrderCustomer'=>[
         'loginAndRegister'
     ],
+    'msOnChangeOrderStatus'=>[
+        'certificate'
+    ]
 );

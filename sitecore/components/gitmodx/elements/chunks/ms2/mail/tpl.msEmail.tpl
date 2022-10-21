@@ -122,11 +122,6 @@
                                         </tr>
                                         </tfoot>
                                     </table>
-                                    {if $coupon?}
-                                        <h3 style="{$style.h}{$style.h3}">
-                                            {'stik_order_info_promocode_discount' | lexicon} ({$coupon['code']}): -{$coupon['discount_amount']}
-                                        </h3>
-                                    {/if}
                                     {if $order.properties.msloyalty?}
                                         {set $msloyalty = '!msMultiCurrencyPriceFloor' | snippet : [
                                         'price' => $msloyalty,
