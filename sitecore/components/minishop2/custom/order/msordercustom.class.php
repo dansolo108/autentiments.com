@@ -246,7 +246,6 @@ class msOrderCustom extends msOrderHandler implements msOrderInterface
         if (!$response['success'])
             return $this->error($response['message']);
         
-        $lang = $this->modx->getOption('cultureKey');
         $percent = $this->modx->getOption('stik_maxma_cart_percent');
         
         $stikLoyalty = $this->modx->getService('stik_loyalty', 'stikLoyalty', $this->modx->getOption('core_path').'components/stik/model/', []);
@@ -256,13 +255,13 @@ class msOrderCustom extends msOrderHandler implements msOrderInterface
 
         $cart = $this->ms2->cart->status();
         $msloyalty = $this->order['msloyalty'] ?: 0;
-        
+
+        $discount_loyalty = 0;
         if (!empty($msloyalty)) {
             $currency = (float)$this->modx->getPlaceholder('msmc.val');
-            $cost_loyalty = $cart['total_cost'] - ($msloyalty * $currency);
-            $cost_loyalty = $cost_loyalty ?: 0;
+            $discount_loyalty =  max($msloyalty * $currency ,$discount_loyalty);
         }
-		$cost = $msloyalty > 0 ? $cost_loyalty : $cart['total_cost'];
+        $cost = $cart['total_cost'] - $discount_loyalty;
         $loyaltyAccrual = $stikLoyalty->getLoyaltyBonusAccrual($cart['total_cost']);
 
         /** @var msDelivery $delivery */
@@ -283,15 +282,15 @@ class msOrderCustom extends msOrderHandler implements msOrderInterface
             $free_delivery = false;
             if($delivery_cost === 0)
                 $free_delivery = true;
-
             $cost = $costWithDelivery;
         }
         /** @var msPayment $payment */
         if (!empty($this->order['payment']) && $payment = $this->modx->getObject('msPayment', ['id' => $this->order['payment']])) {
-            $cost = $payment->getCost($this, $cost);
+            $payment_cost = $cost - $payment->getCost($this, $cost);
+            $cost += $payment_cost;
         }
         // скидка авторизованным пользователям на первый заказ
-        
+
         if ($stikLoyalty->userHasFirstOrderDiscount() === true) {
             $noDisc = true;
             $cart = $this->ms2->cart->get();
@@ -312,7 +311,7 @@ class msOrderCustom extends msOrderHandler implements msOrderInterface
         if (!$response['success']) {
             return $this->error($response['message']);
         }
-        
+
         $cost = $response['data']['cost'];
         
         if ($maxma->userphone) { // проверяем участвует ли пользователь в программе лояльности
@@ -334,7 +333,7 @@ class msOrderCustom extends msOrderHandler implements msOrderInterface
             $cost = $msmc->getPrice($cost, 0, 0, 0.0, false);
         }
         if(!$with_cart)
-            $cost -= $cart['total_cost'];
+            $cost -= $cart['total_cost'] - $discount_loyalty;
         return $only_cost
             ? $cost
             : $this->success('', array(
@@ -344,7 +343,7 @@ class msOrderCustom extends msOrderHandler implements msOrderInterface
 				'msloyalty' => $msloyalty,
 				'msloyalty_text' => $msloyalty_text,
 				'msloyalty_allowable_amount' => $this->modx->runSnippet('msMultiCurrencyPriceFloor', ['price' => $msloyalty_allowable_amount]),
-				'cost_loyalty' => $msmc->getPrice($cost_loyalty, 0, 0, 0.0, false),
+				'cost_loyalty' => $msmc->getPrice($with_cart?$cost - $discount_loyalty:$cost, 0, 0, 0.0, false),
 				'loyalty_accrual' => $msmc->getPrice($loyaltyAccrual, 0, 0, 0.0, false),
             ));
     }
