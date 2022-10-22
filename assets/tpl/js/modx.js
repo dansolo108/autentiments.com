@@ -185,7 +185,13 @@ $(document).ready(function() {
             
             if (typeof(response.data.msloyalty) != "undefined" && response.data.msloyalty !== null) {
                 miniShop2.Order.getcost();
-                
+            }
+            
+            chooseVisibleDelivery();
+        });
+
+        miniShop2.Callbacks.add('Order.getcost.response.success', 'stik', function(response) {
+            if (typeof(response.data.msloyalty) != "undefined" && response.data.msloyalty !== null) {
                 if (response.data.msloyalty > 0) {
                     $('.au-bonuses__form').addClass('used-bonuses');
                     $('.au-promo-code__form').addClass('disabled-code');
@@ -196,10 +202,8 @@ $(document).ready(function() {
                     $('.mspc_field').prop('disabled', false);
                 }
             }
-            
-            chooseVisibleDelivery();
         });
-        
+
         miniShop2.Callbacks.add('Order.getcost.before', 'stik', function(response) {
             // Перед расчетом стоимости, делаем блок с ценами, доставками, способами оплаты неактивным и показываем прелоадер
             showLoading();
