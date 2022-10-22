@@ -78,13 +78,15 @@ class msDeliveryHandlerStikCdek extends msDeliveryHandler implements msDeliveryI
         
         /** @var \CdekSDK\Responses\CalculationResponse $response */
         $delivery_cost = round($response->getPrice());
+
+        // бесплатная доставка по РФ в зависимости от настройки
+        if ($cost < 20000 || !in_array(mb_strtolower($receiverCountry), ['россия','russian federation'])) {
+            $cost += $delivery_cost;
+        }
+
         $min = $response->getDeliveryPeriodMin();
         $max = $response->getDeliveryPeriodMax();
-        // бесплатная доставка по РФ в зависимости от настройки
-        if ($cost > 20000 && in_array(mb_strtolower($order->order['country']), ['россия','russian federation'])) {
-            return [$cost, $min, $max];
-        }
-        $cost += $delivery_cost;
+
         return [$cost, $min, $max];
     }
 }
