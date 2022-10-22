@@ -189,19 +189,6 @@ $(document).ready(function() {
             
             chooseVisibleDelivery();
         });
-
-        miniShop2.Callbacks.add('Order.getcost.response.success', 'stik', function(response) {
-            if (typeof(response.data.msloyalty) != "undefined" && response.data.msloyalty !== null && response.data.msloyalty > 0) {
-                $('.au-bonuses__form').addClass('used-bonuses');
-                $('.au-promo-code__form').addClass('disabled-code');
-                $('.mspc_field').prop('disabled', true);
-            }else {
-                $('.au-bonuses__form').removeClass('used-bonuses');
-                $('.au-promo-code__form').removeClass('disabled-code');
-                $('.mspc_field').prop('disabled', false);
-            }
-        });
-
         miniShop2.Callbacks.add('Order.getcost.before', 'stik', function(response) {
             // Перед расчетом стоимости, делаем блок с ценами, доставками, способами оплаты неактивным и показываем прелоадер
             showLoading();
@@ -249,7 +236,7 @@ $(document).ready(function() {
             }
             
             // бонусы
-            if(response.data.msloyalty > 0) {
+            if(typeof(response.data.msloyalty) != "undefined" && response.data.msloyalty !== null && response.data.msloyalty > 0) {
                 $('.loyalty_discount_amount').show();
                 $('.loyalty_discount_amount span').text(miniShop2.Utils.formatPrice(response.data.msloyalty));
                 $('.msloyalty_writeoff_amount').text(miniShop2.Utils.formatPrice(response.data.msloyalty));
@@ -263,7 +250,15 @@ $(document).ready(function() {
                 $('.msloyalty_accrual').text(miniShop2.Utils.formatPrice(response.data.loyalty_accrual));
                 $('.msloyalty_accrual_declension').text(declension(response.data.loyalty_accrual, stik_declension_bonuses_js));
             }
-            
+            if (typeof(response.data.msloyalty) != "undefined" && response.data.msloyalty !== null && response.data.msloyalty > 0) {
+                $('.au-bonuses__form').addClass('used-bonuses');
+                $('.au-promo-code__form').addClass('disabled-code');
+                $('.mspc_field').prop('disabled', true);
+            }else {
+                $('.au-bonuses__form').removeClass('used-bonuses');
+                $('.au-promo-code__form').removeClass('disabled-code');
+                $('.mspc_field').prop('disabled', false);
+            }
             chooseVisibleDelivery();
             setOrderRates();
             setOrderDiscount();
