@@ -352,6 +352,8 @@ class msOrderCustom extends msOrderHandler implements msOrderInterface
     {
         switch ($key){
             case "msloyalty":
+                if(empty($value))
+                    break;
                 $cart = $this->ms2->cart->status();
                 if($cart['total_discount'] > 0) {
                     unset($this->order['msloyalty']);
