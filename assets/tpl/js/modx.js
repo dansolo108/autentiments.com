@@ -191,16 +191,14 @@ $(document).ready(function() {
         });
 
         miniShop2.Callbacks.add('Order.getcost.response.success', 'stik', function(response) {
-            if (typeof(response.data.msloyalty) != "undefined" && response.data.msloyalty !== null) {
-                if (response.data.msloyalty > 0) {
-                    $('.au-bonuses__form').addClass('used-bonuses');
-                    $('.au-promo-code__form').addClass('disabled-code');
-                    $('.mspc_field').prop('disabled', true);
-                } else {
-                    $('.au-bonuses__form').removeClass('used-bonuses');
-                    $('.au-promo-code__form').removeClass('disabled-code');
-                    $('.mspc_field').prop('disabled', false);
-                }
+            if (typeof(response.data.msloyalty) != "undefined" && response.data.msloyalty !== null && response.data.msloyalty > 0) {
+                $('.au-bonuses__form').addClass('used-bonuses');
+                $('.au-promo-code__form').addClass('disabled-code');
+                $('.mspc_field').prop('disabled', true);
+            }else {
+                $('.au-bonuses__form').removeClass('used-bonuses');
+                $('.au-promo-code__form').removeClass('disabled-code');
+                $('.mspc_field').prop('disabled', false);
             }
         });
 
