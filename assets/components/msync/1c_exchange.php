@@ -40,6 +40,7 @@ if (!isset($_SERVER['PHP_AUTH_USER']) && !isset($_SERVER['PHP_AUTH_PW'])) {
 $user = $_SERVER['PHP_AUTH_USER'];
 $password = $_SERVER['PHP_AUTH_PW'];
 
+$modx->log(1,var_export($_SERVER,1));
 
 $syncuser = $modx->getOption('msync_1c_sync_login');
 $syncpass = $modx->getOption('msync_1c_sync_pass');
