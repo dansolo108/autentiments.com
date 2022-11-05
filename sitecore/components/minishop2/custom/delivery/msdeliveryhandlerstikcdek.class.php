@@ -75,18 +75,54 @@ class msDeliveryHandlerStikCdek extends msDeliveryHandler implements msDeliveryI
             }
             return [$cost, 0, 0];
         }
-        
-        /** @var \CdekSDK\Responses\CalculationResponse $response */
-        $delivery_cost = round($response->getPrice());
-
-        // бесплатная доставка по РФ в зависимости от настройки
-        if ($cost < 20000 || !in_array(mb_strtolower($receiverCountry), ['россия','russian federation'])) {
-            $cost += $delivery_cost;
-        }
-
         $min = $response->getDeliveryPeriodMin();
         $max = $response->getDeliveryPeriodMax();
-
+        $delivery_cost = 0;
+        // бесплатная доставка по РФ в зависимости от настройки
+        if (!($cost > 20000 && in_array(mb_strtolower($receiverCountry), ['россия','russian federation']))) {
+            /* @var modRest $modRestClient */
+            $modRestClient = $this->modx->getService('rest', 'rest.modRest');
+            $modRestClient->setOption('baseUrl', 'api.delivery.yandex.ru');
+            $modRestClient->setOption('format', 'json');
+            $modRestClient->setOption('suppressSuffix', true);
+            $modRestClient->setOption('headers', [
+                'Accept' => 'application/json',
+                'Content-type' => 'application/json',
+                'Authorization' => 'OAuth y0_AgAAAAAw6kw-AAiOCQAAAADTGrE5FwNJXaCJTbuweF6C-qQreOjVzUg'
+            ]);
+            $response = $modRestClient->get('location', ['term' => $orderData['city']]);
+            $response = $response->process();
+            $addresses = [];
+            //normalize addresses
+            foreach($response[0]['addressComponents'] as $item){
+                $addresses[$item['kind']][] = $item['name'];
+            }
+            $prices = [
+                'LOCALITY'=>[
+                    'Москва' => 500,
+                    'Санкт-Петербург' => 500,
+                ],
+                'PROVINCE'=>[
+                    'Московская область'=>690,
+                    'Ленинградская область'=>690,
+                    'Санкт-Петербург'=>690,
+                ],
+            ];
+            foreach ($prices as $keyKind => $itemKind){
+                if($addresses[$keyKind]){
+                    foreach($addresses[$keyKind] as $name){
+                        if($itemKind[$name]){
+                            $delivery_cost = $itemKind[$name];
+                            break(2);
+                        }
+                    }
+                }
+            }
+            if($delivery_cost == 0){
+                $delivery_cost = 790;
+            }
+        }
+        $cost += $delivery_cost;
         return [$cost, $min, $max];
     }
 }

@@ -97,11 +97,16 @@
                                                     {if $product.options?}
                                                         <div class="small">
                                                             {if $product.options.size}
-                                                                {'stik_basket_size' | lexicon}: {$product.options.size};<br>
+                                                                {'stik_basket_size' | lexicon}: {$product.options.size};
                                                             {/if}
                                                             {if $product.options.color}
+                                                                <br>
                                                                 {set $colorId = 'msoGetColor' | snippet : ['input' => $product.options.color, 'return_id' => true]}
                                                                 {'stik_basket_color' | lexicon}: {('stik_color_'~$colorId) | lexicon};
+                                                            {/if}
+                                                            {if $product.options.code}
+                                                                <br>
+                                                                Код подарочного сертификата: {$product.options.code}
                                                             {/if}
                                                         </div>
                                                     {/if}

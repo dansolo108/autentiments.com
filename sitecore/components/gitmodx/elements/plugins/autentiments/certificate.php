@@ -26,9 +26,12 @@ switch ($modx->event->name) {
                     $phone = $sms->clearPhone($phone);
                     $text = "Поздравляем с приобретением  подарочного сертификата на сумму {$giftCard['initAmount']} RUB. \nКод сертификата: {$giftCard['code']}";
                     $sms->sendSms(urlencode($text), $phone);
-//                    /** @var modUser $user */
-//                    $user = $order->getOne('User');
-//                    $user->sendEmail();
+                    $options = $product->get('options');
+                    if(empty($options)){
+                        $options = [];
+                    }
+                    $options['code'] = $giftCard['code'];
+                    $product->set('options',$options);
                 }
             }
         }

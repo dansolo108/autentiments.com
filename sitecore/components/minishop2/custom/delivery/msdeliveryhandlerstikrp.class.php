@@ -61,11 +61,52 @@ class msDeliveryHandlerStikRp extends msDeliveryHandler implements msDeliveryInt
         $data =  $response->process();
 
         if (isset($data['total-rate'])) {
-            $delivery_cost = round(number_format($data['total-rate'] / 100, 0, '.', '')); // переводим копейки в рубли и округляем
-            $this->modx->log(1,var_export($order->get(),1));
-            if($cost < 20000 || !in_array(mb_strtolower($orderData['country']), ['россия','russian federation'])){
-                $cost += $delivery_cost * 2;
+            $delivery_cost = 0;
+            // бесплатная доставка по РФ в зависимости от цены
+            if (!($cost > 20000 && in_array(mb_strtolower($orderData['country']), ['россия','russian federation']))) {
+                /* @var modRest $modRestClient */
+                $modRestClient = $this->modx->getService('rest', 'rest.modRest');
+                $modRestClient->setOption('baseUrl', 'api.delivery.yandex.ru');
+                $modRestClient->setOption('format', 'json');
+                $modRestClient->setOption('suppressSuffix', true);
+                $modRestClient->setOption('headers', [
+                    'Accept' => 'application/json',
+                    'Content-type' => 'application/json',
+                    'Authorization' => 'OAuth y0_AgAAAAAw6kw-AAiOCQAAAADTGrE5FwNJXaCJTbuweF6C-qQreOjVzUg'
+                ]);
+                $response = $modRestClient->get('location', ['term' => $orderData['city']]);
+                $response = $response->process();
+                $addresses = [];
+                //normalize addresses
+                foreach($response[0]['addressComponents'] as $item){
+                    $addresses[$item['kind']][] = $item['name'];
+                }
+                $prices = [
+                    'LOCALITY'=>[
+                        'Москва' => 500,
+                        'Санкт-Петербург' => 500,
+                    ],
+                    'PROVINCE'=>[
+                        'Московская область'=>690,
+                        'Ленинградская область'=>690,
+                        'Санкт-Петербург'=>690,
+                    ],
+                ];
+                foreach ($prices as $keyKind => $itemKind){
+                    if($addresses[$keyKind]){
+                        foreach($addresses[$keyKind] as $name){
+                            if($itemKind[$name]){
+                                $delivery_cost = $itemKind[$name];
+                                break(2);
+                            }
+                        }
+                    }
+                }
+                if($delivery_cost == 0){
+                    $delivery_cost = 790;
+                }
             }
+            $cost += $delivery_cost;
             // увеличиваем стоимость доставки вдвое.
             $min = $max = 0;
             if (isset($data['delivery-time'])) {
