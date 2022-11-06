@@ -148,7 +148,7 @@
 {if $_modx->isAuthenticated('web') && !$_modx->user['email']}
     <div class="au-modal au-modal-mailSubs modal " style="max-width:510px">
         <div class="au-info-size__wrapper">
-            <button class="au-close au-modal-size__close" onclick="localStorage.discountClose = true;" aria-label="Закрыть"></button>
+            <button class="au-close au-modal-size__close" onclick="sessionStorage.mailSubs = 1;" aria-label="Закрыть"></button>
             <div class="au-modal__content  au-info-size__content">
                 <h3 class="au-info-discount__title">Секретное предложение!</h3>
                 <h2 class="au-info-discount__sub-title">Подпишитесь на рассылку акций и новостей, и мы отправим вам полезный подарок на почту!</h2>
@@ -165,7 +165,7 @@
                         </div>
                         <button class="au-btn" type="submit" disabled style="margin: 0 auto;">Получить подарок</button>
                     </form>
-                    <button style="color:#999;margin-top:20px" onClick="closeForModal();localStorage.mailSubs = 1;">Продолжить без подарка</button>
+                    <button style="color:#999;margin-top:20px" onClick="closeForModal();sessionStorage.mailSubs = 1;">Продолжить без подарка</button>
                 </div>
 
             </div>
@@ -181,6 +181,7 @@
             $('.au-modal-mailSubs').addClass('active');
         }
     },1000);
+
     let form = document.querySelector('.mailSubs__form');
     let input = form.querySelector('#emailSubs');
     input.addEventListener('input',e=>{
@@ -189,6 +190,7 @@
     form.addEventListener('submit',e=>{
         $.post("/assets/components/autentiments/changeEmail.php", { email:input.value });
     })
+
 </script>
 {/ignore}
 {/if}
