@@ -77,53 +77,33 @@ class msDeliveryHandlerStikCdek extends msDeliveryHandler implements msDeliveryI
         }
         $min = $response->getDeliveryPeriodMin();
         $max = $response->getDeliveryPeriodMax();
-        $delivery_cost = 0;
         // бесплатная доставка по РФ в зависимости от настройки
-        if (!($cost > 20000 && in_array(mb_strtolower($receiverCountry), ['россия','russian federation']))) {
-            /* @var modRest $modRestClient */
+        if(in_array(mb_strtolower($receiverCountry), ['россия','russian federation'])){
+            if ($cost > 20000)
+                return [$cost,$min,$max];
+
+            if($orderData['city'] === "Москва" || $orderData['city'] === "Санкт-Петербург")
+                return [$cost + 500,$min,$max];
+
             $modRestClient = $this->modx->getService('rest', 'rest.modRest');
-            $modRestClient->setOption('baseUrl', 'api.delivery.yandex.ru');
+            $modRestClient->setOption('baseUrl', 'cleaner.dadata.ru');
             $modRestClient->setOption('format', 'json');
             $modRestClient->setOption('suppressSuffix', true);
             $modRestClient->setOption('headers', [
                 'Accept' => 'application/json',
                 'Content-type' => 'application/json',
-                'Authorization' => 'OAuth y0_AgAAAAAw6kw-AAiOCQAAAADTGrE5FwNJXaCJTbuweF6C-qQreOjVzUg'
+                'Authorization' => 'Token da659a5364a0d433b8a5e2641e6d7f70390f8606',
+                'X-Secret' => 'ef7a0c4e1090899ef09aebfb00d01303b48b3684',
             ]);
-            $response = $modRestClient->get('location', ['term' => $orderData['city']]);
-            $response = $response->process();
-            $addresses = [];
-            //normalize addresses
-            foreach($response[0]['addressComponents'] as $item){
-                $addresses[$item['kind']][] = $item['name'];
-            }
-            $prices = [
-                'LOCALITY'=>[
-                    'Москва' => 500,
-                    'Санкт-Петербург' => 500,
-                ],
-                'PROVINCE'=>[
-                    'Московская область'=>690,
-                    'Ленинградская область'=>690,
-                    'Санкт-Петербург'=>690,
-                ],
-            ];
-            foreach ($prices as $keyKind => $itemKind){
-                if($addresses[$keyKind]){
-                    foreach($addresses[$keyKind] as $name){
-                        if($itemKind[$name]){
-                            $delivery_cost = $itemKind[$name];
-                            break(2);
-                        }
-                    }
-                }
-            }
-            if($delivery_cost == 0){
-                $delivery_cost = 790;
-            }
+            $response = $modRestClient->post('api/v1/clean/address', [ $orderData['city'] ]);
+            $response = $response->process()[0];
+            $this->modx->log(1,var_export($response,1));
+            if($response['region'] === 'Московская' || $response['region'] === 'Ленинградская')
+                return [$cost + 690,$min,$max];
+
+            return [$cost + 790, $min, $max];
         }
-        $cost += $delivery_cost;
-        return [$cost, $min, $max];
+        return [$cost + $response->getPrice(), $min, $max];
     }
 }
 ?>

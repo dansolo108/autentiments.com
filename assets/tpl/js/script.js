@@ -359,7 +359,7 @@ function openModalАdditionally(overlay) {
     $('body').addClass('no-scroll');
     $('body').css("padding-right", `${widthScroll()}px`);
     $('.au-header').css("padding-right", `${paddingRightHeader + widthScroll()}px`);
-    $('.loyality-discount').css("padding-right", `${ parseInt($('.loyality-discount').css("padding-right")) + widthScroll()}px`);
+    $('.top-banner__wrapper').css("padding-right", `${ parseInt($('.top-banner__wrapper').css("padding-right")) + widthScroll()}px`);
     if (overlay) {
         $('.au-modal-overlay').addClass('active');
     }
@@ -371,7 +371,7 @@ function closeForModal() {
     $('body').removeClass('no-scroll');
     $('body').css("padding-right", "");
     $('.au-header').css("padding-right", "");
-    $('.loyality-discount').css("padding-right", "");
+    $('.top-banner__wrapper').css("padding-right", "");
     $('.au-modal-overlay').removeClass('active');
     $('.modal').removeClass('active');
     $('.au-header').removeClass('z-index');
@@ -1162,3 +1162,28 @@ $(document).on('smsCodeCheck',(e,response,form,values)=>{
         setEvent("maxma-registration");
     }
 });
+let bannerItemsParent = document.querySelector('.top-banner__items');
+let bannerItems = bannerItemsParent.querySelectorAll('.top-banner-item');
+let active = bannerItemsParent.querySelector('.top-banner-item.active');
+if(!active)
+    bannerItems[0].classList.add('active');
+setInterval(()=>{
+    if(bannerItems.length < 2)
+        return;
+    let active = bannerItemsParent.querySelector('.top-banner-item.active');
+    if(!active) {
+        bannerItems[0].classList.add('active');
+        active = bannerItems[0];
+    }
+    let newActive = active.nextElementSibling;
+    if(!newActive)
+        newActive = bannerItems[0];
+    let next = newActive.nextElementSibling;
+    if(!next)
+        next = bannerItems[0];
+    active.classList.remove('active');
+    active.classList.remove('next');
+    newActive.classList.add('active');
+    newActive.classList.remove('next');
+    next.classList.add('next');
+},5000);
