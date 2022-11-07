@@ -212,7 +212,6 @@
 <!-- End Google Tag Manager (noscript) -->
 <div class="au-modal-overlay"></div>
 {block 'loyality-discount'}
-
         <div class="top-banner__wrapper" >
             <div class="top-banner__items">
                 {if !$_modx->isAuthenticated('web')}
@@ -223,7 +222,7 @@
         </div>
 {/block}
 
-<div class="au-header__wrapper" {($_modx->isAuthenticated('web'))?'style="top:0;"' :''}>
+<div class="au-header__wrapper">
     {block 'header'}
         <header class="au-header container">
             <div class="au-header__head">
