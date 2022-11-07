@@ -212,16 +212,15 @@
 <!-- End Google Tag Manager (noscript) -->
 <div class="au-modal-overlay"></div>
 {block 'loyality-discount'}
-    {if !$_modx->isAuthenticated('web')}
+
         <div class="top-banner__wrapper" >
             <div class="top-banner__items">
-                <div class="top-banner-item" onClick="openModalАdditionally($('.au-modal-overlay'));$('.au-modal-sale').addClass('active');">ДАРИМ СКИДКУ 10% НА ПЕРВУЮ ПОКУПКУ | ПОДРОБНЕЕ</div>
+                {if !$_modx->isAuthenticated('web')}
+                    <div class="top-banner-item" onClick="openModalАdditionally($('.au-modal-overlay'));$('.au-modal-sale').addClass('active');">ДАРИМ СКИДКУ 10% НА ПЕРВУЮ ПОКУПКУ | ПОДРОБНЕЕ</div>
+                {/if}
                 <div class="top-banner-item">Бесплатная доставка по России при заказе от 20 000₽</div>
             </div>
-
         </div>
-    {/if}
-
 {/block}
 
 <div class="au-header__wrapper" {($_modx->isAuthenticated('web'))?'style="top:0;"' :''}>
