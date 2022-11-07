@@ -214,9 +214,9 @@
 {block 'loyality-discount'}
         <div class="top-banner__wrapper" >
             <div class="top-banner__items">
-                {if !$_modx->isAuthenticated('web')}
+                {*if !$_modx->isAuthenticated('web')*}
                     <div class="top-banner-item" onClick="openModalАdditionally($('.au-modal-overlay'));$('.au-modal-sale').addClass('active');">ДАРИМ СКИДКУ 10% НА ПЕРВУЮ ПОКУПКУ | ПОДРОБНЕЕ</div>
-                {/if}
+                {*/if*}
                 <div class="top-banner-item">Бесплатная доставка по России при заказе от 20 000₽</div>
             </div>
         </div>
