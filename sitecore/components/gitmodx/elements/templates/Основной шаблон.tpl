@@ -91,7 +91,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 </head>
 
-<body {block 'body-padding'}{!$_modx->isAuthenticated('web') ? 'class="padding-loyality"':''}"{/block}>
+<body {block 'body-padding'}class="padding-loyality"{/block}>
 
 <!--ROISTAT CODE BEGIN -->
 <script>
