@@ -276,6 +276,7 @@ textarea {
   position: absolute;
   top: -100%;
   transition: top .3s ease;
+  text-transform: uppercase;
 }
 .top-banner-item.active{
   top: 0;
