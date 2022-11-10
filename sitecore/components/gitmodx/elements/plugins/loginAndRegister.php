@@ -91,6 +91,9 @@ switch($modx->event->name){
         /** @var stikSms $stikSms */
         $stikSms = $modx->getService('stikSms', 'stikSms', $modx->getOption('core_path').'components/stik/model/', []);
         $data['phone'] = $stikSms->preparePhone($data['phone']);
+        if(empty($data['receiver'])){
+            $order->add('receiver', $data['name']." ".$data['surname']);
+        }
         if (!empty($data['phone'])) {
             $c = $modx->newQuery('modUser');
             $c->leftJoin('modUserProfile', 'Profile');
@@ -99,6 +102,17 @@ switch($modx->event->name){
             if ($user = $modx->getObject('modUser', $c)) {
                 $scriptProperties['customer'] = $user;
             }
+        }
+        break;
+    case "OnUserSave":
+        /** @var $mode 'new' || 'upd' */
+        if($mode === "upd"){
+            /** @var modUserProfile $profile */
+            /** @var $user modUser */
+            $profile = $user->getOne('Profile');
+            ['name'=>$name, 'surname'=>$surname] = $profile->toArray();
+            $profile->set('fullname',"{$name} {$surname}");
+            $profile->save();
         }
         break;
 }

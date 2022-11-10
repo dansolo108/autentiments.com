@@ -36,5 +36,8 @@ return array(
     ],
     'msOnChangeOrderStatus'=>[
         'certificate'
+    ],
+    'OnUserSave'=>[
+        'loginAndRegister'
     ]
 );
