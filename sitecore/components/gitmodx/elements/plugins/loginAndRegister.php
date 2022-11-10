@@ -111,8 +111,10 @@ switch($modx->event->name){
             /** @var $user modUser */
             $profile = $user->getOne('Profile');
             ['name'=>$name, 'surname'=>$surname] = $profile->toArray();
-            $profile->set('fullname',"{$name} {$surname}");
-            $profile->save();
+            if($name && $surname){
+                $profile->set('fullname',"{$name} {$surname}");
+                $profile->save();
+            }
         }
         break;
 }
