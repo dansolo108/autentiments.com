@@ -48,6 +48,7 @@ switch ($modx->event->name) {
         $modification = $modx->getObject('Modification',[ '1c_id'=> (string)$xml->Ид]);
         if(!$modification) {
             $modification = $modx->newObject('Modification',['1c_id'=> (string)$xml->Ид,'hide'=>true]);
+            $modification->save();
             $mSync->log('Создана новая модификация 1с_id:'.(string)$xml->Ид,1);
         }
         else{
@@ -83,8 +84,7 @@ switch ($modx->event->name) {
                     $mSync->log('Найден тип характеристик: '.var_export($detailType->toArray(),1),1);
                 }
                 $type_id = $detailType->get('id');
-                if(!$modification->isNew()) {
-                    $detail = $modx->getObject('ModificationDetail',['modification_id'=>$modification->get('id'),'type_id'=>$type_id]);
+                if(!$modification->isNew() && $detail = $modx->getObject('ModificationDetail',['modification_id'=>$modification->get('id'),'type_id'=>$type_id])) {
                     $mSync->log('Найдена опция :'.$detail->get('id'),1);
                     $detail->set('value',$value);
                     if(!$detail->save()){
