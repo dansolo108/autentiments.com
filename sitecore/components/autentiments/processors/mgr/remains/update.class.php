@@ -7,24 +7,30 @@ class ModificationRemainUpdateProcessor extends modObjectUpdateProcessor
     public $permission = 'ModificationRemain_save';
     public $beforeSaveEvent = 'OnBeforeModificationRemainSave';
     public $afterSaveEvent = 'OnModificationRemainSave';
-    /** @var ModificationSubscriber $object */
+    /** @var ModificationRemain $object */
     public $object;
-
+    public $beforeRemains;
 
     /**
      * @return mixed
      */
-    public function beforeSave()
-    {
-        return parent::beforeSave();
+    public function beforeSet(){
+        $this->beforeRemains = $this->object->get('remains');
+        return parent::beforeSet();
     }
 
 
     /**
      * @return mixed
      */
-    public function afterSave()
-    {
+    public function afterSave(){
+        if($this->beforeRemains !== $this->object->get('remains')){
+            $this->modx->invokeEvent("OnModificationRemainsUpdate",array(
+                $this->primaryKeyField => $this->object->get($this->primaryKeyField),
+                $this->objectType => &$this->object,
+                'object' => &$this->object,
+            ));
+        }
         return parent::afterSave();
     }
 

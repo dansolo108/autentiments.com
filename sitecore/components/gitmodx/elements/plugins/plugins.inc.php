@@ -39,5 +39,8 @@ return array(
     ],
     'OnUserSave'=>[
         'loginAndRegister'
+    ],
+    'OnModificationRemainsUpdate'=>[
+        'subscribersSend'
     ]
 );
