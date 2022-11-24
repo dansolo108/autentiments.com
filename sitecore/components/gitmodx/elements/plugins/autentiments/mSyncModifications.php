@@ -45,6 +45,8 @@ switch ($modx->event->name) {
         $product_id = $resource->get('id');
         /** @var Modification $modification */
         /** @var SimpleXMLElement $xml */
+        /** @var Autentiments $autentiments */
+        $autentiments = $modx->getService('autentiments');
         $modification = $modx->getObject('Modification',[ '1c_id'=> (string)$xml->Ид]);
         if(!$modification) {
             $modification = $modx->newObject('Modification',['1c_id'=> (string)$xml->Ид,'hide'=>true]);
@@ -142,19 +144,19 @@ switch ($modx->event->name) {
             }
             $count = (int)str_replace('.0', '', $storeXML['КоличествоНаСкладе']);
             $count = max($count, 0);
-            if(!$modification->isNew()) {
-                $remain = $modx->getObject('ModificationRemain',['modification_id'=>$modification->get('id'),'store_id'=>$store->get('id')]);
+            if(!$modification->isNew() && $remain = $modx->getObject('ModificationRemain',['modification_id'=>$modification->get('id'),'store_id'=>$store->get('id')])) {
                 $mSync->log('Обновлены остатки:'.$remain->get('id'),1);
-                $remain->set('remains',$count);
-                if(!$remain->save()){
-                    $modx->log(MODX_LOG_LEVEL_ERROR,'Remain save error'.var_export($remain->toArray(),1));
-                }
+                $autentiments->runProcessor('remains/update',[
+                    'id'=>$remain->get('id'),
+                    'remains'=>$count,
+                ]);
                 continue;
             }
-            $remain = $modx->newObject('ModificationRemain',[
-                'store_id'=>$store->get('id'),
-                'remains'=> $count
-            ]);
+            $autentiments->runProcessor('remains/create',[
+                'modification_id'=>$modification->get('id'),
+                'store_id' =>$store->get('id'),
+                'remains'=>$count,
+                ]);
             $modification->addMany($remain);
             $mSync->log('Созданы остатки:'.var_export($remain->toArray(),1),1);
         }
