@@ -152,13 +152,12 @@ switch ($modx->event->name) {
                 ]);
                 continue;
             }
-            $autentiments->runProcessor('remains/create',[
+            $response = $autentiments->runProcessor('remains/create',[
                 'modification_id'=>$modification->get('id'),
                 'store_id' =>$store->get('id'),
                 'remains'=>$count,
                 ]);
-            $modification->addMany($remain);
-            $mSync->log('Созданы остатки:'.var_export($remain->toArray(),1),1);
+            $mSync->log('Созданы остатки:'.var_export($response->object,1),1);
         }
         // Привязка цвета оффера к изображению
         if ($xml->Картинка && $color) {
