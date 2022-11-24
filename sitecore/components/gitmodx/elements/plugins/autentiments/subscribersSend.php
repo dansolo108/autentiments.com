@@ -22,9 +22,9 @@ switch ($modx->event->name) {
 
             $text = $modx->lexicon('size_in_stock_phone',[
                 'product'=>$product->get('pagetitle'),
-                'size'=>$size,
-                'color'=>$color,
-                'url'=>$product->getPreviewUrl()
+                'size'=> $size->get('value'),
+                'color'=> $color->get('value'),
+                'url'=> $product->getPreviewUrl()
             ]);
             if($subscriber->remove()){
                 $sms->sendSms(urlencode($text), $phone);
