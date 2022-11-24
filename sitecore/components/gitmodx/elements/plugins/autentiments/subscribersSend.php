@@ -2,8 +2,10 @@
 /** @var $modx gitModx */
 switch ($modx->event->name) {
     case "OnModificationRemainsUpdate":
-
+        $modx->log(1,'test');
         /** @var ModificationRemain $object */
+        if($object->get('remains') == 0)
+            break;
         $sms = $modx->getService("sms", "sms", MODX_CORE_PATH . "components/sms/model/sms/");
         $sms->initialize();
         $sms->mode = "user";

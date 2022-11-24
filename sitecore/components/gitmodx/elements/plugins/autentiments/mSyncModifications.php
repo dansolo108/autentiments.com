@@ -146,13 +146,13 @@ switch ($modx->event->name) {
             $count = max($count, 0);
             if(!$modification->isNew() && $remain = $modx->getObject('ModificationRemain',['modification_id'=>$modification->get('id'),'store_id'=>$store->get('id')])) {
                 $mSync->log('Обновлены остатки:'.$remain->get('id'),1);
-                $autentiments->runProcessor('remains/update',[
+                $autentiments->runProcessor('mgr/remains/update',[
                     'id'=>$remain->get('id'),
                     'remains'=>$count,
                 ]);
                 continue;
             }
-            $response = $autentiments->runProcessor('remains/create',[
+            $response = $autentiments->runProcessor('mgr/remains/create',[
                 'modification_id'=>$modification->get('id'),
                 'store_id' =>$store->get('id'),
                 'remains'=>$count,
