@@ -250,4 +250,28 @@ for (var i=0; i<tabs.length; i++) {
         }
         return $output;
     }
+    /**
+     * Shorthand for the call of processor
+     *
+     * @access public
+     *
+     * @param string $action Path to processor
+     * @param array $data Data to be transmitted to the processor
+     *
+     * @return mixed The result of the processor
+     */
+    public function runProcessor($action = '', $data = array())
+    {
+        if (empty($action)) {
+            return false;
+        }
+        $this->modx->error->reset();
+        $processorsPath = !empty($this->config['processorsPath'])
+            ? $this->config['processorsPath']
+            : MODX_CORE_PATH . 'components/autentiments/processors/';
+
+        return $this->modx->runProcessor($action, $data, array(
+            'processors_path' => $processorsPath,
+        ));
+    }
 }

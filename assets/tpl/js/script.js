@@ -1,17 +1,17 @@
 function resizeWindowHeight() {
     let vh = window.innerHeight * 0.01;
     document.documentElement.style.setProperty('--vh', `${vh}px`);
-    
+
     window.addEventListener('resize', () => {
-      let vh = window.innerHeight * 0.01;
-      document.documentElement.style.setProperty('--vh', `${vh}px`);
+        let vh = window.innerHeight * 0.01;
+        document.documentElement.style.setProperty('--vh', `${vh}px`);
     });
 }
 
 
 // data-val для input
 function setDataValInput() {
-    $(document).on('input', '.custom-form__input', function() {
+    $(document).on('input', '.custom-form__input', function () {
         this.setAttribute('data-val', this.value);
     });
 }
@@ -19,12 +19,12 @@ function setDataValInput() {
 
 // textarea
 function resizeTextarea() {
-    $('textarea').on('input', function() {
+    $('textarea').on('input', function () {
         let height = $(this).outerHeight();
         if (this.scrollHeight > height) {
             $(this).removeAttr("rows");
             $(this).removeAttr("cols");
-            
+
             this.style.height = `${this.scrollHeight}px`;
         }
     });
@@ -50,13 +50,13 @@ function toggleShowPassword() {
 // фиксация шапки при скролле вверх
 function fixedHeaderTop() {
     let header = $('.au-header');
-    let	scrollPrev = 0;
+    let scrollPrev = 0;
     let height = header.outerHeight();
 
-    $(window).scroll(function() {
+    $(window).scroll(function () {
         let scrolled = $(window).scrollTop();
-    
-        if ( scrolled > height && scrolled > scrollPrev ) {
+
+        if (scrolled > height && scrolled > scrollPrev) {
             header.addClass('out');
         } else {
             header.removeClass('out');
@@ -69,13 +69,13 @@ function fixedHeaderTop() {
 // модалка с выбором языка/валюты на мобиле
 function toggleLangBlock() {
     if ($(window).width() < 768) {
-        $('.au-header__btn-lang').click(function() {
-        $('.modal').removeClass('active');
-        $('.au-filter__close').removeClass('active');
-        $('.au-header__lang-box').toggleClass('active');
-        }); 
-        
-        $(document).scroll(function() {
+        $('.au-header__btn-lang').click(function () {
+            $('.modal').removeClass('active');
+            $('.au-filter__close').removeClass('active');
+            $('.au-header__lang-box').toggleClass('active');
+        });
+
+        $(document).scroll(function () {
             $('.au-header__lang-box').removeClass('active');
         });
     }
@@ -84,7 +84,7 @@ function toggleLangBlock() {
 
 // поиск
 function toggleModalSearsh() {
-    $('.btn_search_open').click(function() {
+    $('.btn_search_open').click(function () {
         if ($(window).width() >= 1024) {
             $('.modal').removeClass('active');
             openModalАdditionally($('.au-modal-overlay'));
@@ -100,7 +100,7 @@ function toggleModalSearsh() {
 
 // открытие/закрытие бургера
 function toggleBurger() {
-    $('.au-btn-burger_open').click(function() {
+    $('.au-btn-burger_open').click(function () {
         $('.au-burger').addClass('active');
         $('.au-header__lang-box').removeClass('active');
         $('body').addClass('no-scroll');
@@ -113,7 +113,7 @@ function toggleBurger() {
         }
     });
 
-    $('.au-btn-burger_close').click(function() {
+    $('.au-btn-burger_close').click(function () {
         $('.au-burger').removeClass('active visible');
         $('.au-header__sub-box').removeClass('active top');
         $('body').removeClass('no-scroll');
@@ -131,7 +131,7 @@ function toggleSubMenu() {
         }
     }
 
-    $('.au-header__sub-open').click(function() {
+    $('.au-header__sub-open').click(function () {
         $('.au-burger.active').addClass('visible');
         $('.au-header__sub-box').removeClass('active');
         $(this).find($('.au-header__sub-box')).addClass('active');
@@ -152,11 +152,11 @@ function toggleSubMenu() {
         });
     });
 
-    $('.au-header__sub-close').click(function() {
-        setTimeout(function() {
+    $('.au-header__sub-close').click(function () {
+        setTimeout(function () {
             $('.au-header__sub-box').removeClass('active');
         }, 0);
-        setTimeout(function() {
+        setTimeout(function () {
             $('.au-burger.active').removeClass('visible');
         }, 250);
         if ($(window).width() >= 1024) {
@@ -165,16 +165,16 @@ function toggleSubMenu() {
     });
 
     if ($(window).width() >= 1024) {
-        $('.au-header__sub-open').hover(function() {
+        $('.au-header__sub-open').hover(function () {
             if (!$('.modal').hasClass('au-modal-text-page')) {
                 closeForModal();
-            } 
+            }
             $(this).find($('.au-header__sub-box')).toggleClass('active');
             $(this).find($('.au-header__link')).toggleClass('active');
             addColumns($(this));
         });
 
-        $(document).scroll(function() {
+        $(document).scroll(function () {
             $('.au-header__sub-box').removeClass('active');
             $('.au-header__link').removeClass('active');
         });
@@ -185,7 +185,7 @@ function toggleSubMenu() {
 // модалка фильтры
 function toggleModalFilter() {
     if ($('.filter-btn-open').length) {
-        $('.filter-btn-open').click(function() {
+        $('.filter-btn-open').click(function () {
             let top = $(this).offset().top + $(this).outerHeight();
 
             $('.modal').removeClass('active');
@@ -196,11 +196,11 @@ function toggleModalFilter() {
             if ($(window).width() < 1024) {
                 $('.au-modal-filter').offset({top: top});
                 $('.au-filter__close').addClass('active');
-            } 
+            }
         });
 
         if ($(window).width() < 1024) {
-            $('.au-filter__close').click(function() {
+            $('.au-filter__close').click(function () {
                 $(this).removeClass('active');
             });
         }
@@ -220,9 +220,9 @@ function startUpRangeUiCost() {
         },
         min: 500,
         max: 200000,
-        values: [ 500, 200000 ],
+        values: [500, 200000],
         step: 500,
-        slide: function( event, ui ) {
+        slide: function (event, ui) {
             $('#min_cost').val(ui.values[0]);
             $('#max_cost').val(ui.values[1]);
         }
@@ -235,7 +235,7 @@ function startUpRangeUiCost() {
 // модалка info-size
 function toggleModalInfoSize() {
     if ($('.au-product__info-size').length) {
-        $('.au-product__info-size').click(function() {
+        $('.au-product__info-size').click(function () {
 
             $('.modal').removeClass('active');
             $('.au-modal-size').addClass('active');
@@ -248,7 +248,7 @@ function toggleModalInfoSize() {
 // модалка info-remains
 function toggleModalInfoRemains() {
     if ($('.au-product__info-remains').length) {
-        $('.au-product__info-remains').click(function() {
+        $('.au-product__info-remains').click(function () {
 
             $('.modal').removeClass('active');
             $('.au-modal-remains').addClass('active');
@@ -261,7 +261,7 @@ function toggleModalInfoRemains() {
 
 // модалка авторизация/регистрация
 function openModalLogin() {
-    $('.btn_login_open').click(function() {
+    $('.btn_login_open').click(function () {
         $('.au-burger').removeClass('active');
         $('.modal').removeClass('active');
         $('.au-modal-login').addClass('active');
@@ -281,11 +281,11 @@ function openModalLogin() {
         }
     });
 
-    $('.au-tab-title[href="register"]').click(function() {
+    $('.au-tab-title[href="register"]').click(function () {
         $('.au-login__img_register').fadeIn();
     });
 
-    $('.au-tab-title[href="login"]').click(function() {
+    $('.au-tab-title[href="login"]').click(function () {
         $('.au-login__img_register').fadeOut();
     });
 }
@@ -294,7 +294,7 @@ function openModalLogin() {
 // модалка корзина
 function showAjaxCart() {
     if ($('#ms2_cart_modal').length) {
-        $.post("/assets/components/autentiments/getAjaxCart.php", {language: $('html').attr('lang')}, function(data) {
+        $.post("/assets/components/autentiments/getAjaxCart.php", {language: $('html').attr('lang')}, function (data) {
             if (data) {
                 $('#ms2_cart_modal').html(data);
                 $('.modal').removeClass('active');
@@ -309,7 +309,7 @@ function showAjaxCart() {
 
 function openModalCart() {
 
-    $('.au-cart-open').click(function() {
+    $('.au-cart-open').click(function () {
         showAjaxCart();
     });
 }
@@ -339,7 +339,7 @@ function openModalCart() {
 
 
 // ширина scrollbar
-function widthScroll(){
+function widthScroll() {
     let div = document.createElement('div');
     let body = document.querySelector('body')
     div.style.overflowY = 'scroll';
@@ -359,7 +359,7 @@ function openModalАdditionally(overlay) {
     $('body').addClass('no-scroll');
     $('body').css("padding-right", `${widthScroll()}px`);
     $('.au-header').css("padding-right", `${paddingRightHeader + widthScroll()}px`);
-    $('.top-banner__wrapper').css("padding-right", `${ parseInt($('.top-banner__wrapper').css("padding-right")) + widthScroll()}px`);
+    $('.top-banner__wrapper').css("padding-right", `${parseInt($('.top-banner__wrapper').css("padding-right")) + widthScroll()}px`);
     if (overlay) {
         $('.au-modal-overlay').addClass('active');
     }
@@ -385,14 +385,14 @@ function closeForModal() {
 
     if ($('.au-header__burger').hasClass('au-hidden')) {
         $('.au-login__header-close').fadeOut(200);
-        setTimeout(function() {
+        setTimeout(function () {
             $('.au-header__burger').removeClass('au-hidden');
         }, 200);
     }
 
     if ($('.au-ordering__link-back').hasClass('au-hidden')) {
         $('.au-login__header-close').fadeOut(200);
-        setTimeout(function() {
+        setTimeout(function () {
             $('.au-ordering__link-back').removeClass('au-hidden');
         }, 200);
     }
@@ -401,12 +401,12 @@ function closeForModal() {
 
 // закрытие модалок
 function closeModal() {
-    $(document).on('click', '.au-close, .au-modal-overlay.active, .au-modal.active', function(e) {
+    $(document).on('click', '.au-close, .au-modal-overlay.active, .au-modal.active', function (e) {
         if (!$('.au-modal__content').is(e.target) && $('.au-modal__content').has(e.target).length === 0) {
             closeForModal();
             $(window).scroll();
         }
-        if(e.target.closest('.au-modal-cart')){
+        if (e.target.closest('.au-modal-cart')) {
             closeForModal();
         }
         if ($('.au-lookbook__gallery').length) {
@@ -416,11 +416,13 @@ function closeModal() {
         }
     });
 }
-document.addEventListener('click',function (e){
-    if(e.target.closest('.au-cart__resume')){
+
+document.addEventListener('click', function (e) {
+    if (e.target.closest('.au-cart__resume')) {
         closeForModal();
     }
 })
+
 // theiaStickySidebar
 function addStickySidebar() {
     $('.sidebar').theiaStickySidebar({
@@ -446,23 +448,23 @@ function addProductCart() {
     const btnSize = $('.au-product__add-size');
     const size = $('.au-product__size');
     const notSize = $('.not-size');
-    if(btnSize.length > 0){
+    if (btnSize.length > 0) {
         if ($('.au-product__size-input').is(':checked')) {
             btnBasket.css('visibility', 'visible');
             btnBasket.css('opacity', '1');
             $('.au-product__add-size').css('visibility', 'hidden');
             $('.au-product__add-size').css('opacity', '0');
         }
-    
-        btnBasket.mouseenter(function() {
+
+        btnBasket.mouseenter(function () {
             $(this).removeClass('active');
             btnSize.addClass('active');
         });
-        btnSize.mouseleave(function() {
+        btnSize.mouseleave(function () {
             $(this).removeClass('active');
             btnBasket.addClass('active');
         });
-        $(document).on('click', '.au-product__size', function() {
+        $(document).on('click', '.au-product__size', function () {
             btnBasket.css('visibility', 'visible');
             btnBasket.css('opacity', '1');
             $('.au-product__add-size').css('visibility', 'hidden');
@@ -470,41 +472,66 @@ function addProductCart() {
             $('.not-size').removeClass('active');
             $('.au-product__add-entrance').removeClass('active');
             $('.au-product__add-entrance').removeClass('end').prop('disabled', false);
-        }); 
-    
-        $(document).on('click', '.not-size', function() {
+        });
+
+        $(document).on('click', '.not-size', function () {
             $(this).addClass('active');
             $('.au-product__add-entrance').addClass('active');
             $('.au-product__size-input').prop('checked', false);
             $('.au-product__add-entrance').removeClass('end').prop('disabled', false);
         });
-    
-        $(document).on('click', '.au-product__add-entrance', function() {
-            let size = $('.au-product__size.not-size.active').attr('for'),
-                color = $('.au-product__color-input:checked').val();;
-            $('#size_subscribe_form input[name="size"]').val(size);
-            $('#size_subscribe_form input[name="color"]').val(color);
+
+        $(document).on('click', '.au-product__add-entrance', function () {
+            let sizeLabel = $('.au-product__size.not-size.active');
+            let size = sizeLabel.html();
+            let sizeInput = $(`.au-product__size-input[id="${sizeLabel.attr('for')}"]`);
+            $('#size_subscribe_form input[name="modification_id"]').val(sizeInput.val());
             $('#size_subscribe_form .selected-size_js').text(size);
-            
+            let colorLabel = $('.au-product__color.active');
+            let color = colorLabel.attr('title');
+            $('#size_subscribe_form .selected-color_js').text(color);
+
             $('.modal').removeClass('active');
             $('.au-modal-entrance').addClass('active');
             openModalАdditionally($('.au-modal-overlay'));
             $('.au-header__lang-box').removeClass('active');
         });
     }
-    else{
-        
-    }
-
 }
 
+document.querySelector('#size_subscribe_form')?.addEventListener('submit', e => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    $.ajax({
+        url: '/assets/components/autentiments/subscribeModification.php',
+        method: "POST",
+        data: {
+            phone: e.target.elements["phone"].value,
+            modification_id: e.target.elements["modification_id"].value
+        },
+        dataType: "JSON",
+        success:function (data){
+            if (!data)
+                return;
+            if(data.success){
+                $.jGrowl(data.message,{theme:"ms2-message-success"});
+                $('.modal').removeClass('active');
+                closeForModal();
+            }
+            else{
+                $.jGrowl(data.message,{theme:"ms2-message-error"});
+            }
+        }
+    });
+})
 
 // табы
 function toggleTabs() {
-    $('.au-tab-title').click(function(e) {
+    $('.au-tab-title').click(function (e) {
         e.preventDefault();
         const id = $(this).attr('href');
-        const content = $('.au-tab-content[data-tab="'+ id +'"]');
+        const content = $('.au-tab-content[data-tab="' + id + '"]');
 
         $('.au-tab-title').removeClass('active');
         $('.au-tab-content').removeClass('active');
@@ -516,7 +543,7 @@ function toggleTabs() {
 
 // accordeons
 function toggleAccordeons() {
-    $('.au-accordeon-title').click(function() {
+    $('.au-accordeon-title').click(function () {
         $('.au-accordeon-title').not($(this)).removeClass('open');
         $('.au-accordeon-content').not($(this).next()).slideUp(300);
         $(this).toggleClass('open');
@@ -527,10 +554,10 @@ function toggleAccordeons() {
 
 // табы в модалке авторизации
 function toggleLoginTabs() {
-    $('.au-tab-login-title').click(function(e) {
+    $('.au-tab-login-title').click(function (e) {
         e.preventDefault();
         const id = $(this).attr('href');
-        const content = $('.au-tab-login-content[data-tab="'+ id +'"]');
+        const content = $('.au-tab-login-content[data-tab="' + id + '"]');
 
         $('.au-tab-login-title').removeClass('active');
         $('.au-tab-login-content').removeClass('active');
@@ -541,7 +568,7 @@ function toggleLoginTabs() {
 
 
 function showRegisterPhone() {
-    $('.loyalty-check_js').on('change', function() {
+    $('.loyalty-check_js').on('change', function () {
         if ($(this).is(':checked')) {
             $('.custom-form__register_phone').fadeIn();
         } else {
@@ -552,7 +579,7 @@ function showRegisterPhone() {
 
 
 function openBonusRules() {
-    $('.bonus-rules-open').click(function() {
+    $('.bonus-rules-open').click(function () {
         openModalАdditionally($('.au-modal-overlay'));
         $('.au-modal-bonus-rules').addClass('active');
     });
@@ -560,7 +587,7 @@ function openBonusRules() {
 
 
 function hideLoyaltyMobile() {
-    $('.au-profile__tab').click(function() {
+    $('.au-profile__tab').click(function () {
         let href = $(this).attr('href');
 
         if (href === 'purchases' && $(window).width() < 1024) {
@@ -574,13 +601,13 @@ function hideLoyaltyMobile() {
 
 // модалка смены пароля
 function toggleChangePassword() {
-    $('.au-change-password__btn-open').click(function() {
+    $('.au-change-password__btn-open').click(function () {
         $('.modal').removeClass('active');
         openModalАdditionally($('.au-modal-overlay'));
         $('.au-modal-change-password').addClass('active');
     });
 
-    $('.au-change-password__btn').click(function() {
+    $('.au-change-password__btn').click(function () {
         $('.au-close').trigger('click');
     });
 }
@@ -588,67 +615,67 @@ function toggleChangePassword() {
 
 // текстовые страницы-модалки
 function toggleTextModal() {
-    $('.au-text-tab_js').click(function(e) {
+    $('.au-text-tab_js').click(function (e) {
         e.preventDefault();
         $this = this;
 
-        $.ajax("/info").done(function(ajaxData) {
+        $.ajax("/info").done(function (ajaxData) {
             if (ajaxData) {
                 $('.au-modal-text-page').html(ajaxData);
-                
+
                 const id = $($this).attr('href').replace("/", "");
-                const content = $('.au-tab-text-content[data-tab="'+ id +'"]');
-                const tab = $('.au-text-tab_js[href="'+ id +'"]');
-                
+                const content = $('.au-tab-text-content[data-tab="' + id + '"]');
+                const tab = $('.au-text-tab_js[href="' + id + '"]');
+
                 $('.au-login__header-close').fadeOut(200);
-                setTimeout(function() {
+                setTimeout(function () {
                     $('.au-header__burger').removeClass('au-hidden');
                     $('.au-ordering__link-back').removeClass('au-hidden');
                 }, 200);
                 $('.modal').removeClass('active');
                 $('.au-modal-overlay').removeClass('active');
                 $('.au-header').removeClass('out');
-                setTimeout(function() {
+                setTimeout(function () {
                     $('.au-header__sub-box').removeClass('active top');
                 }, 0);
                 $('.au-burger').removeClass('active visible');
-        
+
                 if (!$('.au-modal-text-page').hasClass('active')) {
                     openModalАdditionally();
                     $('.au-modal-text-page').addClass('active');
                 }
-        
+
                 $('.au-text-tab_js').removeClass('active');
                 $('.au-tab-text-content').removeClass('active');
                 $($this).addClass('active');
                 content.addClass('active');
                 tab.addClass('active');
-        
+
                 $('#text_tab_active').val($($this).data('text'));
                 $(window).off('scroll');
             }
         })
     });
 
-    $(document).on('click', '#text_tab_active', function() {
+    $(document).on('click', '#text_tab_active', function () {
         $(this).toggleClass('open');
         $('.au-text-page__nav').toggleClass('active');
     });
 
     // Табы в модалке
-    $(document).on('click', '.au-modal-text-page .au-text-tab_js', function(e) {
+    $(document).on('click', '.au-modal-text-page .au-text-tab_js', function (e) {
         e.preventDefault();
-        
+
         const id = $(this).attr('href');
-        const content = $('.au-tab-text-content[data-tab="'+ id +'"]');
-        const tab = $('.au-text-tab_js[href="'+ id +'"]');
-        
+        const content = $('.au-tab-text-content[data-tab="' + id + '"]');
+        const tab = $('.au-text-tab_js[href="' + id + '"]');
+
         $('.au-text-tab_js').removeClass('active');
         $('.au-tab-text-content').removeClass('active');
         $(this).addClass('active');
         content.addClass('active');
         tab.addClass('active');
-        
+
         $('#text_tab_active').val($(this).data('text')).removeClass('open');
         $('.au-text-page__nav').removeClass('active');
     });
@@ -658,14 +685,14 @@ function toggleTextModal() {
 // просмотр картинки лукбука на мобиле
 function openLookbookImg() {
     if ($(window).width() < 1025) {
-        $('.au-lookbook__card img').on('click', function() {
+        $('.au-lookbook__card img').on('click', function () {
             let src = $(this).attr('src');
             $('.au-lookbook__gallery').addClass('active');
             $('.au-lookbooks__gallery-img').attr('src', src);
             openModalАdditionally($('.au-modal-overlay'));
-            
+
         });
-    }    
+    }
 }
 
 
@@ -676,10 +703,10 @@ function countAmountForLevel() {
         const LEVEL_ONE = 50000;
         const LEVEL_TWO = 70000;
         let amount = parseInt($('#amount').text());
-        let x = amount/AMOUNT_TOTAL*100;
+        let x = amount / AMOUNT_TOTAL * 100;
         let amountLevel = $('#amount_level');
         let currentLevel = $('#current_level');
-        
+
         // $('.au-profile__loyalty-slider').css('width', `${x}%`);
 
         // if (amount < LEVEL_ONE) {
@@ -699,55 +726,55 @@ function countAmountForLevel() {
 }
 
 
-$(document).ready(function() {
-    
+$(document).ready(function () {
+
     if ($('.au-header-cart').length) {
         $('body').addClass('au-ordering-home');
     }
 
-    $('input[type=number]').on('input', function() {
+    $('input[type=number]').on('input', function () {
         this.value = this.value.replace(/[^\d]/g, '');
     });
 
-    $('input[type=tel]').on('input', function() {
+    $('input[type=tel]').on('input', function () {
         this.value = this.value.replace(/[^\d\+\-\(\)\s]/g, '');
     });
-    
-    $('#date').on('input', function() {
+
+    $('#date').on('input', function () {
         this.value = this.value.replace(/[^\d\.]/g, '');
     });
 
 
-    $('.au-profile__form input').on("input", function() {
+    $('.au-profile__form input').on("input", function () {
         $('.au-profile__submit').prop('disabled', false);
     });
-    
 
-    $('.au-promo-code__cancel').click(function(e) {
+
+    $('.au-promo-code__cancel').click(function (e) {
         e.preventDefault();
         $('.mspc_btn').click();
     });
 
-    $('.au-promo-code__input').on('input', function() {
+    $('.au-promo-code__input').on('input', function () {
         $('.au-promo-code__submit').addClass('active');
     });
 
 
-    $('.au-bonuses__input').on('input', function() {
+    $('.au-bonuses__input').on('input', function () {
         $('.au-bonuses__submit').addClass('active');
     });
 
     // disabled contacts submit
-    $('.au-contacts__col-form .custom-form__input').on('input', function() {
+    $('.au-contacts__col-form .custom-form__input').on('input', function () {
         if ($('#name').val().length > 0 && $('#email').val().length > 0 && $('#message').val().length > 0) {
             $('.au-contacts__submit').prop('disabled', false);
         }
     });
-    
+
     // test
     $('.au-profile__loyalty-btn').click((e) => {
         if ($('input[name="mobilephone"]').val() == '') {
-            e.preventDefault(); 
+            e.preventDefault();
             addPhoneLoyalty();
         }
     });
@@ -780,7 +807,7 @@ $(document).ready(function() {
 
 
 // cookie
-$(function() {
+$(function () {
     function showCookieModal() {
         $(".au-modal-cookie").fadeIn();
     }
@@ -789,7 +816,7 @@ $(function() {
         setTimeout(showCookieModal, 3000);
     }
 
-    $(".au-modal-cookie__close").click(function() {
+    $(".au-modal-cookie__close").click(function () {
         $(".au-modal-cookie").fadeOut();
         $.cookie("hideCookieModal", true, {
             expires: 365,
@@ -821,16 +848,16 @@ $(function() {
 // });
 
 
-document.addEventListener("DOMContentLoaded", function() {
-    if('#purchases' === window.location.hash) {
+document.addEventListener("DOMContentLoaded", function () {
+    if ('#purchases' === window.location.hash) {
         $('.au-profile__tab').removeClass('active');
         $('.au-profile__tab-content').removeClass('active');
         $('.au-profile__tab[href="purchases"]').addClass('active');
         $('.au-profile__tab-content[data-tab="purchases"]').addClass('active');
-    
+
         if ($(window).width() < 1024) {
             $('.au-profile__loyalty-box').hide();
-        } 
+        }
     }
 });
 
@@ -840,11 +867,11 @@ function addPhoneLoyalty() {
     $('.loyalty-text_join').hide();
     $('.au-profile__loyalty-btn').hide();
     $('.custom-form__group_tel').addClass('group-no-phone');
-    $('.custom-form__group_tel input').focus(); 
+    $('.custom-form__group_tel input').focus();
 }
 
 
-$(document).ready(function() {
+$(document).ready(function () {
     resizeWindowHeight();
     setDataValInput();
     resizeTextarea();
@@ -883,7 +910,7 @@ $("input[type=tel]").each(function (index) {
     let telInput = $(this),
         errorMsg = $(".int-tel-error"),
         errorMap = ["Неправильный номер", "Неверный код страны", "Слишком короткий", "Слишком длинный", "Неправильный номер"];
-    
+
     // initialise plugin
     let iti = telInput.intlTelInput({
         nationalMode: false,
@@ -891,8 +918,9 @@ $("input[type=tel]").each(function (index) {
         autoHideDialCode: false,
         initialCountry: "ru",
         preferredCountries: ["ru", "by", "kz", "az", "uz", "am", "ge", "kg"],
-        geoIpLookup: function(callback) {
-            $.get('//ipinfo.io', function() {}, "jsonp").always(function(resp) {
+        geoIpLookup: function (callback) {
+            $.get('//ipinfo.io', function () {
+            }, "jsonp").always(function (resp) {
                 let countryCode = (resp && resp.country) ? resp.country : "";
                 callback(countryCode);
             });
@@ -900,13 +928,13 @@ $("input[type=tel]").each(function (index) {
         utilsScript: "/assets/tpl/js/vendor/intl-tel-input/utils.js"
     });
 
-    let reset = function() {
+    let reset = function () {
         telInput.removeClass("error");
         errorMsg.html('');
     };
-    
+
     // on blur: validate
-    telInput.on('blur keyup change', function() {
+    telInput.on('blur keyup change', function () {
         if ($.trim(telInput.val())) {
             if (telInput.intlTelInput("isValidNumber")) {
                 $('.js_sms_code_send').prop('disabled', false);
@@ -921,38 +949,39 @@ $("input[type=tel]").each(function (index) {
             reset();
         }
     });
-    
+
     // on keyup / change flag: reset
     // telInput.on("keyup change", reset);
 });
-if($('.coupon-form').length){
-    $('.coupon-form button').click(function(e){
+if ($('.coupon-form').length) {
+    $('.coupon-form button').click(function (e) {
         var values = $('.coupon-form').serializeArray();
         values['action'] = 'activateCoupon';
-      $.ajax({
-        url: "",
-        method: "POST",
-        data: { action: 'activateCoupon', values: values },
-        dataType: "JSON",
-        success: function (response) {
-          if (response.success) {
-            if($('.au-bonuses__count span').length){
-                $.jGrowl(response.msg, {theme: 'af-message-success'});
-                $('.au-bonuses__count span').html(miniShop2.Utils.formatPrice(response.balance));
+        $.ajax({
+            url: "",
+            method: "POST",
+            data: {action: 'activateCoupon', values: values},
+            dataType: "JSON",
+            success: function (response) {
+                if (response.success) {
+                    if ($('.au-bonuses__count span').length) {
+                        $.jGrowl(response.msg, {theme: 'af-message-success'});
+                        $('.au-bonuses__count span').html(miniShop2.Utils.formatPrice(response.balance));
+                    }
+                    console.log(response);
+                } else {
+                    $.jGrowl(response.msg, {theme: 'af-message-error'});
+                }
             }
-            console.log(response);
-          }
-          else {
-            $.jGrowl(response.msg, {theme: 'af-message-error'});
-          }
-        }
-      })
+        })
         return false;
     });
-};
+}
+;
 let countEvents = 0;
-function setEvent(event, props = {}){
-    console.log(event,props);
+
+function setEvent(event, props = {}) {
+    console.log(event, props);
     countEvents++;
     var _tmr = _tmr || [];
     switch (event) {
@@ -968,15 +997,15 @@ function setEvent(event, props = {}){
                 }],
                 value: props.price * (props.quantity ?? 1),
             });
-            VK.Retargeting.ProductEvent(PRICE_LIST_ID,'add_to_cart',{
-                'products':[
+            VK.Retargeting.ProductEvent(PRICE_LIST_ID, 'add_to_cart', {
+                'products': [
                     {
                         id: props.id,
                         price: props.price,
                         price_old: props.old_price,
                     }
                 ],
-                'currency_code':'RUR',
+                'currency_code': 'RUR',
             });
             ClTrack("addToCart", {
                 product: {
@@ -1002,20 +1031,20 @@ function setEvent(event, props = {}){
                     id: props.id
                 }
             });
-            VK.Retargeting.ProductEvent(PRICE_LIST_ID,'remove_from_cart',{
-                'products':[
+            VK.Retargeting.ProductEvent(PRICE_LIST_ID, 'remove_from_cart', {
+                'products': [
                     {
                         id: props.id,
                         price: props.price,
                         price_old: props.old_price,
                     }
                 ],
-                'currency_code':'RUR',
+                'currency_code': 'RUR',
             });
             break;
         case "purchase":
             gtag("event", "purchase", {
-                items: Object.keys(props.products).map((item)=>{
+                items: Object.keys(props.products).map((item) => {
                     item = props.products[item];
                     return {
                         item_name: item.pagetitle,
@@ -1028,31 +1057,31 @@ function setEvent(event, props = {}){
                 currency: "RUB",
                 shipping: props.delivery_cost,
                 value: props.cost,
-                transaction_id:props.transaction_id,
+                transaction_id: props.transaction_id,
             });
-            VK.Retargeting.ProductEvent(PRICE_LIST_ID,'purchase',{
-                products: Object.keys(props.products).map((item)=>{
+            VK.Retargeting.ProductEvent(PRICE_LIST_ID, 'purchase', {
+                products: Object.keys(props.products).map((item) => {
                     item = props.products[item];
                     return {
-                        id:''+item.id,
-                        price:item.price,
-                        group_id:''+item.parent,
-                        price_old:item.old_price,
+                        id: '' + item.id,
+                        price: item.price,
+                        group_id: '' + item.parent,
+                        price_old: item.old_price,
                     };
                 }),
-                'currency_code':'RUR',
+                'currency_code': 'RUR',
             });
             break;
         case "view_item":
-            VK.Retargeting.ProductEvent(PRICE_LIST_ID,'view_product',{
-                'products':[{
+            VK.Retargeting.ProductEvent(PRICE_LIST_ID, 'view_product', {
+                'products': [{
                     id: props.id,
                     price: props.price,
                     price_old: props.old_price,
                 }],
-                'currency_code':'RUR',
+                'currency_code': 'RUR',
             });
-            gtag('event','view_item',{
+            gtag('event', 'view_item', {
                 currency: "RUB",
                 items: [{
                     item_name: props.pagetitle,
@@ -1086,15 +1115,15 @@ function setEvent(event, props = {}){
                 }],
                 value: props.price * (props.quantity ?? 1),
             });
-            VK.Retargeting.ProductEvent(PRICE_LIST_ID,'add_to_wishlist',{
-                'products':[
+            VK.Retargeting.ProductEvent(PRICE_LIST_ID, 'add_to_wishlist', {
+                'products': [
                     {
                         id: props.id,
                         price: props.price,
                         price_old: props.old_price,
                     }
                 ],
-                'currency_code':'RUR',
+                'currency_code': 'RUR',
             });
             ClTrack("addToFav", {
                 product: {
@@ -1110,7 +1139,7 @@ function setEvent(event, props = {}){
                 }
             });
             VK.Retargeting.ProductEvent(PRICE_LIST_ID, "remove_from_wishlist", {
-                'products':[
+                'products': [
                     {
                         id: props.id,
                         price: props.price,
@@ -1121,7 +1150,7 @@ function setEvent(event, props = {}){
             break;
         case "view_item_list":
             gtag("event", "view_item_list", {
-                items: Object.keys(props.products).map((item)=>{
+                items: Object.keys(props.products).map((item) => {
                     item = props.products[item];
                     return {
                         item_name: item.pagetitle,
@@ -1132,16 +1161,16 @@ function setEvent(event, props = {}){
                     };
                 }),
             });
-            VK.Retargeting.ProductEvent(PRICE_LIST_ID,'view_category',{
-                products: Object.keys(props.products).map((item)=>{
+            VK.Retargeting.ProductEvent(PRICE_LIST_ID, 'view_category', {
+                products: Object.keys(props.products).map((item) => {
                     item = props.products[item];
                     return {
-                        id:''+item.id,
-                        item:item.price,
-                        price_old:item.old_price,
+                        id: '' + item.id,
+                        item: item.price,
+                        price_old: item.old_price,
                     };
                 }),
-                'currency_code':'RUR',
+                'currency_code': 'RUR',
             });
             ClTrack('categoryView', {
                 id: props.id,
@@ -1149,41 +1178,42 @@ function setEvent(event, props = {}){
             break;
         case 'maxma-registration':
             gtag("event", "registration", {
-                category:"maxma"
+                category: "maxma"
             });
-            ym(86113805,'reachGoal','maxma-reg')
+            ym(86113805, 'reachGoal', 'maxma-reg')
             roistat.event.send('maxma-reg')
             break;
     }
     return true;
 }
-$(document).on('smsCodeCheck',(e,response,form,values)=>{
-    if(response.isRegister){
+
+$(document).on('smsCodeCheck', (e, response, form, values) => {
+    if (response.isRegister) {
         setEvent("maxma-registration");
     }
 });
 let bannerItemsParent = document.querySelector('.top-banner__items');
 let bannerItems = bannerItemsParent.querySelectorAll('.top-banner-item');
 let active = bannerItemsParent.querySelector('.top-banner-item.active');
-if(!active)
+if (!active)
     bannerItems[0].classList.add('active');
-setInterval(()=>{
-    if(bannerItems.length < 2)
+setInterval(() => {
+    if (bannerItems.length < 2)
         return;
     let active = bannerItemsParent.querySelector('.top-banner-item.active');
-    if(!active) {
+    if (!active) {
         bannerItems[0].classList.add('active');
         active = bannerItems[0];
     }
     let newActive = active.nextElementSibling;
-    if(!newActive)
+    if (!newActive)
         newActive = bannerItems[0];
     let next = newActive.nextElementSibling;
-    if(!next)
+    if (!next)
         next = bannerItems[0];
     active.classList.remove('active');
     active.classList.remove('next');
     newActive.classList.add('active');
     newActive.classList.remove('next');
     next.classList.add('next');
-},5000);
+}, 5000);

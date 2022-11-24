@@ -10,4 +10,8 @@ $xpdo_meta_map = array (
     4 => 'ModificationFile',
     5 => 'ModificationRemain',
   ),
+  'xPDOObject' => 
+  array (
+    0 => 'ModificationSubscriber',
+  ),
 );
