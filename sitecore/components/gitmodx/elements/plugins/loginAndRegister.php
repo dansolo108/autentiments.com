@@ -91,6 +91,10 @@ switch($modx->event->name){
         /** @var stikSms $stikSms */
         $stikSms = $modx->getService('stikSms', 'stikSms', $modx->getOption('core_path').'components/stik/model/', []);
         $data['phone'] = $stikSms->preparePhone($data['phone']);
+        if(strlen($data['phone']) !== 11){
+            $modx->event->output("В номере должно быть 11 цифр.");
+            return false;
+        }
         if(empty($data['receiver'])){
             $order->add('receiver', $data['name']." ".$data['surname']);
         }
