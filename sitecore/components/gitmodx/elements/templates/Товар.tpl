@@ -22,7 +22,7 @@
 {/block}
 
 {block 'main'}
-    <script>
+    <script type="text/javascript">
         document.addEventListener('DOMContentLoaded',e=>{
             let thisPage = {$_modx->resource.id | getJSONPageInfo};
             {ignore}
@@ -32,7 +32,7 @@
             },500);
             {/ignore}
         });
-        
+        var _tmr = _tmr || [];
     </script>
     {set $colors = 'getProductDetails' | snippet : [
         'id'=>$_modx->resource.id,

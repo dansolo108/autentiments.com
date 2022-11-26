@@ -983,7 +983,11 @@ let countEvents = 0;
 function setEvent(event, props = {}) {
     console.log(event, props);
     countEvents++;
-    var _tmr = _tmr || [];
+    if(_tmr === undefined) {
+        var _tmr = [];
+
+    }
+    _tmr = _tmr || [];
     switch (event) {
         case "add_to_cart":
             gtag("event", "add_to_cart", {
@@ -1013,6 +1017,12 @@ function setEvent(event, props = {}) {
                 },
                 price: props.price,
             });
+            _tmr.push({
+                type: 'AddToCart',
+                productid: props.id,
+                totalvalue: props.price,
+            });
+
             break;
         case "remove_from_cart":
             gtag("event", "remove_from_cart", {
@@ -1099,7 +1109,6 @@ function setEvent(event, props = {}) {
                 type: 'itemView',
                 productid: props.id,
                 pagetype: 'product',
-                list: 'VALUE',
                 totalvalue: props.price
             });
             break;
