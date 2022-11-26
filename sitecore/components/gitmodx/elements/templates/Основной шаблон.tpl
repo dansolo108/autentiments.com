@@ -211,6 +211,7 @@
                   height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- End Google Tag Manager (noscript) -->
 <!-- Top.Mail.Ru counter -->
+{ignore}
 <script type="text/javascript">
     var _tmr = window._tmr || (window._tmr = []);
     _tmr.push({id: "3269446", type: "pageView", start: (new Date()).getTime(), pid: "USER_ID"});
@@ -224,6 +225,7 @@
 </script>
 <noscript><div><img src="https://top-fwz1.mail.ru/counter?id=3269446;js=na" style="position:absolute;left:-9999px;" alt="Top.Mail.Ru" /></div></noscript>
 <!-- /Top.Mail.Ru counter -->
+{/ignore}
 <div class="au-modal-overlay"></div>
 {block 'loyality-discount'}
         <div class="top-banner__wrapper" >
