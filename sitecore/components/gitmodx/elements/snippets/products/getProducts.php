@@ -33,7 +33,7 @@ $scriptProperties['where']['msProduct.class_key'] = 'msProduct';
 $rows = $modx->runSnippet('getModifications',array_merge($scriptProperties,
     [
         'tpl'=>'',
-        'details'=> ['color'],
+        'details'=> ['color','size'],
         'sortby'=>['Modification.id','Modification.sort_index'=>"DESC"],
         'groupby'=>['Modification.product_id','color'],
     ]));
@@ -42,8 +42,11 @@ $output = array();
 if (!empty($rows) && is_array($rows)) {
     $opt_time = 0;
     foreach ($rows as $k => $row) {
-        $row['price'] = $miniShop2->formatPrice($row['price']);
-        $row['old_price'] = $miniShop2->formatPrice($row['old_price']);
+        if($row['pagetitle'] == 'Тренч-дождевик Zebra'){
+            $modx->log(1,var_export($row,1));
+        }
+//        $row['price'] = $miniShop2->formatPrice($row['price']);
+//        $row['old_price'] = $miniShop2->formatPrice($row['old_price']);
         $row['weight'] = $miniShop2->formatWeight($row['weight']);
         $row['idx'] = $pdoFetch->idx++;
         $opt_time_start = microtime(true);
