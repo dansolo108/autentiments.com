@@ -42,9 +42,9 @@ $output = array();
 if (!empty($rows) && is_array($rows)) {
     $opt_time = 0;
     foreach ($rows as $k => $row) {
-        if($row['pagetitle'] == 'Тренч-дождевик Zebra'){
-            $modx->log(1,var_export($row,1));
-        }
+//        if($row['pagetitle'] == 'Тренч-дождевик Zebra'){
+//            $modx->log(1,var_export($row,1));
+//        }
 //        $row['price'] = $miniShop2->formatPrice($row['price']);
 //        $row['old_price'] = $miniShop2->formatPrice($row['old_price']);
         $row['weight'] = $miniShop2->formatWeight($row['weight']);
