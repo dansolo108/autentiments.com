@@ -71,7 +71,7 @@ class stikAmoCRM
         $response = $this->modRest->post('oauth2/access_token', $params);
         $result = $response->process();
 
-        if ($result['status'] !== 200) {
+        if (isset($result['status']) || $result['status'] !== 200) {
             $this->modx->log(MODX_LOG_LEVEL_ERROR, 'stikAmoCRM getAccessToken error: ' . print_r($result, 1));
         } else {
             $this->saveTokens($result);
