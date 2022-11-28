@@ -71,7 +71,7 @@ class stikAmoCRM
         $response = $this->modRest->post('oauth2/access_token', $params);
         $result = $response->process();
 
-        if (isset($result['errorCode'])) {
+        if ($result['status'] !== 200) {
             $this->modx->log(MODX_LOG_LEVEL_ERROR, 'stikAmoCRM getAccessToken error: ' . print_r($result, 1));
         } else {
             $this->saveTokens($result);
@@ -545,6 +545,7 @@ class stikAmoCRM
         $this->modRest->setOption('format', 'json');
         $this->modRest->setOption('userAgent', 'amoCRM-oAuth-client/1.0');
         $this->modRest->setOption('sslVerifypeer', 1);
+        $this->modRest->setOption('sslVerifyhost', 2);
         $this->modRest->setOption('suppressSuffix', true);
         $this->modRest->setOption('headers', [
             'Content-type' => 'application/json',
