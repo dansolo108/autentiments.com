@@ -56,13 +56,13 @@ if(is_string($scriptProperties['groupby'])){
 // Include linked products
 $innerJoin = array();
 if (!empty($link) && !empty($master)) {
-    $leftJoin['Link'] = [
+    $innerJoin['Link'] = [
         'class' => 'msProductLink',
         'on' => 'msProduct.id = Link.slave AND Link.link = ' . $link,
     ];
     $where['Link.master'] = $master;
 } elseif (!empty($link) && !empty($slave)) {
-    $leftJoin['Link'] = [
+    $innerJoin['Link'] = [
         'class' => 'msProductLink',
         'on' => 'msProduct.id = Link.master AND Link.link = ' . $link,
     ];
