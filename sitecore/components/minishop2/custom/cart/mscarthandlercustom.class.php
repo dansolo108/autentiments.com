@@ -160,6 +160,7 @@ class msCartHandlerCustom extends msCartHandler implements msCartInterface
                     }
                     $status['key'] = $key;
                     $status['cost'] = $count * $this->cart[$key]['price'];
+                    $status['max_count'] = $remains;
                 }
             }
             return $this->success('ms2_cart_change_success', $this->status($status),

@@ -150,10 +150,21 @@ $(document).ready(function() {
         });
     
         miniShop2.Callbacks.add('Cart.change.response.success', 'stik', function(response) {
+            console.log(response);
             $('.ms2_total_cost').text(miniShop2.Utils.formatPrice(msmcGetPrice(response.data.total_cost)));
             // $('.mse2_total_declension').text(declension(response.data.total_count, stik_declension_product_js));
-            $('.ms2_total_no_discount').text(miniShop2.Utils.formatPrice(msmcGetPrice(response.data.real_total_cost)));
+            $('.ms2_total_no_discount').text(miniShop2.Utils.formatPrice(msmcGetPrice(response.data.total_cost + response.data.total_discount)));
             $('.ms2_total_discount_custom').text(miniShop2.Utils.formatPrice(msmcGetPrice(response.data.total_discount)));
+            let $inputCount = $(`#${response.data.key}`).find(`.au-cart__card-count`);
+            if(response.data.max_count && $inputCount){
+                $inputCount.attr('max',response.data.max_count);
+                if($inputCount.val() > response.data.max_count){
+                    $inputCount.val(response.data.max_count);
+                    let productName = $(`#${response.data.key}`).find('.au-cart__card-title').html();
+                    $.jGrowl(`Извините, на складе больше нет такого количества ${productName}`,{life:5000,theme:"ms2-message-success"});
+                }
+            }
+
             calcRealTotalCost();
             if ($('.msOrder').length) {
                 miniShop2.Order.getcost();
@@ -166,11 +177,11 @@ $(document).ready(function() {
             if ($('.msOrder').length) {
                 miniShop2.Order.getcost();
             }
+
         });
         
         miniShop2.Callbacks.add('Cart.add.response.success', 'stik', function(response) {
             showAjaxCart();
-            ym(86113805,'reachGoal','add_to_cart');
         });
 
         miniShop2.Callbacks.add('Order.add.response.success', 'stik', function(response) {

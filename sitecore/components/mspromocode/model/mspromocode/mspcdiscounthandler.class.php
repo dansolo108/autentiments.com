@@ -106,23 +106,23 @@ class mspcDiscountHandler implements mspcDiscountInterface
             $this->mspc->setSuccess($this->modx->lexicon('mspromocode_ok_code_apply'), true);
             $this->current = $_SESSION['mspc']['discount_amount'] = array();
             $calculated = $this->mspc->maxma->calculatePurchase($coupon);
-            $this->modx->log(1,'setDiscountForCart response '.var_export($calculated,1));
+//            $this->modx->log(1,'setDiscountForCart response '.var_export($calculated,1));
             $i = 0;
-            $this->modx->log(1,'setDiscountForCart old cart '.var_export($this->mspc->cart,1));
+//            $this->modx->log(1,'setDiscountForCart old cart '.var_export($this->mspc->cart,1));
             foreach ($this->mspc->cart as $key => &$product) {
                 $calcDiscount = $calculated['calculationResult']['rows'][$i];
                 if($calcDiscount['id'] !== $key)
                     continue;
                 $discount = $calcDiscount['discounts']['promocode'] / $product['count'];
-                $this->modx->log(1,'setDiscountForCart discount '.var_export($discount,1));
-                $this->modx->log(1,'setDiscountForCart qty '.var_export($product['count'],1));
+//                $this->modx->log(1,'setDiscountForCart discount '.var_export($discount,1));
+//                $this->modx->log(1,'setDiscountForCart qty '.var_export($product['count'],1));
 
                 // Пишем в старую корзину, чтобы потом всё вернуть при отвязке купона
                 $_SESSION['mspc']['cart'][$key] = $product;
                 $product['options']['old_price'] = $product['old_price'] = max($product['price'],$product['old_price']);
                 $product['price'] = $product['price'] - $discount;
-                $this->modx->log(1,'setDiscountForCart price after discount '.var_export($product['price'],1));
-                $this->modx->log(1,'setDiscountForCart old_price after discount '.var_export($product['old_price'],1));
+//                $this->modx->log(1,'setDiscountForCart price after discount '.var_export($product['price'],1));
+//                $this->modx->log(1,'setDiscountForCart old_price after discount '.var_export($product['old_price'],1));
 
                 //$this->setDiscountForProduct($coupon_id, $key, $product, $refresh);
                 $this->current[$key] = $_SESSION['mspc']['discount_amount'][$key] = array(
@@ -131,7 +131,7 @@ class mspcDiscountHandler implements mspcDiscountInterface
                 );
                 $i++;
             }
-            $this->modx->log(1,'setDiscountForCart cart '.var_export($_SESSION['mspc']['cart'],1));
+//            $this->modx->log(1,'setDiscountForCart cart '.var_export($_SESSION['mspc']['cart'],1));
             if (!$refresh) {
                 $this->mspc->ms2->cart->set($this->mspc->cart);
             }

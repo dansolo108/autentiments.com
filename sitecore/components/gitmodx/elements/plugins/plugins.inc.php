@@ -42,5 +42,17 @@ return array(
     ],
     'OnModificationRemainsUpdate'=>[
         'subscribersSend'
+    ],
+    'msOnAddToCart'=>[
+        'refreshPrices'
+    ],
+    'msOnChangeInCart'=>[
+        'refreshPrices'
+    ],
+    'msOnGetStatusCart'=>[
+        'refreshPrices'
+    ],
+    'msOnRemoveFromCart'=>[
+        'refreshPrices'
     ]
 );

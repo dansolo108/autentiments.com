@@ -544,9 +544,7 @@ class msPromoCode
                 }
                 if ($coupon = $this->coupon->setCurrentCoupon($resp['mspc']['coupon']) && $this->modx->getAuthenticatedUser('web')) {
                     $resp['success'] = true;
-                    $resp['mspc']['coupon'] = $coupon['code'];
-                    
-
+                    $resp['mspc']['coupon'] = $this->coupon->current['code'];
                     $this->discount->setDiscountForCart($this->coupon->current['code']);
 
                     if ($this->getError()) {

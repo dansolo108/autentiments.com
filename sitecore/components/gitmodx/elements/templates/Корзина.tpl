@@ -71,7 +71,6 @@ style="padding-top:{(!$_modx->user.join_loyalty || !$_modx->isAuthenticated('web
             //г. Санкт-Петербург, Басков переулок, 26
             //г. Москва, ул. Пятницкая, 7, стр.5
             $('.au-ordering__delivery').change(function(event){ 
-                console.log(this.value);
                 if (event.target.closest('#delivery_7')) {
                     $('#street').val('ул. Пятницкая').attr('data-val','ул. Пятницкая');
                     $('#building').val('7').attr('data-val','7');

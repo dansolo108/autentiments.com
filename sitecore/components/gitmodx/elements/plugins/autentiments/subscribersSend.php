@@ -27,6 +27,7 @@ switch ($modx->event->name) {
                 'url'=> $product->getPreviewUrl()
             ]);
             if($subscriber->remove()){
+
                 $sms->sendSms(urlencode($text), $phone);
             }
         }
