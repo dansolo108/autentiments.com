@@ -234,6 +234,7 @@
                     <div class="top-banner-item" onClick="openModalАdditionally($('.au-modal-overlay'));$('.au-modal-sale').addClass('active');">ДАРИМ СКИДКУ 10% НА ПЕРВУЮ ПОКУПКУ | ПОДРОБНЕЕ</div>
                 {*/if*}
                 <div class="top-banner-item">Бесплатная доставка по России при заказе от 20 000₽</div>
+                <div class="top-banner-item">ДОСТАВКА С ПРИМЕРКОЙ НАШИМ КУРЬЕРОМ ПО МОСКВЕ. ВЫЕЗД СТИЛИСТА</div>
             </div>
         </div>
 {/block}
