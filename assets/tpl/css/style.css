@@ -270,7 +270,7 @@ textarea {
   width: 100%;
   height: 100%;
   flex: 1 0 100%;
-  display: flex;
+  display: none;
   align-items: center;
   justify-content: center;
   position: absolute;
@@ -279,21 +279,17 @@ textarea {
   text-transform: uppercase;
 }
 .top-banner-item.active{
+  display: flex;
   top: 0;
 }
-.top-banner-item.next:not(.active){
+.top-banner-item.next{
+  display: flex;
+  top: -100%;
   transition: none;
-  animation: .3s ease 0s 1 next-top-banner-item;
 }
-@keyframes next-top-banner-item {
-  0%{
-    top: 0;
-    transition: top .3s ease;
-  }
-  100%{
-    transition: top .3s ease;
-    top:100%;
-  }
+.top-banner-item.prev{
+  display: flex;
+  top: 100%;
 }
 .au-header.fix-padding{
   padding-right:calc(100px + 17px);

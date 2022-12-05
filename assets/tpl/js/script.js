@@ -1206,23 +1206,28 @@ let bannerItems = bannerItemsParent.querySelectorAll('.top-banner-item');
 let active = bannerItemsParent.querySelector('.top-banner-item.active');
 if (!active)
     bannerItems[0].classList.add('active');
+active.nextElementSibling.classList.add('next');
+active.previousElementSibling.classList.add('prev');
 setInterval(() => {
     if (bannerItems.length < 2)
         return;
-    let active = bannerItemsParent.querySelector('.top-banner-item.active');
-    if (!active) {
+    let prev = bannerItemsParent.querySelector('.top-banner-item.active');
+    if (!prev) {
         bannerItems[0].classList.add('active');
-        active = bannerItems[0];
+        prev = bannerItems[0];
     }
-    let newActive = active.nextElementSibling;
+    let newActive = prev.nextElementSibling;
     if (!newActive)
         newActive = bannerItems[0];
     let next = newActive.nextElementSibling;
     if (!next)
         next = bannerItems[0];
-    active.classList.remove('active');
-    active.classList.remove('next');
+    bannerItems.forEach(item=>{
+        item.classList.remove('active');
+        item.classList.remove('prev');
+        item.classList.remove('next');
+    })
+    prev.classList.add('prev');
     newActive.classList.add('active');
-    newActive.classList.remove('next');
     next.classList.add('next');
 }, 5000);

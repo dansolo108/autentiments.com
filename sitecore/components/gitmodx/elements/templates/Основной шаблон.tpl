@@ -231,10 +231,10 @@
         <div class="top-banner__wrapper" >
             <div class="top-banner__items">
                 {*if !$_modx->isAuthenticated('web')*}
-                    <div class="top-banner-item" onClick="openModalАdditionally($('.au-modal-overlay'));$('.au-modal-sale').addClass('active');">ДАРИМ СКИДКУ 10% НА ПЕРВУЮ ПОКУПКУ | ПОДРОБНЕЕ</div>
+                    <div class="top-banner-item active" onClick="openModalАdditionally($('.au-modal-overlay'));$('.au-modal-sale').addClass('active');">ДАРИМ СКИДКУ 10% НА ПЕРВУЮ ПОКУПКУ | ПОДРОБНЕЕ</div>
                 {*/if*}
-                <div class="top-banner-item">Бесплатная доставка по России при заказе от 20 000₽</div>
-                <div class="top-banner-item">ДОСТАВКА С ПРИМЕРКОЙ НАШИМ КУРЬЕРОМ ПО МОСКВЕ. ВЫЕЗД СТИЛИСТА</div>
+                <div class="top-banner-item next">Бесплатная доставка по России при заказе от 20 000₽</div>
+                <div class="top-banner-item prev">ДОСТАВКА С ПРИМЕРКОЙ НАШИМ КУРЬЕРОМ ПО МОСКВЕ. ВЫЕЗД СТИЛИСТА</div>
             </div>
         </div>
 {/block}
