@@ -16,9 +16,9 @@ function initAutocomplete() {
             body.locations = [
 
             ];
-            if(countryElem.attr('data-val')){
+            if(countryElem.val()){
                 body.locations.push({
-                    "country":countryElem.attr('data-val'),
+                    "country":countryElem.val(),
                 });
             }
             let options = {
