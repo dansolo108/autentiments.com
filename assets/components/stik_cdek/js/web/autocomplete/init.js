@@ -35,9 +35,8 @@ function initAutocomplete() {
                 .then(response => response.text())
                 .then(result => {
                     result = JSON.parse(result);
-                    console.log(result);
                     result.suggestions.forEach(item=>{
-                        console.log(item.data.region_type_full,item.data.area_type_full,item.data.city_type_full,item.data.settlement_type_full,item.data.street_type_full);
+                        //console.log(item.data.region_type_full,item.data.area_type_full,item.data.city_type_full,item.data.settlement_type_full,item.data.street_type_full);
                     })
 
                     response(result.suggestions);
@@ -66,7 +65,6 @@ function initAutocomplete() {
                 .then(response => response.text())
                 .then(result => {
                     result = JSON.parse(result);
-                    console.log(result);
                     if(result.suggestions){
                         miniShop2.Order.add('cdek_id', result.suggestions[0].data.cdek_id);
                     }
