@@ -48,10 +48,8 @@ function initAutocomplete() {
         },
         onSelect: function (e, term, item) {
             $('[name=city]').val($(item).data('city'));
-            setTimeout(function () {
-                miniShop2.Order.add('city', $(item).data('city'));
-                $('[name=city]').change();
-            }, 500);
+            miniShop2.Order.add('city', $(item).data('city'));
+            $('[name=city]').change();
             setTimeout(function () {
                 let options = {
                     method: "POST",
@@ -74,7 +72,8 @@ function initAutocomplete() {
                         }
                     })
                     .catch(error => console.log("error", error));
-            }, 100);
+            }, 500);
+
         }
     });
 }
