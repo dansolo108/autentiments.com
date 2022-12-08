@@ -39,40 +39,39 @@ function initAutocomplete() {
                     result.suggestions.forEach(item=>{
                         console.log(item.data.region_type_full,item.data.area_type_full,item.data.city_type_full,item.data.settlement_type_full,item.data.street_type_full);
                     })
+
                     response(result.suggestions);
                 })
                 .catch(error => console.log("error", error));
         },
         renderItem: function (item, search) {
-            return `<div class="autocomplete-suggestion" data-index="0" data-id="${item.data.kladr_id}" data-city="${item.data.city}" data-val="${(item.data.settlement || item.data.city)}">${(item.data.settlement_with_type || item.data.city_with_type)} <small>[${item.data.region_with_type}]</small></div>`;
+            return `<div class="autocomplete-suggestion" data-index="${item.data.postal_code}" data-id="${item.data.kladr_id}" data-city="${item.data.city}" data-val="${(item.data.settlement || item.data.city)}">${(item.data.settlement_with_type || item.data.city_with_type)} <small>[${item.data.region_with_type}]</small></div>`;
         },
         onSelect: function (e, term, item) {
-            $('[name=city]').val($(item).data('city'));
-            miniShop2.Order.add('city', $(item).data('city'));
-            $('[name=city]').change();
-            setTimeout(function () {
-                let options = {
-                    method: "POST",
-                    mode: "cors",
-                    headers: {
-                        "Content-Type": "application/json",
-                        "Accept": "application/json",
-                        "Authorization": "Token " + dadataToken
-                    },
-                    body: JSON.stringify({
-                        query: $(item).data('id')
-                    })
-                }
-                fetch("https://suggestions.dadata.ru/suggestions/api/4_1/rs/findById/delivery", options)
-                    .then(response => response.text())
-                    .then(result => {
-                        result = JSON.parse(result);
-                        if(result.suggestions){
-                            miniShop2.Order.add('cdek_id', result.suggestions[0].data.cdek_id);
-                        }
-                    })
-                    .catch(error => console.log("error", error));
-            }, 500);
+            $('[name=city]').val($(item).data('city')).change();
+            $('[name=index]').val($(item).data('index')).change();
+            let options = {
+                method: "POST",
+                mode: "cors",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Accept": "application/json",
+                    "Authorization": "Token " + dadataToken
+                },
+                body: JSON.stringify({
+                    query: $(item).data('id')
+                })
+            }
+            fetch("https://suggestions.dadata.ru/suggestions/api/4_1/rs/findById/delivery", options)
+                .then(response => response.text())
+                .then(result => {
+                    result = JSON.parse(result);
+                    console.log(result);
+                    if(result.suggestions){
+                        miniShop2.Order.add('cdek_id', result.suggestions[0].data.cdek_id);
+                    }
+                })
+                .catch(error => console.log("error", error));
 
         }
     });
