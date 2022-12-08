@@ -1206,8 +1206,8 @@ let bannerItems = bannerItemsParent.querySelectorAll('.top-banner-item');
 let active = bannerItemsParent.querySelector('.top-banner-item.active');
 if (!active)
     bannerItems[0].classList.add('active');
-active.nextElementSibling.classList.add('next');
-active.previousElementSibling.classList.add('prev');
+active.nextElementSibling?.classList.add('next');
+active.previousElementSibling?.classList.add('prev');
 setInterval(() => {
     if (bannerItems.length < 2)
         return;
