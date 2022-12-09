@@ -48,7 +48,9 @@ function initAutocomplete() {
         },
         onSelect: function (e, term, item) {
             $('[name=city]').val($(item).data('city')).change();
-            $('[name=index]').val($(item).data('index')).change();
+            $('[name=city]').change();
+            $('[name=index]').val($(item).data('index'));
+            $('[name=index]').change();
             let options = {
                 method: "POST",
                 mode: "cors",
