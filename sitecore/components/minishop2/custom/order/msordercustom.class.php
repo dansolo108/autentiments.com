@@ -78,14 +78,7 @@ class msOrderCustom extends msOrderHandler implements msOrderInterface
         $createdon = date('Y-m-d H:i:s');
         /** @var msDelivery $delivery */
         $delivery = $this->modx->getObject('msDelivery', ['id' => $this->order['delivery']]);
-        
-        if (
-            $delivery_cost <= 0 &&
-            ($delivery->get('price') > 0 || $delivery->get('class')) &&
-            ($delivery->get('free_delivery_rf') != 1 || !in_array(mb_strtolower($this->order['country']), ['россия','russian federation']))
-        ) {
-            return $this->error('stik_delivery_error_text');
-        }
+
         
         // Выводим ошибку, если количество товаров больше допустимого для курьера по городу и оплаты при получении
         if ($cart_status['total_count'] > $this->config['local_courier_max_count'] && $this->order['delivery'] == 5 && $this->order['payment'] == 1) {

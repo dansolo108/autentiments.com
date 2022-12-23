@@ -254,8 +254,8 @@ class mspcDiscountHandler implements mspcDiscountInterface
         foreach ($this->mspc->cart as $key => $p) {
             if (!empty($_SESSION['mspc']['cart'][$key])) {
                 $this->mspc->cart[$key]['price'] = $_SESSION['mspc']['cart'][$key]['price'];
-                $this->modx->log(1,'removeDiscountFromCart old_price'.var_export($_SESSION['mspc']['cart'][$key]['old_price'],1));
-                $this->modx->log(1,'removeDiscountFromCart price'.var_export($_SESSION['mspc']['cart'][$key]['price'],1));
+                //$this->modx->log(1,'removeDiscountFromCart old_price'.var_export($_SESSION['mspc']['cart'][$key]['old_price'],1));
+                //$this->modx->log(1,'removeDiscountFromCart price'.var_export($_SESSION['mspc']['cart'][$key]['price'],1));
 
                 $this->mspc->cart[$key]['old_price'] = $_SESSION['mspc']['cart'][$key]['old_price'];
             }
