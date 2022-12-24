@@ -97,7 +97,6 @@ class msDeliveryHandlerStikCdek extends msDeliveryHandler implements msDeliveryI
             ]);
             $response = $modRestClient->post('api/v1/clean/address', [ $orderData['city'] ]);
             $response = $response->process()[0];
-            $this->modx->log(1,var_export($response,1));
             if($response['region'] === 'Московская' || $response['region'] === 'Ленинградская')
                 return [$cost + 690,$min,$max];
 
