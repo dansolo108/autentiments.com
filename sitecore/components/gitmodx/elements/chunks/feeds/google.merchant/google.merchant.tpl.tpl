@@ -5,7 +5,7 @@
     <g:price>{"!msMultiCurrencyPrice" | snippet : ["price" => $price, "cid" => $_modx->getPlaceholder("currency_id_pls")] | replace : " " : ""} {$_modx->getPlaceholder("currency_code_pls")}</g:price>
     <g:condition>new</g:condition>
     <g:image_link>{$_modx->getPlaceholder("site_url_pls")}{$thumbs[0]["category"] | escape}</g:image_link>
-    <title>{$pagetitle}</title>
+    <g:title>{$pagetitle}</g:title>
     <g:brand>Autentiments</g:brand>
     <g:availability>in stock</g:availability>
     <g:description>{($content ?: ($longtitle ?: $pagetitle)) | strip_tags | strip | escape}</g:description>
