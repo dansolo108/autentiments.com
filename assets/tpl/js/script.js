@@ -989,13 +989,15 @@ function setEvent(event, props = {}) {
     }
     _tmr = _tmr || [];
     switch (event) {
+        
         case "add_to_cart":
+             ym(86113805,'reachGoal','add_to_cart',props);
             gtag("event", "add_to_cart", {
                 currency: "RUB",
                 items: [{
                     item_name: props.pagetitle,
-                    item_category: props.category.split("/")[0],
-                    item_category2: props.category.split("/")[1],
+                    item_category: props?.category?.split("/")[0],
+                    item_category2: props?.category?.split("/")[1],
                     price: props.price,
                     quantity: props.quantity ?? 1,
                 }],
@@ -1022,15 +1024,15 @@ function setEvent(event, props = {}) {
                 productid: props.id,
                 totalvalue: props.price,
             });
-
+           
             break;
         case "remove_from_cart":
             gtag("event", "remove_from_cart", {
                 currency: "RUB",
                 items: [{
                     item_name: props.pagetitle,
-                    item_category: props.category.split("/")[0],
-                    item_category2: props.category.split("/")[1],
+                    item_category: props?.category?.split("/")[0],
+                    item_category2: props?.category?.split("/")[1],
                     price: props.price,
                     quantity: props.quantity ?? 1,
                 }],
@@ -1095,8 +1097,8 @@ function setEvent(event, props = {}) {
                 currency: "RUB",
                 items: [{
                     item_name: props.pagetitle,
-                    item_category: props.category.split("/")[0],
-                    item_category2: props.category.split("/")[1],
+                    item_category: props?.category?.split("/")[0],
+                    item_category2: props?.category?.split("/")[1],
                     price: props.price,
                     quantity: props.quantity ?? 1,
                 }],
@@ -1117,8 +1119,8 @@ function setEvent(event, props = {}) {
                 currency: "RUB",
                 items: [{
                     item_name: props.pagetitle,
-                    item_category: props.category.split("/")[0],
-                    item_category2: props.category.split("/")[1],
+                    item_category: props?.category?.split("/")[0],
+                    item_category2: props?.category?.split("/")[1],
                     price: props.price,
                     quantity: props.quantity ?? 1,
                 }],

@@ -22,7 +22,7 @@
                     {if $_modx->config.menu_clothes_img_2}
                         <a class="au-desktop_xxl" href="{$_modx->config.menu_clothes_link_2}">
                             <div class="au-header__sub-img-box">
-                                {include 'picture' img=$_modx->config.menu_clothes_img_2 height=294 width=196 class='au-header__sub-img' noprefix=true}
+                                {*{include 'picture' img=$_modx->config.menu_clothes_img_2 height=294 width=196 class='au-header__sub-img' noprefix=true}*}
                             </div>
                         </a>
                     {/if}
@@ -39,7 +39,7 @@
                     {if $_modx->config.menu_accessorise_img}
                         <a class="au-desktop_xl" href="{$_modx->config.menu_accessorise_link}">
                             <div class="au-header__sub-img-box">
-                                {include 'picture' img=$_modx->config.menu_accessorise_img height=294 width=196 class='au-header__sub-img' noprefix=true}
+                                {*{include 'picture' img=$_modx->config.menu_accessorise_img height=294 width=196 class='au-header__sub-img' noprefix=true}*}
                             </div>
                         </a>
                     {/if}

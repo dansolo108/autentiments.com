@@ -262,7 +262,7 @@
                     dataType:"json",
                     success:(response)=>{
                         if(response.success){
-                            setEvent('add_to_cart',response.info);
+                            setEvent('add_to_cart',PageInfo?({...PageInfo, ...response.info}):(response.info));
                         }
                     }
                 });

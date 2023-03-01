@@ -212,31 +212,31 @@
 <!-- End Google Tag Manager (noscript) -->
 <!-- Top.Mail.Ru counter -->
 {ignore}
-<script type="text/javascript">
-    var _tmr = window._tmr || (window._tmr = []);
-    _tmr.push({id: "3269446", type: "pageView", start: (new Date()).getTime(), pid: "USER_ID"});
-    (function (d, w, id) {
-        if (d.getElementById(id)) return;
-        var ts = d.createElement("script"); ts.type = "text/javascript"; ts.async = true; ts.id = id;
-        ts.src = "https://top-fwz1.mail.ru/js/code.js";
-        var f = function () { var s = d.getElementsByTagName("script")[0]; s.parentNode.insertBefore(ts, s); };
-        if (w.opera == "[object Opera]") { d.addEventListener("DOMContentLoaded", f, false); } else { f(); }
-    })(document, window, "tmr-code");
-</script>
-<noscript><div><img src="https://top-fwz1.mail.ru/counter?id=3269446;js=na" style="position:absolute;left:-9999px;" alt="Top.Mail.Ru" /></div></noscript>
-<!-- /Top.Mail.Ru counter -->
+    <script type="text/javascript">
+        var _tmr = window._tmr || (window._tmr = []);
+        _tmr.push({id: "3269446", type: "pageView", start: (new Date()).getTime(), pid: "USER_ID"});
+        (function (d, w, id) {
+            if (d.getElementById(id)) return;
+            var ts = d.createElement("script"); ts.type = "text/javascript"; ts.async = true; ts.id = id;
+            ts.src = "https://top-fwz1.mail.ru/js/code.js";
+            var f = function () { var s = d.getElementsByTagName("script")[0]; s.parentNode.insertBefore(ts, s); };
+            if (w.opera == "[object Opera]") { d.addEventListener("DOMContentLoaded", f, false); } else { f(); }
+        })(document, window, "tmr-code");
+    </script>
+    <noscript><div><img src="https://top-fwz1.mail.ru/counter?id=3269446;js=na" style="position:absolute;left:-9999px;" alt="Top.Mail.Ru" /></div></noscript>
+    <!-- /Top.Mail.Ru counter -->
 {/ignore}
 <div class="au-modal-overlay"></div>
 {block 'loyality-discount'}
-        <div class="top-banner__wrapper" >
-            <div class="top-banner__items">
-                {*if !$_modx->isAuthenticated('web')*}
-                   {* <div class="top-banner-item active" onClick="openModalАdditionally($('.au-modal-overlay'));$('.au-modal-sale').addClass('active');">ДАРИМ СКИДКУ 10% НА ПЕРВУЮ ПОКУПКУ | ПОДРОБНЕЕ</div>*}
-                {*/if*}
-                <div class="top-banner-item active">Бесплатная доставка по России при заказе от 20 000₽</div>
-{*                <div class="top-banner-item">ДОСТАВКА С ПРИМЕРКОЙ НАШИМ КУРЬЕРОМ ПО МОСКВЕ. ВЫЕЗД СТИЛИСТА</div>*}
-            </div>
+    <div class="top-banner__wrapper" >
+        <div class="top-banner__items">
+            {*if !$_modx->isAuthenticated('web')*}
+            {* <div class="top-banner-item active" onClick="openModalАdditionally($('.au-modal-overlay'));$('.au-modal-sale').addClass('active');">ДАРИМ СКИДКУ 10% НА ПЕРВУЮ ПОКУПКУ | ПОДРОБНЕЕ</div>*}
+            {*/if*}
+            <div class="top-banner-item active">Бесплатная доставка по России при заказе от 20 000₽</div>
+            {*                <div class="top-banner-item">ДОСТАВКА С ПРИМЕРКОЙ НАШИМ КУРЬЕРОМ ПО МОСКВЕ. ВЫЕЗД СТИЛИСТА</div>*}
         </div>
+    </div>
 {/block}
 
 <div class="au-header__wrapper">
@@ -431,12 +431,12 @@
                 <a class="au-footer__link" href="{2|url}">{$linkAbout}</a>
             </li>
             {'pdoMenu' | snippet : [
-                'parents' => 16,
-                'resources' => '20,17,18,19',
-                'sortby' => 'menuindex',
-                'level' => 1,
-                'tplOuter' => '@INLINE {$wrapper}',
-                'tpl' => '@INLINE <li class="au-footer__item"><a class="au-footer__link  au-text-tab_js" href="{$link}">{$menutitle}</a></li>',
+            'parents' => 16,
+            'resources' => '20,17,18,19',
+            'sortby' => 'menuindex',
+            'level' => 1,
+            'tplOuter' => '@INLINE {$wrapper}',
+            'tpl' => '@INLINE <li class="au-footer__item"><a class="au-footer__link  au-text-tab_js" href="{$link}">{$menutitle}</a></li>',
             ]}
         </ul>
         <ul class="au-footer__menu">
@@ -450,18 +450,24 @@
         <div class="au-footer__info-box">
             <div class="au-footer__box-link">
                 {'pdoMenu' | snippet : [
-                    'parents' => 16,
-                    'resources' => '31,30',
-                    'sortby' => 'menuindex',
-                    'level' => 1,
-                    'tplOuter' => '@INLINE {$wrapper}',
-                    'tpl' => '@INLINE <a class="au-footer__policy-link  au-text-tab_js" href="{$link}">{$menutitle}</a>',
+                'parents' => 16,
+                'resources' => '31,30',
+                'sortby' => 'menuindex',
+                'level' => 1,
+                'tplOuter' => '@INLINE {$wrapper}',
+                'tpl' => '@INLINE <a class="au-footer__policy-link  au-text-tab_js" href="{$link}">{$menutitle}</a>',
                 ]}
             </div>
             <div class="au-footer__year">
-                © Autentiments 2021
+                © Autentiments 2023
             </div>
+            {if $_modx->resource.template == 18}
+                <div class="au-footer__developer" >
+                    <div class="au-footer__developer-link">Разработка сайта STIK</div>
+                </div>
+            {/if}
         </div>
+
         <div class="fixed-buttons">
             <a href="https://t.me/autentiments_bot" target="_blank" class="fixed-buttons__telegram"><img src="https://img.icons8.com/ios/50/ffffff/sent.png"/>&nbsp;Написать</a>
             <a href="whatsapp://send?phone=79215702113" target="_blank" class="fixed-buttons__whatsapp"><img src="https://img.icons8.com/ios/50/ffffff/whatsapp--v1.png"/>&nbsp;Написать</a>

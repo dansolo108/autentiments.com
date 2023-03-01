@@ -5282,7 +5282,9 @@ label.au-filter__cost:last-child input {
   line-height: 19px;
   color: #6D6A6A;
   transition: all 0.2s ease-in-out; }
-
+  .au-footer__policy-link{
+      text-align:center;
+  }
 .au-footer__year,
 .au-footer__developer-link {
   color: #6D6A6A; }
