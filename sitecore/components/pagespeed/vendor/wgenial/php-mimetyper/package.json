@@ -1,0 +1,23 @@
+{
+  "name": "php-mimetyper",
+  "version": "2.0.0",
+  "description": "PHP mime type and extension mapping library: compatible with Symfony, powered by jshttp/mime-db",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/wgenial/php-mimetyper.git"
+  },
+  "keywords": [
+    "php",
+    "mime",
+    "mimetype"
+  ],
+  "author": "WGenial <developers@wgenial.com.br>",
+  "license": "MIT",
+  "dependencies": {
+    "mime-db": "^1.44.0"
+  }
+}

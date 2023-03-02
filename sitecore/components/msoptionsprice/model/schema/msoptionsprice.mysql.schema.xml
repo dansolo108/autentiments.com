@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<model package="msoptionsprice" baseClass="xPDOObject" platform="mysql" defaultEngine="MyISAM"
+	   phpdoc-package="msoptionsprice"
+	   version="1.1">
+
+
+	<object class="msopModification" table="msop_modifications" extends="xPDOSimpleObject">
+		<field key="name" dbtype="varchar" precision="255" phptype="string" null="true" default=""/>
+		<field key="rid" dbtype="int" precision="10" attributes="unsigned" phptype="integer" null="true"
+			   default="0"/>
+		<field key="type" dbtype="tinyint" precision="3" attributes="unsigned" phptype="integer" null="false"
+			   default="1"/>
+		<field key="price" dbtype="varchar" precision="11" phptype="string" null="false" default="0"/>
+		<field key="old_price" dbtype="varchar" precision="11" phptype="string" null="false" default="0"/>
+		<field key="article" dbtype="varchar" precision="50" phptype="string" null="true" default=""/>
+		<field key="weight" dbtype="decimal" precision="13,3" phptype="float" null="false" default="0"/>
+		<field key="count" dbtype="int" precision="10" phptype="integer" null="false" default="0"/>
+		<field key="image" dbtype="int" precision="10" attributes="unsigned" phptype="integer" null="true"/>
+
+		<field key="active" dbtype="tinyint" precision="1" phptype="boolean" attributes="unsigned" null="false"
+			   default="1" index="index"/>
+		<field key="rank" dbtype="int" precision="10" phptype="integer" attributes="unsigned" null="false" default="0"
+			   index="index"/>
+
+		<field key="sync_id" dbtype="varchar" precision="255" phptype="string" null="true" />
+		<field key="sync_service" dbtype="varchar" precision="50" phptype="string" null="true"/>
+
+		<field key="description" dbtype="text" phptype="string" null="true"/>
+
+		<index alias="rid" name="rid" primary="false" unique="false" type="BTREE">
+			<column key="rid" length="" collation="A" null="false"/>
+		</index>
+		<index alias="article" name="article" primary="false" unique="false" type="BTREE">
+			<column key="article" length="" collation="A" null="false"/>
+		</index>
+		<index alias="image" name="image" primary="false" unique="false" type="BTREE">
+			<column key="image" length="" collation="A" null="false"/>
+		</index>
+		<index alias="active" name="active" primary="false" unique="false" type="BTREE">
+			<column key="active" length="" collation="A" null="false"/>
+		</index>
+		<index alias="active" name="active" primary="false" unique="false" type="BTREE">
+			<column key="active" length="" collation="A" null="false"/>
+		</index>
+		<index alias="active" name="active" primary="false" unique="false" type="BTREE">
+			<column key="active" length="" collation="A" null="false"/>
+		</index>
+		<index alias="sync_id" name="sync_id" primary="false" unique="false" type="BTREE">
+			<column key="sync_id" length="" collation="A" null="false"/>
+		</index>
+		<index alias="sync_service" name="sync_service" primary="false" unique="false" type="BTREE">
+			<column key="sync_service" length="" collation="A" null="false"/>
+		</index>
+
+		<composite alias="Options" class="msopModificationOption" local="id" foreign="mid" cardinality="many"
+				   owner="local"/>
+		<composite alias="Images" class="msopModificationImage" local="id" foreign="mid" cardinality="many"
+				   owner="local"/>
+
+		<aggregate alias="Product" class="msProduct" local="rid" foreign="id" cardinality="one" owner="foreign"/>
+
+	</object>
+
+
+	<object class="msopModificationOption" table="msop_modification_options" extends="xPDOObject">
+		<field key="mid" dbtype="int" precision="10" attributes="unsigned" phptype="integer" null="false"
+			   default="0" index="pk"/>
+		<field key="rid" dbtype="int" precision="10" attributes="unsigned" phptype="integer" null="false"
+			   default="0" index="pk"/>
+		<field key="key" dbtype="varchar" precision="191" phptype="string" null="false" index="pk"/>
+		<field key="value" dbtype="text" phptype="string" null="true" default=""/>
+
+		<index alias="modification" name="modification" primary="true" unique="true" type="BTREE">
+			<column key="mid" length="" collation="A" null="false"/>
+			<column key="rid" length="" collation="A" null="false"/>
+			<column key="key" length="" collation="A" null="false"/>
+		</index>
+
+		<aggregate alias="Modification" class="msopModification" local="mid" foreign="id" cardinality="one"
+				   owner="foreign"/>
+	</object>
+
+
+	<object class="msopModificationImage" table="msop_modification_images" extends="xPDOObject">
+		<field key="mid" dbtype="int" precision="10" attributes="unsigned" phptype="integer" null="false"
+			   default="0" index="pk"/>
+		<field key="image" dbtype="int" precision="10" attributes="unsigned" phptype="integer" null="false"
+			   default="0" index="pk"/>
+		<field key="rank" dbtype="tinyint" precision="1" attributes="unsigned" phptype="integer" null="true"
+			   default="0" index="index"/>
+
+		<index alias="image" name="image" primary="true" unique="true" type="BTREE">
+			<column key="mid" length="" collation="A" null="false"/>
+			<column key="image" length="" collation="A" null="false"/>
+		</index>
+
+		<aggregate alias="Modification" class="msopModification" local="mid" foreign="id" cardinality="one"
+				   owner="foreign"/>
+		<aggregate alias="Image" class="msProductFile" local="image" foreign="id" cardinality="one"
+				   owner="foreign"/>
+	</object>
+
+
+</model>
