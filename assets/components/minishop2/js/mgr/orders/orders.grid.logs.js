@@ -20,13 +20,13 @@ miniShop2.grid.Logs = function (config) {
 Ext.extend(miniShop2.grid.Logs, miniShop2.grid.Default, {
 
     getFields: function () {
-        return ['id', 'user_id', 'username', 'fullname', 'timestamp', 'action', 'entry'];
+        return ['id', 'user_id', 'username', 'fullname', 'timestamp', 'action', 'entry', 'color'];
     },
 
     getColumns: function () {
         return [
             {header: _('ms2_id'), dataIndex: 'id', hidden: true, sortable: true, width: 50},
-            {header: _('ms2_username'), dataIndex: 'username', width: 75, renderer: function(val, cell, row) {
+            {header: _('ms2_username'), dataIndex: 'username', width: 75, renderer: function (val, cell, row) {
                 return miniShop2.utils.userLink(val, row.data['user_id'], true);
             }},
             {header: _('ms2_fullname'), dataIndex: 'fullname', width: 100},
@@ -36,9 +36,9 @@ Ext.extend(miniShop2.grid.Logs, miniShop2.grid.Default, {
                 sortable: true,
                 renderer: miniShop2.utils.formatDate,
                 width: 75
-            },
+        },
             {header: _('ms2_action'), dataIndex: 'action', width: 50},
-            {header: _('ms2_entry'), dataIndex: 'entry', width: 50}
+            {header: _('ms2_entry'), dataIndex: 'entry', width: 50, renderer: miniShop2.utils.renderBadge}
         ];
     },
 

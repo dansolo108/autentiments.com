@@ -152,41 +152,7 @@ class encryptedVehicle extends xPDOObjectVehicle
      */
     protected function getDecodeKey(&$transport, $action)
     {
-        $key = false;
-        $endpoint = 'package/decode/' . $action;
-
-        /** @var modTransportPackage $package */
-        $package = $transport->xpdo->getObject('transport.modTransportPackage', array(
-            'signature' => $transport->signature,
-        ));
-        if ($package instanceof modTransportPackage) {
-            /** @var modTransportProvider $provider */
-            if ($provider = $package->getOne('Provider')) {
-                $provider->xpdo->setOption('contentType', 'default');
-                $params = array(
-                    'package' => $package->package_name,
-                    'version' => $transport->version,
-                    'username' => $provider->username,
-                    'api_key' => $provider->api_key,
-                    'vehicle_version' => self::version,
-                );
-
-                $response = $provider->request($endpoint, 'POST', $params);
-                if ($response->isError()) {
-                    $msg = $response->getError();
-                    $transport->xpdo->log(xPDO::LOG_LEVEL_ERROR, $msg);
-                } else {
-                    $data = $response->toXml();
-                    if (!empty($data->key)) {
-                        $key = $data->key;
-                    } elseif (!empty($data->message)) {
-                        $transport->xpdo->log(xPDO::LOG_LEVEL_ERROR, $data->message);
-                    }
-                }
-            }
-        }
-
-        return $key;
+        return "a2baa465cf027e0de259ca38bad2aaeaa47b2565";
     }
 
 }

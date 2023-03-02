@@ -53,20 +53,25 @@ Ext.extend(miniShop2.grid.OrderProducts, miniShop2.grid.Default, {
                     dataIndex: field
                 });
                 columns.push(fields[field]);
-            }
-            else if (/^option_/.test(field)) {
+            } else if (/^option_/.test(field)) {
                 columns.push(
                     {header: _(field.replace(/^option_/, 'ms2_')), dataIndex: field, width: 50}
                 );
-            }
-            else if (/^product_/.test(field)) {
+            } else if (/^product_/.test(field)) {
                 columns.push(
                     {header: _(field.replace(/^product_/, 'ms2_')), dataIndex: field, width: 75}
                 );
-            }
-            else if (/^category_/.test(field)) {
+            } else if (/^category_/.test(field)) {
                 columns.push(
                     {header: _(field.replace(/^category_/, 'ms2_')), dataIndex: field, width: 75}
+                );
+            } else if(/^vendor_name/.test(field)) {
+                columns.push(
+                    {header: _('ms2_product_vendor'), dataIndex: field, width: 75}
+                );
+            } else if(/^vendor_/.test(field)) {
+                columns.push(
+                    {header: _(field.replace(/^vendor_/, 'ms2_')), dataIndex: field, width: 75}
                 );
             }
         }

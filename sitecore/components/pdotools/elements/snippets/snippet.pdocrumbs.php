@@ -1,6 +1,7 @@
 <?php
 /** @var array $scriptProperties */
 /** @var pdoFetch $pdoFetch */
+/** @var modX $modx */
 $fqn = $modx->getOption('pdoFetch.class', null, 'pdotools.pdofetch', true);
 $path = $modx->getOption('pdofetch_class_path', null, MODX_CORE_PATH . 'components/pdotools/model/', true);
 if ($pdoClass = $modx->loadClass($fqn, $path, false, true)) {
@@ -25,6 +26,7 @@ if ($outputSeparator == '&nbsp;&rarr;&nbsp;' && $direction == 'rtl') {
 if ($limit == '') {
     $limit = 10;
 }
+
 // For compatibility with BreadCrumb
 if (!empty($maxCrumbs)) {
     $limit = $maxCrumbs;
@@ -147,7 +149,7 @@ $pdoFetch->addTime('Query parameters ready');
 $pdoFetch->setConfig(array_merge($default, $scriptProperties), false);
 $rows = $pdoFetch->run();
 
-$output = array();
+$output = [];
 if (!empty($rows) && is_array($rows)) {
     if (strtolower($direction) == 'ltr') {
         $rows = array_reverse($rows);
@@ -156,7 +158,7 @@ if (!empty($rows) && is_array($rows)) {
     foreach ($rows as $row) {
         if (!empty($useWeblinkUrl) && $row['class_key'] == 'modWebLink') {
             $row['link'] = is_numeric(trim($row['content'], '[]~ '))
-                ? $pdoFetch->makeUrl(intval(trim($row['content'], '[]~ ')), $row)
+                ? $pdoFetch->makeUrl((int)trim($row['content'], '[]~ '), $row)
                 : $row['content'];
         } else {
             $row['link'] = $pdoFetch->makeUrl($row['id'], $row);
@@ -165,12 +167,16 @@ if (!empty($rows) && is_array($rows)) {
         $row = array_merge(
             $scriptProperties,
             $row,
-            array('idx' => $pdoFetch->idx++)
+            ['idx' => $pdoFetch->idx++]
         );
         if (empty($row['menutitle'])) {
             $row['menutitle'] = $row['pagetitle'];
         }
 
+        if (isset($return) && $return === 'data') {
+            $output[] = $row;
+            continue;
+        }
         if ($row['id'] == $resource->id && empty($showCurrent)) {
             continue;
         } elseif ($row['id'] == $resource->id && !empty($tplCurrent)) {
@@ -185,6 +191,10 @@ if (!empty($rows) && is_array($rows)) {
             : $pdoFetch->getChunk($tpl, $row, $fastMode);
     }
 }
+if (isset($return) && $return === 'data') {
+    return $output;
+}
+
 $pdoFetch->addTime('Chunks processed');
 
 if (count($output) == 1 && !empty($hideSingle)) {

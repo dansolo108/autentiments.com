@@ -104,6 +104,7 @@ Ext.extend(Redi.panel.Home, MODx.FormPanel, {
                 ,text: _('redirector.import.do')
                 ,anchor: 'auto'
                 ,disabled: true
+                ,style: {marginTop: '15px'}
                 ,listeners: {
                     'click': { fn: function() {
                         var formObj = Ext.getCmp('redirector-import-formpanel').getForm();

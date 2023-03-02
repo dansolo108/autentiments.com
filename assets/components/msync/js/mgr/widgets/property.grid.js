@@ -15,11 +15,11 @@ mSync.grid.Property = function(config) {
         ,columns: [
             {header: _('msync_id'),dataIndex: 'id',width: 50, sortable: true}
             ,{header: _('msync_source'),dataIndex: 'source',width: 150, sortable: true}
-            ,{header: _('msync_type'),dataIndex: 'type',width: 100, renderer: this.renderType}
+            ,{header: _('msync_type'),dataIndex: 'type',width: 100, renderer: this.renderType, sortable: true}
             ,{header: _('msync_target'),dataIndex: 'target',width: 150, sortable: true}
-            ,{header: _('msync_is_multiple'),dataIndex: 'is_multiple',width: 100, renderer: this.renderBool}
-            ,{header: _('msync_is_primary'),dataIndex: 'is_primary',width: 100, renderer: this.renderBool}
-            ,{header: _('msync_active'),dataIndex: 'active',width: 100, renderer: this.renderBool}
+            ,{header: _('msync_is_multiple'),dataIndex: 'is_multiple',width: 100, renderer: this.renderBool, sortable: true}
+            ,{header: _('msync_is_primary'),dataIndex: 'is_primary',width: 100, renderer: this.renderBool, sortable: true}
+            ,{header: _('msync_active'),dataIndex: 'active',width: 100, renderer: this.renderBool, sortable: true}
         ]
         ,tbar: [{
             text: _('msync_btn_create')
@@ -58,7 +58,7 @@ Ext.extend(mSync.grid.Property,MODx.grid.Grid,{
         if (!this.windows.createProperty) {
             this.windows.createProperty = MODx.load({
                 xtype: 'msync-window-property-create'
-                ,fields: this.getPropertyFields('create',0)
+                ,fields: this.getPropertyFields({})
                 ,listeners: {
                     success: {fn:function() { this.refresh(); },scope:this}
                 }
@@ -73,16 +73,15 @@ Ext.extend(mSync.grid.Property,MODx.grid.Grid,{
         if (!this.menu.record || !this.menu.record.id) return false;
         var r = this.menu.record;
 
-//        if (!this.windows.updateProperty) {
-            this.windows.updateProperty = MODx.load({
-                xtype: 'msync-window-property-update'
-                ,record: r
-                ,fields: this.getPropertyFields('update', r.default)
-                ,listeners: {
-                    success: {fn:function() { this.refresh(); },scope:this}
-                }
-            });
-//        }
+        this.windows.updateProperty = MODx.load({
+            xtype: 'msync-window-property-update'
+            ,record: r
+            ,fields: this.getPropertyFields(r)
+            ,listeners: {
+                 success: {fn:function() { this.refresh(); },scope:this}
+            }
+        });
+
         this.windows.updateProperty.fp.getForm().reset();
         this.windows.updateProperty.fp.getForm().setValues(r);
         this.windows.updateProperty.show(e.target);
@@ -93,7 +92,7 @@ Ext.extend(mSync.grid.Property,MODx.grid.Grid,{
         if (!this.menu.record) return false;
 
         MODx.msg.confirm({
-            title: _('msync_menu_remove') + '"' + this.menu.record.name + '"'
+            title: _('msync_menu_remove') + '"' + this.menu.record.source + '"?'
             ,text: _('msync_menu_remove_confirm')
             ,url: this.config.url
             ,params: {
@@ -105,16 +104,39 @@ Ext.extend(mSync.grid.Property,MODx.grid.Grid,{
             }
         });
     }
-    ,getPropertyFields: function(type,propertyDefault) {
+    ,getPropertyFields: function(property) {
         return [
             {xtype: 'hidden',name: 'id'}
             ,{xtype: 'hidden',name: 'default'}
-            ,{xtype: 'textfield',fieldLabel: _('msync_source'), name: 'source', allowBlank: false, anchor: '99%',  disabled: propertyDefault == true ? 1 : 0}
-            ,{xtype: 'msync-combo-property-type',fieldLabel: _('msync_type'), name: 'type', allowBlank: false, anchor: '99%'}
-            ,{xtype: 'textfield',fieldLabel: _('msync_target'), name: 'target', allowBlank: false, anchor: '99%'}
-            ,{xtype: 'xcheckbox',boxLabel: _('msync_is_multiple'), name: 'is_multiple', inputValue: 0, checked: 0}
-            ,{xtype: 'xcheckbox',boxLabel: _('msync_is_primary'), name: 'is_primary', inputValue: 0, checked: 0}
-            ,{xtype: 'xcheckbox',boxLabel: _('msync_active'), name: 'active', inputValue: 1, checked: 1}
+            ,{xtype: 'textfield',fieldLabel: _('msync_source'), name: 'source', allowBlank: false, anchor: '99%',  disabled: !!property.default,
+                style: { marginTop: '10px'}, labelStyle: 'margin-top:10px'}
+            ,{xtype: 'msync-combo-property-type',fieldLabel: _('msync_type'), name: 'type', allowBlank: false, anchor: '99%',
+            listeners: {
+                'select': function(combo, record) {
+                    var isTv = record.id == '2';
+                    var form = combo.ownerCt.getForm();
+                    var primaryField = form.findField('is_primary');
+                    var multipleField = form.findField('is_multiple');
+                    primaryField.setDisabled(isTv);
+                    multipleField.setDisabled(isTv);
+                    if (isTv) {
+                        primaryField.setValue(false);
+                        multipleField.setValue(false);
+                    }
+                }
+            }}
+            ,{xtype: 'textfield',fieldLabel: _('msync_target'), name: 'target', allowBlank: false, anchor: '99%'},
+            {
+                layout: 'column',
+                defaults: {
+                    columnWidth: 0.33
+                },
+                items: [
+                    {xtype: 'xcheckbox',boxLabel: _('msync_is_multiple'), name: 'is_multiple', inputValue: 0, checked: 0, disabled: property.type == '2'}
+                    ,{xtype: 'xcheckbox',boxLabel: _('msync_is_primary'), name: 'is_primary', inputValue: 0, checked: 0, disabled: property.type == '2'}
+                    ,{xtype: 'xcheckbox',boxLabel: _('msync_active'), name: 'active', inputValue: 1, checked: 1}
+                ]}
+            ,
         ];
     }
 });

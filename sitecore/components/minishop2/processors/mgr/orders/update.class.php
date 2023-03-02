@@ -4,7 +4,7 @@ class msOrderUpdateProcessor extends modObjectUpdateProcessor
 {
     public $classKey = 'msOrder';
     public $objectType = 'msOrder';
-    public $languageTopics = array('minishop2:default');
+    public $languageTopics = ['minishop2:default'];
     public $beforeSaveEvent = 'msOnBeforeUpdateOrder';
     public $afterSaveEvent = 'msOnUpdateOrder';
     public $permission = 'msorder_save';
@@ -14,13 +14,11 @@ class msOrderUpdateProcessor extends modObjectUpdateProcessor
     /** @var  miniShop2 $ms2 */
     protected $ms2;
 
-
     /**
-    * @return bool|null|string
-    */
+     * @return bool|null|string
+     */
     public function initialize()
     {
-
         $this->ms2 = $this->modx->getService('miniShop2');
 
         if (!$this->modx->hasPermission($this->permission)) {
@@ -30,13 +28,12 @@ class msOrderUpdateProcessor extends modObjectUpdateProcessor
         return parent::initialize();
     }
 
-
     /**
-    * @return bool|null|string
-    */
+     * @return bool|null|string
+     */
     public function beforeSet()
     {
-        foreach (array('status', 'delivery', 'payment') as $v) {
+        foreach (['status', 'delivery', 'payment'] as $v) {
             if (!$this->$v = $this->getProperty($v)) {
                 $this->addFieldError($v, $this->modx->lexicon('ms2_err_ns'));
             }
@@ -53,10 +50,9 @@ class msOrderUpdateProcessor extends modObjectUpdateProcessor
         return parent::beforeSet();
     }
 
-
     /**
-    * @return bool|string
-    */
+     * @return bool|string
+     */
     public function beforeSave()
     {
         $this->object->set('updatedon', time());
@@ -73,12 +69,12 @@ class msOrderUpdateProcessor extends modObjectUpdateProcessor
         return parent::beforeSave();
     }
 
-
     /**
-    * {@inheritDoc}
-    * @return mixed
-    */
-    public function process() {
+     * {@inheritDoc}
+     * @return mixed
+     */
+    public function process()
+    {
         /* Run the beforeSet method before setting the fields, and allow stoppage */
         $canSave = $this->beforeSet();
         if ($canSave !== true) {
@@ -99,7 +95,7 @@ class msOrderUpdateProcessor extends modObjectUpdateProcessor
             $validator = $this->object->getValidator();
             if ($validator->hasMessages()) {
                 foreach ($validator->getMessages() as $message) {
-                    $this->addFieldError($message['field'],$this->modx->lexicon($message['message']));
+                    $this->addFieldError($message['field'], $this->modx->lexicon($message['message']));
                 }
             }
         }
@@ -111,7 +107,7 @@ class msOrderUpdateProcessor extends modObjectUpdateProcessor
         }
 
         if ($this->saveObject() == false) {
-            return $this->failure($this->modx->lexicon($this->objectType.'_err_save'));
+            return $this->failure($this->modx->lexicon($this->objectType . '_err_save'));
         }
 
         // set "new status"
@@ -129,7 +125,6 @@ class msOrderUpdateProcessor extends modObjectUpdateProcessor
 
         return $this->cleanup();
     }
-
 }
 
 return 'msOrderUpdateProcessor';

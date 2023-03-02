@@ -1,5 +1,15 @@
 Changelog file for Redirector component.
 
+Redirector 2.0.11
+====================================
+- Fixed: Set index length for utf8mb4 and remove 1.0 index in schema
+- Fixed: Some styling issues
+
+Redirector 2.0.10
+====================================
+- Fixed: Fix upper case letters in processor paths for MODX3
+- Fixed: Lexicon issues
+
 Redirector 2.0.9
 ====================================
 - Fixed: Removed modAction suppport

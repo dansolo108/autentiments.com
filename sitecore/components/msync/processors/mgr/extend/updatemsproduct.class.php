@@ -16,7 +16,9 @@ class extendModResourceUpdateProcessor extends modResourceUpdateProcessor
     {
         $object = $modx->getObject('modResource', $properties['id']);
         $objArray = $object ? $object->toArray() : array();
+
         $properties = array_merge($objArray, $properties);
+        unset($object, $objArray);
 
         $processor = new msProductDisableCacheUpdateProcessor($modx, $properties);
         return $processor;
@@ -28,6 +30,12 @@ class msProductDisableCacheUpdateProcessor extends msProductUpdateProcessor
     public function clearCache()
     {
         return;
+    }
+
+    public function success($msg = '',$object = null) {
+        $result = parent::success($msg, $object);
+        unset($this->object);
+        return $result;
     }
 }
 

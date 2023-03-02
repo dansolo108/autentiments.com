@@ -99,6 +99,7 @@
                 id: id,
                 ids: ids,
                 ctx: this.options.ctx || '',
+                cultureKey: this.options.cultureKey || '',
                 controller: 'toggle',
                 action: 'toggle',
                 mode: mode

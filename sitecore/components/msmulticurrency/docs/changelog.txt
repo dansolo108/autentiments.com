@@ -1,5 +1,17 @@
 Changelog for msMultiCurrency integration into MODx Revolution.
 
+msMultiCurrency 1.2.5
+====================================
+- Added: Event "msmcOnBeforeUpdateProductPrice"
+
+msMultiCurrency 1.2.4
+====================================
+- Improved: Price rounding
+
+msMultiCurrency 1.2.3
+====================================
+- Fixed: Currency switching
+
 msMultiCurrency 1.2.2
 ====================================
 - Added: Custom order processing class "msmcOrder"

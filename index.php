@@ -32,9 +32,9 @@ if (!@include_once (MODX_CORE_PATH . "components/gitmodx/model/gitmodx/gitmodx.c
     exit();
 }
 
+
 /* start output buffering */
 ob_start();
-
 /* Create an instance of the modX class */
 $modx= new gitModx();
 if (!is_object($modx) || !($modx instanceof modX)) {

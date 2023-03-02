@@ -42,17 +42,7 @@ Ext.extend(miniShop2.page.CreateProduct, MODx.page.CreateResource, {
             ? 'resource/update'
             : 'welcome';
 
-        var fp = Ext.getCmp(this.config.formpanel);
-        if (fp && fp.isDirty() && MODx.config['confirm_navigation'] == 1) {
-            Ext.Msg.confirm(_('warning'), _('resource_cancel_dirty_confirm'), function (e) {
-                if (e == 'yes') {
-                    fp.warnUnsavedChanges = false;
-                    MODx.loadPage(action, 'id=' + id)
-                }
-            }, this);
-        } else {
-            MODx.loadPage(action, 'id=' + id)
-        }
+        MODx.loadPage(action, 'id=' + id)
     },
 
 });
@@ -81,7 +71,7 @@ Ext.extend(miniShop2.panel.CreateProduct, miniShop2.panel.Product, {
 
                     // Get the "Resource Groups" tab and move it to the end
                     var accessPermissionsTab;
-                    var index = item.items.findIndex(function(tab) {
+                    var index = item.items.findIndex(function (tab) {
                         return tab.id == 'modx-resource-access-permissions';
                     });
                     if (index != -1) {
@@ -101,8 +91,8 @@ Ext.extend(miniShop2.panel.CreateProduct, miniShop2.panel.Product, {
             title: _('ms2_tab_product_gallery'),
             disabled: true,
             listeners: {
-                afterrender: function(p) {
-                    Ext.get(p.tabEl).on('click', function() {
+                afterrender: function (p) {
+                    Ext.get(p.tabEl).on('click', function () {
                         MODx.msg.alert(_('warning'), _('ms2_gallery_unavailablemsg'));
                     });
                 }

@@ -6,17 +6,16 @@ class msCategoryOptionUnRequireProcessor extends msCategoryOptionUpdateProcessor
 {
 
     /**
-    * @return bool
-    */
+     * @return bool
+     */
     public function beforeSet()
     {
-        $this->properties = array(
+        $this->properties = [
             'required' => false,
-        );
+        ];
 
         return true;
     }
-
 }
 
 return 'msCategoryOptionUnRequireProcessor';

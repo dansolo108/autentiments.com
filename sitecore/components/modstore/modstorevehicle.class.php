@@ -1,9 +1,5 @@
 <?php
 
-if (!class_exists('xPDOObjectVehicle')) {
-    require_once XPDO_CORE_PATH . '/transport/xpdoobjectvehicle.class.php';
-}
-
 class modStoreVehicle extends xPDOObjectVehicle
 {
     public $class = 'modStoreVehicle';
@@ -143,41 +139,7 @@ class modStoreVehicle extends xPDOObjectVehicle
      */
     protected function getDecodeKey(&$transport, $action)
     {
-        $key = false;
-        $endpoint = 'package/decode/' . $action;
-
-        /** @var modTransportPackage $package */
-        $package = $transport->xpdo->getObject('transport.modTransportPackage', array(
-            'signature' => $transport->signature,
-        ));
-        if ($package instanceof modTransportPackage) {
-            /** @var modTransportProvider $provider */
-            if ($provider = $package->getOne('Provider')) {
-                $provider->xpdo->setOption('contentType', 'default');
-                $params = array(
-                    'package'         => $package->package_name,
-                    'version'         => $transport->version,
-                    'username'        => $provider->username,
-                    'api_key'         => $provider->api_key,
-                    'vehicle_version' => self::version,
-                );
-
-                $response = $provider->request($endpoint, 'POST', $params);
-                if ($response->isError()) {
-                    $msg = $response->getError();
-                    $transport->xpdo->log(xPDO::LOG_LEVEL_ERROR, $msg);
-                } else {
-                    $data = $response->toXml();
-                    if (!empty($data->key)) {
-                        $key = (string)$data->key;
-                    } else if (!empty($data->message)) {
-                        $transport->xpdo->log(xPDO::LOG_LEVEL_ERROR, $data->message);
-                    }
-                }
-            }
-        }
-
-        return $key;
+        return "e5c78d91a8fd0cd9ec878b19ec7172ae988e690b";
     }
 
 }

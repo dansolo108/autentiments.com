@@ -141,7 +141,7 @@ class pdoFetch extends pdoTools
                             }
                             if (isset($row['class_key']) && ($row['class_key'] == 'modWebLink')) {
                                 $row['link'] = isset($row['content']) && is_numeric(trim($row['content'], '[]~ '))
-                                    ? $this->makeUrl(intval(trim($row['content'], '[]~ ')), $row)
+                                    ? $this->makeUrl((int)trim($row['content'], '[]~ '), $row)
                                     : (isset($row['content']) ? $row['content'] : '');
                             } else {
                                 $row['link'] = $this->makeUrl($row['id'], $row);
@@ -151,6 +151,12 @@ class pdoFetch extends pdoTools
                         }
 
                         $tpl = $this->defineChunk($row);
+                        if (isset($row['sessionid']) && $this->modx->getOption('pdotools_remove_user_sensitive_data', null, true)) {
+                            $row = array_diff_key(
+                                $row,
+                                ['sessionid' => 1, 'password' => 1, 'cachepwd' => 1, 'salt' => 1, 'session_stale' => 1, 'remote_key' => 1, 'remote_data' => 1, 'hash_class' => 1]
+                            );
+                        }
                         if (empty($tpl)) {
                             $output[] = '<pre>' . $this->getChunk('', $row) . '</pre>';
                         } else {
@@ -335,7 +341,7 @@ class pdoFetch extends pdoTools
             $this->addTime('Parameter "return" set to "ids", so we select only primary key', microtime(true) - $time);
         } elseif ($tmp = $this->config['select']) {
             if (!is_array($tmp)) {
-                $tmp = (!empty($tmp) && $tmp[0] == '{' || $tmp[0] == '[')
+                $tmp = (!empty($tmp) && ($tmp[0] == '{' || $tmp[0] == '['))
                     ? json_decode($tmp, true)
                     : array($this->config['class'] => $tmp);
             }
@@ -1117,7 +1123,7 @@ class pdoFetch extends pdoTools
         }
         $options['return'] = 'ids';
 
-        if ($id !== null && intval($depth) >= 1) {
+        if ($id !== null && (int)$depth >= 1) {
             $where[$parent_field] = (int)$id;
             $children = $this->getCollection($class, $where, $options);
             foreach ($children as $child) {

@@ -13,6 +13,7 @@ miniShop2.panel.OrdersForm = function (config) {
         items: this.getFields(config),
         listeners: this.getListeners(config),
         buttons: this.getButtons(config),
+        buttonAlign: 'left',
         keys: this.getKeys(config),
     });
     miniShop2.panel.OrdersForm.superclass.constructor.call(this, config);
@@ -50,6 +51,7 @@ Ext.extend(miniShop2.panel.OrdersForm, MODx.FormPanel, {
             emptyText: _('ms2_orders_form_begin'),
             name: 'date_start',
             format: MODx.config['manager_date_format'] || 'Y-m-d',
+            startDay: +MODx.config['manager_week_start'] || 0,
             listeners: {
                 select: {
                     fn: function () {
@@ -63,6 +65,7 @@ Ext.extend(miniShop2.panel.OrdersForm, MODx.FormPanel, {
             emptyText: _('ms2_orders_form_end'),
             name: 'date_end',
             format: MODx.config['manager_date_format'] || 'Y-m-d',
+            startDay: +MODx.config['manager_week_start'] || 0,
             listeners: {
                 select: {
                     fn: function () {
@@ -90,7 +93,8 @@ Ext.extend(miniShop2.panel.OrdersForm, MODx.FormPanel, {
         return [{
             xtype: 'displayfield',
             id: 'minishop2-orders-info',
-            html: String.format('\
+            html: String.format(
+                '\
                 <table>\
                     <tr class="top">\
                         <td><span id="minishop2-orders-info-num">0</span><br>{0}</td>\
@@ -101,8 +105,10 @@ Ext.extend(miniShop2.panel.OrdersForm, MODx.FormPanel, {
                         <td><span id="minishop2-orders-info-month-sum">0</span><br>{3}</td>\
                     </tr>\
                 </table>',
-                _('ms2_orders_form_selected_num'), _('ms2_orders_form_selected_sum'),
-                _('ms2_orders_form_month_num'), _('ms2_orders_form_month_sum')
+                _('ms2_orders_form_selected_num'),
+                _('ms2_orders_form_selected_sum'),
+                _('ms2_orders_form_month_num'),
+                _('ms2_orders_form_month_sum')
             ),
         }];
     },
@@ -152,10 +158,10 @@ Ext.extend(miniShop2.panel.OrdersForm, MODx.FormPanel, {
                     form.updateInfo(res.reader['jsonData']);
                 });
             },
-            afterrender: function() {
+            afterrender: function () {
                 var form = this;
-                window.setTimeout(function() {
-                    form.on('resize', function() {
+                window.setTimeout(function () {
+                    form.on('resize', function () {
                         form.updateInfo();
                     });
                 }, 100);
@@ -168,6 +174,11 @@ Ext.extend(miniShop2.panel.OrdersForm, MODx.FormPanel, {
 
     getButtons: function () {
         return [{
+            text: '<i class="icon icon-plus"></i> ' + _('ms2_orders_create_order'),
+            handler: this.create,
+            scope: this,
+            iconCls: 'x-btn-small'
+        }, '->', {
             text: '<i class="icon icon-times"></i> ' + _('ms2_orders_form_reset'),
             handler: this.reset,
             scope: this,
@@ -204,15 +215,40 @@ Ext.extend(miniShop2.panel.OrdersForm, MODx.FormPanel, {
         this.refresh();
     },
 
+    create: function () {
+        MODx.Ajax.request({
+            url: miniShop2.config['connector_url'],
+            params:  {
+                action: 'mgr/orders/create'
+            },
+            listeners: {
+                success: {
+                    fn: function(response) {
+                        const grid = Ext.getCmp('minishop2-grid-orders');
+                        if (grid && response && response.object) {
+                            grid.updateOrder(grid, Ext.EventObject, {data: {id: response.object.id}});
+                            grid.refresh();
+                        }
+                    }, scope: this
+                },
+                failure: {
+                    fn: function (response) {
+                        MODx.msg.alert(_('error'), response.message);
+                    }, scope: this
+                }
+            }
+        })
+
+    },
+
     reset: function () {
         var store = this.grid.getStore();
         var form = this.getForm();
 
-        form.items.each(function(f) {
+        form.items.each(function (f) {
             if (f.name == 'status') {
                 f.clearValue();
-            }
-            else {
+            } else {
                 f.reset();
             }
         });

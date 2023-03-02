@@ -17,7 +17,6 @@ class mSync
     public $catalog;
     /* @var msyncSaleInterface $sale */
     public $sale;
-    private $logFile;
 
 
     function __construct(modX &$modx, array $config = array())
@@ -115,17 +114,21 @@ class mSync
         require_once dirname(__FILE__) . "/{$className}.class.php";
     }
 
-    public function setLogFile($fileName)
+    protected function getLogFile($fileName)
     {
-        $this->logFile = "{$this->config['logsPath']}{$fileName}.txt";
+        if (!$fileName) {
+            $fileName = 'errors_' . date('y-m-d_His');
+        }
+        return "{$this->config['logsPath']}{$fileName}.txt";
     }
 
     /**
+     * @param string $logFile Файл лога
      * @param string $string Строка лога
      * @param bool|false $isDebug True, если данные только для дебага
      * @param bool $modxLogError True, если надо записать в лог ошибок MODX
      */
-    public function log($string, $isDebug = false, $modxLogError = false)
+    public function logFile($logFile, $string, $isDebug = false, $modxLogError = false)
     {
         if ($modxLogError) {
             $this->modx->log(modX::LOG_LEVEL_ERROR, '[mSync] '.$string);
@@ -135,10 +138,20 @@ class mSync
         $t = microtime(true);
         $t = round($t - floor($t), 3) * 1000;
 
-        $file = fopen($this->logFile, "a");
+        $file = fopen($this->getLogFile($logFile), "a");
         if (!$file) return;
         fwrite($file, date("d.m.y H:i:s.") . $t . "  " . $string ."\r\n");
 		fclose($file);
+	}
+
+    /**
+     * @param string $string Строка лога
+     * @param bool|false $isDebug True, если данные только для дебага
+     * @param bool $modxLogError True, если надо записать в лог ошибок MODX
+     */
+    public function log($string, $isDebug = false, $modxLogError = false)
+    {
+        $this->logFile($_SESSION['mSyncLogFile'], $string, $isDebug, $modxLogError);
 	}
 
     /**

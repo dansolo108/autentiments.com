@@ -23,7 +23,8 @@ miniShop2.grid.Products = function (config) {
         defaultNotify: false
     });
     miniShop2.grid.Products.superclass.constructor.call(this, config);
-    if (!this.defaultNotify) { this.ddText = ''; }
+    if (!this.defaultNotify) {
+        this.ddText = ''; }
 };
 Ext.extend(miniShop2.grid.Products, miniShop2.grid.Default, {
 
@@ -158,7 +159,7 @@ Ext.extend(miniShop2.grid.Products, miniShop2.grid.Default, {
             }
         }
 
-        var option_columns= [];
+        var option_columns = [];
         if (miniShop2.config['show_options']) {
             option_columns = this.getCategoryOptions(miniShop2.config);
         }
@@ -175,7 +176,7 @@ Ext.extend(miniShop2.grid.Products, miniShop2.grid.Default, {
                     dataIndex: field
                 });
                 fields.push(columns[field]);
-            }else if (option_columns[field]) {
+            } else if (option_columns[field]) {
                 fields.push(option_columns[field]);
             }
         }
@@ -185,11 +186,11 @@ Ext.extend(miniShop2.grid.Products, miniShop2.grid.Default, {
 
     getTopBar: function () {
         return [{
-            text: (MODx.config.ms2_add_icon_product ? String.format('<i class="{0}"></i> ', Ext.util.Format.htmlEncode(MODx.config.ms2_add_icon_product)) : '') + _('ms2_product_create'),
+            text: (MODx.config.mgr_tree_icon_msproduct ? String.format('<i class="{0}"></i> ', Ext.util.Format.htmlEncode(MODx.config.mgr_tree_icon_msproduct)) : '') + _('ms2_product_create'),
             handler: this.createProduct,
             scope: this
         }, '-', {
-            text: (MODx.config.ms2_add_icon_category ? String.format('<i class="{0}"></i> ', Ext.util.Format.htmlEncode(MODx.config.ms2_add_icon_category)) : '') + _('ms2_category_create'),
+            text: (MODx.config.mgr_tree_icon_mscategory ? String.format('<i class="{0}"></i> ', Ext.util.Format.htmlEncode(MODx.config.mgr_tree_icon_mscategory)) : '') + _('ms2_category_create'),
             handler: this.createCategory,
             scope: this
         }, '-', {
@@ -310,6 +311,35 @@ Ext.extend(miniShop2.grid.Products, miniShop2.grid.Default, {
         w.show();
     },
 
+    generatePreview: function(){
+        var ids = this._getSelectedIds();
+        if (!ids.length) {
+            return false;
+        }
+        MODx.Ajax.request({
+            url: miniShop2.config['connector_url'],
+            params: {
+                action: 'mgr/gallery/generateall',
+                product_id: ids,
+            },
+            listeners: {
+                success: {
+                    fn: function () {
+                        //noinspection JSUnresolvedFunction
+                        this.reloadTree();
+                        //noinspection JSUnresolvedFunction
+                        this.refresh();
+                    }, scope: this
+                },
+                failure: {
+                    fn: function (response) {
+                        MODx.msg.alert(_('error'), response.message);
+                    }, scope: this
+                },
+            }
+        })
+    },
+
     reloadTree: function (ids) {
         if (ids == undefined || typeof(ids) != 'object') {
             ids = this._getSelectedIds();
@@ -355,8 +385,7 @@ Ext.extend(miniShop2.grid.Products, miniShop2.grid.Default, {
                 row['data']['id'],
                 link
             );
-        }
-        else {
+        } else {
             var category_link = miniShop2.utils.productLink(row.data['category_name'], row.data['parent']);
             return String.format(
                 '<div class="nested-product">\

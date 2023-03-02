@@ -27,6 +27,7 @@ $config = array(
     'cartUserCurrency' => $modx->getOption('msmulticurrency.cart_user_currency', null, 0, true),
     'setId' => $setId,
     'ctx' => $modx->context->key,
+    'cultureKey' => $modx->getOption('cultureKey'),
     'userCurrencyId' => $userCurrencyId,
     'baseCurrencyId' => $baseCurrencyId,
     'cartUserCurrency' => $cartUserCurrency,

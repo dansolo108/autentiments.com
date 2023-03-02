@@ -61,14 +61,15 @@ switch ($modx->event->name) {
         $properties['msmc'] = $userCurrencyData;
         $msOrder->set('properties', $properties);
         break;
-    case 'OnDocFormSave':
-        if ($resource->class_key != 'msProduct' || empty($showInProduct)) return;
+    case 'OnBeforeDocFormSave':
+        if ($resource->get('class_key') != 'msProduct') return;
         if ($resource->get('currency_id')) {
             $setId = $resource->get('currency_set_id');
             $price = $msmc->convertPriceToBaseCurrency($resource->get('msmc_price'), $resource->get('currency_id'), $setId);
             $oldPrice = $msmc->convertPriceToBaseCurrency($resource->get('msmc_old_price'), $resource->get('currency_id'), $setId);
-            $msmc->updateProductPrice($resource->get('id'), $price, $oldPrice);
-            $msmc->clearAllCache();
+            $resource->set('price',$price);
+            $resource->set('old_price',$oldPrice);
+           // $msmc->clearAllCache();
         }
         break;
     case 'msopOnModificationSave':

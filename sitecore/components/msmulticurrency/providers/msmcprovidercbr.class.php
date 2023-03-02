@@ -76,6 +76,7 @@ class MsMCProviderCbR extends MsMCProvider
         $url = $url ? $url : 'http://www.cbr.ru/scripts/XML_daily.asp?date_req=' . date('d/m/Y');
         if ($content = $this->load($url)) {
             $output = simplexml_load_string($content);
+            $output = $output;
         }
         return $output;
     }

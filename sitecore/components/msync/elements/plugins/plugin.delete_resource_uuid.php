@@ -11,6 +11,9 @@ if ($modx->event->name == 'OnBeforeEmptyTrash') {
         if( $product = $modx->getObject( 'mSyncProductData', array('product_id' => $resourceid)) ){
             $product->remove();
         }
+        if( $offer = $modx->getObject( 'mSyncOfferData', array('data_id' => $resourceid)) ){
+            $offer->remove();
+        }
     }
 }
 return;

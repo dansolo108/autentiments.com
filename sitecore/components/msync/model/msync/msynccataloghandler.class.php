@@ -80,6 +80,7 @@ class msyncCatalogHandler implements msyncCatalogInterface
             'price_by_feature_tv' => $this->modx->getOption('msync_price_by_feature_tv', null, ''),
             'catalog_root_id' => $this->modx->getOption('msync_catalog_root_id', $config, -1),
             'category_by_name' => $this->modx->getOption('msync_category_by_name', $config, false),
+            'no_categories' => $this->modx->getOption('msync_no_categories', $config, false),
             'catalog_context' => $this->modx->getOption('msync_catalog_context', $config, 'web'),
             'user_id_import' => $this->modx->getOption('msync_user_id_import', $config, 1),
             'publish_default' => $this->modx->getOption('msync_publish_default', $config, 0),
@@ -92,7 +93,10 @@ class msyncCatalogHandler implements msyncCatalogInterface
             'save_properties_to_tv' => $this->modx->getOption('msync_save_properties_to_tv', null, ''),
             'import_all_prices' => $this->modx->getOption('msync_import_all_prices', null, false),
             'publish_by_quantity' => $this->modx->getOption('msync_publish_by_quantity', null, false),
+            'hidemenu_by_quantity' => $this->modx->getOption('msync_hidemenu_by_quantity', null, false),
             'remove_temp' => $this->modx->getOption('msync_remove_temp', null, true),
+            'only_offers' => $this->modx->getOption('msync_import_only_offers', null, false),
+            'temp_count' => $this->modx->getOption('msync_import_temp_count', null, false),
         ), $config);
 
         $this->catalog = &$this->config['catalog'];
@@ -104,7 +108,7 @@ class msyncCatalogHandler implements msyncCatalogInterface
 
         $this->config['start_time'] = microtime(true);
         $this->config['max_exec_time'] = min($this->config['time_limit'], @ini_get('max_execution_time'));
-        if (empty($this->config['max_exec_time'])) $this->config['max_exec_time'] = 60;
+        if (empty($this->config['max_exec_time'])) $this->config['max_exec_time'] = 6;
         $this->modx->user = $this->modx->getObject('modUser', $this->config['user_id_import']);
 
 
@@ -125,24 +129,7 @@ class msyncCatalogHandler implements msyncCatalogInterface
     /* @inheritdoc} */
     public function initialize($ctx = 'web')
     {
-        if (!isset($_SESSION['logFile'])) {
-            $_SESSION['logFile'] = 'import_' . date('y-m-d_His');
-        }
-
-        // Хранилище созданных и обновленных категорий и товаров
-        if (!isset($_SESSION['importResources'])) {
-            $_SESSION['importResources'] = array(
-                'category' => array(
-                    'created' => array(),
-                    'updated' => array()
-                ),
-                'product' => array(
-                    'created' => array(),
-                    'updated' => array()
-                )
-            );
-        }
-        $this->msync->setLogFile($_SESSION['logFile']);
+        $this->initLog();
         return true;
     }
 
@@ -202,6 +189,19 @@ class msyncCatalogHandler implements msyncCatalogInterface
         $_SESSION['feature_mapping'] = array();
         $_SESSION['importFileCount'] = 0;
 
+        // Хранилище созданных и обновленных категорий и товаров
+        if (!isset($_SESSION['importResources'])) {
+            $_SESSION['importResources'] = array(
+                'category' => array(
+                    'created' => array(),
+                    'updated' => array()
+                ),
+                'product' => array(
+                    'created' => array(),
+                    'updated' => array()
+                )
+            );
+        }
     }
 
     /* @inheritdoc} */
@@ -220,6 +220,7 @@ class msyncCatalogHandler implements msyncCatalogInterface
         ));
 
         $filename = $response['data']['filename'];
+        unset($response);
         $filename = $this->config['temp_dir'] . $filename;
 
         mkdir(dirname($filename), 0777, true);
@@ -346,8 +347,6 @@ class msyncCatalogHandler implements msyncCatalogInterface
             return self::FAIL_MSG;
         }
 
-
-        @set_time_limit($this->config['time_limit']);
         $this->config['start_time'] = microtime(true);
         $this->log("Начата обработка файла {$filename}", 1);
 
@@ -386,6 +385,12 @@ class msyncCatalogHandler implements msyncCatalogInterface
      */
     protected function checkImportCatalogStep()
     {
+        if ($this->config['only_offers']) {
+            $msg = 'Включена настройка "Импортировать только торговые предложения". Импортирование категорий и товаров пропущено.';
+            $this->log($msg);
+            return 'finish';
+        }
+
         $start = $this->options['start'];
         $finish = $this->options['finish'];
 
@@ -463,10 +468,18 @@ class msyncCatalogHandler implements msyncCatalogInterface
      *
      * @param $filename
      *
-     * @return bool|int
+     * @return string
      */
     protected function importCategories($filename)
     {
+        if ($this->config['no_categories']) {
+            $msg = 'Включена настройка "Не создавать категории". Импортирование категорий пропущено.';
+            $this->log($msg);
+
+            $_SESSION['totalCategories'] = $_SESSION['lastCategory'] = 1;
+            return 'progress' . PHP_EOL . $msg . PHP_EOL;
+        }
+
         $this->log("Начат импорт категорий из XML файла во временную таблицу БД. Таблица очищена.", 1);
         //clear temp category table
         $this->modx->exec("TRUNCATE TABLE {$this->modx->getTableName('mSyncCategoryTemp')}");
@@ -518,6 +531,7 @@ class msyncCatalogHandler implements msyncCatalogInterface
             ));
 
             $data = $response['data']['data'];
+            unset($response);
 
             $sql = "INSERT " . "INTO " . $this->modx->getTableName('mSyncCategoryTemp') . " (`name`, `uuid`, `parent_uuid`, `level`) VALUES
 						('{$data['name']}', '{$data['uuid']}', '{$data['parent_uuid']}', '{$level}');";
@@ -585,8 +599,7 @@ class msyncCatalogHandler implements msyncCatalogInterface
         $firstCategory = $lastCategory+1;
         $this->log("Начата подготовка категорий начиная с {$firstCategory} из {$totalCategories}", 1);
 
-        //get 500 categories from temp table to import
-        $categoriesData = $this->getCategoryTempData(500, $lastCategory);
+        $categoriesData = $this->getCategoryTempData($this->config['temp_count'], $lastCategory);
         $this->log("Получено категорий из временной таблицы: " . count($categoriesData), 1);
 
         foreach ($categoriesData as $categoryData) {
@@ -625,13 +638,20 @@ class msyncCatalogHandler implements msyncCatalogInterface
         $uuid = $categoryData['uuid'];
         /** @var mSyncCategoryData $data */
         $data = $this->modx->getObject('mSyncCategoryData', array('uuid_1c' => $uuid));
-        if (!$data && $this->config['parent_by_name']) {
+        if (!$data && $this->config['category_by_name']) {
             $category = $this->modx->getObject('msCategory', array(
                 'pagetitle' => $categoryData['name'],
                 'parent' => $categoryData['parent_id'],
             ));
             if ($category) {
-                return $this->createCategoryData($category->get('id'), $uuid);
+                // обрабатываем случай, когда категория с таким именем изменилась в 1С
+                $data = $this->modx->getObject('mSyncCategoryData', array('category_id' => $category->get('id')));
+                if ($data) {
+                    $data->set('uuid_1c', $uuid);
+                    $data->save();
+                } else {
+                    return $this->createCategoryData($category->get('id'), $uuid);
+                }
             }
         }
         return $data;
@@ -719,7 +739,6 @@ class msyncCatalogHandler implements msyncCatalogInterface
 
         $this->log("Начато обновление категории по временным данным " . print_r($categoryData, 1), 1);
 
-        $categoryId = 0;
         $parent_uuid = $categoryData['parent_uuid'];
         $parentId = isset($_SESSION['categories_mapping'][$parent_uuid])
             ? $_SESSION['categories_mapping'][$parent_uuid]
@@ -730,17 +749,23 @@ class msyncCatalogHandler implements msyncCatalogInterface
 
         $catData = $this->getCategoryData($categoryData);
 
-        $this->log("Вызвано событие mSyncOnPrepareCategory для категории с uuid={$categoryData['uuid']}", 1);
-        $this->modx->invokeEvent('mSyncOnPrepareCategory', array(
+        $this->log("Вызвано событие mSyncOnPrepareCategory для категории {$categoryData['name']} с uuid={$categoryData['uuid']}", 1);
+        $response = $this->msync->invokeEvent('mSyncOnPrepareCategory', array(
             'data' => &$catData,
             'uuid' => $categoryData['uuid'],
+            'name' => $categoryData['name'],
             'parent' => $parentId,
             'parentUuid' => $parent_uuid,
         ));
 
+        $catData = $response['data']['data'];
+        $categoryName = $response['data']['name'];
+        $parentId = $response['data']['parent'];
+        $categoryUuid = $catData ? $catData->get('uuid_1c') : $categoryData['uuid'];
+
         $newCatData = $catData
-            ? $this->updateByCategoryData($catData, $categoryData['name'], $parentId)
-            : $this->createByCategoryData($categoryData['name'], $categoryData['uuid'], $parentId);
+            ? $this->updateByCategoryData($catData, $categoryName, $parentId)
+            : $this->createByCategoryData($categoryName, $categoryUuid, $parentId);
 
         if (!$newCatData) {
             $this->log("Не удалось создать привязку для параметров " . print_r($categoryData, 1), 0, 1);
@@ -783,13 +808,14 @@ class msyncCatalogHandler implements msyncCatalogInterface
             , 'template' => $this->config['category_template']
         );
         $response = $this->modx->runProcessor('mgr/extend/createmscategory', $processorProps, array('processors_path' => $this->config['processorsPath']));
-
-
+        unset($processorProps);
         if (!$response->isError()) {
             $_SESSION['importResources']['category']['created'][] = $categoryId = $response->response['object']['id'];
+            unset($response);
             return $categoryId;
         } else {
             $this->log("Ошибка создания категории каталога {$categoryName}: " . print_r($response->getResponse(), 1), 0, 1);
+            unset($response);
             return false;
         }
     }
@@ -800,7 +826,6 @@ class msyncCatalogHandler implements msyncCatalogInterface
      * @param $parentId
      * @param $categoryId
      * @param $categoryName
-     * @return bool|mixed
      */
     protected function updateMsCategory($parentId, $categoryId, $categoryName)
     {
@@ -814,11 +839,11 @@ class msyncCatalogHandler implements msyncCatalogInterface
         );
         if ($parentId) $processorProps['parent'] = $parentId;
         $response = $this->modx->runProcessor('mgr/extend/updatemscategory', $processorProps, array('processors_path' => $this->config['processorsPath']));
-
+        unset($processorProps);
         if (!$response->isError()) {
             $_SESSION['importResources']['category']['updated'][] = $categoryId;
-            return $response;
-        } else return false;
+        }
+        unset($response);
     }
 
     /**
@@ -944,6 +969,7 @@ class msyncCatalogHandler implements msyncCatalogInterface
             ));
 
             $data = $response['data']['data'];
+            unset($response);
 
             if (!isset($data['properties'])) {
                 $data['properties'] = $this->jsonXml($data['characteristics']['properties']);
@@ -1063,7 +1089,7 @@ class msyncCatalogHandler implements msyncCatalogInterface
 
 
         $prod['uuid'] = $this->stringXml($xml->Ид);
-        $prod['parent_uuid'] = $this->stringXml($xml->Группы->Ид);
+        $prod['parent_uuid'] = $this->config['no_categories'] ? 0 : $this->stringXml($xml->Группы->Ид);
         $prod['status'] = $this->stringXml($xml->Статус);
         if (empty($prod['status']) && isset($xml->attributes()->Статус)) {
             $prod['status'] = $this->stringXml($xml->attributes()->Статус);
@@ -1074,7 +1100,7 @@ class msyncCatalogHandler implements msyncCatalogInterface
 
     /**
      * Вставка товаров во временную таблицу
-     * @param string $prodSql
+     * @param array $prodSql
      */
     protected function executeProdSql($prodSql)
     {
@@ -1137,21 +1163,22 @@ class msyncCatalogHandler implements msyncCatalogInterface
 
         $this->loadProperties();
 
-        //get 500 products from temp table to import
-        $productsData = $this->getProductTempData(500, $lastProduct);
+        $productsData = $this->getProductTempData($this->config['temp_count'], $lastProduct);
         $this->log("Получено товаров из временной таблицы: " . count($productsData), 1);
 
         foreach ($productsData as $productData) {
             $this->prepareProduct($productData);
-
             $_SESSION['lastProduct'] = ++$lastProduct;
             if ($this->checkExecTime()) break;
-
         }
 
         $msg = 'Импортировано товаров ' . $lastProduct . ' из ' . $totalProducts;
         $this->log($msg);
         return 'progress' . PHP_EOL . $msg . PHP_EOL;
+    }
+
+    private function logMemory($msg = "") {
+        $this->log("Memory ($msg): " . round(memory_get_usage()/1024) . "kB peak: " . round(memory_get_peak_usage()/1024) . 'kB');
     }
 
     /**
@@ -1203,8 +1230,20 @@ class msyncCatalogHandler implements msyncCatalogInterface
     {
         $primaryProperties = array();
         foreach ($this->properties as $source => $value) {
-            if ($value['is_primary'] && isset($productData[$value['source']])) {
-                $primaryProperties[$value['target']] = $productData[$value['source']];
+            if (!$value['is_primary'])  continue;
+
+            $property = $value['target'];
+            $prefix = '';
+            if (in_array($property, array_keys($this->modx->getFields('msProductData')))) {
+                $prefix = 'msProductData.';
+            }
+            if (in_array($property, array_keys($this->modx->getFields('msProduct')))) {
+                $prefix = 'msProduct.';
+            }
+            if (isset($productData[$property])) {
+                $primaryProperties[$prefix.$property] = $productData[$property];
+            } else if (isset($productData['properties'][$property])) {
+                $primaryProperties[$prefix.$property] = $productData['properties'][$property];
             }
         }
         return $primaryProperties;
@@ -1265,13 +1304,21 @@ class msyncCatalogHandler implements msyncCatalogInterface
             if ($this->properties[$propertyName]['is_multiple']) {
                 $value = $this->propertyToArray($value);
             }
+
+            $target = $this->properties[$propertyName]['target'];
+            if (empty($target)) return false;
             if ($this->properties[$propertyName]['type'] == 1) {
-                $data[$this->properties[$propertyName]['target']] = $value;
-                if (!$isStandard) {
-                    $data['options-'.$this->properties[$propertyName]['target']] = $value;
+                $data[$target] = $value;
+                $resourceFields = array_merge(
+                    array_keys($this->modx->getFields('msProduct')),
+                    array_keys($this->modx->getFields('msProductData'))
+                );
+
+                if (!$isStandard && !in_array($target, $resourceFields)) {
+                    $data['options-'.$target] = $value;
                 }
             } elseif ($this->properties[$propertyName]['type'] == 2) {
-                $tv[$this->properties[$propertyName]['target']] = $value;
+                $tv[$target] = $value;
             }
 
             return true;
@@ -1358,12 +1405,14 @@ class msyncCatalogHandler implements msyncCatalogInterface
         $productAddTv = array();
         //prepare standard properties
         $productAddData['pagetitle'] = $productData['name'];
+        $productAddData['uuid'] = $productData['uuid'];
         if (!empty($productData['description'])) $productAddData['content'] = $productData['description'];
         $this->addProductData($productAddData, $productAddTv, 'Изготовитель', $productData['manufacturer'], true);
         $this->addProductData($productAddData, $productAddTv, 'Артикул', $productData['article'], true);
 
         //prepare other properties
         $productProperties = json_decode($productData['properties'], 1);
+        $productProperties['Ид'] = $productData['uuid'];
         foreach ($productProperties as $propertyName => $propertyValue) {
             $propertyExist = $this->addProductData($productAddData, $productAddTv, $propertyName, stripslashes($propertyValue));
             if ($propertyExist || !$this->config['create_properties_tv']) continue;
@@ -1389,23 +1438,33 @@ class msyncCatalogHandler implements msyncCatalogInterface
 
     /**
      * Возвращает из БД идентификатор ресурса-товара по UUID
-     * @param array $productData
+     * @param array $properties
      * @return bool|int
      */
-    protected function getProductDataId($productData)
+    protected function getProductDataId($properties)
     {
+        $productData = $properties['data'];
         $q = $this->modx->newQuery('mSyncProductData', array('uuid_1c' => $productData['uuid']));
         $q->select('product_id');
-        if ($this->modx->getCount('mSyncProductData', $q)) {
+        if (!$this->config['only_offers'] && $this->modx->getCount('mSyncProductData', $q)) {
             if ($q->prepare() && $q->stmt->execute()) {
                 return $q->stmt->fetch(PDO::FETCH_COLUMN);
             }
         } else {
+            $this->log('Начат поиск ключевых параметров товара по данным: ' . print_r($productData, 1), 1);
             $primaryProperties = $this->findPrimaryProperties($productData);
+            $this->log('Найдены ключевые параметры товара: ' . print_r($primaryProperties, 1), 1);
             if (count($primaryProperties) > 0) {
-                $product = $this->modx->getObject('msProduct', $primaryProperties);
+                $q = $this->modx->newQuery('msProduct');
+                $q->leftJoin('msProductData', 'msProductData', 'msProduct.id=msProductData.id');
+                $q->where($primaryProperties);
+                $q->limit(1);
+                $pr = $this->modx->getIterator('msProduct', $q);
+                $pr->rewind();
+                $product = $pr->current();
                 if ($product) {
                     $productId = $product->get('id');
+                    $this->log('Найден товар по ключевым параметрам с id=' . $productId, 1);
                     $this->createProductData($productId, $productData['uuid']);
                     return $productId;
                 }
@@ -1423,17 +1482,14 @@ class msyncCatalogHandler implements msyncCatalogInterface
     protected function prepareProduct($productData)
     {
         $this->log("Начато обновление товара по временным данным " . print_r($productData, 1), 1);
-
         $categoryId = $this->getCategoryId($productData['parent_uuid']);
-
         $this->clearModxErrors();
-
         $properties = $this->prepareProperties($productData);
         $this->log("Подготовлены свойства товара: " . print_r($properties, 1), 1);
 
         // Ищем товар
         $productMode = 'create';
-        $productId = $this->getProductDataId($productData);
+        $productId = $this->getProductDataId($properties);
 
         $this->log("Вызвано событие mSyncOnPrepareProduct для товара с uuid={$productData['uuid']}", 1);
         $response = $this->msync->invokeEvent('mSyncOnPrepareProduct', array(
@@ -1449,13 +1505,12 @@ class msyncCatalogHandler implements msyncCatalogInterface
         $properties = $response['data']['properties'];
         $productAddData = $properties['data'];
         $productAddTv = $properties['tv'];
-
+        unset($response);
 
         if ($productId) {
             $productMode = 'update';
             $success = $this->updateMsProduct($categoryId, $productId, $productAddData);
         } else {
-            /** @var modProcessorResponse $response */
             $productId = $this->createMsProduct($categoryId, $productAddData);
             $success = ($productId > 0);
             if ($productId) {
@@ -1467,7 +1522,6 @@ class msyncCatalogHandler implements msyncCatalogInterface
             $this->log("Ошибка обновления товара uuid='{$productData['uuid']}'", 0, 1);
             return;
         }
-
 
         $this->uploadImagesMsProduct($productId, $productData['name'], $productData['images']);
 
@@ -1490,6 +1544,7 @@ class msyncCatalogHandler implements msyncCatalogInterface
             'properties' => json_decode($productData['properties'], 1),
             'data' => $productData,
         ));
+        unset($categoryId, $properties, $productId, $productData, $productAddData, $productAddTv, $product, $productMode);
     }
 
     /**
@@ -1649,7 +1704,7 @@ class msyncCatalogHandler implements msyncCatalogInterface
 
         $msg = 'Выгружено ценовых предложений: ' . $this_offer_num;
         $this->log($msg);
-        unset($_SESSION['logFile']);
+        unset($_SESSION['mSyncLogFile']);
         return 'success' . PHP_EOL . $msg . PHP_EOL;
     }
 
@@ -1661,7 +1716,7 @@ class msyncCatalogHandler implements msyncCatalogInterface
     protected function countOffers($filename) {
         $offers = $this->getXmlReader($filename, 'Предложения');
         $xml = $this->readXml($offers);
-        return $xml->count();
+        return $xml ? $xml->count() : 0;
     }
 
     /**
@@ -1706,12 +1761,14 @@ class msyncCatalogHandler implements msyncCatalogInterface
         , 'template' => $this->config['product_template']
         ), $productAddData);
         $response = $this->modx->runProcessor('mgr/extend/createmsproduct', $processorProps, array('processors_path' => $this->config['processorsPath']));
-
+        unset($processorProps);
         if (!$response->isError()) {
             $_SESSION['importResources']['product']['created'][] = $productId = $response->response['object']['id'];
+            unset($response);
             return $productId;
         } else {
             $this->log('Ошибка создания товара (' . $productAddData['pagetitle'] . '), импорт остановлен' . "\r\n" . print_r($response->getResponse(), 1), 0, 1);
+            unset($response);
             return false;
         }
     }
@@ -1737,12 +1794,15 @@ class msyncCatalogHandler implements msyncCatalogInterface
 
         $response = $this->modx->runProcessor('mgr/extend/updatemsproduct', $processorProps,
             array('processors_path' => $this->config['processorsPath']));
+        unset($processorProps);
         if (!$response->isError()) {
             $_SESSION['importResources']['product']['updated'][] = $productId;
+            unset($response);
             return true;
         } else {
             $this->log('Ошибка обновления товара (' . $productAddData['pagetitle'] . ' ' . $productId . '), импорт остановлен' .
                 "\r\n" . print_r($response->getResponse(), 1), 0, 1);
+            unset($response);
             return false;
         }
     }
@@ -1773,6 +1833,7 @@ class msyncCatalogHandler implements msyncCatalogInterface
                 if ($response->isError() && $response->getMessage() != $this->modx->lexicon('ms2_err_gallery_exists')) {
                     $this->log('Ошибка загрузки изображения товара (' . $productName . ' ' . $productId . "): \r\n" . print_r($response->getMessage(), 1), 0, 1);
                 }
+                unset($response);
             } else {
                 $this->log('Ошибка загрузки изображения товара (' . $productName . ' ' . $productId . '), файл (' . $this->config['temp_dir'] . $image . ') не найден', 0, 1);
             }
@@ -1864,7 +1925,7 @@ class msyncCatalogHandler implements msyncCatalogInterface
         $quantityVal = $quantity;
 
         $feature = $this->getFeature($xml);
-        if ($feature) {
+        if ($feature && $productFeatureExist) {
             if ($productFeatureExist) {
                 $target = $this->properties['Количество']['target'];
                 $type = $this->properties['Количество']['type'];
@@ -1880,6 +1941,7 @@ class msyncCatalogHandler implements msyncCatalogInterface
 
         $this->saveProductProperty($product, 'Количество', $quantityVal);
         $this->publishByQuantity($product, $quantity);
+        $this->hidemenuByQuantity($product, $quantity);
     }
 
     /**
@@ -1914,6 +1976,26 @@ class msyncCatalogHandler implements msyncCatalogInterface
             $product->save();
 
             $msg = $shouldBePublished ? 'опубликован' : 'снят с публикации';
+            $this->log("Товар {$msg} по остаткам: {$quantity} шт.", 1);
+        }
+    }
+
+    /**
+     * Добавление/удаление из меню товара в зависимости от остатков, если настроено
+     * @param modResource $product
+     * @param mixed $quantity
+     */
+    protected function hidemenuByQuantity($product, $quantity)
+    {
+        if (!$this->config['hidemenu_by_quantity'] || $quantity === false) return;
+
+        $hideMenu = $product->get('hidemenu');
+        $shouldBePublished = ($quantity > 0);
+        if (($hideMenu && $shouldBePublished) || (!$hideMenu && !$shouldBePublished)) {
+            $product->set('hidemenu', !$shouldBePublished);
+            $product->save();
+
+            $msg = $shouldBePublished ? 'добавлен в меню' : 'убран из меню';
             $this->log("Товар {$msg} по остаткам: {$quantity} шт.", 1);
         }
     }
@@ -1996,7 +2078,15 @@ class msyncCatalogHandler implements msyncCatalogInterface
         $logMsg = "Свойство {$propertyName} ({$target}) товара {$product->get('pagetitle')} ({$product->get('id')}) обновлено значением {$value}.";
 
         if ($type == 1 && !$productFeatureExist) {
-            $product->set($target, $value);
+            $optionKeys = $product->loadData()->getOptionKeys();
+            if (in_array($target, $optionKeys)) {
+                $options = $product->get('options');
+                $options[$target] = $value;
+                $product->set('options', $options);
+            } else {
+                $product->set($target, $value);
+            }
+
             $product->save();
             $this->log($logMsg, 1);
         }
@@ -2108,14 +2198,26 @@ class msyncCatalogHandler implements msyncCatalogInterface
             'xml' => $xml,
         ));
         $uuid = $response['data']['uuid'];
+        unset($response);
 
-        $prodData = $this->getProductData($uuid);
-        if (!$prodData) {
-            $this->log("Привязка к товару для торгового предложения с uuid={$uuid} не найдена.", 0, 1);
-            return;
+        if ($this->config['only_offers']) {
+            $productData = array(
+                'uuid' => $uuid,
+                'name' => (string)$xml->Наименование,
+                'article' => (string)$xml->Артикул,
+            );
+            $properties = $this->prepareProperties($productData);
+            $product_id = $this->getProductDataId($properties);
+        } else {
+            $prodData = $this->getProductData($uuid);
+            if (!$prodData) {
+                $this->log("Привязка к товару для торгового предложения с uuid={$uuid} не найдена.", 0, 1);
+                return;
+            }
+
+            $product_id = $prodData->get('product_id');
         }
 
-        $product_id = $prodData->get('product_id');
         $product = $this->getProduct($product_id);
         if (!$product) {
             $this->log("Товар с идентификатором {$product_id} для торгового предложения с uuid={$uuid} не найден.", 0, 1);
@@ -2124,7 +2226,7 @@ class msyncCatalogHandler implements msyncCatalogInterface
 
         /** @var mSyncOfferData $offerMaker */
         $offerMaker = $this->modx->newObject('mSyncOfferData');
-        $offer = $offerMaker->saveOffer($this->xmlReader, $xml, $uuid_offer, $prodData->get('product_id'), $this->properties);
+        $offer = $offerMaker->saveOffer($this->xmlReader, $xml, $uuid_offer, $product->get('id'), $this->properties);
 
         $productFeatureExist = $this->isProductFeatureExist($product_id);
         $this->updateQuantity($xml, $product, $productFeatureExist);
@@ -2207,6 +2309,12 @@ class msyncCatalogHandler implements msyncCatalogInterface
         return true;
     }
 
+    protected function initLog() {
+        if (!isset($_SESSION['mSyncLogFile'])) {
+            $_SESSION['mSyncLogFile'] = 'import_' . date('y-m-d_His');
+        }
+    }
+
     /**
      * @param string $string Строка лога
      * @param bool|false $isDebug True, если данные только для дебага
@@ -2214,7 +2322,7 @@ class msyncCatalogHandler implements msyncCatalogInterface
      */
     protected function log($string, $isDebug = false, $modxLogError = false)
     {
-        $this->msync->log($string, $isDebug, $modxLogError);
+        $this->msync->logFile($_SESSION['mSyncLogFile'], $string, $isDebug, $modxLogError);
     }
 
 }

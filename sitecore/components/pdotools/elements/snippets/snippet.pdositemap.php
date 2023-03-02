@@ -99,23 +99,23 @@ if (!empty($itemSeparator)) {
 
 
 $class = 'modResource';
-$where = array();
+$where = [];
 if (empty($showHidden)) {
-    $where[] = array(
+    $where[] = [
         $class . '.hidemenu' => 0,
-        'OR:' . $class . '.class_key:IN' => array('Ticket', 'Article'),
-    );
+        'OR:' . $class . '.class_key:IN' => ['Ticket', 'Article'],
+    ];
 }
 if (empty($context)) {
     $scriptProperties['context'] = $modx->context->key;
 }
 
-$select = array($class => 'id,editedon,createdon,context_key,class_key,uri');
+$select = [$class => 'id,editedon,createdon,context_key,class_key,uri'];
 if (!empty($useWeblinkUrl)) {
     $select[$class] .= ',content';
 }
 // Add custom parameters
-foreach (array('where', 'select') as $v) {
+foreach (['where', 'select'] as $v) {
     if (!empty($scriptProperties[$v])) {
         $tmp = $scriptProperties[$v];
         if (!is_array($tmp)) {
@@ -130,7 +130,7 @@ foreach (array('where', 'select') as $v) {
 $pdoFetch->addTime('Conditions prepared');
 
 // Default parameters
-$default = array(
+$default = [
     'class' => $class,
     'where' => json_encode($where),
     'select' => json_encode($select),
@@ -139,7 +139,7 @@ $default = array(
     'return' => 'data',
     'scheme' => 'full',
     'limit' => 0,
-);
+];
 // Merge all properties and run!
 $pdoFetch->addTime('Query parameters ready');
 $pdoFetch->setConfig(array_merge($default, $scriptProperties), false);
@@ -147,19 +147,22 @@ $pdoFetch->setConfig(array_merge($default, $scriptProperties), false);
 if (!empty($cache)) {
     $data = $pdoFetch->getCache($scriptProperties);
 }
+if (!isset($return)) {
+    $return = 'chunks';
+}
 if (empty($data)) {
     $now = time();
-    $data = $urls = array();
+    $data = $urls = [];
     $rows = $pdoFetch->run();
     foreach ($rows as $row) {
         if (!empty($useWeblinkUrl) && $row['class_key'] == 'modWebLink') {
             $row['url'] = is_numeric(trim($row['content'], '[]~ '))
-                ? $pdoFetch->makeUrl(intval(trim($row['content'], '[]~ ')), $row)
+                ? $pdoFetch->makeUrl((int)trim($row['content'], '[]~ '), $row)
                 : $row['content'];
         } else {
             $row['url'] = $pdoFetch->makeUrl($row['id'], $row);
         }
-
+        unset($row['content']);
         $time = !empty($row['editedon'])
             ? $row['editedon']
             : $row['createdon'];
@@ -192,9 +195,13 @@ if (empty($data)) {
         $urls[$row['url']] = $row['date'];
 
         // Add item to output
-        $data[$row['url']] = $pdoFetch->parseChunk($tpl, $row);
-        if (strpos($data[$row['url']], '[[') !== false) {
-            $modx->parser->processElementTags('', $data[$row['url']], true, true, '[[', ']]', array(), 10);
+        if ($return === 'data') {
+            $data[$row['url']] = $row;
+        } else {
+            $data[$row['url']] = $pdoFetch->parseChunk($tpl, $row);
+            if (strpos($data[$row['url']], '[[') !== false) {
+                $modx->parser->processElementTags('', $data[$row['url']], true, true, '[[', ']]', array(), 10);
+            }
         }
     }
     $pdoFetch->addTime('Rows processed');
@@ -203,18 +210,21 @@ if (empty($data)) {
     }
 }
 
-$output = implode($outputSeparator, $data);
-$output = $pdoFetch->getChunk($tplWrapper, array(
-    'schema' => $sitemapSchema,
-    'output' => $output,
-    'items' => $output,
-));
-$pdoFetch->addTime('Rows wrapped');
+if ($return === 'data') {
+    $output = $data;
+} else {
+    $output = implode($outputSeparator, $data);
+    $output = $pdoFetch->getChunk($tplWrapper, [
+        'schema' => $sitemapSchema,
+        'output' => $output,
+        'items' => $output,
+    ]);
+    $pdoFetch->addTime('Rows wrapped');
 
-if ($modx->user->hasSessionContext('mgr') && !empty($showLog)) {
-    $output .= '<pre class="pdoSitemapLog">' . print_r($pdoFetch->getTime(), 1) . '</pre>';
+    if ($modx->user->hasSessionContext('mgr') && !empty($showLog)) {
+        $output .= '<pre class="pdoSitemapLog">' . print_r($pdoFetch->getTime(), 1) . '</pre>';
+    }
 }
-
 if (!empty($forceXML)) {
     header("Content-Type:text/xml");
     @session_write_close();

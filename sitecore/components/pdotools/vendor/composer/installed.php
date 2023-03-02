@@ -6,7 +6,7 @@
     'aliases' => 
     array (
     ),
-    'reference' => 'adff11faa52cca8fcfbf3bd85d4acbdad1a885e4',
+    'reference' => '42a2342e1c9d71f32cf69743399a5c10c3621334',
     'name' => 'bezumkin/pdotools',
   ),
   'versions' => 
@@ -18,7 +18,7 @@
       'aliases' => 
       array (
       ),
-      'reference' => 'adff11faa52cca8fcfbf3bd85d4acbdad1a885e4',
+      'reference' => '42a2342e1c9d71f32cf69743399a5c10c3621334',
     ),
     'fenom/fenom' => 
     array (

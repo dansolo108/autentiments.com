@@ -29,6 +29,12 @@ class msCategoryDisableCacheUpdateProcessor extends msCategoryUpdateProcessor
 	{
 		return;
 	}
+
+    public function success($msg = '',$object = null) {
+        $result = parent::success($msg, $object);
+        unset($this->object);
+        return $result;
+    }
 }
 
 return 'extendModCategoryUpdateProcessor';

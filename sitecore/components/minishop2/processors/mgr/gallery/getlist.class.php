@@ -3,7 +3,7 @@
 class msProductFileGetListProcessor extends modObjectGetListProcessor
 {
     public $classKey = 'msProductFile';
-    public $languageTopics = array('default', 'minishop2:product');
+    public $languageTopics = ['default', 'minishop2:product'];
     public $defaultSortField = 'rank';
     public $defaultSortDirection = 'ASC';
     public $permission = 'msproductfile_list';
@@ -11,10 +11,9 @@ class msProductFileGetListProcessor extends modObjectGetListProcessor
     protected $miniShop2;
     protected $thumb;
 
-
     /**
-    * @return bool|null|string
-    */
+     * @return bool|null|string
+     */
     public function initialize()
     {
         if (!$this->modx->hasPermission($this->permission)) {
@@ -23,12 +22,14 @@ class msProductFileGetListProcessor extends modObjectGetListProcessor
         $this->miniShop2 = $this->modx->getService('miniShop2');
 
         /** @var msProduct $product */
-        if ($product = $this->modx->getObject('msProduct', (int)$this->getProperty('product_id'))) {
-            if ($data = $product->getOne('Data')) {
+        $product = $this->modx->getObject('msProduct', (int)$this->getProperty('product_id'));
+        if ($product) {
+            $data = $product->getOne('Data');
+            if ($data) {
                 /** @var modMediaSource $source */
                 if ($source = $this->modx->getObject('modMediaSource', (int)$data->get('source'))) {
                     $properties = $source->getProperties();
-                    $thumbnails = array();
+                    $thumbnails = [];
                     if (!empty($properties['thumbnails']['value'])) {
                         $thumbnails = json_decode($properties['thumbnails']['value'], true);
                     } elseif (!empty($properties['thumbnail']['value'])) {
@@ -54,10 +55,9 @@ class msProductFileGetListProcessor extends modObjectGetListProcessor
         return parent::initialize();
     }
 
-
     /**
-    * @return array|string
-    */
+     * @return array|string
+     */
     public function process()
     {
         $beforeQuery = $this->beforeQuery();
@@ -69,13 +69,12 @@ class msProductFileGetListProcessor extends modObjectGetListProcessor
         return $this->outputArray($data['results'], $data['total']);
     }
 
-
     /**
-    * @return array
-    */
+     * @return array
+     */
     public function getData()
     {
-        $data = array();
+        $data = [];
         $limit = intval($this->getProperty('limit'));
         $start = intval($this->getProperty('start'));
 
@@ -86,8 +85,12 @@ class msProductFileGetListProcessor extends modObjectGetListProcessor
         $c->select($this->modx->getSelectColumns($this->classKey, $this->classKey));
 
         $sortClassKey = $this->getSortClassKey();
-        $sortKey = $this->modx->getSelectColumns($sortClassKey, $this->getProperty('sortAlias', $sortClassKey), '',
-            array($this->getProperty('sort')));
+        $sortKey = $this->modx->getSelectColumns(
+            $sortClassKey,
+            $this->getProperty('sortAlias', $sortClassKey),
+            '',
+            [$this->getProperty('sort')]
+        );
         if (empty($sortKey)) {
             $sortKey = $this->getProperty('sort');
         }
@@ -96,7 +99,7 @@ class msProductFileGetListProcessor extends modObjectGetListProcessor
             $c->limit($limit, $start);
         }
 
-        $data['results'] = array();
+        $data['results'] = [];
         if ($c->prepare() && $c->stmt->execute()) {
             while ($row = $c->stmt->fetch(PDO::FETCH_ASSOC)) {
                 $data['results'][] = $this->prepareArray($row);
@@ -108,36 +111,36 @@ class msProductFileGetListProcessor extends modObjectGetListProcessor
         return $data;
     }
 
-
     public function prepareQueryBeforeCount(xPDOQuery $c)
     {
-        $c->where(array(
+        $c->where([
             'parent' => (int)$this->getProperty('parent'),
             'product_id' => (int)$this->getProperty('product_id'),
-        ));
+        ]);
 
         $query = trim($this->getProperty('query'));
         if (!empty($query)) {
-            $c->where(array(
+            $c->where([
                 'file:LIKE' => "%{$query}%",
                 'OR:name:LIKE' => "%{$query}%",
                 'OR:description:LIKE' => "%{$query}%",
-            ));
+            ]);
         }
 
         return $c;
     }
 
-
     /**
-    * @param xPDOQuery $c
-    *
-    * @return xPDOQuery
-    */
+     * @param xPDOQuery $c
+     *
+     * @return xPDOQuery
+     */
     public function prepareQueryAfterCount(xPDOQuery $c)
     {
         $c->leftJoin('modMediaSource', 'Source');
-        $c->leftJoin($this->classKey, 'Thumb',
+        $c->leftJoin(
+            $this->classKey,
+            'Thumb',
             $this->classKey . '.id = Thumb.parent AND
             Thumb.path LIKE "%/' . $this->thumb . '/"'
         );
@@ -147,18 +150,18 @@ class msProductFileGetListProcessor extends modObjectGetListProcessor
         return $c;
     }
 
-
     /**
-    * @param array $row
-    *
-    * @return array
-    */
+     * @param array $row
+     *
+     * @return array
+     */
     public function prepareArray(array $row)
     {
-
         if (empty($row['thumbnail'])) {
             if ($row['type'] != 'image') {
-                $row['thumbnail'] = (file_exists(MODX_ASSETS_PATH . 'components/minishop2/img/mgr/extensions/' . $row['type'] . '.png'))
+                $row['thumbnail'] = (file_exists(
+                    MODX_ASSETS_PATH . 'components/minishop2/img/mgr/extensions/' . $row['type'] . '.png'
+                ))
                     ? MODX_ASSETS_URL . 'components/minishop2/img/mgr/extensions/' . $row['type'] . '.png'
                     : MODX_ASSETS_URL . 'components/minishop2/img/mgr/extensions/other.png';
             } else {
@@ -168,30 +171,30 @@ class msProductFileGetListProcessor extends modObjectGetListProcessor
 
         $row['properties'] = strpos($row['properties'], '{') === 0
             ? json_decode($row['properties'], true)
-            : array();
+            : [];
 
-        $row['actions'] = array();
+        $row['actions'] = [];
 
-        $row['actions'][] = array(
+        $row['actions'][] = [
             'cls' => '',
             'icon' => 'icon icon-edit',
             'title' => $this->modx->lexicon('ms2_gallery_file_update'),
             'action' => 'updateFile',
             'button' => false,
             'menu' => true,
-        );
+        ];
 
-        $row['actions'][] = array(
+        $row['actions'][] = [
             'cls' => '',
             'icon' => 'icon icon-share',
             'title' => $this->modx->lexicon('ms2_gallery_file_show'),
             'action' => 'showFile',
             'button' => false,
             'menu' => true,
-        );
+        ];
 
         if ($row['type'] == 'image') {
-            $row['actions'][] = array(
+            $row['actions'][] = [
                 'cls' => '',
                 'icon' => 'icon icon-refresh',
                 'title' => $this->modx->lexicon('ms2_gallery_file_generate_thumbs'),
@@ -199,10 +202,10 @@ class msProductFileGetListProcessor extends modObjectGetListProcessor
                 'action' => 'generateThumbs',
                 'button' => false,
                 'menu' => true,
-            );
+            ];
         }
 
-        $row['actions'][] = array(
+        $row['actions'][] = [
             'cls' => '',
             'icon' => 'icon icon-trash-o action-red',
             'title' => $this->modx->lexicon('ms2_gallery_file_delete'),
@@ -210,11 +213,10 @@ class msProductFileGetListProcessor extends modObjectGetListProcessor
             'action' => 'deleteFiles',
             'button' => false,
             'menu' => true,
-        );
+        ];
 
         return $row;
     }
-
 }
 
 return 'msProductFileGetListProcessor';

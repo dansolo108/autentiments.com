@@ -20,7 +20,11 @@ class RedirectorCreateProcessor extends modObjectCreateProcessor {
         // check if pattern & context combi not already exists
         $exists = $this->modx->getObject('modRedirect', array('pattern' => $this->getProperty('pattern'), 'context_key' => $context));
         if(!empty($exists) && is_object($exists)) {
-            $this->addFieldError('pattern', $this->modx->lexicon('redirector.'.((empty($context)) ? 'redirect_err_ae_pattern' : 'redirect_err_ae_patctx'), array('context' => $context)));
+            if (empty($context)) {
+                $this->addFieldError('pattern', $this->modx->lexicon('redirector.redirect_err_ae_pattern', array('context' => $context)));
+            } else {
+                $this->addFieldError('pattern', $this->modx->lexicon('redirector.redirect_err_ae_patctx', array('context' => $context)));
+            }
         }
 
         // check if pattern is an existing resource

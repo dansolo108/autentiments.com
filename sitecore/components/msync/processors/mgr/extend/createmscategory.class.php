@@ -92,6 +92,11 @@ class msCategoryDisableCacheCreateProcessor extends msCategoryCreateProcessor
 		return $this->success('', array('id' => $this->object->get('id')));
 	}
 
+    public function success($msg = '',$object = null) {
+        $result = parent::success($msg, $object);
+        unset($this->object);
+        return $result;
+    }
 
 }
 

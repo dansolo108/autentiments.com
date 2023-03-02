@@ -74,6 +74,7 @@ class msyncSaleHandler implements msyncSaleInterface
     /* @inheritdoc} */
     public function initialize($ctx = 'web')
     {
+        $this->initLog();
         return true;
     }
 
@@ -87,14 +88,8 @@ class msyncSaleHandler implements msyncSaleInterface
     /* @inheritdoc} */
     public function init()
     {
-        $this->initLog();
         $this->log("Начата выгрузка заказов: " . date('d-m-Y H:i:s'));
 
-        $tmp_files = glob($this->config['temp_dir'] . '*.*');
-        if (is_array($tmp_files))
-            foreach ($tmp_files as $v) {
-                unlink($v);
-            }
         unset($_SESSION['sale_order_ids']);
         $_SESSION['sale_order_ids'] = array();
         $_SESSION['msync_full_export'] = 1;
@@ -104,8 +99,6 @@ class msyncSaleHandler implements msyncSaleInterface
     /* @inheritdoc} */
     public function query()
     {
-        $this->initLog();
-
         $this->loadProperties();
 
         $no_spaces = '<?xml version="1.0" encoding="utf-8" standalone="yes"?>
@@ -115,7 +108,7 @@ class msyncSaleHandler implements msyncSaleInterface
 
         $lastSync = $this->getLastSyncTime();
         $this->orders = $this->modx->getCollection('msOrder', array("`createdon` >= '{$lastSync}' OR `updatedon` >= '{$lastSync}'"));
-        $this->log("Выбраны заказы, начиная с времени {$lastSync}: " .  count($this->orders),true);
+        $this->log("Выбраны заказы, начиная с времени {$lastSync}: " .  count($this->orders));
         foreach ($this->orders as $order) {
             $this->prepareOrder($xml, $order);
         }
@@ -132,7 +125,7 @@ class msyncSaleHandler implements msyncSaleInterface
 
         if (!isset($_SESSION['msync_full_export'])) {
             $this->log("Все заказы обработаны");
-            unset($_SESSION['logFileOrders']);
+            unset($_SESSION['mSyncLogFileOrders']);
         }
         return $out;
     }
@@ -162,8 +155,8 @@ class msyncSaleHandler implements msyncSaleInterface
         $lastSync->save();
         $this->msync->clearCache();
 
-        $this->log("Заказы обработаны: " . count($this->orders),1);
-        unset($_SESSION['logFileOrders']);
+        $this->log("Заказы обработаны: " . count($this->orders));
+        unset($_SESSION['mSyncLogFileOrders']);
         return 'success' . PHP_EOL . session_name() . PHP_EOL . session_id() . PHP_EOL . date("Y-m-d H:i:s");
     }
 
@@ -195,7 +188,7 @@ class msyncSaleHandler implements msyncSaleInterface
             foreach ($properties as $val) $this->properties[$val['source']] = $val;
         }
 
-        $this->log("Соответствия свойств подгружены: " . print_r($this->properties, 1),1);
+        $this->log("Соответствия свойств подгружены: " . print_r($this->properties, 1), true);
     }
 
     /**
@@ -219,11 +212,11 @@ class msyncSaleHandler implements msyncSaleInterface
      * @param xPDOObject $order
      */
     protected function prepareOrder(&$xml, $order)
-    { 
+    {
         $order_ext = $this->extendOrder($order);
         $order_date = explode(' ', $order_ext['createdon']);
 
-        $this->log("Обрабатывается заказ ({$order_date}):\r\n" . print_r($order_ext, 1));
+        $this->log("Обрабатывается заказ ({$order_date}):\r\n" . print_r($order_ext, 1), 1);
 
         $doc = $xml->addChild("Документ");
         $this->addChildren($doc, array(
@@ -327,25 +320,13 @@ class msyncSaleHandler implements msyncSaleInterface
         }
 
         // Статус
-        $status = array(
+        $this->addDetails($doc, array(
             "Статус заказа" => $order_ext['statusName'],
             "Способ оплаты" => $order_ext['payment.name'],
             "Способ доставки" => $order_ext['delivery.name'],
-            "Адрес доставки" => $order_ext['address.full'],
-            'Источник' => 'Сайт'
-        );
-        if(!empty($order_ext['comment'])){
-            $comment = json_decode($order_ext['comment'],true);
-            if(is_array($comment)){
-                foreach($comment as $key => $utm){
-                    if(!empty($utm)){
-                        $status[$key] = $utm;
-                    }
-                    
-                }
-            }
-        }
-        $this->addDetails($doc, $status);
+            "Адрес доставки" => $order_ext['address.full']
+        ));
+
         if ($order_ext['status'] == 1) $_SESSION['sale_order_ids'][$order_ext['id']] = $order_ext['id'];
     }
 
@@ -517,11 +498,9 @@ class msyncSaleHandler implements msyncSaleInterface
     }
 
     protected function initLog() {
-        if (!isset($_SESSION['logFileOrders'])) {
-            $_SESSION['logFileOrders'] = 'orders_' . date('y-m-d_His');
+        if (!isset($_SESSION['mSyncLogFileOrders'])) {
+            $_SESSION['mSyncLogFileOrders'] = 'orders_' . date('y-m-d_His');
         }
-
-        $this->msync->setLogFile($_SESSION['logFileOrders']);
     }
 
     /**
@@ -531,6 +510,6 @@ class msyncSaleHandler implements msyncSaleInterface
      */
     protected function log($string, $isDebug = false, $modxLogError = false)
     {
-        $this->msync->log($string, $isDebug, $modxLogError);
+        $this->msync->logFile($_SESSION['mSyncLogFileOrders'], $string, $isDebug, $modxLogError);
     }
 }

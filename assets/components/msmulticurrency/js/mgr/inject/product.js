@@ -76,12 +76,12 @@ Ext.onReady(function () {
                     , listeners: {
                         keyup: {
                             fn: function (f, e) {
-                                this.updatePrice(f.getValue(), 'price');
+                                this.updatePrice(f.getValue(), 'price', true);
                             }, scope: this
                         }
                         , blur: {
                             fn: function (f, e) {
-                                this.updatePrice(f.getValue(), 'price');
+                              //  this.updatePrice(f.getValue(), 'price', true);
                             }, scope: this
                         }
                     }
@@ -104,12 +104,12 @@ Ext.onReady(function () {
                     , listeners: {
                         keyup: {
                             fn: function (f, e) {
-                                this.updatePrice(f.getValue(), 'old_price');
+                                this.updatePrice(f.getValue(), 'old_price', true);
                             }, scope: this
                         }
                         , blur: {
                             fn: function (f, e) {
-                                this.updatePrice(f.getValue(), 'old_price');
+                                //this.updatePrice(f.getValue(), 'old_price', true);
                             }, scope: this
                         }
                     }
@@ -136,20 +136,18 @@ Ext.onReady(function () {
                 if (oldPrice) oldPrice.setReadOnly(true);
             }
         },
-        updatePrice: function (val, target) {
+        updatePrice: function (val, target, overwrite) {
             var price = ''
                 , symbol = ''
                 , currency = Ext.getCmp('modx-resource-currency-id').getSelectedRecord();
-
-
             if (currency && parseInt(currency.data.cid)) {
                 var price = parseFloat(val) * parseFloat(currency.data.val),
                     field = Ext.getCmp('modx-resource-' + target),
                     label = Ext.getCmp('msmc-' + target + '-desc');
                 if (field) {
-                    price = MsMC.utils.numberFormat(price, MsMC.config.baseCurrency.precision, '.', '');
+                    price = MsMC.utils.roundNumeric(price, MsMC.config.baseCurrency.precision);
                     symbol = MsMC.config.baseCurrency.symbol_right;
-                    field.setValue(price);
+                    if (overwrite) field.setValue(price);
                 }
             }
             if (label) label.getEl().update(price + ' ' + symbol);

@@ -1,5 +1,6 @@
 <?php
 /** @var array $scriptProperties */
+/** @var modX $modx */
 
 // Convert parameters from Wayfinder if exists
 if (isset($startId)) {
@@ -48,15 +49,14 @@ if ($scriptProperties['parents'] === '') {
         $contexts = array_map('trim', explode(',', $scriptProperties['context']));
         $parents = array();
         if (!empty($scriptProperties['showDeleted'])) {
+            /** @var pdoFetch $pdoFetch */
             $pdoFetch = $modx->getService('pdoFetch');
             foreach ($contexts as $ctx) {
-                $parents = array_merge($parents,
-                    $pdoFetch->getChildIds('modResource', 0, $scriptProperties['depth'], array('context' => $ctx)));
+                $parents = array_merge($parents, $pdoFetch->getChildIds('modResource', 0, $scriptProperties['depth'], array('context' => $ctx)));
             }
         } else {
             foreach ($contexts as $ctx) {
-                $parents = array_merge($parents,
-                    $modx->getChildIds(0, $scriptProperties['depth'], array('context' => $ctx)));
+                $parents = array_merge($parents, $modx->getChildIds(0, $scriptProperties['depth'], array('context' => $ctx)));
             }
         }
         $scriptProperties['parents'] = !empty($parents) ? implode(',', $parents) : '+0';
@@ -164,6 +164,9 @@ if (empty($tree)) {
     if ($cache) {
         $pdoMenu->pdoTools->setCache($tree, $scriptProperties);
     }
+}
+if (isset($return) && $return === 'data') {
+    return $tree;
 }
 if (!empty($tree)) {
     $output = $pdoMenu->templateTree($tree);

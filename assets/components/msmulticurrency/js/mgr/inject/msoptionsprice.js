@@ -142,7 +142,7 @@ Ext.onReady(function () {
 
             if (currency && parseInt(currency.data.cid)) {
                 var price = parseFloat(val) * parseFloat(currency.data.val);
-                price = MsMC.utils.numberFormat(price, MsMC.config.baseCurrency.precision, '.', '');
+                price = MsMC.utils.roundNumeric(price, MsMC.config.baseCurrency.precision);
                 symbol = MsMC.config.baseCurrency.symbol_right;
                 f.findField(target).setValue(price);
             }

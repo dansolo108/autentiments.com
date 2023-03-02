@@ -36,9 +36,9 @@ Redi.grid.Redirects = function(config) {
     Ext.applyIf(config,{
         id: 'redirector-grid-redirects'
         ,url: Redi.config.connector_url
-        ,baseParams: { action: 'mgr/redirect/getList' }
+        ,baseParams: { action: 'mgr/redirect/getlist' }
         ,fields: ['id','pattern','target','context_key','triggered','triggered_first','triggered_last','valid','failure_msg','active']
-        ,save_action: 'mgr/redirect/updateFromGrid'
+        ,save_action: 'mgr/redirect/updatefromgrid'
         ,save_callback: function(r) {
             if(!r.success) {
                 Ext.MessageBox.alert(_('error'), r.data[0].msg);
@@ -113,7 +113,7 @@ Redi.grid.Redirects = function(config) {
         },'-',{
             xtype: 'textfield'
             ,id: 'redirector-search-filter'
-            ,emptyText: _('redirector.search...')
+            ,emptyText: _('redirector.search')
             ,listeners: {
                 'change': { fn: this.search ,scope: this }
                 ,'render': { fn: function(cmp) {
@@ -142,7 +142,7 @@ Ext.extend(Redi.grid.Redirects,MODx.grid.Grid,{
         MODx.Ajax.request({
             url: url
             ,params: {
-                action: this.config.save_action || 'updateFromGrid'
+                action: this.config.save_action || 'updatefromgrid'
                 ,data: d
             }
             ,listeners: {
@@ -214,7 +214,7 @@ Ext.extend(Redi.grid.Redirects,MODx.grid.Grid,{
         MODx.Ajax.request({
             url: Redi.config.connector_url
             ,params: {
-                action : 'mgr/redirect/updateFromGrid'
+                action : 'mgr/redirect/updatefromgrid'
                 ,data: Ext.util.JSON.encode(rowData)
             }
             ,method: 'POST'
@@ -231,7 +231,7 @@ Ext.extend(Redi.grid.Redirects,MODx.grid.Grid,{
         MODx.Ajax.request({
             url: Redi.config.connector_url
             ,params: {
-                action : 'mgr/redirect/getUrl'
+                action : 'mgr/redirect/geturl'
                 ,id: this.menu.record.id
             }
             ,method: 'GET'
@@ -285,10 +285,10 @@ Ext.reg('redirector-grid-redirects',Redi.grid.Redirects);
 
 Redi.window.CreateUpdateRedirect = function(config) {
     config = config || {};
-    this.ident = config.ident || Ext.id();
+    this.ident = 'redi-redirect-create-update-' + Ext.id();
 
     Ext.applyIf(config,{
-        title: _('redirector.redirect_create')
+        title: (config.update) ? _('redirector.redirect_update') : _('redirector.redirect_create')
         ,url: Redi.config.connector_url
         ,baseParams: { action: ((config.update) ? 'mgr/redirect/update' : 'mgr/redirect/create') }
         ,modal: true
@@ -327,6 +327,9 @@ Redi.window.CreateUpdateRedirect = function(config) {
                             } ,scope: this
                         }
                     }
+                },{
+                    html: _('redirector.context_desc')
+                    ,style: 'padding-top:4px;'
                 },{
                     layout: 'column'
                     ,border: false

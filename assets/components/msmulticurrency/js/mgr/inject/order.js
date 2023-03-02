@@ -22,9 +22,9 @@ Ext.override(miniShop2.window.UpdateOrder, {
     msmcCurrencyData: function (config) {
         var data = {};
         if (
-            !Ext.isEmpty(config.record) ||
-            !Ext.isEmpty(config.record.properties) ||
-            !Ext.isEmpty(config.record.properties.msmc)
+            !MsMC.utils.isEmpty(config.record) ||
+            !MsMC.utils.isEmpty(config.record.properties) ||
+            !MsMC.utils.isEmpty(config.record.properties.msmc)
         ) {
             data = config.record.properties.msmc;
         }

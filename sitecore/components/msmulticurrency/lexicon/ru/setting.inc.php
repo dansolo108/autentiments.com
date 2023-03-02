@@ -18,5 +18,5 @@ $_lang['setting_msmulticurrency.show_currency_in_product'] = 'Показыват
 $_lang['setting_msmulticurrency.show_currency_in_product_desc'] = '';
 $_lang['setting_msmulticurrency.session_key'] = 'Ключ сессии';
 $_lang['setting_msmulticurrency.session_key_desc'] = '';
-$_lang['setting_msmulticurrency.order_cur_field'] = 'Поле валюты в окне заказа';
-$_lang['setting_msmulticurrency.order_cur_field_desc'] = 'Название поля которое следует выводить в окне редактирования заказа для указания валюты заказа. Доступны следующие значения: code;symbol_left;symbol_right';
+$_lang['setting_msmulticurrency.order_currency_field'] = 'Поле валюты в окне заказа';
+$_lang['setting_msmulticurrency.order_currency_field_desc'] = 'Название поля которое следует выводить в окне редактирования заказа для указания валюты заказа. Доступны следующие значения: code;symbol_left;symbol_right';

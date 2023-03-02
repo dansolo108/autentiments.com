@@ -28,10 +28,10 @@ Ext.override(Ext.form.FieldSet, {
 });
 
 Ext.override(Ext.form.ComboBox, {
-    getSelectedRecord: function() {
+    getSelectedRecord: function () {
         return this.findRecord(this.valueField || this.displayField, this.getValue());
     },
-    getSelectedIndex: function() {
+    getSelectedIndex: function () {
         return this.store.indexOf(this.getSelectedRecord());
     }
 });
@@ -44,8 +44,7 @@ MsMC.utils.formatDate = function (string) {
             ? new Date(string * 1000)
             : new Date(string.replace(/(\d+)-(\d+)-(\d+)/, '$2/$3/$1'));
         return date.strftime(MsMC.config['date_format']);
-    }
-    else {
+    } else {
         return '&nbsp;';
     }
 };
@@ -63,12 +62,11 @@ MsMC.utils.renderActions = function (value, props, row) {
         }
 
         icon = a['icon'] ? a['icon'] : '';
-        if (typeof(a['cls']) == 'object') {
-            if (typeof(a['cls']['button']) != 'undefined') {
+        if (typeof (a['cls']) == 'object') {
+            if (typeof (a['cls']['button']) != 'undefined') {
                 icon += ' ' + a['cls']['button'];
             }
-        }
-        else {
+        } else {
             cls = a['cls'] ? a['cls'] : '';
         }
         action = a['action'] ? a['action'] : '';
@@ -104,8 +102,7 @@ MsMC.utils.getMenu = function (actions, grid, selected) {
                 menu.push('-');
             }
             continue;
-        }
-        else if (menu.length > 0 && !has_delete && (/^remove/i.test(a['action']) || /^delete/i.test(a['action']))) {
+        } else if (menu.length > 0 && !has_delete && (/^remove/i.test(a['action']) || /^delete/i.test(a['action']))) {
             menu.push('-');
             has_delete = true;
         }
@@ -113,19 +110,17 @@ MsMC.utils.getMenu = function (actions, grid, selected) {
         if (selected.length > 1) {
             if (!a['multiple']) {
                 continue;
-            }
-            else if (typeof(a['multiple']) == 'string') {
+            } else if (typeof (a['multiple']) == 'string') {
                 a['title'] = a['multiple'];
             }
         }
 
         icon = a['icon'] ? a['icon'] : '';
-        if (typeof(a['cls']) == 'object') {
-            if (typeof(a['cls']['menu']) != 'undefined') {
+        if (typeof (a['cls']) == 'object') {
+            if (typeof (a['cls']['menu']) != 'undefined') {
                 icon += ' ' + a['cls']['menu'];
             }
-        }
-        else {
+        } else {
             cls = a['cls'] ? a['cls'] : '';
         }
         title = a['title'] ? a['title'] : a['title'];
@@ -143,6 +138,13 @@ MsMC.utils.getMenu = function (actions, grid, selected) {
 
     return menu;
 };
+MsMC.utils.roundNumeric = function (number, precision) {
+    number = number.toString().replace(',', '.');
+    var tmp = number.split('.');
+    if (tmp.length == 1) return number;
+    return tmp[0] + '.' + tmp[1].substr(0, parseInt(precision));
+};
+
 MsMC.utils.numberFormat = function (number, decimals, dec_point, thousands_sep) {
     // original by: Jonas Raoni Soares Silva (http://www.jsfromhell.com)
     // improved by: Kevin van Zonneveld (http://kevin.vanzonneveld.net)
@@ -179,4 +181,11 @@ MsMC.utils.numberFormat = function (number, decimals, dec_point, thousands_sep) 
         ? dec_point + Math.abs(number - i).toFixed(decimals).replace(/-/, '0').slice(2)
         : '');
     return km + kw + kd;
+};
+
+MsMC.utils.isEmpty = function (obj) {
+    if (!obj || Object.keys(obj).length === 0) {
+        return true;
+    }
+    return false;
 };

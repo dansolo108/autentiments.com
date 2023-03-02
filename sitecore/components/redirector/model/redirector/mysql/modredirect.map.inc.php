@@ -4,7 +4,7 @@
  */
 $xpdo_meta_map['modRedirect']= array (
   'package' => 'redirector',
-  'version' => '1.0',
+  'version' => '1.1',
   'table' => 'redirects',
   'extends' => 'xPDOSimpleObject',
   'tableMeta' => 
@@ -30,7 +30,6 @@ $xpdo_meta_map['modRedirect']= array (
       'phptype' => 'string',
       'null' => false,
       'default' => '',
-      'index' => 'index',
     ),
     'target' => 
     array (
@@ -39,7 +38,6 @@ $xpdo_meta_map['modRedirect']= array (
       'phptype' => 'string',
       'null' => false,
       'default' => '',
-      'index' => 'index',
     ),
     'context_key' => 
     array (
@@ -48,7 +46,6 @@ $xpdo_meta_map['modRedirect']= array (
       'phptype' => 'string',
       'null' => true,
       'default' => NULL,
-      'index' => 'index',
     ),
     'triggered' => 
     array (
@@ -80,7 +77,73 @@ $xpdo_meta_map['modRedirect']= array (
       'phptype' => 'boolean',
       'null' => false,
       'default' => 1,
-      'index' => 'index',
+    ),
+  ),
+  'indexes' => 
+  array (
+    'pattern' => 
+    array (
+      'alias' => 'pattern',
+      'primary' => false,
+      'unique' => false,
+      'type' => 'BTREE',
+      'columns' => 
+      array (
+        'pattern' => 
+        array (
+          'length' => '191',
+          'collation' => 'A',
+          'null' => false,
+        ),
+      ),
+    ),
+    'target' => 
+    array (
+      'alias' => 'target',
+      'primary' => false,
+      'unique' => false,
+      'type' => 'BTREE',
+      'columns' => 
+      array (
+        'target' => 
+        array (
+          'length' => '191',
+          'collation' => 'A',
+          'null' => false,
+        ),
+      ),
+    ),
+    'context_key' => 
+    array (
+      'alias' => 'context_key',
+      'primary' => false,
+      'unique' => false,
+      'type' => 'BTREE',
+      'columns' => 
+      array (
+        'context_key' => 
+        array (
+          'length' => '191',
+          'collation' => 'A',
+          'null' => true,
+        ),
+      ),
+    ),
+    'active' => 
+    array (
+      'alias' => 'active',
+      'primary' => false,
+      'unique' => false,
+      'type' => 'BTREE',
+      'columns' => 
+      array (
+        'active' => 
+        array (
+          'length' => '',
+          'collation' => 'A',
+          'null' => false,
+        ),
+      ),
     ),
   ),
   'aggregates' => 

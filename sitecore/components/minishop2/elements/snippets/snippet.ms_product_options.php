@@ -1,4 +1,5 @@
 <?php
+
 /** @var modX $modx */
 /** @var array $scriptProperties */
 /** @var miniShop2 $miniShop2 */
@@ -10,23 +11,29 @@ if (!empty($input) && empty($product)) {
 }
 
 $product = !empty($product) && $product != $modx->resource->id
-    ? $modx->getObject('msProduct', array('id' => $product))
+    ? $modx->getObject('msProduct', ['id' => $product])
     : $modx->resource;
 if (!($product instanceof msProduct)) {
     return "[msProductOptions] The resource with id = {$product->id} is not instance of msProduct.";
 }
 
-$ignoreGroups = array_diff(array_map('trim', explode(',', $modx->getOption('ignoreGroups', $scriptProperties, ''))), array(''));
-$ignoreOptions = array_diff(array_map('trim', explode(',', $modx->getOption('ignoreOptions', $scriptProperties, ''))), array(''));
-$sortGroups = array_diff(array_map('trim', explode(',', $modx->getOption('sortGroups', $scriptProperties, ''))), array(''));
-$sortOptions = array_diff(array_map('trim', explode(',', $modx->getOption('sortOptions', $scriptProperties, ''))), array(''));
-$onlyOptions = array_diff(array_map('trim', explode(',', $modx->getOption('onlyOptions', $scriptProperties, ''))), array(''));
+$ignoreGroups = array_diff(
+    array_map('trim', explode(',', $modx->getOption('ignoreGroups', $scriptProperties, ''))),
+    ['']
+);
+$ignoreOptions = array_diff(
+    array_map('trim', explode(',', $modx->getOption('ignoreOptions', $scriptProperties, ''))),
+    ['']
+);
+$sortGroups = array_diff(array_map('trim', explode(',', $modx->getOption('sortGroups', $scriptProperties, ''))), ['']);
+$sortOptions = array_diff(array_map('trim', explode(',', $modx->getOption('sortOptions', $scriptProperties, ''))), ['']);
+$onlyOptions = array_diff(array_map('trim', explode(',', $modx->getOption('onlyOptions', $scriptProperties, ''))), ['']);
 if (empty($sortOptions) && !empty($onlyOptions)) {
     $sortOptions = $onlyOptions;
 }
 $groups = !empty($groups)
     ? array_map('trim', explode(',', $groups))
-    : array();
+    : [];
 /** @var msProductData $data */
 if ($data = $product->getOne('Data')) {
     $optionKeys = $data->getOptionKeys();
@@ -36,7 +43,7 @@ if (empty($optionKeys)) {
 }
 $productData = $product->loadOptions();
 
-$options = array();
+$options = [];
 foreach ($optionKeys as $key) {
     // Filter by key
     if (!empty($onlyOptions) && $onlyOptions[0] != '' && !in_array($key, $onlyOptions)) {
@@ -44,7 +51,7 @@ foreach ($optionKeys as $key) {
     } elseif (in_array($key, $ignoreOptions)) {
         continue;
     }
-    $option = array();
+    $option = [];
     foreach ($productData as $dataKey => $dataValue) {
         $dataKey = explode('.', $dataKey);
         if ($dataKey[0] == $key && (count($dataKey) > 1)) {
@@ -52,7 +59,10 @@ foreach ($optionKeys as $key) {
         }
     }
 
-    $skip = (!empty($ignoreGroups) && (in_array($option['category'], $ignoreGroups) || in_array($option['category_name'], $ignoreGroups)))
+    $skip = (!empty($ignoreGroups) && (in_array($option['category'], $ignoreGroups) || in_array(
+        $option['category_name'],
+        $ignoreGroups
+    )))
         || (!empty($groups) && !in_array($option['category'], $groups) && !in_array($option['category_name'], $groups));
 
     if (!$skip) {
@@ -65,7 +75,7 @@ foreach ($optionKeys as $key) {
 
 if (!empty($sortGroups) && !empty($options)) {
     $sortGroups = array_map('mb_strtolower', $sortGroups);
-    uasort($options, function($a, $b) use ($sortGroups) {
+    uasort($options, function ($a, $b) use ($sortGroups) {
         $ai = array_search(mb_strtolower($a['category'], 'utf-8'), $sortGroups, true);
         $ai = $ai !== false ? $ai : array_search(mb_strtolower($a['category_name'], 'utf-8'), $sortGroups, true);
         $bi = array_search(mb_strtolower($b['category'], 'utf-8'), $sortGroups, true);
@@ -87,7 +97,7 @@ if (!empty($sortGroups) && !empty($options)) {
 
 if (!empty($sortOptions) && !empty($options)) {
     $sortOptions = array_map('mb_strtolower', $sortOptions);
-    uksort($options, function($a, $b) use ($sortOptions) {
+    uksort($options, function ($a, $b) use ($sortOptions) {
         $ai = array_search(mb_strtolower($a, 'utf-8'), $sortOptions, true);
         $bi = array_search(mb_strtolower($b, 'utf-8'), $sortOptions, true);
         if ($ai === false && $bi === false) {
@@ -107,13 +117,14 @@ if (!empty($sortOptions) && !empty($options)) {
 
 $options = $miniShop2->sortOptionValues($options, $scriptProperties['sortOptionValues']);
 
-if (in_array($scriptProperties['return'], array('data', 'array'), true)) {
+if (in_array($scriptProperties['return'], ['data', 'array'], true)) {
     return $options;
 }
 
 /** @var pdoTools $pdoTools */
 $pdoTools = $modx->getService('pdoTools');
 
-return $pdoTools->getChunk($tpl, array(
+return $pdoTools->getChunk($tpl, [
     'options' => $options,
-));
+    'scriptProperties' => $scriptProperties
+]);

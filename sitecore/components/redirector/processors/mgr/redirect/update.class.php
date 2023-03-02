@@ -30,7 +30,9 @@ class RedirectorUpdateProcessor extends modObjectUpdateProcessor {
         if(strpos($target, '$') === false) {
 
             // parse link & MODX tags
-            $this->modx->parser->processElementTags('', $target, true, true);
+            if(stripos($target, '[[') !== false) {
+                $this->modx->parser->processElementTags('', $target, true, true);
+            }
 
             if(!empty($target)) {
 

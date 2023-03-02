@@ -17,7 +17,6 @@ class RedirectorHomeManagerController extends modExtraManagerController {
         Ext.onReady(function() {
             Redi.config = '.$this->modx->toJSON($this->redirector->config).';
             Redi.config.connector_url = "'.$this->redirector->config['connectorUrl'].'";
-            Redi.request = '.$this->modx->toJSON($_GET).';
         });
         </script>');
         return parent::initialize();

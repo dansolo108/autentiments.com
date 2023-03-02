@@ -24,7 +24,7 @@ class mSyncXmlReader
         $reader = new XMLReader;
         $success = $reader->open($filename);
         if (!$success) {
-            $this->msync->log("Невозможно считать файл {$filename}. Возможно он содержит ошибки XML.", 0, 1);
+            $this->msync->logFile(null, "Невозможно считать файл {$filename}. Возможно он содержит ошибки XML.", 0, 1);
         }
 
         //search categories

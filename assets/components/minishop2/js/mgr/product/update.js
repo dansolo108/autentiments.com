@@ -86,17 +86,7 @@ Ext.extend(miniShop2.page.UpdateProduct, MODx.page.UpdateResource, {
             ? 'resource/update'
             : 'welcome';
 
-        var fp = Ext.getCmp(this.config.formpanel);
-        if (fp && fp.isDirty() && MODx.config['confirm_navigation'] == 1) {
-            Ext.Msg.confirm(_('warning'), _('resource_cancel_dirty_confirm'), function (e) {
-                if (e == 'yes') {
-                    fp.warnUnsavedChanges = false;
-                    MODx.loadPage(action, 'id=' + id)
-                }
-            }, this);
-        } else {
-            MODx.loadPage(action, 'id=' + id)
-        }
+        MODx.loadPage(action, 'id=' + id)
     },
 
 });
@@ -130,7 +120,7 @@ Ext.extend(miniShop2.panel.UpdateProduct, miniShop2.panel.Product, {
                 }
                 // Get the "Resource Groups" tab and move it to the end
                 if (miniShop2.config['show_gallery'] != 0 || miniShop2.config['show_comments'] != 0) {
-                    var index = item.items.findIndex(function(tab) {
+                    var index = item.items.findIndex(function (tab) {
                         return tab.id == 'modx-resource-access-permissions';
                     });
                     if (index != -1) {

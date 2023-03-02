@@ -147,7 +147,7 @@ Ext.extend(miniShop2.window.UpdateOrder, miniShop2.window.Default, {
                 columnWidth: .5,
                 layout: 'form',
                 items: [
-                    {xtype: 'textarea', name: 'comment', fieldLabel: _('ms2_comment'), anchor: '100%', height: 170}
+                    {xtype: 'textarea', name: 'order_comment', fieldLabel: _('ms2_order_comment'), anchor: '100%', height: 170}
                 ]
             }]
         }];
@@ -165,7 +165,9 @@ Ext.extend(miniShop2.window.UpdateOrder, miniShop2.window.Default, {
             city: {},
             street: {},
             room: {},
-            point: {}
+            entrance: {},
+            floor: {},
+            email: {},
         };
         var fields = [], tmp = [];
         for (var i = 0; i < miniShop2.config['order_address_fields'].length; i++) {
@@ -201,18 +203,33 @@ Ext.extend(miniShop2.window.UpdateOrder, miniShop2.window.Default, {
         var n;
         if (tmp.length > 0) {
             for (i = 0; i < tmp.length; i++) {
-                if (i == 0) fields.push(addx(.7, .3));
-                else if (i == 2) fields.push(addx(.3, .7));
-                else if (i % 2 == 0) fields.push(addx());
+                if (i == 0) {
+                    fields.push(addx(.7, .3));
+                } else if (i == 2) {
+                    fields.push(addx(.3, .7));
+                } else if (i % 2 == 0) {
+                    fields.push(addx());
+                }
 
                 if (i <= 1) {
                     n = 0;
-                }
-                else {
+                } else {
                     n = Math.floor(i / 2);
                 }
                 fields[n].items[i % 2].items.push(tmp[i]);
             }
+            if (miniShop2.config['order_address_fields'].in_array('text_address')) {
+                fields.push(
+                    {
+                        xtype: 'textarea',
+                        name: 'addr_text_address',
+                        fieldLabel: _('ms2_text_address'),
+                        anchor: '98%',
+                        style: 'min-height: 50px;border:1px solid #efefef;width:95%;'
+                    }
+                );
+            }
+
             if (miniShop2.config['order_address_fields'].in_array('comment')) {
                 fields.push(
                     {
@@ -224,6 +241,7 @@ Ext.extend(miniShop2.window.UpdateOrder, miniShop2.window.Default, {
                     }
                 );
             }
+
         }
 
         return fields;

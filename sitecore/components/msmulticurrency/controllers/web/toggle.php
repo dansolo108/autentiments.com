@@ -63,6 +63,8 @@ class msMultiCurrencyToggleController extends MsMCController
             case 'toggle':
                 $cid = $this->dictionary->get('id', 1);
                 $ctx = $this->dictionary->get('ctx', '');
+                $cultureKey = $this->dictionary->get('cultureKey', $this->modx->getOption('cultureKey'));
+                $this->modx->setOption('cultureKey', $cultureKey);
                 if ($ctx && $ctx != 'mgr') {
                     $this->modx->switchContext($ctx);
                 }

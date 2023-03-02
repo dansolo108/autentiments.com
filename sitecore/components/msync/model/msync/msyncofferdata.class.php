@@ -119,7 +119,7 @@ class mSyncOfferData extends xPDOSimpleObject
                     'value' => (float)$this->xmlReader->stringXml($price->ЦенаЗаЕдиницу),
                     'currency' => $this->xmlReader->stringXml($price->Валюта),
                     'unit' => $this->xmlReader->stringXml($price->Единица),
-                    'factor' => $this->xmlReader->stringXml($price->Коэффициент),
+                    'factor' => (float)$this->xmlReader->stringXml($price->Коэффициент),
                 ));
             }
         }

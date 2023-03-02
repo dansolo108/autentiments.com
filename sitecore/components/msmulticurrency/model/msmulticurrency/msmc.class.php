@@ -8,7 +8,7 @@
 class MsMC
 {
 
-    const version = '1.2.1';
+    const version = '1.2.5';
 
     /** @var modX $modx */
     public $modx;
@@ -446,7 +446,7 @@ class MsMC
      * @param int $setId
      * @return array|mixed
      */
-   public function getCurrencies($cache = true, $onlyEnable = true, $setId = 0)
+    public function getCurrencies($cache = true, $onlyEnable = true, $setId = 0)
     {
         $setId = $setId ? $setId : $this->config['baseCurrencySetId'];
         $cacheOptions = array(
@@ -497,7 +497,7 @@ class MsMC
         $list = array();
         $setId = $setId ? $setId : $this->config['baseCurrencySetId'];
         $q = $this->modx->newQuery('msProductData');
-        $q->select($this->modx->getSelectColumns('msProductData', 'msProductData', '', array('id', 'currency_set_id', 'currency_id', 'msmc_price', 'msmc_old_price')));
+        $q->select($this->modx->getSelectColumns('msProductData', 'msProductData'));
         $q->where(array('currency_set_id' => $setId));
         if (empty($currencyId)) {
             $q->where(array('currency_id:!=' => 0));
@@ -593,12 +593,24 @@ class MsMC
                     //  $this->modx->log(modX::LOG_LEVEL_ERROR, print_r($product, 1));
                     $price = $this->convertPriceToBaseCurrency($product['msmc_price'], $product['currency_id'], $setId);
                     $oldPrice = $this->convertPriceToBaseCurrency($product['msmc_old_price'], $product['currency_id'], $setId);
-                    $this->updateProductPrice($product['id'], $price, $oldPrice);
+                    $response = $this->invokeEvent('msmcOnBeforeUpdateProductPrice', array(
+                        'price' => $price,
+                        'oldPrice' => $oldPrice,
+                        'product' => $product,
+                        'currencyId' => $currencyId,
+                        'setId' => $setId,
+                    ));
+                    if ($response['success']) {
+                        $price = $response['data']['price'];
+                        $oldPrice = $response['data']['oldPrice'];
+                        $this->updateProductPrice($product['id'], $price, $oldPrice);
+                    } else {
+                        $this->modx->log(modX::LOG_LEVEL_ERROR, $response['message']);
+                    }
                 }
             }
         }
     }
-
 
     /**
      * @return array
@@ -679,9 +691,14 @@ class MsMC
     public function getSessionCurrencyKey()
     {
         $ctx = $this->modx->context->get('key');
+        $cartContext = $this->modx->getOption('ms2_cart_context');
         $cultureKey = $this->modx->getOption('cultureKey');
         $key = $this->modx->getOption('msmulticurrency.session_key', null, 'msmc', true);
-        $key .= ":id:{$ctx}:{$cultureKey}";
+        if ($cartContext) {
+            $key .= ":id:{$cultureKey}";
+        } else {
+            $key .= ":id:{$ctx}:{$cultureKey}";
+        }
         return $key;
 
     }
@@ -713,15 +730,15 @@ class MsMC
         } else {
             $key = $this->getSessionContextKey();
             $ctx = $this->modx->context->get('key');
-
             if ($ctx != 'mgr' && isset($_SESSION[$key]) && $ctx != $_SESSION[$key]) {
                 $this->modx->switchContext($_SESSION[$key]);
             }
             $key = $this->getSessionCurrencyKey();
-            if (!empty($_SESSION[$key])) {
-                $currencyId = (int)$_SESSION[$key];
-            } else if (!empty($_COOKIE[$key])) {
+            // $this->modx->log(modX::LOG_LEVEL_ERROR, '$key1='.$key);
+            if (!empty($_COOKIE[$key])) {
                 $currencyId = (int)$_COOKIE[$key];
+            } else if (!empty($_SESSION[$key])) {
+                $currencyId = (int)$_SESSION[$key];
             } else {
                 $currencyId = $this->modx->getOption('msmulticurrency.selected_currency_default', null, 0, true);
                 if (!$currencyId) {
@@ -831,10 +848,11 @@ class MsMC
     {
         $cost = 0;
         $ctx = $this->modx->context->key;
+        $cartContext = $this->modx->getOption('ms2_cart_context');
         if ($this->getMs2Instance()) {
             if ($products = $this->ms2->cart->get()) {
                 foreach ($products as $key => $product) {
-                    if ($ctx != $product['ctx']) continue;
+                    if (!$cartContext && $ctx != $product['ctx']) continue;
                     $price = $this->getPrice($product['price'], 0, $currencyId, 0, $isFormat);
                     $cost += $price * $product['count'];
                 }
@@ -868,10 +886,11 @@ class MsMC
     {
         $cost = 0;
         $ctx = $this->modx->context->key;
+        $cartContext = $this->modx->getOption('ms2_cart_context');
         if ($ms2 = $this->getMs2Instance()) {
             if ($products = $this->ms2->cart->get()) {
                 foreach ($products as $product) {
-                    if ($ctx != $product['ctx']) continue;
+                    if (!$cartContext && $ctx != $product['ctx']) continue;
                     //$price = $this->getPrice($product['price'], 0, $currencyId, 0, $isFormat);
                     //  $cost += $price * $product['count'];
                     $cost += $product['price'] * $product['count'];
@@ -940,7 +959,6 @@ class MsMC
                 }
             }
         }
-
         $response = $this->invokeEvent('msmcOnGetPrice', array(
             'price' => $price,
             'newPrice' => $newPrice,
@@ -951,7 +969,6 @@ class MsMC
             'isBaseCurrency' => $isBaseCurrency,
             'currency' => $currency,
             'userCurrency' => $userCurrency,
-            'productCurrency' => $productCurrency,
         ));
 
         if (!$response['success']) {
@@ -961,6 +978,7 @@ class MsMC
             $currency = $response['data']['currency'];
             $newPrice = $response['data']['newPrice'];
         }
+
         $precision = $currency['precision'];
         return $isFormat ? $this->formatPrice($newPrice, array($precision, '.', ' ')) : $this->formatPrice($newPrice, array($precision, '.', ''));
 
@@ -985,12 +1003,10 @@ class MsMC
         }
         if (!$currencies = $this->getCurrencies(true, false, $setId)) return $price;
         if (!isset($currencies[$currencyId])) return $price;
-
         $price = $this->prepareNumeric($price);
         $course = $currencies[$currencyId]['val'];
         $precision = $currencies[$currencyId]['precision'];
         $newPrice = $price * $course;
-
         return $isFormat ? $this->formatPrice($newPrice, array($precision, '.', ' ')) : $this->formatPrice($newPrice, array($precision, '.', ''));
 
     }
@@ -1028,6 +1044,7 @@ class MsMC
      */
     public function formatPrice($price = 0, $pf = array())
     {
+
         $price = $this->prepareNumeric($price);
         if (empty($pf)) {
             if (!$pf = json_decode($this->modx->getOption('ms2_price_format', null, '[2, ".", " "]'), true)) {
@@ -1088,15 +1105,19 @@ class MsMC
     }
 
     /**
-     * @param float $number
+     * @param float|string $number
      * @param int $precision
-     * @return float|int
+     * @return float
      */
     public function roundNumeric($number, $precision = 2)
     {
-        $pow = pow(10, $precision);
-        return floor($number * $pow) / $pow;
-        //return $this->prepareNumeric($number);
+        if (0 == (int)$number) return $number;
+        $number = $this->prepareNumeric($number);
+        $tmp = explode('.', $number);
+        if (count($tmp) > 1) {
+            $number = intval($number) . '.' . substr(end($tmp), 0, $precision);
+        }
+        return (float)$number;
     }
 
 

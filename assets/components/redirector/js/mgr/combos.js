@@ -15,7 +15,7 @@ Redi.combo.ResourceList = function(config) {
 		pageSize: 20,
 		url: Redi.config.connector_url,
 		baseParams: {
-            action: 'mgr/resources/getList',
+            action: 'mgr/resources/getlist',
 			combo: true
         }
     });
@@ -41,7 +41,7 @@ Redi.combo.ContextList = function(config) {
 		autocomplete: true,
 		url: Redi.config.connector_url,
 		baseParams: {
-            action: 'mgr/contexts/getList',
+            action: 'mgr/contexts/getlist',
 			combo: true
         }
     });

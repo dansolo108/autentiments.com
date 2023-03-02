@@ -16,8 +16,8 @@ $xpdo_meta_map['mSyncOfferData']= array (
     'barcode' => '',
     'name' => '',
     'base_unit' => NULL,
-    'price' => 0,
-    'count' => 0,
+    'price' => 0.0,
+    'count' => 0.0,
   ),
   'fieldMeta' => 
   array (
@@ -73,7 +73,7 @@ $xpdo_meta_map['mSyncOfferData']= array (
       'precision' => '12,2',
       'phptype' => 'float',
       'null' => false,
-      'default' => 0,
+      'default' => 0.0,
     ),
     'count' => 
     array (
@@ -81,7 +81,7 @@ $xpdo_meta_map['mSyncOfferData']= array (
       'precision' => '12,2',
       'phptype' => 'float',
       'null' => false,
-      'default' => 0,
+      'default' => 0.0,
     ),
   ),
   'indexes' => 

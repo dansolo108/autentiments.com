@@ -1,7 +1,7 @@
 <?php
 
 if (empty($_REQUEST['action']) && empty($_REQUEST['ms2_action'])) {
-    die('Access denied');
+    http_response_code(403);
 }
 
 if (!empty($_REQUEST['action'])) {
@@ -9,4 +9,4 @@ if (!empty($_REQUEST['action'])) {
 }
 
 /** @noinspection PhpIncludeInspection */
-require dirname(dirname(dirname(dirname(__FILE__)))) . '/index.php';
+require dirname(__FILE__, 4) . '/index.php';

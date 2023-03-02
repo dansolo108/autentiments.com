@@ -14,10 +14,10 @@ $xpdo_meta_map['mSyncOfferPrice']= array (
     'price_name' => '',
     'price_id' => '',
     'presentation' => '',
-    'value' => 0,
+    'value' => 0.0,
     'currency' => '',
     'unit' => '',
-    'factor' => 0,
+    'factor' => 0.0,
   ),
   'fieldMeta' => 
   array (
@@ -60,7 +60,7 @@ $xpdo_meta_map['mSyncOfferPrice']= array (
       'precision' => '12,2',
       'phptype' => 'string',
       'null' => false,
-      'default' => 0,
+      'default' => 0.0,
     ),
     'currency' => 
     array (
@@ -84,7 +84,7 @@ $xpdo_meta_map['mSyncOfferPrice']= array (
       'precision' => '12,2',
       'phptype' => 'float',
       'null' => false,
-      'default' => 0,
+      'default' => 0.0,
     ),
   ),
   'indexes' => 

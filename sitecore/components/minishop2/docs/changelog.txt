@@ -5,6 +5,203 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [4.1.1-pl] - 2022-02-02
+
+### Changed
+- Update JS classes names in system settings
+- Rename new JS method sendResponse to sendRequest
+
+## [4.1.0-pl] - 2022-31-01
+
+### Added
+- New type of options - color selection
+- Queue manager support
+- Working with lexicons through the crowdln service, similar to MODX
+- Additional data returned by the cart when it is changed
+- New modes for returning data from msGallery
+- System setting ms2_status_canceled
+
+
+### Changed
+- Fixed a bug with simultaneous operation of the basket with different contexts
+- Added saving the description field to the gallery/upload processor
+- Improved sorting and selection of uploaded files to save the first image to the msProductData table
+- Updated the text and values of the setting_ms2_order_product_options system setting
+- Fixed a bug with redirection after placing an order in new js
+- Many minor syntax and code readability improvements
+
+### Removed
+- Setting for button icons in mgr category
+- Phone length limitation during validation in the order
+
+## [4.0.0-pl] - 2022-12-18
+
+### Added
+- Displaying custom parameters in msProducts.tpl #742
+- Patch for error when installing and creating the ms2_options table  #747
+- Patch for error with non-existent fields in the tables #749
+- Creating a vendor when creating a product #748
+
+## [4.0.0-beta] - 2022-09-16
+
+### Added
+- A new set of JS scripts
+- Creating an order from the manager
+- Ability to assign order statuses for various events (new order, payment, creating draft)
+
+### Changed
+- Relationship between msOrder and msOrderAddress
+- Interfaces for controllers are moved to a separate file
+
+### Removed
+- Plugin fotorama
+- Depricated controllers
+
+## [3.0.7-pl] - 2022-09-06
+
+### Added
+- MODX and PHP version check before installation
+- Snippet options are now available in wrapper chunks
+- The ability to search for an order in the admin panel by phone number
+- Email field to order address window
+
+### Changed
+
+- Css styles reserved for global layout classes (header, footer, title, count, weight, price, image) in msCart and msGetOrder chunks.
+
+## [3.0.6-pl] - 2022-06-29
+
+### Changed
+Improved readability of the code without changing the logic
+Fixed potential unknown variable error in  Order.submit method
+
+### Removed
+- PayPal payment module
+
+## [3.0.5-pl] - 2022-06-16
+
+### Changed
+Fixed bug of linking order and address models
+Fixed conflict of identical fields #696
+
+## [3.0.4-pl] - 2022-06-09
+
+### Added
+Removal of empty directories of images #685
+
+### Changed
+Fix escaping rank field for msProductFile #690
+Fix first thumbnail generator #691
+load minishop2:default lexicon in registerFrontend #688
+
+## [3.0.3-pl] - 2022-05-30
+
+### Changed
+- Fixed error with escaping of the rank on object msOrderStatus
+- Added escaping of the rank in upload processor
+- Returned the ability to add any fields to the order object
+
+## [3.0.2-pl] - 2022-05-20
+
+### Added
+- The ability to update image previews in the product grid
+- The ability to specify the role number when registering a user
+- Lost system setting ms2_cart_max_count
+
+### Changed
+- msCartHandler, msOrderHandler, msDeliveryHandler, msPaymentHandler deprecated file notifications now listen to the log_deprecated system setting
+- Escaping of the rank field to support mysql 8
+
+## [3.0.1-pl] - 2022-05-04
+
+### Changed
+- Old controllers msCartHandler, msOrderHandler, msDeliveryHandler, msPaymentHandler are marked as deprecated with usage error logged
+- The configuration required for JS controllers no longer depends on the included js files and is always available
+- DB storage controllers got additional checks
+- Update Copyrights
+
+## [3.0.0-pl] - 2022-04-27
+
+### Added
+- New catalog handlers to store the main controllers: msCartHandler, msOrderHandler, msDeliveryHandler, msPaymentHandler
+- System settings: ms2_tmp_storage, ms2_register_frontend
+- Database fields ms2_orders.session_id, ms2_order_addresses.email ms2_order_products.properties
+- New controllers for db storage, session storage
+- New order status Processed
+- Method RegisterFrontend
+
+### Changed
+
+- Composite msOrder.Address change owner from foreign to local
+- Clear controllers msCartHandler, msOrderHandler, msDeliveryHandler, msPaymentHandler.  Content replaced by stub
+- Resolver table.  New mechanism for managing database tables and fields
+- Field's type  ms2_order_statuses.rank  changed from tinyint to int
+- Plugin minishop2.  Added Method RegisterFrontend to section OnLoadWebDocument
+
+### Removed
+- Resolver Upgrade
+
+## [2.9.3-pl] - 2021-10-16
+
+### Added
+
+- Added a class for the form of cleaning the trash [#630]
+
+### Changed
+
+- Fixed bug with adding text_address field [#628]
+
+## [2.9.2-pl] - 2021-09-28
+
+### Added
+
+- Added the ability to set / remove product previews [#617]
+
+### Changed
+
+- Removed duplicate code [#619]
+- Removed a broken check for resource changes [#618]
+- Fixed correct http code 403 in case of unauthorized access to the file [#622]
+- Default msProduct class when added to cart [#613]
+- Improved overall code readability [#620]
+-- Optimized dirname method when connecting files
+-- Optimized definition of constants
+-- Added PHPDOC
+-- Removed commented code and some empty blocks
+-- Added access specifier to methods
+
+## [2.9.1-pl] - 2021-09-12
+
+### Added
+
+- Added msVendor fields in the list of order items [#612]
+- Added frequently used fields to the address table [#581]
+
+### Changed
+
+- Bug fixed This image is already in the product gallery
+
+## [2.9.0-pl] - 2021-08-25
+
+### Added
+
+- Added wiretapping of initiated context for work from API [#578]
+- Added counting of the number of items in the cart [#579]
+- Replace ssl certificate for PayPal [#573]
+- Added delivery_cost parameter for msOnGetOrderCost event [#585]
+- Added the ability to set week start in orders [#570]
+- Added support for zero cost
+
+### Changed
+
+- Fixed the logic of registration of the order status label in the order history [#576], [#580]
+- Bringing the code to the PSR12 standard [#574]
+- Refactoring PSR-12 errors [#577]
+- Added a name field for micro-markup [#588]
+- Fixed error Cannot read property 'Search' of undefined [#591]
+- getCost method optimized [#602]
+- Fixed error create ms2_options table
+
 ## [2.8.3-pl] - 2021-04-01
 
 ### Changed

@@ -43,7 +43,7 @@ class mSyncImportProcessProcessor extends modProcessor
                 return $this->success($response);
                 break;
             case 'init':
-                unset($_SESSION['logFile']);
+                unset($_SESSION['mSyncLogFile']);
                 $this->msync->catalog->initialize();
                 $response = $this->msync->catalog->resetSession();
                 return $this->success($response);
