@@ -7,9 +7,10 @@ class msPaymentDeliveriesGetListProcessor extends modObjectGetListProcessor
     public $defaultSortDirection = 'asc';
     public $permission = 'mssetting_list';
 
+
     /**
-     * @return bool|null|string
-     */
+    * @return bool|null|string
+    */
     public function initialize()
     {
         if (!$this->modx->hasPermission($this->permission)) {
@@ -19,11 +20,12 @@ class msPaymentDeliveriesGetListProcessor extends modObjectGetListProcessor
         return parent::initialize();
     }
 
+
     /**
-     * @param xPDOQuery $c
-     *
-     * @return xPDOQuery
-     */
+    * @param xPDOQuery $c
+    *
+    * @return xPDOQuery
+    */
     public function prepareQueryBeforeCount(xPDOQuery $c)
     {
         $c->leftJoin(
@@ -38,18 +40,19 @@ class msPaymentDeliveriesGetListProcessor extends modObjectGetListProcessor
         return $c;
     }
 
+
     /**
-     * @param xPDOObject $object
-     *
-     * @return array
-     */
+    * @param xPDOObject $object
+    *
+    * @return array
+    */
     public function prepareRow(xPDOObject $object)
     {
         $data = $object->toArray();
-        $data['actions'] = [];
+        $data['actions'] = array();
 
         if (empty($data['active'])) {
-            $data['actions'][] = [
+            $data['actions'][] = array(
                 'cls' => '',
                 'icon' => 'icon icon-power-off action-green',
                 'title' => $this->modx->lexicon('ms2_menu_enable'),
@@ -57,9 +60,9 @@ class msPaymentDeliveriesGetListProcessor extends modObjectGetListProcessor
                 'action' => 'enableDelivery',
                 'button' => true,
                 'menu' => true,
-            ];
+            );
         } else {
-            $data['actions'][] = [
+            $data['actions'][] = array(
                 'cls' => '',
                 'icon' => 'icon icon-power-off action-gray',
                 'title' => $this->modx->lexicon('ms2_menu_disable'),
@@ -67,7 +70,7 @@ class msPaymentDeliveriesGetListProcessor extends modObjectGetListProcessor
                 'action' => 'disableDelivery',
                 'button' => true,
                 'menu' => true,
-            ];
+            );
         }
 
         return $data;

@@ -4,22 +4,23 @@ class msProductGetOptionsProcessor extends modObjectProcessor
 {
     public $classKey = 'msProductOption';
 
+
     public function process()
     {
         $query = trim($this->getProperty('query'));
         $start = (int)$this->getProperty('start', 0);
         $limit = (int)$this->getProperty('limit', 10);
         $key = preg_replace('#^options-(.*?)#', '$1', $this->getProperty('key'));
-        $values = [];
+        $values = array();
 
         $c = $this->modx->newQuery('msProductOption');
         $c->sortby('value', 'ASC');
         $c->select('value');
         $c->groupby('value');
-        $c->where(['key' => $key]);
+        $c->where(array('key' => $key));
         $c->limit(0);
         if (!empty($query)) {
-            $c->where(['value:LIKE' => "%{$query}%"]);
+            $c->where(array('value:LIKE' => "%{$query}%"));
         }
         if ($c->prepare() && $c->stmt->execute()) {
             if ($tmp = $c->stmt->fetchAll(PDO::FETCH_COLUMN)) {
@@ -40,8 +41,8 @@ class msProductGetOptionsProcessor extends modObjectProcessor
 
     public function prepareValues($values, $query = '')
     {
-        if ($words = array_diff(array_map('trim', explode('|', $query)), [''])) {
-            $search = [];
+        if ($words = array_diff(array_map('trim', explode('|', $query)), array(''))) {
+            $search = array();
             foreach ($words as $word) {
                 $s = preg_quote($word, '\\');
                 $found = preg_grep("!{$s}!usi", $values);
@@ -54,9 +55,9 @@ class msProductGetOptionsProcessor extends modObjectProcessor
         }
 
         $values = array_keys(array_flip($values));
-        $values = array_diff($values, ['']);
+        $values = array_diff($values, array(''));
         foreach ($values as $id => $value) {
-            $values[$id] = ['value' => $value];
+            $values[$id] = array('value' => $value);
         }
 
         return $values;

@@ -3,9 +3,10 @@
 class msTypeMultipleProcessor extends modProcessor
 {
 
+
     /**
-     * @return array|string
-     */
+    * @return array|string
+    */
     public function process()
     {
         if (!$method = $this->getProperty('method', false)) {
@@ -21,17 +22,17 @@ class msTypeMultipleProcessor extends modProcessor
             if ($categories && $options) {
                 foreach ($options as $option) {
                     foreach ($categories as $category) {
-                        $miniShop2->runProcessor('mgr/settings/option/assign', [
+                        $miniShop2->runProcessor('mgr/settings/option/assign', array(
                             'option_id' => $option,
                             'category_id' => $category,
-                        ]);
+                        ));
                     }
                 }
             }
         } elseif ($ids = json_decode($this->getProperty('ids'), true)) {
             foreach ($ids as $id) {
                 /** @var modProcessorResponse $response */
-                $response = $miniShop2->runProcessor('mgr/settings/option/' . $method, ['id' => $id]);
+                $response = $miniShop2->runProcessor('mgr/settings/option/' . $method, array('id' => $id));
                 if ($response->isError()) {
                     return $response->getResponse();
                 }

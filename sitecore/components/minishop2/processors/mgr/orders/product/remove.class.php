@@ -4,20 +4,20 @@ class msOrderProductRemoveProcessor extends modObjectRemoveProcessor
 {
     public $classKey = 'msOrderProduct';
     public $objectType = 'msOrderProduct';
-    public $languageTopics = ['minishop2'];
+    public $languageTopics = array('minishop2');
     public $beforeRemoveEvent = 'msOnBeforeRemoveOrderProduct';
     public $afterRemoveEvent = 'msOnRemoveOrderProduct';
     public $permission = 'msorder_save';
     /** @var msOrder $order */
     protected $order;
 
+
     /**
-     * @return bool|null|string
-     */
+    * @return bool|null|string
+    */
     public function beforeRemove()
     {
-        $this->order = $this->object->getOne('Order');
-        if (!$this->order) {
+        if (!$this->order = $this->object->getOne('Order')) {
             return $this->modx->lexicon('ms2_err_order_nf');
         }
 
@@ -32,9 +32,10 @@ class msOrderProductRemoveProcessor extends modObjectRemoveProcessor
         return !$this->hasErrors();
     }
 
+
     /**
-     *
-     */
+    *
+    */
     public function afterRemove()
     {
         // Fix "cache"

@@ -6,20 +6,20 @@
 class msVendor extends xPDOSimpleObject
 {
     /**
-     * @param array $ancestors
-     *
-     * @return bool
-     */
-    public function remove(array $ancestors = [])
+    * @param array $ancestors
+    *
+    * @return bool
+    */
+    public function remove(array $ancestors = array())
     {
         $c = $this->xpdo->newQuery('msProductData');
         $c->command('UPDATE');
-        $c->set([
+        $c->set(array(
             'vendor' => 0,
-        ]);
-        $c->where([
+        ));
+        $c->where(array(
             'vendor' => $this->id,
-        ]);
+        ));
         $c->prepare();
         $c->stmt->execute();
 

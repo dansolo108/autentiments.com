@@ -1,7 +1,6 @@
 <?php
 
-require_once(dirname(__FILE__, 2) . '/msproductlink.class.php');
-
+require_once(dirname(dirname(__FILE__)) . '/msproductlink.class.php');
 class msProductLink_mysql extends msProductLink
 {
 }

@@ -28,65 +28,57 @@ if (!$order = $modx->getObject('msOrder', compact('id'))) {
     return $modx->lexicon('ms2_err_order_nf');
 }
 $canView = (!empty($_SESSION['minishop2']['orders']) && in_array($id, $_SESSION['minishop2']['orders'])) ||
-    $order->get('user_id') == $modx->user->id || $modx->user->hasSessionContext(
-        'mgr'
-    ) || !empty($scriptProperties['id']);
+    $order->get('user_id') == $modx->user->id || $modx->user->hasSessionContext('mgr') || !empty($scriptProperties['id']);
 if (!$canView) {
     return '';
 }
 
 // Select ordered products
-$where = [
+$where = array(
     'msOrderProduct.order_id' => $id,
-];
+);
 
 // Include products properties
-$leftJoin = [
-    'msProduct' => [
+$leftJoin = array(
+    'msProduct' => array(
         'class' => 'msProduct',
         'on' => 'msProduct.id = msOrderProduct.product_id',
-    ],
-    'Data' => [
+    ),
+    'Data' => array(
         'class' => 'msProductData',
         'on' => 'msProduct.id = Data.id',
-    ],
-    'Vendor' => [
+    ),
+    'Vendor' => array(
         'class' => 'msVendor',
         'on' => 'Data.vendor = Vendor.id',
-    ],
-];
+    ),
+);
 
 // Select columns
-$select = [
+$select = array(
     'msProduct' => !empty($includeContent)
         ? $modx->getSelectColumns('msProduct', 'msProduct')
-        : $modx->getSelectColumns('msProduct', 'msProduct', '', ['content'], true),
+        : $modx->getSelectColumns('msProduct', 'msProduct', '', array('content'), true),
     'Data' => $modx->getSelectColumns(
-            'msProductData',
-            'Data',
-            '',
-            ['id'],
-            true
-        ) . ',`Data`.`price` as `original_price`',
-    'Vendor' => $modx->getSelectColumns('msVendor', 'Vendor', 'vendor.', ['id'], true),
-    'OrderProduct' => $modx->getSelectColumns(
-            'msOrderProduct',
-            'msOrderProduct',
-            '',
-            ['id'],
-            true
-        ) . ', `msOrderProduct`.`id` as `order_product_id`',
-];
+        'msProductData',
+        'Data',
+        '',
+        array('id'),
+        true
+    ) . ',`Data`.`price` as `original_price`',
+    'Vendor' => $modx->getSelectColumns('msVendor', 'Vendor', 'vendor.', array('id'), true),
+    'OrderProduct' => $modx->getSelectColumns('msOrderProduct', 'msOrderProduct', '', array('id'), true) . ', `msOrderProduct`.`id` as `order_product_id`',
+);
 
 // Include products thumbnails
 if (!empty($includeThumbs)) {
     $thumbs = array_map('trim', explode(',', $includeThumbs));
     if (!empty($thumbs[0])) {
         foreach ($thumbs as $thumb) {
-            $leftJoin[$thumb] = [
+            $leftJoin[$thumb] = array(
                 'class' => 'msProductFile',
                 'on' => "`{$thumb}`.product_id = msProduct.id AND `{$thumb}`.parent != 0 AND `{$thumb}`.path LIKE '%/{$thumb}/%'",
-            ];
+            );
             $select[$thumb] = "`{$thumb}`.url as '{$thumb}'";
         }
         $pdoFetch->addTime('Included list of thumbnails: <b>' . implode(', ', $thumbs) . '</b>.');
@@ -94,7 +86,7 @@ if (!empty($includeThumbs)) {
 }
 
 // Add user parameters
-foreach (['where', 'leftJoin', 'select'] as $v) {
+foreach (array('where', 'leftJoin', 'select') as $v) {
     if (!empty($scriptProperties[$v])) {
         $tmp = $scriptProperties[$v];
         if (!is_array($tmp)) {
@@ -109,7 +101,7 @@ foreach (['where', 'leftJoin', 'select'] as $v) {
 $pdoFetch->addTime('Conditions prepared');
 
 // Tables for joining
-$default = [
+$default = array(
     'class' => 'msOrderProduct',
     'where' => $where,
     'leftJoin' => $leftJoin,
@@ -123,12 +115,12 @@ $default = [
     'return' => 'data',
     'decodeJSON' => true,
     'nestedChunkPrefix' => 'minishop2_',
-];
+);
 // Merge all properties and run!
 $pdoFetch->setConfig(array_merge($default, $scriptProperties), true);
 $rows = $pdoFetch->run();
 
-$products = [];
+$products = array();
 $cart_count = 0;
 $cart_discount_cost = 0;
 foreach ($rows as $product) {
@@ -160,7 +152,7 @@ foreach ($rows as $product) {
     }
 
     // Add option values
-    $options = $modx->call('msProductData', 'loadOptions', [$modx, $product['id']]);
+    $options = $modx->call('msProductData', 'loadOptions', array($modx, $product['id']));
     $products[] = array_merge($product, $options);
 
     // Count total
@@ -168,22 +160,22 @@ foreach ($rows as $product) {
     $cart_discount_cost += $product['count'] * $discount_price;
 }
 
-$pls = array_merge($scriptProperties, [
+$pls = array_merge($scriptProperties, array(
     'order' => $order->toArray(),
     'products' => $products,
     'user' => ($tmp = $order->getOne('User'))
         ? array_merge($tmp->getOne('Profile')->toArray(), $tmp->toArray())
-        : [],
+        : array(),
     'address' => ($tmp = $order->getOne('Address'))
         ? $tmp->toArray()
-        : [],
+        : array(),
     'delivery' => ($tmp = $order->getOne('Delivery'))
         ? $tmp->toArray()
-        : [],
+        : array(),
     'payment' => ($payment = $order->getOne('Payment'))
         ? $payment->toArray()
-        : [],
-    'total' => [
+        : array(),
+    'total' => array(
         'cost' => $miniShop2->formatPrice($order->get('cost')),
         'cart_cost' => $miniShop2->formatPrice($order->get('cart_cost')),
         'delivery_cost' => $miniShop2->formatPrice($order->get('delivery_cost')),
@@ -191,8 +183,8 @@ $pls = array_merge($scriptProperties, [
         'cart_weight' => $miniShop2->formatWeight($order->get('weight')),
         'cart_count' => $cart_count,
         'cart_discount' => $cart_discount_cost
-    ],
-]);
+    ),
+));
 
 // add "payment" link
 if ($payment and $class = $payment->get('class')) {

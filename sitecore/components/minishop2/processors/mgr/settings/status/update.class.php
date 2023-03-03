@@ -5,12 +5,13 @@ class msOrderStatusUpdateProcessor extends modObjectUpdateProcessor
     /** @var msOrderStatus $object */
     public $object;
     public $classKey = 'msOrderStatus';
-    public $languageTopics = ['minishop2'];
+    public $languageTopics = array('minishop2');
     public $permission = 'mssetting_save';
 
+
     /**
-     * @return bool|null|string
-     */
+    * @return bool|null|string
+    */
     public function initialize()
     {
         if (!$this->modx->hasPermission($this->permission)) {
@@ -20,12 +21,13 @@ class msOrderStatusUpdateProcessor extends modObjectUpdateProcessor
         return parent::initialize();
     }
 
+
     /**
-     * @return bool
-     */
+    * @return bool
+    */
     public function beforeSet()
     {
-        $required = ['name'];
+        $required = array('name');
         if ($this->getProperty('email_user')) {
             $required[] = 'subject_user';
             $required[] = 'body_user';
@@ -42,7 +44,7 @@ class msOrderStatusUpdateProcessor extends modObjectUpdateProcessor
             }
         }
         $name = $this->getProperty('name');
-        if ($this->modx->getCount($this->classKey, ['name' => $name, 'id:!=' => $this->object->id])) {
+        if ($this->modx->getCount($this->classKey, array('name' => $name, 'id:!=' => $this->object->id))) {
             $this->modx->error->addField('name', $this->modx->lexicon('ms2_err_ae'));
         }
 

@@ -1,7 +1,6 @@
 <?php
 
-require_once(dirname(__FILE__, 2) . '/msoption.class.php');
-
+require_once(dirname(dirname(__FILE__)) . '/msoption.class.php');
 class msOption_mysql extends msOption
 {
 }

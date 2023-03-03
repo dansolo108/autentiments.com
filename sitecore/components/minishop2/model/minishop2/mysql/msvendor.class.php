@@ -1,7 +1,6 @@
 <?php
 
-require_once(dirname(__FILE__, 2) . '/msvendor.class.php');
-
+require_once(dirname(dirname(__FILE__)) . '/msvendor.class.php');
 class msVendor_mysql extends msVendor
 {
 }

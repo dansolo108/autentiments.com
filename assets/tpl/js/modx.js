@@ -5,7 +5,7 @@ function calcRealTotalCost() {
             count = $(this).find('input[name=count]').val();
         real_total_cost = real_total_cost + (price * count);
     });
-    $('.real_total_cost').text(miniShop2.Utils.formatPrice(real_total_cost));
+    $('.real_total_cost').text(miniShop2.formatPrice(real_total_cost));
 }
 
 function chooseVisibleDelivery(delivery) {
@@ -134,7 +134,7 @@ $(document).ready(function() {
         
         $(document).on('mspc_set mspc_freshen', function(e, response) { // событие mspc_freshen добавлено в кастомном js-файле
             if(response.mspc.discount_amount > 0) {
-                $('.mspc_discount_amount span').text(miniShop2.Utils.formatPrice(msmcGetPrice(response.mspc.discount_amount)));
+                $('.mspc_discount_amount span').text(miniShop2.formatPrice(msmcGetPrice(response.mspc.discount_amount)));
                 promocodeApplied();
             } else {
                 $('.mspc_discount_amount span').text("-");
@@ -151,10 +151,10 @@ $(document).ready(function() {
     
         miniShop2.Callbacks.add('Cart.change.response.success', 'stik', function(response) {
             console.log(response);
-            $('.ms2_total_cost').text(miniShop2.Utils.formatPrice(msmcGetPrice(response.data.total_cost)));
+            $('.ms2_total_cost').text(miniShop2.formatPrice(msmcGetPrice(response.data.total_cost)));
             // $('.mse2_total_declension').text(declension(response.data.total_count, stik_declension_product_js));
-            $('.ms2_total_no_discount').text(miniShop2.Utils.formatPrice(msmcGetPrice(response.data.total_cost + response.data.total_discount)));
-            $('.ms2_total_discount_custom').text(miniShop2.Utils.formatPrice(msmcGetPrice(response.data.total_discount)));
+            $('.ms2_total_no_discount').text(miniShop2.formatPrice(msmcGetPrice(response.data.total_cost + response.data.total_discount)));
+            $('.ms2_total_discount_custom').text(miniShop2.formatPrice(msmcGetPrice(response.data.total_discount)));
             let $inputCount = $(`#${response.data.key}`).find(`.au-cart__card-count`);
             if(response.data.max_count && $inputCount){
                 $inputCount.attr('max',response.data.max_count);
@@ -172,7 +172,7 @@ $(document).ready(function() {
         });
     
         miniShop2.Callbacks.add('Cart.remove.response.success', 'stik', function(response) {
-            $('.ms2_total_no_discount').text(miniShop2.Utils.formatPrice(response.data.real_total_cost));
+            $('.ms2_total_no_discount').text(miniShop2.formatPrice(response.data.real_total_cost));
             calcRealTotalCost();
             if ($('.msOrder').length) {
                 miniShop2.Order.getcost();
@@ -187,9 +187,9 @@ $(document).ready(function() {
         miniShop2.Callbacks.add('Order.add.response.success', 'stik', function(response) {
             // если было изменено поле страна/город/индекс и все эти поля не пустые
             if(
-                !miniShop2.Utils.empty(response.data.country) ||
-                !miniShop2.Utils.empty(response.data.city) ||
-                !miniShop2.Utils.empty(response.data.index)
+                !miniShop2.empty(response.data.country) ||
+                !miniShop2.empty(response.data.city) ||
+                !miniShop2.empty(response.data.index)
             ) {
                 checkDeliveryFields();
             }
@@ -223,7 +223,7 @@ $(document).ready(function() {
             // }
             
             // Стоимость заказа, поскольку она находится за пределами #msOrder
-            $('.ms2_order_cost').text(miniShop2.Utils.formatPrice(response.data.cost));
+            $('.ms2_order_cost').text(miniShop2.formatPrice(response.data.cost));
             
             // Отключаем кнопку оформления заказа, если не рассчиталась доставка
             // if(response.data.delivery_cost > 0) {
@@ -236,7 +236,7 @@ $(document).ready(function() {
             
             // Общая стоимость доставки
             if(response.data.delivery_cost > 0) {
-                $('.ms2_delivery_cost').text(miniShop2.Utils.formatPrice(response.data.delivery_cost) + " " + ms2_frontend_currency);
+                $('.ms2_delivery_cost').text(miniShop2.formatPrice(response.data.delivery_cost) + " " + ms2_frontend_currency);
                 // $('#city, #index').removeClass('error');
             } else if(response.data.free_delivery && response.data.delivery_cost == 0){
                 $('.ms2_delivery_cost').text(stik_order_delivery_free);
@@ -249,8 +249,8 @@ $(document).ready(function() {
             // бонусы
             if(typeof(response.data.msloyalty) != "undefined" && response.data.msloyalty !== null && response.data.msloyalty > 0) {
                 $('.loyalty_discount_amount').show();
-                $('.loyalty_discount_amount span').text(miniShop2.Utils.formatPrice(response.data.msloyalty));
-                $('.msloyalty_writeoff_amount').text(miniShop2.Utils.formatPrice(response.data.msloyalty));
+                $('.loyalty_discount_amount span').text(miniShop2.formatPrice(response.data.msloyalty));
+                $('.msloyalty_writeoff_amount').text(miniShop2.formatPrice(response.data.msloyalty));
                 $('.msloyalty_writeoff_declension').text(declension(response.data.msloyalty, stik_declension_bonuses_js));
             } else {
                 $('.loyalty_discount_amount').hide();
@@ -258,7 +258,7 @@ $(document).ready(function() {
             }
             
             if(response.data.loyalty_accrual > 0) {
-                $('.msloyalty_accrual').text(miniShop2.Utils.formatPrice(response.data.loyalty_accrual));
+                $('.msloyalty_accrual').text(miniShop2.formatPrice(response.data.loyalty_accrual));
                 $('.msloyalty_accrual_declension').text(declension(response.data.loyalty_accrual, stik_declension_bonuses_js));
             }
             if (typeof(response.data.msloyalty) != "undefined" && response.data.msloyalty !== null && response.data.msloyalty > 0) {
@@ -440,10 +440,10 @@ $(document).on('click', '#msProduct .au-product__size', function () {
     }, function(data) {
         data = JSON.parse(data);
         if (data) {
-            $('.js_card_price span').html(miniShop2.Utils.formatPrice(msmcGetPrice(data.price)));
+            $('.js_card_price span').html(miniShop2.formatPrice(msmcGetPrice(data.price)));
             if (data.old_price > 0) {
                 $('.js_card_old_price').show();
-                $('.js_card_old_price span').html(miniShop2.Utils.formatPrice(msmcGetPrice(data.old_price)));
+                $('.js_card_old_price span').html(miniShop2.formatPrice(msmcGetPrice(data.old_price)));
             } else {
                 $('.js_card_old_price').hide();
             }

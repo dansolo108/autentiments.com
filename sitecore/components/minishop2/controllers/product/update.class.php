@@ -9,28 +9,32 @@ class msProductUpdateManagerController extends msResourceUpdateController
     /** @var msProduct $resource */
     public $resource;
 
-    /**
-     * Returns language topics
-     * @return array
-     */
-    public function getLanguageTopics()
-    {
-        return ['resource', 'minishop2:default', 'minishop2:product', 'minishop2:manager', 'tickets:default'];
-    }
 
     /**
-     * Check for any permissions or requirements to load page
-     * @return bool
-     */
+    * Returns language topics
+    * @return array
+    */
+    public function getLanguageTopics()
+    {
+        return array('resource', 'minishop2:default', 'minishop2:product', 'minishop2:manager', 'tickets:default');
+    }
+
+
+    /**
+    * Check for any permissions or requirements to load page
+    * @return bool
+    */
     public function checkPermissions()
     {
         return $this->modx->hasPermission('edit_document');
     }
 
+
+
     /**
-     * Register custom CSS/JS for the page
-     * @return void
-     */
+    * Register custom CSS/JS for the page
+    * @return void
+    */
     public function loadCustomCssJs()
     {
         $mgrUrl = $this->getOption('manager_url', null, MODX_MANAGER_URL);
@@ -69,7 +73,7 @@ class msProductUpdateManagerController extends msResourceUpdateController
         }
 
         // Customizable product fields feature
-        $product_fields = array_merge($this->resource->getAllFieldsNames(), ['syncsite']);
+        $product_fields = array_merge($this->resource->getAllFieldsNames(), array('syncsite'));
         $product_data_fields = $this->resource->getDataFieldsNames();
 
         if (!$product_main_fields = $this->getOption('ms2_product_main_fields')) {
@@ -95,12 +99,12 @@ class msProductUpdateManagerController extends msResourceUpdateController
         if ($show_comments) {
             $this->loadTickets();
         }
-        $neighborhood = [];
+        $neighborhood = array();
         if ($this->resource instanceof msProduct) {
             $neighborhood = $this->resource->getNeighborhood();
         }
 
-        $config = [
+        $config = array(
             'assets_url' => $this->miniShop2->config['assetsUrl'],
             'connector_url' => $this->miniShop2->config['connectorUrl'],
             'show_comments' => $show_comments,
@@ -115,12 +119,12 @@ class msProductUpdateManagerController extends msResourceUpdateController
             'option_keys' => $product_option_keys,
             'option_fields' => $product_option_fields,
             'data_fields' => $product_data_fields,
-            'additional_fields' => [],
+            'additional_fields' => array(),
             'media_source' => $this->getSourceProperties(),
             'isHideContent' => $this->isHideContent(),
-        ];
+        );
 
-        $ready = [
+        $ready = array(
             'xtype' => 'minishop2-page-product-update',
             'resource' => $this->resource->get('id'),
             'record' => $this->resourceArray,
@@ -143,10 +147,9 @@ class msProductUpdateManagerController extends msResourceUpdateController
                 : 0,
             'up_page' => $this->resource->parent,
             'mode' => 'update',
-        ];
+        );
 
-        $this->addHtml(
-            '
+        $this->addHtml('
         <script>
         // <![CDATA[
         MODx.config.publish_document = "' . $this->canPublish . '";
@@ -158,18 +161,18 @@ class msProductUpdateManagerController extends msResourceUpdateController
         });
         MODx.perm.tree_show_resource_ids = ' . ($this->modx->hasPermission('tree_show_resource_ids') ? 1 : 0) . ';
         // ]]>
-        </script>'
-        );
+        </script>');
 
         // load RTE
         $this->loadRichTextEditor();
-        $this->modx->invokeEvent('msOnManagerCustomCssJs', ['controller' => $this, 'page' => 'product_update']);
+        $this->modx->invokeEvent('msOnManagerCustomCssJs', array('controller' => $this, 'page' => 'product_update'));
         $this->loadPlugins();
     }
 
+
     /**
-     * Loads Tickets component to display comments
-     */
+    * Loads Tickets component to display comments
+    */
     public function loadTickets()
     {
         /** @var Tickets $Tickets */
@@ -177,12 +180,12 @@ class msProductUpdateManagerController extends msResourceUpdateController
             return;
         }
         if (method_exists($Tickets, 'loadManagerFiles')) {
-            $Tickets->loadManagerFiles($this, [
+            $Tickets->loadManagerFiles($this, array(
                 'config' => true,
                 'utils' => true,
                 'css' => true,
                 'comments' => true,
-            ]);
+            ));
         } else {
             $ticketsAssetsUrl = $Tickets->config['assetsUrl'];
             $connectorUrl = $ticketsAssetsUrl . 'connector.php';
@@ -192,8 +195,7 @@ class msProductUpdateManagerController extends msResourceUpdateController
             $this->addLastJavascript($ticketsJsUrl . 'misc/utils.js');
             $this->addLastJavascript($ticketsJsUrl . 'comment/comments.common.js');
             $this->addLastJavascript($ticketsJsUrl . 'comment/comments.grid.js');
-            $this->addHtml(
-                '
+            $this->addHtml('
             <script>
             // <![CDATA[
             Tickets.config = {
@@ -201,24 +203,24 @@ class msProductUpdateManagerController extends msResourceUpdateController
                 connector_url: "' . $connectorUrl . '"
             };
             // ]]>
-            </script>'
-            );
+            </script>');
         }
     }
 
+
     /**
-     * Additional preparation of the resource fields
-     */
+    * Additional preparation of the resource fields
+    */
     public function prepareFields()
     {
         $data = array_keys($this->modx->getFieldMeta('msProductData'));
         foreach ($this->resourceArray as $k => $v) {
             if (is_array($v) && in_array($k, $data)) {
                 $tmp = $this->resourceArray[$k];
-                $this->resourceArray[$k] = [];
+                $this->resourceArray[$k] = array();
                 foreach ($tmp as $v2) {
                     if (!empty($v2)) {
-                        $this->resourceArray[$k][] = ['value' => $v2];
+                        $this->resourceArray[$k][] = array('value' => $v2);
                     }
                 }
             }
@@ -229,9 +231,10 @@ class msProductUpdateManagerController extends msResourceUpdateController
         }
     }
 
+
     /**
-     * Loads additional scripts for product form from miniShop2 plugins
-     */
+    * Loads additional scripts for product form from miniShop2 plugins
+    */
     public function loadPlugins()
     {
         $plugins = $this->miniShop2->loadPlugins();
@@ -242,18 +245,19 @@ class msProductUpdateManagerController extends msResourceUpdateController
         }
     }
 
+
     /**
-     * Loads media source properties
-     *
-     * @return array
-     */
+    * Loads media source properties
+    *
+    * @return array
+    */
     public function getSourceProperties()
     {
-        $properties = [];
+        $properties = array();
         /** @var $source modMediaSource */
         if ($source = $this->resource->initializeMediaSource()) {
             $tmp = $source->getProperties();
-            $properties = [];
+            $properties = array();
             foreach ($tmp as $v) {
                 $properties[$v['name']] = $v['value'];
             }

@@ -1,0 +1,96 @@
+/* Grid */
+.amocrm-amocrm-row-disabled { font-style: italic; opacity: .6; color: #555; }
+.x-grid3-col-actions { padding: 3px 0 3px 5px; }
+
+/* Actions */
+.action-red { color: darkred !important; }
+.action-green { color: darkgreen !important; }
+.action-blue { color: cadetblue !important; }
+.action-yellow { color: goldenrod !important; }
+.action-gray { color: dimgray !important; }
+ul.amocrm-row-actions { margin: 0; padding: 0; list-style: none; }
+ul.amocrm-row-actions li { float: left; }
+ul.amocrm-row-actions .amocrm-btn { padding: 5px; margin-right: 2px; min-width: 26px; font-size: inherit; }
+
+/* Action menu */
+a.x-menu-item .x-menu-item-text, a.x-menu-item .x-menu-item-text .icon { cursor: pointer; }
+a.x-menu-item .x-menu-item-text .icon { line-height: 16px; top: auto; }
+.x-menu-list .icon { min-width: 1em; text-align: center; }
+.x-menu-list-item:hover .icon { color: inherit !important; }
+ul.amocrm-row-actions .actions-menu { width: 40px; }
+ul.amocrm-row-actions .actions-menu:after { content: " \f107"; }
+
+/* Search field */
+.x-field-search-clear,
+.x-field-search-go { border-left: 1px solid #e4e4e4 !important; }
+.x-field-search-clear:hover,
+.x-field-search-go:hover { border-left-color: transparent !important; }
+.x-field-search-clear:before { content: '\f00d' !important; }
+.x-field-search-go { right: 31px !important; border-radius: 0 !important; }
+.x-field-search-go:before { content: '\f002' !important; }
+
+/* Buttons */
+.amocrm-btn { display: inline-block; margin-bottom: 0; font-weight: normal; text-align: center; vertical-align: middle; -ms-touch-action: manipulation; touch-action: manipulation; cursor: pointer; background-image: none; border: 1px solid transparent; white-space: nowrap; padding: 6px 12px; font-size: 14px; line-height: 1.42857143; border-radius: 4px; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none }
+.amocrm-btn:focus, .amocrm-btn:active:focus, .amocrm-btn.active:focus, .amocrm-btn.focus, .amocrm-btn:active.focus, .amocrm-btn.active.focus { outline: thin dotted; outline: 5px auto -webkit-focus-ring-color; outline-offset: -2px }
+.amocrm-btn:hover, .amocrm-btn:focus, .amocrm-btn.focus { color: #333; text-decoration: none }
+.amocrm-btn:active, .amocrm-btn.active { outline: 0; background-image: none; -webkit-box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125); box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125) }
+.amocrm-btn.disabled, .amocrm-btn[disabled], fieldset[disabled] .amocrm-btn { cursor: not-allowed; opacity: .65; filter: alpha(opacity=65); -webkit-box-shadow: none; box-shadow: none }
+a.amocrm-btn.disabled, fieldset[disabled] a.amocrm-btn { pointer-events: none }
+.amocrm-btn-default { color: #333; background-color: #fff; border-color: #ccc }
+.amocrm-btn-default:focus, .amocrm-btn-default.focus { color: #333; background-color: #e6e6e6; border-color: #8c8c8c }
+.amocrm-btn-default:hover { color: #333; background-color: #e6e6e6; border-color: #adadad }
+.amocrm-btn-default:active, .amocrm-btn-default.active, .open > .dropdown-toggle.amocrm-btn-default { color: #333; background-color: #e6e6e6; border-color: #adadad }
+.amocrm-btn-default:active:hover, .amocrm-btn-default.active:hover, .open > .dropdown-toggle.amocrm-btn-default:hover, .amocrm-btn-default:active:focus, .amocrm-btn-default.active:focus, .open > .dropdown-toggle.amocrm-btn-default:focus, .amocrm-btn-default:active.focus, .amocrm-btn-default.active.focus, .open > .dropdown-toggle.amocrm-btn-default.focus { color: #333; background-color: #d4d4d4; border-color: #8c8c8c }
+.amocrm-btn-default:active, .amocrm-btn-default.active, .open > .dropdown-toggle.amocrm-btn-default { background-image: none }
+.amocrm-btn-default.disabled:hover, .amocrm-btn-default[disabled]:hover, fieldset[disabled] .amocrm-btn-default:hover, .amocrm-btn-default.disabled:focus, .amocrm-btn-default[disabled]:focus, fieldset[disabled] .amocrm-btn-default:focus, .amocrm-btn-default.disabled.focus, .amocrm-btn-default[disabled].focus, fieldset[disabled] .amocrm-btn-default.focus { background-color: #fff; border-color: #ccc }
+.amocrm-btn-default .badge { color: #fff; background-color: #333 }
+.amocrm-btn-primary { color: #fff; background-color: #337ab7; border-color: #2e6da4 }
+.amocrm-btn-primary:focus, .amocrm-btn-primary.focus { color: #fff; background-color: #286090; border-color: #122b40 }
+.amocrm-btn-primary:hover { color: #fff; background-color: #286090; border-color: #204d74 }
+.amocrm-btn-primary:active, .amocrm-btn-primary.active, .open > .dropdown-toggle.amocrm-btn-primary { color: #fff; background-color: #286090; border-color: #204d74 }
+.amocrm-btn-primary:active:hover, .amocrm-btn-primary.active:hover, .open > .dropdown-toggle.amocrm-btn-primary:hover, .amocrm-btn-primary:active:focus, .amocrm-btn-primary.active:focus, .open > .dropdown-toggle.amocrm-btn-primary:focus, .amocrm-btn-primary:active.focus, .amocrm-btn-primary.active.focus, .open > .dropdown-toggle.amocrm-btn-primary.focus { color: #fff; background-color: #204d74; border-color: #122b40 }
+.amocrm-btn-primary:active, .amocrm-btn-primary.active, .open > .dropdown-toggle.amocrm-btn-primary { background-image: none }
+.amocrm-btn-primary.disabled:hover, .amocrm-btn-primary[disabled]:hover, fieldset[disabled] .amocrm-btn-primary:hover, .amocrm-btn-primary.disabled:focus, .amocrm-btn-primary[disabled]:focus, fieldset[disabled] .amocrm-btn-primary:focus, .amocrm-btn-primary.disabled.focus, .amocrm-btn-primary[disabled].focus, fieldset[disabled] .amocrm-btn-primary.focus { background-color: #337ab7; border-color: #2e6da4 }
+.amocrm-btn-primary .badge { color: #337ab7; background-color: #fff }
+.amocrm-btn-success { color: #fff; background-color: #5cb85c; border-color: #4cae4c }
+.amocrm-btn-success:focus, .amocrm-btn-success.focus { color: #fff; background-color: #449d44; border-color: #255625 }
+.amocrm-btn-success:hover { color: #fff; background-color: #449d44; border-color: #398439 }
+.amocrm-btn-success:active, .amocrm-btn-success.active, .open > .dropdown-toggle.amocrm-btn-success { color: #fff; background-color: #449d44; border-color: #398439 }
+.amocrm-btn-success:active:hover, .amocrm-btn-success.active:hover, .open > .dropdown-toggle.amocrm-btn-success:hover, .amocrm-btn-success:active:focus, .amocrm-btn-success.active:focus, .open > .dropdown-toggle.amocrm-btn-success:focus, .amocrm-btn-success:active.focus, .amocrm-btn-success.active.focus, .open > .dropdown-toggle.amocrm-btn-success.focus { color: #fff; background-color: #398439; border-color: #255625 }
+.amocrm-btn-success:active, .amocrm-btn-success.active, .open > .dropdown-toggle.amocrm-btn-success { background-image: none }
+.amocrm-btn-success.disabled:hover, .amocrm-btn-success[disabled]:hover, fieldset[disabled] .amocrm-btn-success:hover, .amocrm-btn-success.disabled:focus, .amocrm-btn-success[disabled]:focus, fieldset[disabled] .amocrm-btn-success:focus, .amocrm-btn-success.disabled.focus, .amocrm-btn-success[disabled].focus, fieldset[disabled] .amocrm-btn-success.focus { background-color: #5cb85c; border-color: #4cae4c }
+.amocrm-btn-success .badge { color: #5cb85c; background-color: #fff }
+.amocrm-btn-info { color: #fff; background-color: #5bc0de; border-color: #46b8da }
+.amocrm-btn-info:focus, .amocrm-btn-info.focus { color: #fff; background-color: #31b0d5; border-color: #1b6d85 }
+.amocrm-btn-info:hover { color: #fff; background-color: #31b0d5; border-color: #269abc }
+.amocrm-btn-info:active, .amocrm-btn-info.active, .open > .dropdown-toggle.amocrm-btn-info { color: #fff; background-color: #31b0d5; border-color: #269abc }
+.amocrm-btn-info:active:hover, .amocrm-btn-info.active:hover, .open > .dropdown-toggle.amocrm-btn-info:hover, .amocrm-btn-info:active:focus, .amocrm-btn-info.active:focus, .open > .dropdown-toggle.amocrm-btn-info:focus, .amocrm-btn-info:active.focus, .amocrm-btn-info.active.focus, .open > .dropdown-toggle.amocrm-btn-info.focus { color: #fff; background-color: #269abc; border-color: #1b6d85 }
+.amocrm-btn-info:active, .amocrm-btn-info.active, .open > .dropdown-toggle.amocrm-btn-info { background-image: none }
+.amocrm-btn-info.disabled:hover, .amocrm-btn-info[disabled]:hover, fieldset[disabled] .amocrm-btn-info:hover, .amocrm-btn-info.disabled:focus, .amocrm-btn-info[disabled]:focus, fieldset[disabled] .amocrm-btn-info:focus, .amocrm-btn-info.disabled.focus, .amocrm-btn-info[disabled].focus, fieldset[disabled] .amocrm-btn-info.focus { background-color: #5bc0de; border-color: #46b8da }
+.amocrm-btn-info .badge { color: #5bc0de; background-color: #fff }
+.amocrm-btn-warning { color: #fff; background-color: #f0ad4e; border-color: #eea236 }
+.amocrm-btn-warning:focus, .amocrm-btn-warning.focus { color: #fff; background-color: #ec971f; border-color: #985f0d }
+.amocrm-btn-warning:hover { color: #fff; background-color: #ec971f; border-color: #d58512 }
+.amocrm-btn-warning:active, .amocrm-btn-warning.active, .open > .dropdown-toggle.amocrm-btn-warning { color: #fff; background-color: #ec971f; border-color: #d58512 }
+.amocrm-btn-warning:active:hover, .amocrm-btn-warning.active:hover, .open > .dropdown-toggle.amocrm-btn-warning:hover, .amocrm-btn-warning:active:focus, .amocrm-btn-warning.active:focus, .open > .dropdown-toggle.amocrm-btn-warning:focus, .amocrm-btn-warning:active.focus, .amocrm-btn-warning.active.focus, .open > .dropdown-toggle.amocrm-btn-warning.focus { color: #fff; background-color: #d58512; border-color: #985f0d }
+.amocrm-btn-warning:active, .amocrm-btn-warning.active, .open > .dropdown-toggle.amocrm-btn-warning { background-image: none }
+.amocrm-btn-warning.disabled:hover, .amocrm-btn-warning[disabled]:hover, fieldset[disabled] .amocrm-btn-warning:hover, .amocrm-btn-warning.disabled:focus, .amocrm-btn-warning[disabled]:focus, fieldset[disabled] .amocrm-btn-warning:focus, .amocrm-btn-warning.disabled.focus, .amocrm-btn-warning[disabled].focus, fieldset[disabled] .amocrm-btn-warning.focus { background-color: #f0ad4e; border-color: #eea236 }
+.amocrm-btn-warning .badge { color: #f0ad4e; background-color: #fff }
+.amocrm-btn-danger { color: #fff; background-color: #d9534f; border-color: #d43f3a }
+.amocrm-btn-danger:focus, .amocrm-btn-danger.focus { color: #fff; background-color: #c9302c; border-color: #761c19 }
+.amocrm-btn-danger:hover { color: #fff; background-color: #c9302c; border-color: #ac2925 }
+.amocrm-btn-danger:active, .amocrm-btn-danger.active, .open > .dropdown-toggle.amocrm-btn-danger { color: #fff; background-color: #c9302c; border-color: #ac2925 }
+.amocrm-btn-danger:active:hover, .amocrm-btn-danger.active:hover, .open > .dropdown-toggle.amocrm-btn-danger:hover, .amocrm-btn-danger:active:focus, .amocrm-btn-danger.active:focus, .open > .dropdown-toggle.amocrm-btn-danger:focus, .amocrm-btn-danger:active.focus, .amocrm-btn-danger.active.focus, .open > .dropdown-toggle.amocrm-btn-danger.focus { color: #fff; background-color: #ac2925; border-color: #761c19 }
+.amocrm-btn-danger:active, .amocrm-btn-danger.active, .open > .dropdown-toggle.amocrm-btn-danger { background-image: none }
+.amocrm-btn-danger.disabled:hover, .amocrm-btn-danger[disabled]:hover, fieldset[disabled] .amocrm-btn-danger:hover, .amocrm-btn-danger.disabled:focus, .amocrm-btn-danger[disabled]:focus, fieldset[disabled] .amocrm-btn-danger:focus, .amocrm-btn-danger.disabled.focus, .amocrm-btn-danger[disabled].focus, fieldset[disabled] .amocrm-btn-danger.focus { background-color: #d9534f; border-color: #d43f3a }
+.amocrm-btn-danger .badge { color: #d9534f; background-color: #fff }
+.amocrm-btn-link { color: #337ab7; font-weight: normal; border-radius: 0 }
+.amocrm-btn-link, .amocrm-btn-link:active, .amocrm-btn-link.active, .amocrm-btn-link[disabled], fieldset[disabled] .amocrm-btn-link { background-color: transparent; -webkit-box-shadow: none; box-shadow: none }
+.amocrm-btn-link, .amocrm-btn-link:hover, .amocrm-btn-link:focus, .amocrm-btn-link:active { border-color: transparent }
+.amocrm-btn-link:hover, .amocrm-btn-link:focus { color: #23527c; text-decoration: underline; background-color: transparent }
+.amocrm-btn-link[disabled]:hover, fieldset[disabled] .amocrm-btn-link:hover, .amocrm-btn-link[disabled]:focus, fieldset[disabled] .amocrm-btn-link:focus { color: #777; text-decoration: none }
+.amocrm-btn-lg { padding: 10px 16px; font-size: 18px; line-height: 1.3333333; border-radius: 6px }
+.amocrm-btn-sm { padding: 5px 10px; font-size: 12px; line-height: 1.5; border-radius: 3px }
+.amocrm-btn-xs { padding: 1px 5px; font-size: 12px; line-height: 1.5; border-radius: 3px }
+.amocrm-btn-block { display: block; width: 100% }
+.amocrm-btn-block + .amocrm-btn-block { margin-top: 5px }

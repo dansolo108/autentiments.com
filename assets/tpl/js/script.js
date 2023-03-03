@@ -966,7 +966,7 @@ if ($('.coupon-form').length) {
                 if (response.success) {
                     if ($('.au-bonuses__count span').length) {
                         $.jGrowl(response.msg, {theme: 'af-message-success'});
-                        $('.au-bonuses__count span').html(miniShop2.Utils.formatPrice(response.balance));
+                        $('.au-bonuses__count span').html(miniShop2.formatPrice(response.balance));
                     }
                     console.log(response);
                 } else {

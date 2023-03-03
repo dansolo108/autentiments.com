@@ -6,14 +6,15 @@ require_once MODX_CORE_PATH . 'model/modx/processors/resource/update.class.php';
 class msCategoryUpdateProcessor extends modResourceUpdateProcessor
 {
     public $classKey = 'msCategory';
-    public $languageTopics = ['resource', 'minishop2:default'];
+    public $languageTopics = array('resource', 'minishop2:default');
     public $permission = 'mscategory_save';
     public $beforeSaveEvent = 'OnBeforeDocFormSave';
     public $afterSaveEvent = 'OnDocFormSave';
 
+
     /**
-     * @return bool|null|string
-     */
+    * @return bool|null|string
+    */
     public function initialize()
     {
         $primaryKey = $this->getProperty($this->primaryKeyField, false);
@@ -21,8 +22,8 @@ class msCategoryUpdateProcessor extends modResourceUpdateProcessor
             return $this->modx->lexicon($this->classKey . '_err_ns');
         }
 
-        if (!$this->modx->getCount($this->classKey, ['id' => $primaryKey, 'class_key' => $this->classKey])) {
-            if ($res = $this->modx->getObject('modResource', ['id' => $primaryKey])) {
+        if (!$this->modx->getCount($this->classKey, array('id' => $primaryKey, 'class_key' => $this->classKey))) {
+            if ($res = $this->modx->getObject('modResource', array('id' => $primaryKey))) {
                 $res->set('class_key', $this->classKey);
                 $res->save();
             }
@@ -31,9 +32,10 @@ class msCategoryUpdateProcessor extends modResourceUpdateProcessor
         return parent::initialize();
     }
 
+
     /**
-     * @return int|mixed|string
-     */
+    * @return int|mixed|string
+    */
     public function checkFriendlyAlias()
     {
         if ($this->workingContext->getOption('ms2_category_id_as_alias')) {
@@ -46,9 +48,10 @@ class msCategoryUpdateProcessor extends modResourceUpdateProcessor
         return $alias;
     }
 
+
     /**
-     * @return bool
-     */
+    * @return bool
+    */
     public function beforeSave()
     {
         $this->object->set('isfolder', true);

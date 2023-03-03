@@ -5,12 +5,13 @@ class msPaymentMemberCreateProcessor extends modObjectCreateProcessor
     /** @var msPayment $object */
     public $object;
     public $classKey = 'msDeliveryMember';
-    public $languageTopics = ['minishop2'];
+    public $languageTopics = array('minishop2');
     public $permission = 'mssetting_save';
 
+
     /**
-     * @return bool|null|string
-     */
+    * @return bool|null|string
+    */
     public function initialize()
     {
         if (!$this->modx->hasPermission($this->permission)) {
@@ -20,9 +21,10 @@ class msPaymentMemberCreateProcessor extends modObjectCreateProcessor
         return parent::initialize();
     }
 
+
     /**
-     * @return bool
-     */
+    * @return bool
+    */
     public function beforeSave()
     {
         $this->object->fromArray($this->getProperties(), '', true, true);

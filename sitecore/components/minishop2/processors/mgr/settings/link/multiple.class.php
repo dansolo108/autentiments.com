@@ -3,9 +3,10 @@
 class msLinkMultipleProcessor extends modProcessor
 {
 
+
     /**
-     * @return array|string
-     */
+    * @return array|string
+    */
     public function process()
     {
         if (!$method = $this->getProperty('method', false)) {
@@ -21,7 +22,7 @@ class msLinkMultipleProcessor extends modProcessor
 
         foreach ($ids as $id) {
             /** @var modProcessorResponse $response */
-            $response = $miniShop2->runProcessor('mgr/settings/link/' . $method, ['id' => $id]);
+            $response = $miniShop2->runProcessor('mgr/settings/link/' . $method, array('id' => $id));
             if ($response->isError()) {
                 return $response->getResponse();
             }

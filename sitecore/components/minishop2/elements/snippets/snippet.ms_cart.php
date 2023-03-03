@@ -1,5 +1,4 @@
 <?php
-
 /** @var modX $modx */
 /** @var array $scriptProperties */
 /** @var miniShop2 $miniShop2 */
@@ -27,43 +26,43 @@ if (!empty($_GET['msorder'])) {
 }
 
 // Select cart products
-$where = [
-    'msProduct.id:IN' => [],
-];
+$where = array(
+    'msProduct.id:IN' => array(),
+);
 foreach ($cart as $entry) {
     $where['msProduct.id:IN'][] = $entry['id'];
 }
 $where['msProduct.id:IN'] = array_unique($where['msProduct.id:IN']);
 
 // Include products properties
-$leftJoin = [
-    'Data' => [
+$leftJoin = array(
+    'Data' => array(
         'class' => 'msProductData',
-    ],
-    'Vendor' => [
+    ),
+    'Vendor' => array(
         'class' => 'msVendor',
         'on' => 'Data.vendor = Vendor.id',
-    ],
-];
+    ),
+);
 
 // Select columns
-$select = [
+$select = array(
     'msProduct' => !empty($includeContent)
         ? $modx->getSelectColumns('msProduct', 'msProduct')
-        : $modx->getSelectColumns('msProduct', 'msProduct', '', ['content'], true),
-    'Data' => $modx->getSelectColumns('msProductData', 'Data', '', ['id'], true),
-    'Vendor' => $modx->getSelectColumns('msVendor', 'Vendor', 'vendor.', ['id'], true),
-];
+        : $modx->getSelectColumns('msProduct', 'msProduct', '', array('content'), true),
+    'Data' => $modx->getSelectColumns('msProductData', 'Data', '', array('id'), true),
+    'Vendor' => $modx->getSelectColumns('msVendor', 'Vendor', 'vendor.', array('id'), true),
+);
 
 // Include products thumbnails
 if (!empty($includeThumbs)) {
     $thumbs = array_map('trim', explode(',', $includeThumbs));
     if (!empty($thumbs[0])) {
         foreach ($thumbs as $thumb) {
-            $leftJoin[$thumb] = [
+            $leftJoin[$thumb] = array(
                 'class' => 'msProductFile',
                 'on' => "`{$thumb}`.product_id = msProduct.id AND `{$thumb}`.parent != 0 AND `{$thumb}`.path LIKE '%/{$thumb}/%' AND `{$thumb}`.`rank` = 0",
-            ];
+            );
             $select[$thumb] = "`{$thumb}`.url as '{$thumb}'";
         }
         $pdoFetch->addTime('Included list of thumbnails: <b>' . implode(', ', $thumbs) . '</b>.');
@@ -71,7 +70,7 @@ if (!empty($includeThumbs)) {
 }
 
 // Add user parameters
-foreach (['where', 'leftJoin', 'select'] as $v) {
+foreach (array('where', 'leftJoin', 'select') as $v) {
     if (!empty($scriptProperties[$v])) {
         $tmp = $scriptProperties[$v];
         if (!is_array($tmp)) {
@@ -85,7 +84,7 @@ foreach (['where', 'leftJoin', 'select'] as $v) {
 }
 $pdoFetch->addTime('Conditions prepared');
 
-$default = [
+$default = array(
     'class' => 'msProduct',
     'where' => $where,
     'leftJoin' => $leftJoin,
@@ -96,19 +95,19 @@ $default = [
     'limit' => 0,
     'return' => 'data',
     'nestedChunkPrefix' => 'minishop2_',
-];
+);
 // Merge all properties and run!
 $pdoFetch->setConfig(array_merge($default, $scriptProperties), false);
 
 $tmp = $pdoFetch->run();
-$rows = [];
+$rows = array();
 foreach ($tmp as $row) {
     $rows[$row['id']] = $row;
 }
 
 // Process products in cart
-$products = [];
-$total = ['count' => 0, 'weight' => 0, 'cost' => 0, 'discount' => 0];
+$products = array();
+$total = array('count' => 0, 'weight' => 0, 'cost' => 0, 'discount' => 0);
 foreach ($cart as $key => $entry) {
     if (!isset($rows[$entry['id']])) {
         continue;
@@ -139,7 +138,7 @@ foreach ($cart as $key => $entry) {
     }
 
     // Add option values
-    $options = $modx->call('msProductData', 'loadOptions', [$modx, $product['id']]);
+    $options = $modx->call('msProductData', 'loadOptions', array($modx, $product['id']));
     $products[] = array_merge($product, $options);
 
     // Count total
@@ -152,11 +151,11 @@ $total['cost'] = $miniShop2->formatPrice($total['cost']);
 $total['discount'] = $miniShop2->formatPrice($total['discount']);
 $total['weight'] = $miniShop2->formatWeight($total['weight']);
 
-$output = $pdoFetch->getChunk($tpl, [
+$output = $pdoFetch->getChunk($tpl, array(
     'total' => $total,
     'products' => $products,
     'scriptProperties' => $scriptProperties
-]);
+));
 
 if ($modx->user->hasSessionContext('mgr') && !empty($showLog)) {
     $output .= '<pre class="msCartLog">' . print_r($pdoFetch->getTime(), true) . '</pre>';

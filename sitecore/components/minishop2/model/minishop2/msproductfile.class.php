@@ -15,6 +15,7 @@ class msProductFile extends xPDOSimpleObject
     /** @var miniShop2 $miniShop2 */
     protected $miniShop2;
 
+
     /**
      * @param modMediaSource $mediaSource
      *
@@ -25,22 +26,25 @@ class msProductFile extends xPDOSimpleObject
         $this->miniShop2 = $this->xpdo->getService('miniShop2');
         if ($mediaSource) {
             $this->mediaSource = $mediaSource;
+
             return true;
-        }
-        if ($this->mediaSource instanceof modMediaSource) {
+        } elseif (is_object($this->mediaSource) && $this->mediaSource instanceof modMediaSource) {
             return true;
+        } else {
+            /** @var msProduct $product */
+            if ($product = $this->xpdo->getObject('msProduct', array('id' => $this->get('product_id')))) {
+                $this->mediaSource = $product->initializeMediaSource();
+                if (!$this->mediaSource || !($this->mediaSource instanceof modMediaSource)) {
+                    return '[miniShop2] Could not initialize media source for product with id = ' . $this->get('product_id');
+                }
+
+                return true;
+            } else {
+                return '[miniShop2] Could not find product with id = ' . $this->get('product_id');
+            }
         }
-        /** @var msProduct $product */
-        $product = $this->xpdo->getObject('msProduct', ['id' => $this->get('product_id')]);
-        if (!$product) {
-            return '[miniShop2] Could not find product with id = ' . $this->get('product_id');
-        }
-        $this->mediaSource = $product->initializeMediaSource();
-        if (!($this->mediaSource instanceof modMediaSource)) {
-            return '[miniShop2] Could not initialize media source for product with id = ' . $this->get('product_id');
-        }
-        return true;
     }
+
 
     /**
      * @param null $cacheFlag
@@ -57,6 +61,7 @@ class msProductFile extends xPDOSimpleObject
         return parent::save($cacheFlag);
     }
 
+
     /**
      * @param string $file
      * @param bool $isRaw
@@ -68,10 +73,12 @@ class msProductFile extends xPDOSimpleObject
         $raw = '';
         if ($isRaw) {
             $raw = $file;
-        } elseif (file_exists($file)) {
-            $res = fopen($file, 'rb');
-            $raw = fread($res, 80000);
-            fclose($res);
+        } else {
+            if (file_exists($file)) {
+                $res = fopen($file, 'rb');
+                $raw = fread($res, 80000);
+                fclose($res);
+            }
         }
 
         return sha1($raw);
@@ -92,7 +99,7 @@ class msProductFile extends xPDOSimpleObject
         if ($prepare !== true) {
             return $prepare;
         }
-        $this->mediaSource->errors = [];
+        $this->mediaSource->errors = array();
         $filename = $this->get('path') . $this->get('file');
         $info = $this->mediaSource->getObjectContents($filename);
         if (!is_array($info)) {
@@ -102,14 +109,14 @@ class msProductFile extends xPDOSimpleObject
         }
 
         $properties = $this->mediaSource->getProperties();
-        $thumbnails = [];
+        $thumbnails = array();
         if (array_key_exists('thumbnails', $properties) && !empty($properties['thumbnails']['value'])) {
             $thumbnails = json_decode($properties['thumbnails']['value'], true);
         }
 
         if (empty($thumbnails)) {
-            $thumbnails = [
-                [
+            $thumbnails = array(
+                array(
                     'w' => 120,
                     'h' => 90,
                     'q' => 90,
@@ -118,8 +125,8 @@ class msProductFile extends xPDOSimpleObject
                     'f' => !empty($properties['thumbnailType']['value'])
                         ? $properties['thumbnailType']['value']
                         : 'jpg',
-                ],
-            ];
+                ),
+            );
         }
 
         foreach ($thumbnails as $k => $options) {
@@ -139,13 +146,14 @@ class msProductFile extends xPDOSimpleObject
         return true;
     }
 
+
     /**
      * @param array $options
      * @param array $info
      *
      * @return bool|null
      */
-    public function makeThumbnail($options = [], array $info)
+    public function makeThumbnail($options = array(), array $info)
     {
         if (!class_exists('modPhpThumb')) {
             if (file_exists(MODX_CORE_PATH . 'model/phpthumb/modphpthumb.class.php')) {
@@ -169,18 +177,12 @@ class msProductFile extends xPDOSimpleObject
 
         $output = false;
         if ($phpThumb->GenerateThumbnail() && $phpThumb->RenderOutput()) {
-            $this->xpdo->log(
-                modX::LOG_LEVEL_INFO,
-                '[miniShop2] phpThumb messages for "' . $this->get('url') .
-                '". ' . print_r($phpThumb->debugmessages, true)
-            );
+            $this->xpdo->log(modX::LOG_LEVEL_INFO, '[miniShop2] phpThumb messages for "' . $this->get('url') .
+                '". ' . print_r($phpThumb->debugmessages, true));
             $output = $phpThumb->outputImageData;
         } else {
-            $this->xpdo->log(
-                modX::LOG_LEVEL_ERROR,
-                '[miniShop2] Could not generate thumbnail for "' .
-                $this->get('url') . '". ' . print_r($phpThumb->debugmessages, true)
-            );
+            $this->xpdo->log(modX::LOG_LEVEL_ERROR, '[miniShop2] Could not generate thumbnail for "' .
+                $this->get('url') . '". ' . print_r($phpThumb->debugmessages, true));
         }
 
         if (file_exists($phpThumb->sourceFilename)) {
@@ -191,13 +193,14 @@ class msProductFile extends xPDOSimpleObject
         return $output;
     }
 
+
     /**
      * @param $raw_image
      * @param array $options
      *
      * @return bool
      */
-    public function saveThumbnail($raw_image, $options = [])
+    public function saveThumbnail($raw_image, $options = array())
     {
         $filename = $this->miniShop2->pathinfo($this->get('file'), 'filename') . '.' . $options['f'];
         if (!empty($options['name'])) {
@@ -210,7 +213,7 @@ class msProductFile extends xPDOSimpleObject
 
         /** @var msProductFile $product_file */
         /** @noinspection PhpUndefinedFieldInspection */
-        $product_file = $this->xpdo->newObject('msProductFile', [
+        $product_file = $this->xpdo->newObject('msProductFile', array(
             'product_id' => $this->get('product_id'),
             'parent' => $this->get('id'),
             'name' => $this->get('name'),
@@ -223,27 +226,24 @@ class msProductFile extends xPDOSimpleObject
             'createdby' => $this->xpdo->user->id,
             'active' => 1,
             'hash' => $this->generateHash($raw_image, true),
-            'properties' => [
+            'properties' => array(
                 'size' => strlen($raw_image),
-            ],
-        ]);
+            ),
+        ));
 
         $tf = tempnam(MODX_BASE_PATH, 'ms_');
         file_put_contents($tf, $raw_image);
         $tmp = getimagesize($tf);
         if (is_array($tmp)) {
-            $product_file->set(
-                'properties',
-                array_merge(
-                    $product_file->get('properties'),
-                    [
-                        'width' => $tmp[0],
-                        'height' => $tmp[1],
-                        'bits' => $tmp['bits'],
-                        'mime' => $tmp['mime'],
-                    ]
+            $product_file->set('properties', array_merge(
+                $product_file->get('properties'),
+                array(
+                    'width' => $tmp[0],
+                    'height' => $tmp[1],
+                    'bits' => $tmp['bits'],
+                    'mime' => $tmp['mime'],
                 )
-            );
+            ));
         }
         unlink($tf);
 
@@ -255,12 +255,9 @@ class msProductFile extends xPDOSimpleObject
         );
 
         if ($file) {
-            $product_file->set(
-                'url',
-                $this->mediaSource->getObjectUrl(
-                    $product_file->get('path') . $product_file->get('file')
-                )
-            );
+            $product_file->set('url', $this->mediaSource->getObjectUrl(
+                $product_file->get('path') . $product_file->get('file')
+            ));
 
             return $product_file->save();
         }
@@ -268,22 +265,23 @@ class msProductFile extends xPDOSimpleObject
         return false;
     }
 
+
     /**
      * @return array|mixed
      */
     public function getFirstThumbnail()
     {
-        $c = $this->xpdo->newQuery('msProductFile', [
+        $c = $this->xpdo->newQuery('msProductFile', array(
             'product_id' => $this->get('product_id'),
             'parent:>' => 0,
             'type' => 'image',
-        ]);
+        ));
         $c->limit(1);
         $c->sortby('`rank`', 'ASC');
         $c->sortby('`id`', 'ASC');
         $c->select('id,url');
 
-        $res = [];
+        $res = array();
         if ($c->prepare() && $c->stmt->execute()) {
             $res = $c->stmt->fetch(PDO::FETCH_ASSOC);
         }
@@ -296,7 +294,7 @@ class msProductFile extends xPDOSimpleObject
      *
      * @return bool
      */
-    public function remove(array $ancestors = [])
+    public function remove(array $ancestors = array())
     {
         $this->prepareSource();
         if (!$this->mediaSource->removeObject($this->get('path') . $this->get('file'))) {
@@ -306,7 +304,7 @@ class msProductFile extends xPDOSimpleObject
             );*/
         }
 
-        $children = $this->xpdo->getIterator('msProductFile', ['parent' => $this->get('id')]);
+        $children = $this->xpdo->getIterator('msProductFile', array('parent' => $this->get('id')));
         /** @var msProductFile $child */
         foreach ($children as $child) {
             $child->remove();
@@ -314,6 +312,7 @@ class msProductFile extends xPDOSimpleObject
 
         return parent::remove($ancestors);
     }
+
 
     /**
      * Recursive file rename

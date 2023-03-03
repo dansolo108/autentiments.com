@@ -26,3 +26,4 @@ gulp
 .idea
 *composer*
 sitecore/vendor
+assets/PageSpeed

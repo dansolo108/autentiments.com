@@ -7,30 +7,32 @@ abstract class msOptionType
     /** @var xPDO $xpdo */
     public $xpdo;
     /** @var array $config */
-    public $config = [];
+    public $config = array();
     public static $script = null;
     public static $xtype = null;
 
+
     /**
-     * msOptionType constructor.
-     *
-     * @param msOption $option
-     * @param array $config
-     */
-    public function __construct(msOption $option, array $config = [])
+    * msOptionType constructor.
+    *
+    * @param msOption $option
+    * @param array $config
+    */
+    public function __construct(msOption $option, array $config = array())
     {
         $this->option = $option;
         $this->xpdo = $option->xpdo;
         $this->config = array_merge($this->config, $config);
     }
 
+
     /**
-     * @param $criteria
-     *
-     * @return mixed|null
-     *
-     * @TODO Maybe vulnerable
-     */
+    * @param $criteria
+    *
+    * @return mixed|null
+    *
+    * @TODO Maybe vulnerable
+    */
     public function getValue($criteria)
     {
         /** @var msProductOption $value */
@@ -40,28 +42,28 @@ abstract class msOptionType
     }
 
     /**
-     * @param $criteria
-     *
-     * @return mixed|null
-     */
+    * @param $criteria
+    *
+    * @return mixed|null
+    */
     public function getRowValue($criteria)
     {
         return $this->getValue($criteria);
     }
 
     /**
-     * @param $field
-     *
-     * @return mixed
-     */
+    * @param $field
+    *
+    * @return mixed
+    */
     abstract public function getField($field);
 }
 
 class msOption extends xPDOSimpleObject
 {
     /**
-     * @return string
-     */
+    * @return string
+    */
     public function getInputProperties()
     {
         if ($this->get('type') == 'number') {
@@ -71,23 +73,24 @@ class msOption extends xPDOSimpleObject
         return '';
     }
 
+
     /**
-     * @param $categories
-     *
-     * @return array
-     */
+    * @param $categories
+    *
+    * @return array
+    */
     public function setCategories($categories)
     {
-        $result = [];
+        $result = array();
 
         if (!empty($categories)) {
             foreach ($categories as $category) {
-                $catObj = $this->xpdo->getObject('msCategory', ['id' => $category]);
+                $catObj = $this->xpdo->getObject('msCategory', array('id' => $category));
                 if ($catObj) {
                     /** @var msCategoryOption $catFtObj */
                     $catFtObj = $this->xpdo->getObject(
                         'msCategoryOption',
-                        ['category_id' => $category, 'option_id' => $this->get('id')]
+                        array('category_id' => $category, 'option_id' => $this->get('id'))
                     );
                     if (!$catFtObj) {
                         $catFtObj = $this->xpdo->newObject('msCategoryOption');
@@ -105,11 +108,12 @@ class msOption extends xPDOSimpleObject
         return $result;
     }
 
+
     /**
-     * @param $product_id
-     *
-     * @return mixed
-     */
+    * @param $product_id
+    *
+    * @return mixed
+    */
     public function getValue($product_id)
     {
         /** @var miniShop2 $minishop */
@@ -119,21 +123,23 @@ class msOption extends xPDOSimpleObject
         $type = $minishop->getOptionType($this);
 
         if ($type) {
-            $criteria = [
+            $criteria = array(
                 'product_id' => $product_id,
                 'key' => $this->get('key'),
-            ];
-            return $type->getValue($criteria);
+            );
+            $value = $type->getValue($criteria);
+
+            return $value;
         } else {
             return null;
         }
     }
 
     /**
-     * @param $product_id
-     *
-     * @return mixed
-     */
+    * @param $product_id
+    *
+    * @return mixed
+    */
     public function getRowValue($product_id)
     {
         /** @var miniShop2 $minishop */
@@ -143,21 +149,23 @@ class msOption extends xPDOSimpleObject
         $type = $minishop->getOptionType($this);
 
         if ($type) {
-            $criteria = [
+            $criteria = array(
                 'product_id' => $product_id,
                 'key' => $this->get('key'),
-            ];
-            return $type->getRowValue($criteria);
+            );
+            $value = $type->getRowValue($criteria);
+
+            return $value;
         } else {
             return null;
         }
     }
 
     /**
-     * @param $field
-     *
-     * @return mixed|null
-     */
+    * @param $field
+    *
+    * @return mixed|null
+    */
     public function getManagerField($field)
     {
         /** @var miniShop2 $minishop */

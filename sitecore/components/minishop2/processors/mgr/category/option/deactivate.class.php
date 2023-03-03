@@ -6,13 +6,13 @@ class msCategoryOptionDeActivateProcessor extends msCategoryOptionUpdateProcesso
 {
 
     /**
-     * @return bool
-     */
+    * @return bool
+    */
     public function beforeSet()
     {
-        $this->properties = [
+        $this->properties = array(
             'active' => false,
-        ];
+        );
 
         return true;
     }

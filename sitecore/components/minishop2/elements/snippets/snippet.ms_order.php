@@ -35,30 +35,30 @@ $order['delivery_cost'] = $miniShop2->formatPrice($cost['data']['delivery_cost']
 $order['discount_cost'] = $miniShop2->formatPrice($cost['data']['discount_cost']);
 
 // We need only active methods
-$where = [
+$where = array(
     'msDelivery.active' => true,
     'msPayment.active' => true,
-];
+);
 
 // Join payments to deliveries
-$leftJoin = [
-    'Payments' => [
+$leftJoin = array(
+    'Payments' => array(
         'class' => 'msDeliveryMember',
-    ],
-    'msPayment' => [
+    ),
+    'msPayment' => array(
         'class' => 'msPayment',
         'on' => 'Payments.payment_id = msPayment.id',
-    ],
-];
+    ),
+);
 
 // Select columns
-$select = [
+$select = array(
     'msDelivery' => $modx->getSelectColumns('msDelivery', 'msDelivery', 'delivery_'),
     'msPayment' => $modx->getSelectColumns('msPayment', 'msPayment', 'payment_'),
-];
+);
 
 // Add user parameters
-foreach (['where', 'leftJoin', 'select'] as $v) {
+foreach (array('where', 'leftJoin', 'select') as $v) {
     if (!empty($scriptProperties[$v])) {
         $tmp = $scriptProperties[$v];
         if (!is_array($tmp)) {
@@ -73,7 +73,7 @@ foreach (['where', 'leftJoin', 'select'] as $v) {
 $pdoFetch->addTime('Conditions prepared');
 
 // Default parameters
-$default = [
+$default = array(
     'class' => 'msDelivery',
     'where' => $where,
     'leftJoin' => $leftJoin,
@@ -83,15 +83,15 @@ $default = [
     'limit' => 0,
     'return' => 'data',
     'nestedChunkPrefix' => 'minishop2_',
-];
+);
 // Merge all properties and run!
 $pdoFetch->setConfig(array_merge($default, $scriptProperties), false);
 $rows = $pdoFetch->run();
 
-$deliveries = $payments = [];
+$deliveries = $payments = array();
 foreach ($rows as $row) {
-    $delivery = [];
-    $payment = [];
+    $delivery = array();
+    $payment = array();
     foreach ($row as $key => $value) {
         if (strpos($key, 'delivery_') === 0) {
             $delivery[substr($key, 9)] = $value;
@@ -101,7 +101,7 @@ foreach ($rows as $row) {
     }
 
     if (!isset($deliveries[$delivery['id']])) {
-        $delivery['payments'] = [];
+        $delivery['payments'] = array();
         $deliveries[$delivery['id']] = $delivery;
     }
     if (!empty($payment['id'])) {
@@ -112,13 +112,13 @@ foreach ($rows as $row) {
     }
 }
 
-$form = [];
+$form = array();
 // Get user data
-$profile = [];
+$profile = array();
 if ($modx->user->isAuthenticated($modx->context->key)) {
     $profile = array_merge($modx->user->Profile->toArray(), $modx->user->toArray());
 }
-$fields = [
+$fields = array(
     'receiver' => 'fullname',
     'phone' => 'phone',
     'email' => 'email',
@@ -133,7 +133,7 @@ $fields = [
     'entrance' => 'extended[entrance]',
     'floor' => 'extended[floor]',
     'text_address' => 'extended[address]',
-];
+);
 // Apply custom fields
 if (!empty($userFields)) {
     if (!is_array($userFields)) {
@@ -166,7 +166,7 @@ foreach ($fields as $key => $value) {
 }
 
 // Check for errors
-$errors = [];
+$errors = array();
 if (!empty($_POST)) {
     $response = $miniShop2->order->getDeliveryRequiresFields();
     if ($requires = $response['data']['requires']) {
@@ -179,14 +179,14 @@ if (!empty($_POST)) {
     }
 }
 
-$output = $pdoFetch->getChunk($tpl, [
+$output = $pdoFetch->getChunk($tpl, array(
     'order' => $order,
     'form' => $form,
     'deliveries' => $deliveries,
     'payments' => $payments,
     'errors' => $errors,
     'scriptProperties' => $scriptProperties
-]);
+));
 
 if ($modx->user->hasSessionContext('mgr') && !empty($showLog)) {
     $output .= '<pre class="msOrderLog">' . print_r($pdoFetch->getTime(), true) . '</pre>';

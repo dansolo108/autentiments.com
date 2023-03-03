@@ -11,22 +11,24 @@ class msDelivery extends xPDOSimpleObject
     /** @var miniShop2 $ms2 */
     public $ms2;
 
+
     /**
-     * msDelivery constructor.
-     *
-     * @param xPDO $xpdo
-     */
+    * msDelivery constructor.
+    *
+    * @param xPDO $xpdo
+    */
     public function __construct(xPDO $xpdo)
     {
         parent::__construct($xpdo);
         $this->ms2 = $this->xpdo->getService('miniShop2');
     }
 
+
     /**
-     * Loads delivery handler class
-     *
-     * @return bool
-     */
+    * Loads delivery handler class
+    *
+    * @return bool
+    */
     public function loadHandler()
     {
         require_once dirname(__FILE__, 3) . '/handlers/msdeliveryhandler.class.php';
@@ -44,7 +46,7 @@ class msDelivery extends xPDOSimpleObject
             $class = 'msDeliveryHandler';
         }
 
-        $this->handler = new $class($this, []);
+        $this->handler = new $class($this, array());
         if (!($this->handler instanceof msDeliveryInterface)) {
             $this->xpdo->log(modX::LOG_LEVEL_ERROR, 'Could not initialize delivery handler class: "' . $class . '"');
 
@@ -54,14 +56,15 @@ class msDelivery extends xPDOSimpleObject
         return true;
     }
 
+
     /**
-     * Returns an additional cost depending on the method of delivery
-     *
-     * @param msOrderInterface|msOrderHandler $order
-     * @param float $cost Current cost of order
-     *
-     * @return float
-     */
+    * Returns an additional cost depending on the method of delivery
+    *
+    * @param msOrderInterface|msOrderHandler $order
+    * @param float $cost Current cost of order
+    *
+    * @return float
+    */
     public function getCost(msOrderInterface $order, $cost = 0.0)
     {
         if (!is_object($this->handler) || !($this->handler instanceof msDeliveryInterface)) {
@@ -73,11 +76,12 @@ class msDelivery extends xPDOSimpleObject
         return $this->handler->getCost($order, $this, $cost);
     }
 
+
     /**
-     * Returns id of first active payment method for this delivery
-     *
-     * @return int|mixed
-     */
+    * Returns id of first active payment method for this delivery
+    *
+    * @return int|mixed
+    */
     public function getFirstPayment()
     {
         $id = 0;
@@ -86,7 +90,7 @@ class msDelivery extends xPDOSimpleObject
         $c->leftJoin('msDelivery', 'Delivery', 'Member.delivery_id = Delivery.id');
         $c->sortby('msPayment.rank', 'ASC');
         $c->select('msPayment.id');
-        $c->where(['msPayment.active' => 1, 'Delivery.id' => $this->id]);
+        $c->where(array('msPayment.active' => 1, 'Delivery.id' => $this->id));
         $c->limit(1);
         if ($c->prepare() && $c->stmt->execute()) {
             $id = $c->stmt->fetchColumn();
@@ -95,14 +99,15 @@ class msDelivery extends xPDOSimpleObject
         return $id;
     }
 
+
     /**
-     * @param array $ancestors
-     *
-     * @return bool
-     */
-    public function remove(array $ancestors = [])
+    * @param array $ancestors
+    *
+    * @return bool
+    */
+    public function remove(array $ancestors = array())
     {
-        $this->xpdo->removeCollection('msDeliveryMember', ['delivery_id' => $this->id]);
+        $this->xpdo->removeCollection('msDeliveryMember', array('delivery_id' => $this->id));
 
         return parent::remove($ancestors);
     }

@@ -4,16 +4,17 @@ class msOrderProductUpdateProcessor extends modObjectUpdateProcessor
 {
     public $classKey = 'msOrderProduct';
     public $objectType = 'msOrderProduct';
-    public $languageTopics = ['minishop2'];
+    public $languageTopics = array('minishop2');
     public $beforeSaveEvent = 'msOnBeforeUpdateOrderProduct';
     public $afterSaveEvent = 'msOnUpdateOrderProduct';
     public $permission = 'msorder_save';
     /** @var msOrder $order */
     protected $order;
 
+
     /**
-     * @return bool|null|string
-     */
+    * @return bool|null|string
+    */
     public function initialize()
     {
         if (!$this->modx->hasPermission($this->permission)) {
@@ -23,9 +24,10 @@ class msOrderProductUpdateProcessor extends modObjectUpdateProcessor
         return parent::initialize();
     }
 
+
     /**
-     * @return bool|null|string
-     */
+    * @return bool|null|string
+    */
     public function beforeSet()
     {
         $count = $this->getProperty('count');
@@ -66,9 +68,10 @@ class msOrderProductUpdateProcessor extends modObjectUpdateProcessor
         return !$this->hasErrors();
     }
 
+
     /**
-     *
-     */
+    *
+    */
     public function afterSave()
     {
         // Fix "cache"

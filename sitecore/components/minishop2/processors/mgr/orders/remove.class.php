@@ -3,12 +3,13 @@
 class msOrderRemoveProcessor extends modObjectRemoveProcessor
 {
     public $classKey = 'msOrder';
-    public $languageTopics = ['minishop2'];
+    public $languageTopics = array('minishop2');
     public $permission = 'msorder_remove';
 
+
     /**
-     * @return bool|null|string
-     */
+    * @return bool|null|string
+    */
     public function initialize()
     {
         if (!$this->modx->hasPermission($this->permission)) {

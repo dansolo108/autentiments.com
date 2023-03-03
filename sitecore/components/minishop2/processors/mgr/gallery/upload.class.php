@@ -3,7 +3,7 @@
 class msProductFileUploadProcessor extends modObjectProcessor
 {
     public $classKey = 'msProductFile';
-    public $languageTopics = ['minishop2:default', 'minishop2:product'];
+    public $languageTopics = array('minishop2:default', 'minishop2:product');
     public $permission = 'msproductfile_save';
     /** @var modMediaSource $mediaSource */
     public $mediaSource;
@@ -11,6 +11,7 @@ class msProductFileUploadProcessor extends modObjectProcessor
     protected $miniShop2;
     /** @var msProduct $product */
     private $product = 0;
+
 
     /**
      * @return bool|null|string
@@ -33,6 +34,7 @@ class msProductFileUploadProcessor extends modObjectProcessor
         return true;
     }
 
+
     /**
      * @return array|string
      */
@@ -47,7 +49,7 @@ class msProductFileUploadProcessor extends modObjectProcessor
         $extension = strtolower($pathinfo['extension']);
         $filename = strtolower($pathinfo['filename']);
 
-        $image_extensions = $allowed_extensions = [];
+        $image_extensions = $allowed_extensions = array();
         if (!empty($properties['imageExtensions'])) {
             $image_extensions = array_map('trim', explode(',', strtolower($properties['imageExtensions'])));
         }
@@ -58,24 +60,25 @@ class msProductFileUploadProcessor extends modObjectProcessor
             @unlink($data['tmp_name']);
 
             return $this->failure($this->modx->lexicon('ms2_err_gallery_ext'));
-        }
-        if (in_array($extension, $image_extensions)) {
-            if (empty($data['properties']['height']) || empty($data['properties']['width'])) {
-                @unlink($data['tmp_name']);
-
-                return $this->failure($this->modx->lexicon('ms2_err_wrong_image'));
-            }
-            $type = 'image';
         } else {
-            $type = $extension;
+            if (in_array($extension, $image_extensions)) {
+                if (empty($data['properties']['height']) || empty($data['properties']['width'])) {
+                    @unlink($data['tmp_name']);
+
+                    return $this->failure($this->modx->lexicon('ms2_err_wrong_image'));
+                }
+                $type = 'image';
+            } else {
+                $type = $extension;
+            }
         }
 
         // Duplicate check
-        $count = $this->modx->getCount($this->classKey, [
+        $count = $this->modx->getCount($this->classKey, array(
             'product_id' => $this->product->id,
             'hash' => $data['hash'],
             'parent' => 0,
-        ]);
+        ));
         if ($count) {
             @unlink($data['tmp_name']);
 
@@ -89,11 +92,11 @@ class msProductFileUploadProcessor extends modObjectProcessor
         $tmp_filename = $filename;
         $i = 1;
         while (true) {
-            $count = $this->modx->getCount($this->classKey, [
+            $count = $this->modx->getCount($this->classKey, array(
                 'product_id' => $this->product->id,
                 'file' => $tmp_filename,
                 'parent' => 0,
-            ]);
+            ));
             if (!$count) {
                 $filename = $tmp_filename;
                 break;
@@ -106,10 +109,10 @@ class msProductFileUploadProcessor extends modObjectProcessor
 
         $rank = isset($properties['imageUploadDir']) && empty($properties['imageUploadDir'])
             ? 0
-            : $this->modx->getCount($this->classKey, ['parent' => 0, 'product_id' => $this->product->id]);
+            : $this->modx->getCount($this->classKey, array('parent' => 0, 'product_id' => $this->product->id));
 
         /** @var msProductFile $uploaded_file */
-        $uploaded_file = $this->modx->newObject($this->classKey, [
+        $uploaded_file = $this->modx->newObject($this->classKey, array(
             'product_id' => $this->product->id,
             'parent' => 0,
             'name' => preg_replace('#\.' . $extension . '$#i', '', $data['name']),
@@ -123,53 +126,49 @@ class msProductFileUploadProcessor extends modObjectProcessor
             'hash' => $data['hash'],
             'properties' => $data['properties'],
             'description' => $this->getProperty('description'),
-        ]);
+        ));
 
         $this->mediaSource->createContainer($uploaded_file->get('path'), '/');
-        $this->mediaSource->errors = [];
+        $this->mediaSource->errors = array();
         if ($this->mediaSource instanceof modFileMediaSource) {
-            $upload = $this->mediaSource->createObject(
-                $uploaded_file->get('path'),
-                $uploaded_file->get('file'),
-                file_get_contents($data['tmp_name'])
-            );
+            $upload = $this->mediaSource->createObject($uploaded_file->get('path'), $uploaded_file->get('file'), file_get_contents($data['tmp_name']));
         } else {
             $data['name'] = $filename;
-            $upload = $this->mediaSource->uploadObjectsToContainer($uploaded_file->get('path'), [$data]);
+            $upload = $this->mediaSource->uploadObjectsToContainer($uploaded_file->get('path'), array($data));
         }
         @unlink($data['tmp_name']);
 
-        if (!$upload) {
-            return $this->failure(
-                $this->modx->lexicon('ms2_err_gallery_save') . ': ' .
-                print_r($this->mediaSource->getErrors(), true)
-            );
-        }
-        $url = $this->mediaSource->getObjectUrl($uploaded_file->get('path') . $uploaded_file->get('file'));
-        $uploaded_file->set('url', $url);
-        $uploaded_file->save();
+        if ($upload) {
+            $url = $this->mediaSource->getObjectUrl($uploaded_file->get('path') . $uploaded_file->get('file'));
+            $uploaded_file->set('url', $url);
+            $uploaded_file->save();
 
-        if (empty($rank)) {
-            $imagesTable = $this->modx->getTableName($this->classKey);
-            $sql = "UPDATE {$imagesTable} SET `rank` = `rank` + 1 WHERE product_id ='" . $this->product->id . "' AND id !='" . $uploaded_file->get(
-                    'id'
-                ) . "'";
-            $this->modx->exec($sql);
-        }
+            if (empty($rank)) {
+                $imagesTable = $this->modx->getTableName($this->classKey);
+                $sql = "UPDATE {$imagesTable} SET `rank` = `rank` + 1 WHERE product_id ='" . $this->product->id . "' AND id !='" . $uploaded_file->get('id') . "'";
+                $this->modx->exec($sql);
+            }
 
-        $generate = $uploaded_file->generateThumbnails($this->mediaSource);
-        if ($generate !== true) {
-            $this->modx->log(
-                modX::LOG_LEVEL_ERROR,
-                '[miniShop2] Could not generate thumbnails for image with id = ' . $uploaded_file->get('id') .
-                '. ' . $generate
-            );
+            $generate = $uploaded_file->generateThumbnails($this->mediaSource);
+            if ($generate !== true) {
+                $this->modx->log(
+                    modX::LOG_LEVEL_ERROR,
+                    '[miniShop2] Could not generate thumbnails for image with id = ' . $uploaded_file->get('id') .
+                        '. ' . $generate
+                );
 
-            return $this->failure($this->modx->lexicon('ms2_err_gallery_thumb'));
+                return $this->failure($this->modx->lexicon('ms2_err_gallery_thumb'));
+            } else {
+                $this->product->updateProductImage();
+
+                return $this->success('', $uploaded_file);
+            }
+        } else {
+            return $this->failure($this->modx->lexicon('ms2_err_gallery_save') . ': ' .
+                print_r($this->mediaSource->getErrors(), true));
         }
-        $this->product->updateProductImage();
-        return $this->success('', $uploaded_file);
     }
+
 
     /**
      * @return array|bool
@@ -201,26 +200,28 @@ class msProductFileUploadProcessor extends modObjectProcessor
         clearstatcache(true, $tf);
         if (file_exists($tf) && !empty($name) && $size = filesize($tf)) {
             $hash = ($o = $this->modx->newObject($this->classKey)) ? $o->generateHash($tf) : '';
-            $data = [
+            $data = array(
                 'name' => $name,
                 'tmp_name' => $tf,
                 'hash' => $hash,
-                'properties' => [
+                'properties' => array(
                     'size' => $size,
-                ],
-            ];
+                ),
+            );
+
 
             $tmp = getimagesize($tf);
+
 
             if (is_array($tmp)) {
                 $data['properties'] = array_merge(
                     $data['properties'],
-                    [
+                    array(
                         'width' => $tmp[0],
                         'height' => $tmp[1],
                         'bits' => $tmp['bits'],
                         'mime' => $tmp['mime'],
-                    ]
+                    )
                 );
             } elseif (strpos($data['name'], '.webp') !== false) {
                 $img = imagecreatefromwebp($tf);
@@ -229,17 +230,19 @@ class msProductFileUploadProcessor extends modObjectProcessor
 
                 $data['properties'] = array_merge(
                     $data['properties'],
-                    [
+                    array(
                         'width' => $width,
                         'height' => $height,
                         'mime' => 'image/webp',
-                    ]
+                    )
                 );
             }
             return $data;
+        } else {
+            unlink($tf);
+
+            return false;
         }
-        unlink($tf);
-        return false;
     }
 }
 

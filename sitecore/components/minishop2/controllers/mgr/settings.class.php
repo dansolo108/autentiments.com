@@ -7,24 +7,26 @@ if (!class_exists('msManagerController')) {
 class Minishop2MgrSettingsManagerController extends msManagerController
 {
     /**
-     * @return string
-     */
+    * @return string
+    */
     public function getPageTitle()
     {
         return $this->modx->lexicon('ms2_settings') . ' | miniShop2';
     }
 
-    /**
-     * @return array
-     */
-    public function getLanguageTopics()
-    {
-        return ['minishop2:default', 'minishop2:product', 'minishop2:manager'];
-    }
 
     /**
-     *
-     */
+    * @return array
+    */
+    public function getLanguageTopics()
+    {
+        return array('minishop2:default', 'minishop2:product', 'minishop2:manager');
+    }
+
+
+    /**
+    *
+    */
     public function loadCustomCssJs()
     {
         $this->addCss($this->miniShop2->config['cssUrl'] . 'mgr/bootstrap.buttons.css');
@@ -62,17 +64,14 @@ class Minishop2MgrSettingsManagerController extends msManagerController
             if (class_exists($className)) {
                 /** @var msOptionType $className */
                 if ($className::$script) {
-                    $this->addJavascript(
-                        $this->miniShop2->config['jsUrl'] . 'mgr/settings/option/types/' . $className::$script
-                    );
+                    $this->addJavascript($this->miniShop2->config['jsUrl'] . 'mgr/settings/option/types/' . $className::$script);
                 }
             }
         }
 
         $config = $this->miniShop2->config;
         $config['default_thumb'] = $this->miniShop2->config['defaultThumb'];
-        $this->addHtml(
-            '<script>
+        $this->addHtml('<script>
             miniShop2.config = ' . json_encode($config) . ';
 
             MODx.perm.msorder_list = ' . ($this->modx->hasPermission('msorder_list') ? 1 : 0) . ';
@@ -80,12 +79,11 @@ class Minishop2MgrSettingsManagerController extends msManagerController
             Ext.onReady(function() {
                 MODx.add({xtype: "minishop2-page-settings"});
             });
-        </script>'
-        );
+        </script>');
 
-        $this->modx->invokeEvent('msOnManagerCustomCssJs', [
+        $this->modx->invokeEvent('msOnManagerCustomCssJs', array(
             'controller' => $this,
             'page' => 'settings',
-        ]);
+        ));
     }
 }

@@ -1,7 +1,7 @@
 <?php
 
 if(!class_exists('msCartHandler')) {
-    require_once dirname(dirname(dirname(__FILE__))) . '/model/minishop2/mscarthandler.class.php';
+    require_once dirname(__DIR__, 2) . '/handlers/mscarthandler.class.php';
 }
 
 class msCartHandlerCustom extends msCartHandler implements msCartInterface
@@ -35,7 +35,7 @@ class msCartHandlerCustom extends msCartHandler implements msCartInterface
         $filter['id']= $modification->get('product_id');
         /** @var msProduct $product */
         if ($modification && $product = $this->modx->getObject('modResource',$filter)) {
-
+            ray($this->error('ms2_cart_add_err_product', $this->status()));
             if (!($product instanceof msProduct)) {
                 return $this->error('ms2_cart_add_err_product', $this->status());
             }

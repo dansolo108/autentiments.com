@@ -7,12 +7,13 @@ require_once dirname(__FILE__) . '/getvendor.php';
 class msProductUpdateProcessor extends modResourceUpdateProcessor
 {
     public $classKey = 'msProduct';
-    public $languageTopics = ['resource', 'minishop2:default'];
+    public $languageTopics = array('resource', 'minishop2:default');
     public $permission = 'msproduct_save';
     public $beforeSaveEvent = 'OnBeforeDocFormSave';
     public $afterSaveEvent = 'OnDocFormSave';
     /** @var msProduct $object */
     public $object;
+
 
     /**
      * @return bool|null|string
@@ -24,8 +25,8 @@ class msProductUpdateProcessor extends modResourceUpdateProcessor
             return $this->modx->lexicon($this->classKey . '_err_ns');
         }
 
-        if (!$this->modx->getCount($this->classKey, ['id' => $primaryKey, 'class_key' => $this->classKey])) {
-            if ($res = $this->modx->getObject('modResource', ['id' => $primaryKey])) {
+        if (!$this->modx->getCount($this->classKey, array('id' => $primaryKey, 'class_key' => $this->classKey))) {
+            if ($res = $this->modx->getObject('modResource', array('id' => $primaryKey))) {
                 $res->set('class_key', $this->classKey);
                 $res->save();
             }
@@ -34,13 +35,14 @@ class msProductUpdateProcessor extends modResourceUpdateProcessor
         return parent::initialize();
     }
 
+
     /**
      * @return array|string
      */
     public function beforeSet()
     {
         $properties = $this->getProperties();
-        $options = [];
+        $options = array();
         foreach ($properties as $key => $value) {
             if (strpos($key, 'options-') === 0) {
                 $options[substr($key, 8)] = $value;
@@ -62,6 +64,7 @@ class msProductUpdateProcessor extends modResourceUpdateProcessor
         return parent::beforeSet();
     }
 
+
     /**
      *
      */
@@ -73,6 +76,7 @@ class msProductUpdateProcessor extends modResourceUpdateProcessor
         $this->setCheckbox('favorite');
         $this->setCheckbox('show_in_tree');
     }
+
 
     /**
      * @return int|mixed|string
@@ -89,6 +93,7 @@ class msProductUpdateProcessor extends modResourceUpdateProcessor
         return $alias;
     }
 
+
     /**
      * @return bool
      */
@@ -98,6 +103,7 @@ class msProductUpdateProcessor extends modResourceUpdateProcessor
 
         return parent::beforeSave();
     }
+
 
     /**
      *
@@ -110,7 +116,7 @@ class msProductUpdateProcessor extends modResourceUpdateProcessor
         if (!empty($this->oldParent) && !($this->oldParent instanceof msCategory)) {
             $oldParentChildrenCount = $this->modx->getCount(
                 'modResource',
-                ['parent' => $this->oldParent->get('id')]
+                array('parent' => $this->oldParent->get('id'))
             );
             if ($oldParentChildrenCount <= 0 || $oldParentChildrenCount === null) {
                 $this->oldParent->set('isfolder', false);

@@ -5,12 +5,13 @@ class msOrderStatusRemoveProcessor extends modObjectRemoveProcessor
     /** @var msOrderStatus $object */
     public $object;
     public $classKey = 'msOrderStatus';
-    public $languageTopics = ['minishop2'];
+    public $languageTopics = array('minishop2');
     public $permission = 'mssetting_save';
 
+
     /**
-     * @return bool|null|string
-     */
+    * @return bool|null|string
+    */
     public function initialize()
     {
         if (!$this->modx->hasPermission($this->permission)) {
@@ -20,9 +21,10 @@ class msOrderStatusRemoveProcessor extends modObjectRemoveProcessor
         return parent::initialize();
     }
 
+
     /**
-     * @return bool|string
-     */
+    * @return bool|string
+    */
     public function beforeRemove()
     {
         if (!$this->object->get('editable')) {

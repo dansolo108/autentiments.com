@@ -4,14 +4,15 @@ class msProductShowInTreeProcessor extends modObjectUpdateProcessor
 {
     public $classKey = 'msProduct';
 
+
     /**
-     * @return bool
-     */
+    * @return bool
+    */
     public function beforeSet()
     {
-        $this->properties = [
+        $this->properties = array(
             'show_in_tree' => true
-        ];
+        );
 
         return true;
     }

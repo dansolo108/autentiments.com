@@ -5,12 +5,13 @@ class msPaymentMemberRemoveProcessor extends modObjectRemoveProcessor
     /** @var msPayment $object */
     public $object;
     public $classKey = 'msDeliveryMember';
-    public $languageTopics = ['minishop2'];
+    public $languageTopics = array('minishop2');
     public $permission = 'mssetting_save';
 
+
     /**
-     * @return bool|null|string
-     */
+    * @return bool|null|string
+    */
     public function initialize()
     {
         if (!$this->modx->hasPermission($this->permission)) {
@@ -18,8 +19,8 @@ class msPaymentMemberRemoveProcessor extends modObjectRemoveProcessor
         }
 
         /**
-         * @TODO: hardcode
-         */
+        * @TODO: hardcode
+        */
         $this->object = $this->modx->getObject($this->classKey, $this->getProperties());
         if (empty($this->object)) {
             return $this->modx->lexicon($this->objectType . '_err_nfs');
@@ -28,9 +29,10 @@ class msPaymentMemberRemoveProcessor extends modObjectRemoveProcessor
         return true;
     }
 
+
     /**
-     * @return bool
-     */
+    * @return bool
+    */
     public function beforeSave()
     {
         $this->object->fromArray($this->getProperties(), '', true, true);
