@@ -147,6 +147,8 @@ $pdoFetch->setConfig(array_merge($default,$scriptProperties));
 $result = $pdoFetch->run();
 if($pdoFetch->config['return'] === 'sql')
     return $result;
+if($scriptProperties["return"] == "data" || empty($scriptProperties["tpl"]))
+    return $result;
 $output = '';
 //$pdoFetch->setConfig(array_merge($default,$scriptProperties,['return'=>'sql']));
 //$sql = $pdoFetch->run();
