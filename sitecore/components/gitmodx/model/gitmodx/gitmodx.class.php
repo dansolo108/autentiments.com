@@ -8,6 +8,14 @@ include_once MODX_CORE_PATH . "model/modx/modx.class.php";
  */
 class gitModx extends modX
 {
+    public function __construct($configPath = '', $options = null, $driverOptions = null)
+    {
+        $autoloader = MODX_CORE_PATH."vendor/autoload.php";
+        if(is_file($autoloader)){
+            require_once $autoloader;
+        }
+        parent::__construct($configPath, $options, $driverOptions);
+    }
 
     /**
      * Override standard runSnippet
