@@ -1,0 +1,9 @@
+{
+    "name": "pi/gtranslit",
+    "type": "project",
+    "license": "mit",
+    "minimum-stability": "stable",
+    "require": {
+        "dejurin/php-google-translate-for-free": "^1.0"
+    }
+}

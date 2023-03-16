@@ -1,0 +1,7 @@
+{
+    "require": {
+        "matthiasmullie/minify": "^1.3",
+        "sabberworm/php-css-parser": "^8.3",
+        "wgenial/php-mimetyper": "^2.0"
+    }
+}
