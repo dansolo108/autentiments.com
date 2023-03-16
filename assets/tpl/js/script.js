@@ -966,7 +966,7 @@ if ($('.coupon-form').length) {
                 if (response.success) {
                     if ($('.au-bonuses__count span').length) {
                         $.jGrowl(response.msg, {theme: 'af-message-success'});
-                        $('.au-bonuses__count span').html(miniShop2.formatPrice(response.balance));
+                        $('.au-bonuses__count span').html(miniShop2.Utils.formatPrice(response.balance));
                     }
                     console.log(response);
                 } else {
@@ -979,7 +979,6 @@ if ($('.coupon-form').length) {
 }
 ;
 let countEvents = 0;
-
 function setEvent(event, props = {}) {
     console.log(event, props);
     countEvents++;
@@ -989,9 +988,9 @@ function setEvent(event, props = {}) {
     }
     _tmr = _tmr || [];
     switch (event) {
-        
+
         case "add_to_cart":
-             ym(86113805,'reachGoal','add_to_cart',props);
+            ym(86113805,'reachGoal','add_to_cart',props);
             gtag("event", "add_to_cart", {
                 currency: "RUB",
                 items: [{
@@ -1024,7 +1023,7 @@ function setEvent(event, props = {}) {
                 productid: props.id,
                 totalvalue: props.price,
             });
-           
+
             break;
         case "remove_from_cart":
             gtag("event", "remove_from_cart", {
@@ -1055,6 +1054,16 @@ function setEvent(event, props = {}) {
             });
             break;
         case "purchase":
+            let products = [];
+            document.querySelectorAll(".auten-cart-item").forEach(product=>{
+                products.push({
+                    "pagetitle":product.querySelector(".auten-cart-item__title")?.innerText,
+                    "quantity":product.querySelector("input[name=count]")?.value,
+                    "price":product.querySelector(".ms_price")?.innerText,
+                    "pagetitle":product.querySelector(".auten-cart-item__title")?.innerText,
+                    "pagetitle":product.querySelector(".auten-cart-item__title")?.innerText,
+                });
+            })
             gtag("event", "purchase", {
                 items: Object.keys(props.products).map((item) => {
                     item = props.products[item];
@@ -1067,8 +1076,8 @@ function setEvent(event, props = {}) {
                     };
                 }),
                 currency: "RUB",
-                shipping: props.delivery_cost,
-                value: props.cost,
+                shipping: document.getElementById("ms2_order_delivery_cost")?.innerText,
+                value: document.getElementById("ms2_order_cost")?.innerText,
                 transaction_id: props.transaction_id,
             });
             VK.Retargeting.ProductEvent(PRICE_LIST_ID, 'purchase', {

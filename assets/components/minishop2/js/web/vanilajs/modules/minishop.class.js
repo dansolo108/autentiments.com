@@ -38,15 +38,17 @@ export default class MiniShop {
         this.formData = null;
         this.Message = null;
         this.timeout = 300;
+        this.currency = "RUB";
 
         this.initialize();
+
     }
 
-    async setHandler(property){
+    async setHandler(property) {
         let prefix = property.toLowerCase(),
             response = false,
             messageSettings = false;
-        if(prefix === 'message'){
+        if (prefix === 'message') {
             prefix = 'notify';
             response = await this.sendRequest({url: this.miniShop2Config.notifySettingsPath, method: 'GET'});
             if (response.ok) {
@@ -66,7 +68,9 @@ export default class MiniShop {
     }
 
     async initialize() {
-        if(!this.miniShop2Config.properties.length) { throw new Error('Не передан массив имён обработчиков'); }
+        if (!this.miniShop2Config.properties.length) {
+            throw new Error('Не передан массив имён обработчиков');
+        }
 
         await this.miniShop2Config.properties.forEach(property => {
             this.setHandler(property);
@@ -166,13 +170,13 @@ export default class MiniShop {
 
     sendRequest(params) {
         const body = params.body || new FormData(),
-            headers = params.headers || { 'X-Requested-With': 'XMLHttpRequest' },
+            headers = params.headers || {'X-Requested-With': 'XMLHttpRequest'},
             url = params.url || this.miniShop2Config.actionUrl,
             method = params.method || this.miniShop2Config.formMethod;
 
-        let options = { method, headers, body };
+        let options = {method, headers, body};
         if (method === 'GET') {
-            options = { method, headers };
+            options = {method, headers};
         }
 
         return fetch(url, options);
@@ -195,7 +199,7 @@ export default class MiniShop {
             data += '&ctx=' + this.miniShop2Config.ctx;
         }
 
-        const response = await this.sendRequest({ body: data, headers });
+        const response = await this.sendRequest({body: data, headers});
         if (response.ok) {
             const result = await response.json();
             if (result.success) {
@@ -218,14 +222,11 @@ export default class MiniShop {
     }
 
     formatPrice(price) {
-        const pf = this.miniShop2Config.price_format;
-        price = this.numberFormat(price, pf[0], pf[1], pf[2]);
-
-        if (this.miniShop2Config.price_format_no_zeros && pf[0] > 0) {
-            price = price.replace(/(0+)$/, '');
-            price = price.replace(/[^0-9]$/, '');
-        }
-
+        price = new Intl.NumberFormat(undefined, {
+            style: "currency",
+            currency: this.currency,
+            maximumFractionDigits:0,
+        }).format(price)
         return price;
     }
 
@@ -246,11 +247,13 @@ export default class MiniShop {
         // improved by: Kevin van Zonneveld (http://kevin.vanzonneveld.net)
         // bugfix by: Michael White (http://crestidg.com)
         var i, j, kw, kd, km;
+        let minus = "";
+        if (number < 0)
 
-        // input sanitation & defaults
-        if (isNaN(decimals = Math.abs(decimals))) {
-            decimals = 2;
-        }
+            // input sanitation & defaults
+            if (isNaN(decimals = Math.abs(decimals))) {
+                decimals = 2;
+            }
         if (decPoint == undefined) {
             decPoint = ',';
         }

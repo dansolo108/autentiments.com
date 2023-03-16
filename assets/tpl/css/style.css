@@ -481,10 +481,10 @@ form.ajax_form span.error {
   color: #B34746;
 }
 
-input:-webkit-autofill,
-input:-webkit-autofill:hover,
-input:-webkit-autofill:focus,
-input:-webkit-autofill:active {
+.custom-form__input input:-webkit-autofill,
+.custom-form__input input:-webkit-autofill:hover,
+.custom-form__input input:-webkit-autofill:focus,
+.custom-form__input input:-webkit-autofill:active {
   box-shadow: none;
   border: none;
   border-bottom: 1px solid #999999;
@@ -5282,9 +5282,9 @@ label.au-filter__cost:last-child input {
   line-height: 19px;
   color: #6D6A6A;
   transition: all 0.2s ease-in-out; }
-  .au-footer__policy-link{
-      text-align:center;
-  }
+.au-footer__policy-link{
+  text-align:center;
+}
 .au-footer__year,
 .au-footer__developer-link {
   color: #6D6A6A; }
@@ -5642,7 +5642,7 @@ input[name="link"] {
   display: block;
 }
 
-/*** miniShop2 ***/
+/*** MiniShop2 ***/
 
 /* Messages */
 div.jGrowl > .ui-state-highlight {
@@ -6011,8 +6011,8 @@ h2.about-block__title{
   margin: 20px 0;
 }
 .about-block__content p:first-child{
-   margin: 0 0 20px;
- }
+  margin: 0 0 20px;
+}
 .about-block__content p:last-child{
   margin: 20px 0 0;
 }

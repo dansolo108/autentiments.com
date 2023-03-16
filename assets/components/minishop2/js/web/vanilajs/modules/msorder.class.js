@@ -18,9 +18,7 @@ export default class MsOrder {
         this.paymentInputUniquePrefix = '#payment_';
         this.deliveryInputUniquePrefix = '#delivery_';
 
-        this.orderCost = document.querySelector('#ms2_order_cost');
-        this.cartCost = document.querySelector('#ms2_order_cart_cost');
-        this.deliveryCost = document.querySelector('#ms2_order_delivery_cost');
+        this.orderInfoSelector = `.ms2_order_`;
 
         this.changeEvent = new Event('change', {bubbles: true, cancelable: true});
         this.clickEvent = new Event('click', {bubbles: true, cancelable: true});
@@ -49,10 +47,10 @@ export default class MsOrder {
                 });
             }
 
-            const deliveryInputChecked = this.order.querySelector(this.deliveryInput + ':checked');
-            if (deliveryInputChecked) {
-                deliveryInputChecked.dispatchEvent(this.changeEvent);
-            }
+            // const deliveryInputChecked = this.order.querySelector(this.deliveryInput + ':checked');
+            // if (deliveryInputChecked) {
+            //     deliveryInputChecked.dispatchEvent(this.changeEvent);
+            // }
         }
     }
 
@@ -93,36 +91,38 @@ export default class MsOrder {
             let field = this.order.querySelector(`[name="${key}"]`);
 
             if (response.data.delivery) {
-                field = document.querySelector(this.deliveryInputUniquePrefix + response.data[key]);
-                if (response.data[key] !== oldValue) {
-                    field.dispatchEvent(this.clickEvent);
-                } else {
-                    this.getrequired(value);
-                    this.updatePayments(field.dataset.payments);
-                    this.getcost();
-                }
+                this.getrequired(value);
+                this.getcost();
+                return;
             }
 
             if (response.data.payment) {
-                field = document.querySelector(this.paymentInputUniquePrefix + response.data[key]);
-                if (response.data[key] !== oldValue) {
-                    field.dispatchEvent(this.clickEvent);
-                } else {
-                    this.getcost();
+                // field = document.querySelector(this.paymentInputUniquePrefix + response.data[key]);
+                // if (response.data[key] !== oldValue) {
+                //     field.dispatchEvent(this.clickEvent);
+                // } else {
+                //     this.getcost();
+                // }
+                return;
+            }
+            if(response.data){
+                for(let key in response.data){
+                    let value = response.data[key];
+                    document.querySelectorAll(`input[name=${key}]:not(:focus)`).forEach(input=>{
+                        input.value = value;
+                        input.classList.remove('has-error');
+                        input.closest(this.inputParent).classList.remove('has-error');
+                    })
                 }
             }
-
-            field.value = response.data[key] || '';
-            field.classList.remove('error');
-            field.closest(this.inputParent).classList.remove('error');
         }
 
         this.callbacks.add.response.error = () => {
             const field = this.order.querySelector(`[name="${key}"]`);
             if (['checkbox', 'radio'].includes(field.type)) {
-                field.closest(this.inputParent).classList.add('error');
+                field.closest(this.inputParent).classList.add('has-error');
             } else {
-                field.classList.add('error');
+                field.classList.add('has-error');
             }
         };
 
@@ -135,16 +135,18 @@ export default class MsOrder {
 
     getcost() {
         this.callbacks.getcost.response.success = response => {
-            if (this.orderCost) {
-                this.orderCost.innerText = this.minishop.formatPrice(response.data.cost);
-            }
-
-            if (this.cartCost) {
-                this.cartCost.innerText = this.minishop.formatPrice(response.data.cart_cost);
-            }
-
-            if (this.deliveryCost) {
-                this.deliveryCost.innerText = this.minishop.formatPrice(response.data.delivery_cost);
+            for (let key in response.data){
+                document.querySelectorAll(this.orderInfoSelector+key).forEach(item=>{
+                    item.parentElement.style.display = "";
+                    if(Boolean(response.data[key])){
+                        item.innerText = parseInt(response.data[key])?this.minishop.formatPrice(response.data[key]):response.data[key];
+                    }
+                    else if(response.data[key] === 0){
+                        item.innerText = "бесплатно"
+                    }else{
+                        item.parentElement.style.display = "none";
+                    }
+                })
             }
         };
 
