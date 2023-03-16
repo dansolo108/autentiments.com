@@ -24,7 +24,7 @@ _backup/
 _data/
 gulp
 .idea
-composer*
 core/vendor
+core/composer*
 assets/PageSpeed
 extras
