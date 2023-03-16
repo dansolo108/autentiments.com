@@ -85,10 +85,7 @@ export default class MsCart {
                 productCost.innerText = this.minishop.formatPrice(status.cost);
             }
         }
-
-        if (this.minishop.Order.orderCost) {
-            this.minishop.Order.getcost();
-        }
+        this.minishop.Order.getcost();
     }
 
     removePosition(key) {

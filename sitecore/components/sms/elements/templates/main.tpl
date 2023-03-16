@@ -1,1 +1,0 @@
-<div id="sms-panel-main-div"></div>

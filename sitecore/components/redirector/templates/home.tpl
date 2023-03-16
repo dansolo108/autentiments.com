@@ -1,1 +1,0 @@
-<div id="redirector-panel-home-div"></div>

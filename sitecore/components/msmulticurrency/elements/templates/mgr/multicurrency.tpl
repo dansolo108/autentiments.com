@@ -1,1 +1,0 @@
-<div id="msmc-panel-multicurrency-div"></div>
