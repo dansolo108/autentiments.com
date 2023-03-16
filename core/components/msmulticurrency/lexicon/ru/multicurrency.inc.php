@@ -1,0 +1,79 @@
+<?php
+/**
+ * MultiCurrency Russian Lexicon Entries for msMultiCurrency
+ *
+ * @package msmulticurrency
+ * @subpackage lexicon
+ */
+$_lang['msmulticurrency.header_id'] = 'id';
+$_lang['msmulticurrency.header_name'] = 'Название';
+$_lang['msmulticurrency.header_code'] = 'Код';
+$_lang['msmulticurrency.header_symbol_left'] = 'Символ слева';
+$_lang['msmulticurrency.header_symbol_right'] = 'Символ справа';
+$_lang['msmulticurrency.header_precision'] = 'Точность';
+$_lang['msmulticurrency.label_name'] = 'Название';
+$_lang['msmulticurrency.label_name_help'] = '';
+$_lang['msmulticurrency.label_code'] = 'Код';
+$_lang['msmulticurrency.label_code_help'] = '';
+$_lang['msmulticurrency.label_symbol_left'] = 'Символ слева';
+$_lang['msmulticurrency.label_symbol_left_help'] = '';
+$_lang['msmulticurrency.label_symbol_right'] = 'Символ справа';
+$_lang['msmulticurrency.label_symbol_right_help'] = '';
+$_lang['msmulticurrency.label_precision'] = 'Точность';
+$_lang['msmulticurrency.label_precision_hel'] = '';
+$_lang['msmulticurrency.header_provider'] = 'Поставщик';
+$_lang['msmulticurrency.header_actions'] = 'Действия';
+$_lang['msmulticurrency.label_provider'] = 'Поставщик';
+$_lang['msmulticurrency.label_provider_help'] = '';
+$_lang['msmulticurrency.page.multicurrency_title'] = 'msMultiCurrency';
+$_lang['msmulticurrency.multicurrency_title'] = 'msMultiCurrency';
+$_lang['msmulticurrency.tab.multicurrency'] = 'Валюты';
+$_lang['msmulticurrency.tab.multicurrencyset'] = 'Наборы валют';
+$_lang['msmulticurrency.tab.multicurrencysetmember'] = 'Курсы валют';
+$_lang['msmulticurrency.tab.multicurrencyprovider'] = 'Поставщики котировок валют';
+$_lang['msmulticurrency.multicurrency_intro_msg'] = 'Управление списком валют';
+$_lang['msmulticurrency.multicurrencyprovider_intro_msg'] = 'Управление списком поставщиков';
+$_lang['msmulticurrency.grid.field_id'] = 'ID';
+$_lang['msmulticurrency.grid.field_name'] = 'Название';
+$_lang['msmulticurrency.btn_create'] = 'Добавить валюту';
+$_lang['msmulticurrency.menu.update'] = 'Редактировать валюту';
+$_lang['msmulticurrency.menu.remove'] = 'Удалить валюту';
+$_lang['msmulticurrency.menu.multiple_remove'] = 'Удалить валюты';
+$_lang['msmulticurrency.title.win_create'] = 'Добавление валюты';
+$_lang['msmulticurrency.title.win_edit'] = 'Редактирование валюты';
+$_lang['msmulticurrency.title.win_remove'] = 'Удаление валюты';
+$_lang['msmulticurrency.confirm.remove'] = 'Подтверждение удаления валюты';
+$_lang['msmulticurrency.confirm.multiple_remove'] = 'Подтверждение удаления валют';
+$_lang['msmulticurrency.err_ns_empty'] = 'Это поле должно быть заполнено';
+$_lang['msmulticurrency.err.code_ae'] = 'Валюта с таким кодам уже существует';
+$_lang['msmulticurrency.header_provider_name'] = 'Название';
+$_lang['msmulticurrency.header_provider_class_name'] = 'Название класса';
+$_lang['msmulticurrency.header_provider_path'] = 'Путь';
+$_lang['msmulticurrency.header_provider_enable'] = 'Активен';
+$_lang['msmulticurrency.header_provider_actions'] = 'Действия';
+$_lang['msmulticurrency.header_provider_code'] = 'Код';
+$_lang['msmulticurrency.header_provider_course'] = 'Курс';
+$_lang['msmulticurrency.label_provider_name'] = 'Название';
+$_lang['msmulticurrency.label_provider_name_help'] = '';
+$_lang['msmulticurrency.label_provider_class_name'] = 'Название класса';
+$_lang['msmulticurrency.label_provider_class_name_help'] = '';
+$_lang['msmulticurrency.label_provider_path'] = 'Путь';
+$_lang['msmulticurrency.label_provider_path_help'] = '';
+$_lang['msmulticurrency.label_provider_enable'] = 'Активен';
+$_lang['msmulticurrency.label_provider_enable_help'] = '';
+$_lang['msmulticurrency.label_provider_properties'] = 'Параметры';
+$_lang['msmulticurrency.label_provider_properties_help'] = 'Здесь можно указать параметры в JSON формате которые будут переданы в класс провайдера';
+$_lang['msmulticurrency.btn_provider_create'] = 'Добавить';
+$_lang['msmulticurrency.btn_close'] = 'Закрыть';
+$_lang['msmulticurrency.title.win_provider_create'] = 'Добавление нового поставщика';
+$_lang['msmulticurrency.title.win_provider_edit'] = 'Редактирование поставщика';
+$_lang['msmulticurrency.title.win_provider_currency'] = 'Список валют провайдера';
+$_lang['msmulticurrency.title.win_provider_remove'] = 'Удалить';
+$_lang['msmulticurrency.confirm.provider_remove'] = 'Подтверждение удаления';
+$_lang['msmulticurrency.confirm.provider_multiple_remove'] = 'Подтверждение удаления';
+$_lang['msmulticurrency.err.provider_class_name_ae'] = 'Поставщик с таким классам уже существует';
+$_lang['msmulticurrency.err.provider_file_nf'] = 'Не удалось найти файл с классом поставщика';
+$_lang['msmulticurrency.menu.provider_update'] = 'Редактировать';
+$_lang['msmulticurrency.menu.provider_currency'] = 'Список валют провайдера';
+$_lang['msmulticurrency.menu.provider_remove'] = 'Удалить';
+$_lang['msmulticurrency.menu.provider_multiple_remove'] = 'Удалить';

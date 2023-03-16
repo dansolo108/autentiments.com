@@ -1,0 +1,167 @@
+2.1.8-pl
+--------------------------------------------------------------------------------
+- Changed: parseCSSBlockList minify
+- Changed: sabberworm/php-css-parser (8.3.1 => 8.4.0)
+
+2.1.7-pl
+--------------------------------------------------------------------------------
+- Added: MODX 3 compatibility
+- Changed: HTTP_TIMEOUT to '40'
+- Fixed: &convert option 'dynamic'
+- Fixed: PROPERTIES_CACHE_IMAGE
+- Fixed: PROPERTIES_CACHE_STYLESHEET
+- Fixed: beacon csso URL
+- Fixed: expires header value
+- Fixed: parseCSSBlockList base_url
+- Fixed: preload gif, jpg, png images
+
+2.1.6-pl
+--------------------------------------------------------------------------------
+- Fixed: looked compatibility
+
+2.1.5-pl
+--------------------------------------------------------------------------------
+- Fixed: data URI extension
+
+2.1.4-pl
+--------------------------------------------------------------------------------
+- Added: &enable
+- Added: &path
+- Added: &url
+- Added: wgenial/php-mimetyper
+- Changed: CACHE_HASH_ALGO to 'fnv164'
+- Changed: JPEG default extension to 'jpeg'
+- Fixed: PromoDs compatibility
+- Fixed: data URI scheme
+- Fixed: empty HTML
+- Fixed: meta http-equiv
+- Fixed: resizing gif, jpg, png images
+
+2.1.3-pl
+--------------------------------------------------------------------------------
+- Changed: CACHE_LOG_INTERVAL to '10'
+- Changed: libXML error
+
+2.1.2-pl
+--------------------------------------------------------------------------------
+- Changed: OnWebPageInit to OnHandleRequest
+- Changed: cache-control HTTP header
+
+2.1.1-pl
+--------------------------------------------------------------------------------
+- Added: ignore
+- Changed: subresource exceptions import
+- Fixed: critical path CSS generator
+- Fixed: multiple domains compatibility
+- Fixed: preload header format
+- Fixed: refresh timeout
+
+2.1.0-pl
+--------------------------------------------------------------------------------
+- Added: PHP 8 compatibility
+- Added: cache refresh progress messages
+- Added: lexicon etries for log messages
+- Added: multiple domains compatibility
+- Added: sabberworm/php-css-parser
+- Added: stream context
+- Added: subresource integrity validation
+- Changed: matthiasmullie/minify (1.3.61 => 1.3.66)
+- Changed: matthiasmullie/path-converter (1.1.2 => 1.1.3)
+- Fixed: AjaxForm compatibility
+- Fixed: CSS selector
+- Fixed: DIRECTORY_SEPARATOR
+- Fixed: URL
+- Fixed: cross-origin stylesheet
+- Fixed: mSearch2 compatibility
+
+2.0.9-pl
+--------------------------------------------------------------------------------
+- Added: &bundle
+- Added: &crossorigin, &integrity, &script empty value
+- Added: imagick
+- Fixed: browser compatibility
+- Fixed: link subresource
+
+2.0.8-pl
+--------------------------------------------------------------------------------
+- Added: &display
+- Added: &resize
+- Changed: &async, &defer to &script
+- Changed: cache path
+- Fixed: Google Fonts order
+- Fixed: fenom compatibility
+- Fixed: link crossorigin
+- Removed: &tplBeacon, &tplConsole, &tplLink, &tplScript
+
+2.0.7-pl
+--------------------------------------------------------------------------------
+- Fixed: subresource order
+
+2.0.6-pl
+--------------------------------------------------------------------------------
+- Added: &convert
+- Added: http-equiv, prefetch, preload, srcset
+- Added: refresh timeout
+- Changed: &tplLinkStylesheet to &tplLink
+- Changed: LOG_LEVEL_ERROR to LOG_LEVEL_WARN
+- Removed: &assets
+- Removed: &minify option 'css-attr'
+- Removed: &minify option 'js-attr'
+- Removed: &preconnect
+
+2.0.5-pl
+--------------------------------------------------------------------------------
+- Added: System Settings
+- Added: loading attribute
+- Changed: &quality default value to '80'
+- Changed: tplBeacon; CSSStyleRule order
+- Fixed: link media attribute
+
+2.0.4-pl
+--------------------------------------------------------------------------------
+- Changed: &subresources default value to '{}'
+
+2.0.3-pl
+--------------------------------------------------------------------------------
+- Fixed: punycode hostname
+- Fixed: script subresource
+
+2.0.2-pl
+--------------------------------------------------------------------------------
+- Changed: MIME type of cached inline link subresources to text/css
+- Changed: MIME type of cached inline script subresources to text/javascript
+- Fixed: document encoding
+- Fixed: inline script
+
+2.0.1-pl
+--------------------------------------------------------------------------------
+- Fixed: PHP 7 compatibility
+
+2.0.0-pl
+--------------------------------------------------------------------------------
+- Added: &minify option 'css-attr'
+- Added: &minify option 'js-attr'
+- Added: critical path CSS generator
+- Changed: &integrity default value to 'sha256'
+- Changed: &minify default value to 'html link script'
+- Changed: &preconnect default value to 'false'
+- Fixed: request recursion
+
+1.0.2-pl
+--------------------------------------------------------------------------------
+- Changed: local subresource
+
+1.0.1-pl
+--------------------------------------------------------------------------------
+- Added: regClientCSS, regClientStartupScript, regClientScript, regClientStartupHTMLBlock, regClientHTMLBlock
+- Added: subresource version
+- Changed: LOG_LEVEL_ERROR to LOG_LEVEL_WARN on empty $link, $script
+- Changed: loadClass on OnMODXInit
+- Changed: tplConsole
+- Changed: tplLinkStylesheet; Eliminate render-blocking resources
+- Fixed: cache lifetime
+- Fixed: configuration override
+
+1.0.0-pl
+--------------------------------------------------------------------------------
+- Initial release

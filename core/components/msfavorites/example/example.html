@@ -1,0 +1,250 @@
+
+[[!msFavorites.initialize]]
+
+<style>
+    a[name] {
+        font-size: 24px;
+        margin: 15px auto;
+        display: block;
+        cursor: pointer;
+    }
+    .msfavorites,.msfavorites-total-all {
+        font-size: 1.5em;
+    }
+</style>
+<script>
+    $(document).on('click', 'a[name]', function (e) {
+        var name = $(this).attr('name');
+        if (typeof name != 'undefined') {
+            window.location.hash = '#' + name;
+        }
+    });
+</script>
+
+<p>
+    <b>msFavorites</b> - компонент реализует функционал создания списков избранного.
+    <br>
+</p>
+
+<p>
+    - работа с <b>любыми объектами</b><br>
+    - работа с <b>любыми пользователями</b>
+</p>
+<p>
+    Список избранного работает для все пользователей. Для авторизованных пользователей идентификатором
+    служит <b>id пользователя</b>, для неавторизованный <b>id сессии</b>. Избранному анонимных пользователей присваивается флаг <b>anon</b>
+</p>
+
+<div class="row">
+    <div class="col-md-12">
+        <hr>
+
+        <a name="ex-connect">Подключение msFavorites</a>
+
+        <p>
+            Вы можете использовать msFavorites где угодно на странице. Для этого нужно подключить сниппет <b>msFavorites.initialize</b> в любом удобном месте,
+            добавить служебную разметку необходимым элементам. Все!
+        </p>
+
+        <p>
+            <b>Постановка:</b>
+            <br>- возможность добавить / удалить ресурс в список избранного <b>default</b>
+            <br>- вывести счетчик кол-ва пользователей добавивших в избранное текущий ресурс
+            <br>- вывести счетчик кол-ва ресурсов в избранном
+        </p>
+
+        <p>
+            <span class="label label-primary">Вызов</span>
+        </p>
+
+        [[!msFavorites.pre?
+        &hash=`64a89a0963445c824d3c2633ef33966e`
+        ]]
+
+        <hr>
+
+        <p>
+            <span class="label label-success">Результат</span>
+        </p>
+
+        [[!msFavorites.pre?
+        &raw=`1`
+        &cache=`1`
+        &hash=`64a89a0963445c824d3c2633ef33966e`
+        ]]
+
+    </div>
+
+</div>
+
+
+<div class="row">
+    <div class="col-md-12">
+        <hr>
+
+        <a name="ex-1">Пример вывода ресурсов</a>
+
+        <p>
+            <b>Постановка:</b>
+            <br>- требуется вывести список ресурсов
+            <br>- возможность добавить ресурс в список избранного <b>default</b>
+            <br>- вывести общий счетчик кол-ва в избранном
+        </p>
+
+        <p>
+            <span class="label label-primary">Вызов</span>
+        </p>
+
+        [[!msFavorites.pre?
+        &hash=`3dad37998bebe77929a8494a048b51e1`
+        ]]
+
+        <hr>
+
+        <p>
+            <span class="label label-success">Результат</span>
+        </p>
+
+        [[!msFavorites.pre?
+        &raw=`1`
+        &cache=`1`
+        &hash=`3dad37998bebe77929a8494a048b51e1`
+        ]]
+
+    </div>
+
+</div>
+
+
+<div class="row">
+
+    <div class="col-md-12">
+        <hr>
+        <a name="ex-2">Пример вывода ресурсов в избранном</a>
+
+        <p>
+            <b>Постановка:</b>
+            <br>- требуется вывести ресурсы из списка избранного
+            <br>- возможность удалить ресурс из списка избранного <b>default</b>
+            <br>- вывести общий счетчик кол-ва в избранном
+        </p>
+
+        <p>
+            Вы можете использовать сниппет <b>msFavorites.ids</b> для получения списка ресурсов в избранном.
+        </p>
+        <p>
+            <span class="label label-primary">Вызов</span>
+        </p>
+
+
+        [[!msFavorites.pre?
+        &hash=`9e13e78e02cdec62cff9a3d62ab823ec`
+        ]]
+        <hr>
+
+        <p>
+            <span class="label label-success">Результат</span>
+        </p>
+        [[!msFavorites.pre?
+        &raw=`1`
+        &cache=`1`
+        &hash=`9e13e78e02cdec62cff9a3d62ab823ec`
+        ]]
+
+    </div>
+
+</div>
+
+
+<div class="row">
+
+    <div class="col-md-12">
+        <hr>
+        <a name="ex-layout">Разметка элементов</a>
+
+        [[!msFavorites.pre?
+        &hash=`2690f272196c69725d121b63b9195e2b`
+        ]]
+
+        <p>
+            <span class="label label-danger">Примечание!</span>
+        </p>
+
+    </div>
+
+
+    <div class="col-md-12">
+        <hr>
+
+        <a name="ex-setting">Настройка msFavorites</a>
+
+        <p>
+            Основные настройки msFavorites находяться <b>Настройки системы</b> - <b>msFavorites</b>
+        </p>
+        [[!msFavorites.pre?
+        &hash=`335a71bd320e806c0b23876e43a71c75`
+        ]]
+
+    </div>
+
+    <div class="col-md-12">
+        <hr>
+
+        <a name="ex-msFavorites.initialize">Сниппет msFavorites.initialize</a>
+
+        [[!msFavorites.pre?
+        &hash=`b364e1802875dc550bfd25157ac64f70`
+        ]]
+
+    </div>
+
+    <div class="col-md-12">
+        <hr>
+
+        <a name="ex-msFavorites.objects">Сниппет msFavorites.objects</a>
+
+        [[!msFavorites.pre?
+        &hash=`ce13e60b6cbf5e381e435868ba64b073`
+        ]]
+
+    </div>
+
+    <div class="col-md-12">
+        <hr>
+
+        <a name="ex-msFavorites.ids">Сниппет msFavorites.ids</a>
+
+        [[!msFavorites.pre?
+        &hash=`3abaeabf598e75467ad2df657ac8fdf6`
+        ]]
+
+    </div>
+
+
+</div>
+
+
+<div class="row">
+
+    <div class="col-md-12">
+        <hr>
+        <a name="ex-migration">Обновление</a>
+
+        <p>
+            <span class="label label-danger">Внимание</span>
+        </p>
+        <p>
+            - С версии 3.x введена работа с любыми объектами, можно составлять различные списки избранного без ограничений.
+        </p>
+
+        [[!msFavorites.pre?
+        &hash=`55c0582feeb9841b4f899378333edad5`
+        ]]
+
+
+
+
+
+    </div>
+
+</div>

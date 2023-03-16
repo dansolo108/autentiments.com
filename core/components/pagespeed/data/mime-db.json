@@ -1,0 +1,98 @@
+{
+    "application/ecmascript" : {
+        "compressible" : true,
+        "source" : "whatwg",
+        "extensions" : [ "js", "mjs" ],
+        "_notes" : "https://datatracker.ietf.org/doc/draft-ietf-dispatch-javascript-mjs/"
+    },
+    "application/javascript" : {
+        "compressible" : true,
+        "source" : "whatwg",
+        "extensions" : [ "js", "mjs" ],
+        "_notes" : "https://datatracker.ietf.org/doc/draft-ietf-dispatch-javascript-mjs/"
+    },
+    "application/x-ecmascript" : {
+        "compressible" : true,
+        "source" : "whatwg",
+        "extensions" : [ "js", "mjs" ],
+        "_notes" : "https://datatracker.ietf.org/doc/draft-ietf-dispatch-javascript-mjs/"
+    },
+    "application/x-javascript" : {
+        "compressible" : true,
+        "source" : "whatwg",
+        "extensions" : [ "js", "mjs" ],
+        "_notes" : "https://datatracker.ietf.org/doc/draft-ietf-dispatch-javascript-mjs/"
+    },
+    "text/ecmascript" : {
+        "compressible" : true,
+        "source" : "whatwg",
+        "extensions" : [ "js", "mjs" ],
+        "_notes" : "https://datatracker.ietf.org/doc/draft-ietf-dispatch-javascript-mjs/"
+    },
+    "text/javascript" : {
+        "compressible" : true,
+        "source" : "whatwg",
+        "extensions" : [ "js", "mjs" ],
+        "_notes" : "https://datatracker.ietf.org/doc/draft-ietf-dispatch-javascript-mjs/"
+    },
+    "text/javascript1.0" : {
+        "compressible" : true,
+        "source" : "whatwg",
+        "extensions" : [ "js", "mjs" ],
+        "_notes" : "https://datatracker.ietf.org/doc/draft-ietf-dispatch-javascript-mjs/"
+    },
+    "text/javascript1.1" : {
+        "compressible" : true,
+        "source" : "whatwg",
+        "extensions" : [ "js", "mjs" ],
+        "_notes" : "https://datatracker.ietf.org/doc/draft-ietf-dispatch-javascript-mjs/"
+    },
+    "text/javascript1.2" : {
+        "compressible" : true,
+        "source" : "whatwg",
+        "extensions" : [ "js", "mjs" ],
+        "_notes" : "https://datatracker.ietf.org/doc/draft-ietf-dispatch-javascript-mjs/"
+    },
+    "text/javascript1.3" : {
+        "compressible" : true,
+        "source" : "whatwg",
+        "extensions" : [ "js", "mjs" ],
+        "_notes" : "https://datatracker.ietf.org/doc/draft-ietf-dispatch-javascript-mjs/"
+    },
+    "text/javascript1.4" : {
+        "compressible" : true,
+        "source" : "whatwg",
+        "extensions" : [ "js", "mjs" ],
+        "_notes" : "https://datatracker.ietf.org/doc/draft-ietf-dispatch-javascript-mjs/"
+    },
+    "text/javascript1.5" : {
+        "compressible" : true,
+        "source" : "whatwg",
+        "extensions" : [ "js", "mjs" ],
+        "_notes" : "https://datatracker.ietf.org/doc/draft-ietf-dispatch-javascript-mjs/"
+    },
+    "text/jscript" : {
+        "compressible" : true,
+        "source" : "whatwg",
+        "extensions" : [ "js", "mjs" ],
+        "_notes" : "https://datatracker.ietf.org/doc/draft-ietf-dispatch-javascript-mjs/"
+    },
+    "text/livescript" : {
+        "compressible" : true,
+        "source" : "whatwg",
+        "extensions" : [ "js", "mjs" ],
+        "_notes" : "https://datatracker.ietf.org/doc/draft-ietf-dispatch-javascript-mjs/"
+    },
+    "text/x-ecmascript" : {
+        "compressible" : true,
+        "source" : "whatwg",
+        "extensions" : [ "js", "mjs" ],
+        "_notes" : "https://datatracker.ietf.org/doc/draft-ietf-dispatch-javascript-mjs/"
+    },
+    "text/x-javascript" : {
+        "compressible" : true,
+        "source" : "whatwg",
+        "extensions" : [ "js", "mjs" ],
+        "_notes" : "https://datatracker.ietf.org/doc/draft-ietf-dispatch-javascript-mjs/"
+    }
+}

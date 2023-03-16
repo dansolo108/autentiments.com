@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<model package="polylang" baseClass="xPDOObject" platform="mysql" defaultEngine="InnoDB" version="1.1">
+	<object class="PolylangContent" table="polylang_content" extends="xPDOSimpleObject">
+		<field key="content_id" dbtype="int" precision="11" phptype="integer" null="false" index="index" />
+		<field key="culture_key" dbtype="varchar" precision="100" phptype="string" null="false" />
+		<field key="pagetitle" dbtype="varchar" precision="255" phptype="string" null="false" />
+		<field key="seotitle" dbtype="varchar" precision="255" phptype="string" null="true" />
+		<field key="keywords" dbtype="varchar" precision="255" phptype="string" null="true" />
+		<field key="longtitle" dbtype="varchar" precision="255" phptype="string" null="true" />
+		<field key="menutitle" dbtype="varchar" precision="255" phptype="string" null="true" />
+		<field key="introtext" dbtype="text" phptype="string" null="true" />
+		<field key="description" dbtype="text" phptype="string" null="true" />
+		<field key="content" dbtype="text" phptype="string" null="true" />
+		<field key="active" dbtype="tinyint" precision="1" phptype="boolean" null="false" default="1" index="index" />
+
+		<index alias="active" name="active" primary="false" unique="false" type="BTREE" >
+			<column key="active" length="" collation="A" null="false" />
+		</index>
+		<index alias="content_id" name="content_id" primary="false" unique="false" type="BTREE" >
+			<column key="content_id" length="" collation="A" null="false" />
+			<column key="culture_key" length="" collation="A" null="false" />
+		</index>
+		<aggregate alias="PolylangLanguage" class="PolylangLanguage" local="culture_key" foreign="culture_key" cardinality="one" owner="foreign" />
+		<aggregate alias="Resource" class="modResource" local="content_id" foreign="id" cardinality="one" owner="foreign" />
+	</object>
+	<object class="PolylangField" table="polylang_field" extends="xPDOSimpleObject">
+		<field key="class_name" dbtype="varchar" precision="255" phptype="string" null="false" />
+		<field key="name" dbtype="varchar" precision="255" phptype="string" null="false" />
+		<field key="caption" dbtype="varchar" precision="255" phptype="string" null="false" />
+		<field key="description" dbtype="text" phptype="string" null="true" />
+		<field key="meta" dbtype="text" phptype="json" null="false" />
+		<field key="xtype" dbtype="varchar" precision="255" phptype="string" null="false" />
+		<field key="code" dbtype="text" phptype="string" null="true" />
+		<field key="is_option" dbtype="tinyint" precision="1" phptype="boolean" null="false" default="0" />
+		<field key="required" dbtype="tinyint" precision="1" phptype="boolean" null="true" default="0" />
+		<field key="translate" dbtype="tinyint" precision="1" phptype="boolean" null="false" default="0" />
+		<field key="sortable" dbtype="tinyint" precision="1" phptype="boolean" null="true" default="0" />
+		<field key="active" dbtype="tinyint" precision="1" phptype="boolean" null="true" default="1" />
+		<field key="system" dbtype="tinyint" precision="1" phptype="boolean" null="false" default="0" />
+		<field key="rank" dbtype="int" precision="11" phptype="integer" null="true" default="0" />
+	</object>
+	<object class="PolylangLanguage" table="polylang_language" extends="xPDOSimpleObject">
+		<field key="currency_id" dbtype="int" precision="11" phptype="integer" null="false" default="0" />
+		<field key="name" dbtype="varchar" precision="100" phptype="string" null="false" />
+		<field key="culture_key" dbtype="varchar" precision="100" phptype="string" null="false" index="unique" />
+		<field key="site_url" dbtype="varchar" precision="100" phptype="string" null="false" />
+		<field key="rank" dbtype="int" precision="11" phptype="integer" null="false" default="0" index="index" />
+		<field key="rank_translation" dbtype="int" precision="11" phptype="integer" null="false" default="0" index="index" />
+		<field key="group" dbtype="varchar" precision="190" phptype="string" null="true" />
+		<field key="active" dbtype="tinyint" precision="1" phptype="boolean" null="false" default="1" index="index" />
+
+		<index alias="culture_key" name="culture_key" primary="false" unique="true" type="BTREE" >
+			<column key="culture_key" length="" collation="A" null="false" />
+		</index>
+		<index alias="active" name="active" primary="false" unique="false" type="BTREE" >
+			<column key="active" length="" collation="A" null="false" />
+		</index>
+		<index alias="rank" name="rank" primary="false" unique="false" type="BTREE" >
+			<column key="rank" length="" collation="A" null="false" />
+		</index>
+		<index alias="rank_translation" name="rank_translation" primary="false" unique="false" type="BTREE" >
+			<column key="rank_translation" length="" collation="A" null="false" />
+		</index>
+		<composite alias="PolylangContent" class="PolylangContent" local="culture_key" foreign="culture_key" cardinality="many" owner="local" />
+		<aggregate alias="MultiCurrency" class="MultiCurrency" local="currency_id" foreign="id" cardinality="one" owner="foreign" />
+		<composite alias="PolylangProduct" class="PolylangProduct" local="culture_key" foreign="culture_key" cardinality="many" owner="local" />
+		<composite alias="PolylangTv" class="PolylangTv" local="culture_key" foreign="culture_key" cardinality="many" owner="local" />
+		<composite alias="PolylangProductOption" class="PolylangProductOption" local="culture_key" foreign="culture_key" cardinality="many" owner="local" />
+		<composite alias="PolylangTvTmplvars" class="PolylangTvTmplvars" local="culture_key" foreign="culture_key" cardinality="many" owner="local" />
+	</object>
+	<object class="PolylangProduct" table="polylang_product" extends="xPDOSimpleObject">
+		<field key="content_id" dbtype="int" precision="11" phptype="integer" null="false" index="index" />
+		<field key="culture_key" dbtype="varchar" precision="100" phptype="string" null="false" />
+		<field key="color" dbtype="text" phptype="json" null="true" />
+		<field key="size" dbtype="text" phptype="json" null="true" />
+		<field key="tags" dbtype="text" phptype="json" null="true" />
+
+		<index alias="content_id" name="content_id" primary="false" unique="false" type="BTREE" >
+			<column key="content_id" length="" collation="A" null="false" />
+			<column key="culture_key" length="" collation="A" null="false" />
+		</index>
+		<aggregate alias="PolylangLanguage" class="PolylangLanguage" local="culture_key" foreign="culture_key" cardinality="one" owner="foreign" />
+		<aggregate alias="Resource" class="modResource" local="content_id" foreign="id" cardinality="one" owner="foreign" />
+	</object>
+	<object class="PolylangProductOption" table="polylang_product_option" extends="xPDOObject">
+		<field key="content_id" dbtype="int" precision="11" phptype="integer" null="false" index="index" />
+		<field key="culture_key" dbtype="varchar" precision="100" phptype="string" null="false" />
+		<field key="key" dbtype="varchar" precision="255" phptype="string" null="false" />
+		<field key="value" dbtype="text" phptype="string" null="false" />
+
+		<index alias="product" name="product" primary="false" unique="false" type="BTREE" >
+			<column key="content_id" length="" collation="A" null="false" />
+			<column key="culture_key" length="" collation="A" null="false" />
+			<column key="key" length="" collation="A" null="false" />
+		</index>
+		<aggregate alias="Resource" class="modResource" local="content_id" foreign="id" cardinality="one" owner="foreign" />
+		<aggregate alias="PolylangLanguage" class="PolylangLanguage" local="culture_key" foreign="culture_key" cardinality="one" owner="foreign" />
+		<aggregate alias="Ms2Options" class="msOption" local="key" foreign="key" cardinality="one" owner="foreign" />
+	</object>
+	<object class="PolylangTv" table="polylang_tv" extends="xPDOSimpleObject">
+		<field key="content_id" dbtype="int" precision="11" phptype="integer" null="false" index="index" />
+		<field key="culture_key" dbtype="varchar" precision="100" phptype="string" null="false" />
+		<field key="tmplvarid" dbtype="int" precision="11" phptype="integer" null="false" />
+		<field key="value" dbtype="text" phptype="string" null="false" />
+
+		<index alias="content_id" name="content_id" primary="false" unique="false" type="BTREE" >
+			<column key="content_id" length="" collation="A" null="false" />
+			<column key="culture_key" length="" collation="A" null="false" />
+			<column key="tmplvarid" length="" collation="A" null="false" />
+		</index>
+		<aggregate alias="SiteTmplvarTemplates" class="modTemplateVarTemplate" local="tmplvarid" foreign="tmplvarid" cardinality="one" owner="foreign" />
+		<aggregate alias="Resource" class="modResource" local="content_id" foreign="id" cardinality="one" owner="foreign" />
+		<aggregate alias="PolylangLanguage" class="PolylangLanguage" local="culture_key" foreign="culture_key" cardinality="one" owner="foreign" />
+	</object>
+	<object class="PolylangTvTmplvars" table="polylang_tv_tmplvars" extends="xPDOSimpleObject">
+		<field key="culture_key" dbtype="varchar" precision="100" phptype="string" null="true" index="index" />
+		<field key="tmplvarid" dbtype="int" precision="11" phptype="integer" null="false" />
+		<field key="values" dbtype="text" phptype="string" null="true" />
+		<field key="default_text" dbtype="mediumtext" phptype="string" null="true" />
+
+		<index alias="culture_key" name="culture_key" primary="false" unique="false" type="BTREE" >
+			<column key="culture_key" length="" collation="A" null="true" />
+			<column key="tmplvarid" length="" collation="A" null="false" />
+		</index>
+		<aggregate alias="SiteTmplvarTemplates" class="modTemplateVarTemplate" local="tmplvarid" foreign="tmplvarid" cardinality="one" owner="foreign" />
+		<aggregate alias="PolylangLanguage" class="PolylangLanguage" local="culture_key" foreign="culture_key" cardinality="one" owner="foreign" />
+	</object>
+</model>

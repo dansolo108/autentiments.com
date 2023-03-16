@@ -1,0 +1,24 @@
+Changelog for msFavorites
+
+3.0.4 - 3.0.5 beta (08.01.2020)
+==============
+- Change "event:CONTENT_CHANGE" [js]
+
+3.0.3 beta (07.08.2019)
+==============
+- Fix "processMethod" [msFavorites]
+- Fix "isAjax" [msfEvent]
+
+3.0.2 beta (17.07.2019)
+==============
+- Change "msfEventOnWebLogin" [msfEvent]
+- Change "event:CONTENT_CHANGE" [js]
+- Change "loadFavorites" [js]
+
+3.0.1 beta (08.07.2019)
+==============
+- Add "msfEventOnWebPageInit" [msFavorites]
+
+3.0.0 beta (03.07.2019)
+==============
+- Initial

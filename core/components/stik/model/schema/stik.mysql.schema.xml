@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<model package="stik" baseClass="xPDOObject" platform="mysql" defaultEngine="MyISAM" phpdoc-package="" phpdoc-subpackage="" version="1.1">
+
+    <object class="stikRemains" table="stik_remains" extends="xPDOSimpleObject">
+        <field key="product_id" dbtype="int" precision="10" attributes="unsigned" phptype="integer" null="false" />
+        <field key="store_id" dbtype="int" precision="10" phptype="integer" null="false" default="0" />
+        <field key="size" dbtype="varchar" phptype="string" precision="100" null="false" default="" />
+        <field key="color" dbtype="varchar" phptype="string" precision="100" null="false" default="" />
+        <field key="remains" dbtype="int" precision="10" phptype="integer" null="false" default="0" />
+        <field key="price" dbtype="decimal" precision="12,2" phptype="float" null="true" default="0"/>
+        <field key="old_price" dbtype="decimal" precision="12,2" phptype="float" null="true" default="0"/>
+        <field key="hide" dbtype="tinyint" precision="1" attributes="unsigned" phptype="integer" null="false" default="0" />
+
+        <index alias="product_id" name="product_id" primary="false" unique="false" type="BTREE">
+            <column key="product_id" length="" collation="A" null="false" />
+        </index>
+
+        <index alias="store_id" name="store_id" primary="false" unique="false" type="BTREE">
+            <column key="store_id" length="" collation="A" null="false" />
+        </index>
+
+        <index alias="size" name="size" primary="false" unique="false" type="BTREE">
+            <column key="size" length="" collation="A" null="false" />
+        </index>
+
+        <index alias="color" name="color" primary="false" unique="false" type="BTREE">
+            <column key="color" length="" collation="A" null="false" />
+        </index>
+        
+        <index alias="hide" name="hide" primary="false" unique="false" type="BTREE">
+            <column key="hide" length="" collation="A" null="false" />
+        </index>
+
+        <aggregate alias="Product" class="msProduct" local="product_id" foreign="id" cardinality="one" owner="foreign" />
+        <aggregate alias="Store" class="stikStore" local="store_id" foreign="id" cardinality="one" owner="foreign" />
+    </object>
+
+    <object class="stikStore" table="stik_stores" extends="xPDOSimpleObject">
+        <field key="name" dbtype="varchar" phptype="string" precision="255" null="false" default="" />
+        <field key="1c_id" dbtype="varchar" phptype="string" precision="255" null="false" default="" />
+        <field key="resource_id" dbtype="int" precision="10" phptype="integer" null="false" default="0" />
+        <field key="pickup" dbtype="tinyint" precision="1" attributes="unsigned" phptype="integer" null="false" default="0" />
+        <field key="active" dbtype="tinyint" precision="1" attributes="unsigned" phptype="integer" null="false" default="0" />
+
+        <index alias="name" name="name" primary="false" unique="false" type="BTREE">
+            <column key="name" length="" collation="A" null="false" />
+        </index>
+
+        <index alias="1c_id" name="1c_id" primary="false" unique="false" type="BTREE">
+            <column key="1c_id" length="" collation="A" null="false" />
+        </index>
+
+        <index alias="pickup" name="pickup" primary="false" unique="false" type="BTREE">
+            <column key="pickup" length="" collation="A" null="false" />
+        </index>
+
+        <index alias="active" name="active" primary="false" unique="false" type="BTREE">
+            <column key="active" length="" collation="A" null="false" />
+        </index>
+
+        <composite alias="Remains" class="stikRemains" local="id" foreign="store_id" cardinality="many" owner="local" />
+        <composite alias="Cities" class="stikFittingCity" local="id" foreign="store_id" cardinality="many" owner="local" />
+    </object>
+    
+    <object class="stikSizesubscriber" table="stik_sizesubscribers" extends="xPDOSimpleObject">
+        <field key="email" dbtype="varchar" phptype="string" precision="100" null="false" default="" />
+        <field key="product_id" dbtype="int" precision="10" phptype="integer" null="false" default="0" index="index" />
+        <field key="user_id" dbtype="int" precision="10" phptype="integer" null="false" default="0" index="index" />
+        <field key="language" dbtype="varchar" phptype="string" precision="10" null="false" default="" />
+        <field key="size" dbtype="varchar" phptype="string" precision="15" null="false" default="" />
+        <field key="color" dbtype="varchar" phptype="string" precision="50" null="false" default="" />
+        <field key="createdon" dbtype="datetime" phptype="datetime" null="true" />
+        <field key="sendedon" dbtype="datetime" phptype="datetime" null="true" />
+        <field key="hash" dbtype="varchar" phptype="string" precision="50" null="false" default="" />
+        <field key="status" dbtype="tinyint" precision="1" attributes="unsigned" phptype="integer" null="false" default="0" />
+        <field key="active" dbtype="tinyint" precision="1" attributes="unsigned" phptype="integer" null="false" default="0" />
+
+        <index alias="email" name="email" primary="false" unique="false" type="BTREE">
+            <column key="email" length="" collation="A" null="false" />
+        </index>
+
+        <index alias="product_id" name="product_id" primary="false" unique="false" type="BTREE">
+            <column key="product_id" length="" collation="A" null="false" />
+        </index>
+
+        <index alias="user_id" name="user_id" primary="false" unique="false" type="BTREE">
+            <column key="user_id" length="" collation="A" null="false" />
+        </index>
+
+        <index alias="size" name="size" primary="false" unique="false" type="BTREE">
+            <column key="size" length="" collation="A" null="false" />
+        </index>
+
+        <index alias="color" name="color" primary="false" unique="false" type="BTREE">
+            <column key="color" length="" collation="A" null="false" />
+        </index>
+
+        <index alias="hash" name="hash" primary="false" unique="false" type="BTREE">
+            <column key="hash" length="" collation="A" null="false" />
+        </index>
+
+        <index alias="status" name="status" primary="false" unique="false" type="BTREE">
+            <column key="status" length="" collation="A" null="false" />
+        </index>
+
+        <index alias="active" name="active" primary="false" unique="false" type="BTREE">
+            <column key="active" length="" collation="A" null="false" />
+        </index>
+    </object>
+
+    <object class="stikSubscriber" table="stik_subscribers" extends="xPDOSimpleObject">
+        <field key="email" dbtype="varchar" phptype="string" precision="100" null="false" default="" />
+        <field key="user_id" dbtype="int" precision="10" phptype="integer" null="false" default="0" index="index" />
+        <field key="language" dbtype="varchar" phptype="string" precision="5" null="false" default="" />
+        <field key="createdon" dbtype="datetime" phptype="datetime" null="true" />
+        <field key="hash" dbtype="varchar" phptype="string" precision="50" null="false" default="" />
+        <field key="active" dbtype="tinyint" precision="1" attributes="unsigned" phptype="integer" null="false" default="0" />
+
+        <index alias="email" name="email" primary="false" unique="false" type="BTREE">
+            <column key="email" length="" collation="A" null="false" />
+        </index>
+
+        <index alias="hash" name="hash" primary="false" unique="false" type="BTREE">
+            <column key="hash" length="" collation="A" null="false" />
+        </index>
+
+        <index alias="active" name="active" primary="false" unique="false" type="BTREE">
+            <column key="active" length="" collation="A" null="false" />
+        </index>
+    </object>
+    
+    <object class="stikCountry" table="stik_countries" extends="xPDOSimpleObject">
+        <field key="code" dbtype="varchar" precision="255" phptype="string" null="true"/>
+        <field key="name" dbtype="varchar" precision="255" phptype="string" null="true"/>
+        <field key="ru_name" dbtype="varchar" precision="255" phptype="string" null="true"/>
+        <field key="sort" dbtype="int" precision="5" phptype="integer" null="false" default="0" index="index" />
+        <field key="ru_sort" dbtype="int" precision="5" phptype="integer" null="false" default="0" index="index" />
+        
+        <index alias="sort" name="sort" primary="false" unique="false" type="BTREE">
+            <column key="sort" length="" collation="A" null="false" />
+        </index>
+        
+        <index alias="ru_sort" name="ru_sort" primary="false" unique="false" type="BTREE">
+            <column key="ru_sort" length="" collation="A" null="false" />
+        </index>
+    </object>
+
+    <object class="stikCity" table="stik_cities" extends="xPDOSimpleObject">
+        <field key="geonameid" dbtype="int" precision="10" phptype="integer" null="false" default="0"/>
+        <field key="name" dbtype="varchar" precision="200" phptype="string" null="true" index="index"/>
+        <field key="asciiname" dbtype="varchar" precision="200" phptype="string" null="true"/>
+        <field key="alternatenames" dbtype="mediumtext" phptype="string" index="fulltext"/>
+        <field key="latitude" dbtype="varchar" precision="100" phptype="string" null="true"/>
+        <field key="longitude" dbtype="varchar" precision="100" phptype="string" null="true"/>
+        <field key="feature_class" dbtype="varchar" precision="1" phptype="string" null="true"/>
+        <field key="feature_code" dbtype="varchar" precision="10" phptype="string" null="true"/>
+        <field key="country_code" dbtype="varchar" precision="2" phptype="string" null="true"/>
+        <field key="cc2" dbtype="varchar" precision="200" phptype="string" null="true"/>
+        <field key="admin1_code" dbtype="varchar" precision="20" phptype="string" null="true"/>
+        <field key="admin2_code" dbtype="varchar" precision="80" phptype="string" null="true"/>
+        <field key="admin3_code" dbtype="varchar" precision="20" phptype="string" null="true"/>
+        <field key="admin4_code" dbtype="varchar" precision="20" phptype="string" null="true"/>
+        <field key="population" dbtype="int" precision="10" phptype="integer" null="false" default="0" />
+        <field key="elevation" dbtype="int" precision="10" phptype="integer" null="false" default="0" />
+        <field key="dem" dbtype="int" precision="5" phptype="integer" null="false" default="0" />
+        <field key="timezone" dbtype="varchar" precision="40" phptype="string" null="true"/>
+        <field key="modification_date" dbtype="varchar" precision="10" phptype="string" null="true"/>
+        
+        <index alias="alternatenames" name="alternatenames" primary="false" unique="false" type="FULLTEXT">
+            <column key="alternatenames" length="" collation="A" null="false" />
+        </index>
+
+        <index alias="name" name="name" primary="false" unique="false" type="BTREE">
+            <column key="name" length="" collation="A" null="false" />
+        </index>
+
+        <index alias="asciiname" name="asciiname" primary="false" unique="false" type="BTREE">
+            <column key="asciiname" length="" collation="A" null="false" />
+        </index>
+
+        <index alias="country_code" name="country_code" primary="false" unique="false" type="BTREE">
+            <column key="country_code" length="" collation="A" null="false" />
+        </index>
+        
+    </object>
+
+    <object class="stikLoyaltyLevel" table="stik_loyalty" extends="xPDOSimpleObject">
+        <field key="amount" dbtype="decimal" precision="12,2" phptype="float" null="true" default="0"/>
+        <field key="discount" dbtype="int" precision="3" phptype="integer" null="false" default="0" />
+    </object>
+
+    <!-- <object class="stikFittingCity" table="stik_fitting_cities" extends="xPDOSimpleObject">
+        <field key="name" dbtype="varchar" phptype="string" precision="255" null="false" default="" />
+        <field key="store_id" dbtype="int" precision="10" phptype="integer" null="false" default="0" />
+        <field key="cost" dbtype="decimal" precision="12,2" phptype="float" null="true" default="0"/>
+        <field key="active" dbtype="tinyint" precision="1" attributes="unsigned" phptype="integer" null="false" default="1" />
+
+        <aggregate alias="Store" class="stikStore" local="store_id" foreign="id" cardinality="one" owner="foreign" />
+    </object>
+
+    <object class="stikPurchaseAmount" table="stik_purchases_amounts" extends="xPDOSimpleObject">
+        <field key="name" dbtype="varchar" phptype="string" precision="256" null="false" default="" />
+        <field key="phone" dbtype="varchar" phptype="string" precision="256" null="false" default="" />
+        <field key="amount" dbtype="decimal" precision="12,2" phptype="float" null="true" default="0"/>
+        
+        <index alias="phone" name="phone" primary="false" unique="false" type="BTREE">
+            <column key="phone" length="" collation="A" null="false" />
+        </index>
+    </object> -->
+    
+</model>

@@ -1,0 +1,66 @@
+Changelog for Polylang integration into MODx Revolution.
+
+Polylang 1.1.2
+====================================
+- Changed:  Chunk tpl.PolylangLinks (added class polylang-toggle)
+- Updated:  Snippet PolylangLinks (added parameter "trigger")
+
+Polylang 1.1.1
+====================================
+- Added: Event OnTogglePolylangLanguage
+
+Polylang 1.1.0
+====================================
+- Added: Support for PROMT translator
+- Added: Support for component msMultiCurrency
+- Added: Option "polylang_set_currency_for_language" (allows you to set the default currency for msMultiCurrency based on the language specified).
+- Added: Option "polylang_post_processing_translation" (delete extra spaces from modx tags after translation).
+- Added: Option "polylang_disallow_translation_completed_field" (disallow translation of a completed field).
+- Added: Snippet "PolylangSitemap"
+
+Polylang 1.0.10
+====================================
+- Added: PHP script to start automatic translation of a group of resources from the console
+
+Polylang 1.0.9
+====================================
+- Added: Snippet "PolylangCanonical"
+- Fixed: Make full url
+- Fixed: Autocomplete fields
+
+Polylang 1.0.8
+====================================
+- Fixed: Saving data in editors: CKEditor;TinyMCE
+
+Polylang 1.0.7
+====================================
+- Fixed: Saving field data: size and tags
+
+Polylang 1.0.6
+====================================
+- Added: System option polylang_reload_lexicon
+- Fixed: Get default language
+
+Polylang 1.0.5
+====================================
+- Added: Work of google translator with the designation of the Ukrainian language "ua"
+
+Polylang 1.0.4
+====================================
+- Fixed: Tab "Options product"
+
+Polylang 1.0.3
+====================================
+- Added: Localization of possible values of Tv fields
+
+Polylang 1.0.2
+====================================
+- Added: Snippets "PolylangMsOptions" and "Polylang2BaseUrl"
+
+Polylang 1.0.1
+====================================
+- Fixed: Displaying TV richtext field
+
+Polylang 1.0.0
+====================================
+- First release

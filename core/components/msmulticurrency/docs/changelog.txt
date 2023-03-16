@@ -1,0 +1,99 @@
+Changelog for msMultiCurrency integration into MODx Revolution.
+
+msMultiCurrency 1.2.5
+====================================
+- Added: Event "msmcOnBeforeUpdateProductPrice"
+
+msMultiCurrency 1.2.4
+====================================
+- Improved: Price rounding
+
+msMultiCurrency 1.2.3
+====================================
+- Fixed: Currency switching
+
+msMultiCurrency 1.2.2
+====================================
+- Added: Custom order processing class "msmcOrder"
+
+msMultiCurrency 1.2.1
+====================================
+- Added: Currency rate provider "European Central Bank (ECB)"
+
+msMultiCurrency 1.2.0
+====================================
+- Added: Support for the delivery_cost parameter for miniShop2 >= 2.9.0-pl
+- Added: Snippet msMultiCurrencyGetOrder
+- Updated: Snippet msMultiCurrencyCart
+
+msMultiCurrency 1.1.6
+====================================
+- Added: Caching for mFilter2 >= 1.14.5-pl1
+
+msMultiCurrency 1.1.5
+====================================
+- Added: Displaying the order currency in the admin panel
+- Fixed: The total value of the product in the cart for miniShop2 2.7.0-pl
+
+msMultiCurrency 1.1.4
+====================================
+- Fixed: Automatic price update when saving a resource
+
+msMultiCurrency 1.1.3
+====================================
+- Added: Binding currency to product in msOptionsPrice2
+
+msMultiCurrency 1.1.2
+====================================
+- Fixed: List of currencies in product cards
+
+msMultiCurrency 1.1.1
+====================================
+- Improved: Work with contexts
+
+msMultiCurrency 1.1.0
+====================================
+- Added: Option "Default currency ID on the site"
+- Changed: When the option "Price in the basket in user currency" is enabled, the order is created in the currency selected by the user
+- Changed: Snippet "msMultiCurrencyCart"
+
+msMultiCurrency 1.0.9
+====================================
+- Added: Snippet msMultiCurrencyPrices
+
+msMultiCurrency 1.0.8
+====================================
+- Fixed: The total cost of the order in the basket
+
+msMultiCurrency 1.0.7
+====================================
+- Added: Precision for each currency
+
+msMultiCurrency 1.0.6
+====================================
+- Improved: Support of MODX 2.7.
+
+msMultiCurrency 1.0.5
+====================================
+- Fixed: Delivery cost
+
+msMultiCurrency 1.0.4
+====================================
+- Added: Display fields: currency, price and old price in the category of products
+- Added: Recalculate prices when importing using msImportExport
+
+msMultiCurrency 1.0.3
+====================================
+- Added: Sets of currency values
+
+msMultiCurrency 1.0.2
+====================================
+- Changed: Binding currency to product
+
+msMultiCurrency 1.0.1
+====================================
+- Fixed: Total cost in cart. Requires min version miniShop2 >= 2.4.13 pl
+
+msMultiCurrency 1.0.0
+====================================
+- First release

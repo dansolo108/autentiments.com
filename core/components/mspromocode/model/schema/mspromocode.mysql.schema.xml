@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<model package="mspromocode" baseClass="xPDOObject" platform="mysql" defaultEngine="MyISAM" phpdoc-package="mspromocode"
+       version="1.1">
+
+
+    <object class="mspcAction" table="mspc_actions" extends="xPDOSimpleObject">
+        <field key="name" dbtype="varchar" precision="100" phptype="string" null="false" default=""/>
+        <field key="description" dbtype="text" phptype="string" null="true" default=""/>
+        <field key="discount" dbtype="varchar" precision="10" phptype="string" null="true" default="0"/>
+        <field key="condition_logic" dbtype="varchar" precision="10" phptype="string" null="false" default="and"/>
+        <field key="createdon" dbtype="datetime" phptype="datetime" null="true"/>
+        <field key="updatedon" dbtype="datetime" phptype="datetime" null="true"/>
+        <field key="begins" dbtype="datetime" phptype="datetime" null="true"/>
+        <field key="ends" dbtype="datetime" phptype="datetime" null="true"/>
+        <field key="ref" dbtype="tinyint" precision="1" phptype="boolean" null="true" default="0"/>
+        <field key="active" dbtype="tinyint" precision="1" phptype="boolean" null="true" default="1"/>
+
+        <index alias="name" name="name" primary="false" unique="false" type="BTREE">
+            <column key="name" length="" collation="A" null="false"/>
+        </index>
+        <index alias="discount" name="discount" primary="false" unique="false" type="BTREE">
+            <column key="discount" length="" collation="A" null="false"/>
+        </index>
+        <index alias="ref" name="ref" primary="false" unique="false" type="BTREE">
+            <column key="ref" length="" collation="A" null="false"/>
+        </index>
+        <index alias="active" name="active" primary="false" unique="false" type="BTREE">
+            <column key="active" length="" collation="A" null="false"/>
+        </index>
+        <index alias="date" name="date" primary="false" unique="false" type="BTREE">
+            <column key="begins" length="" collation="A" null="false"/>
+            <column key="ends" length="" collation="A" null="false"/>
+        </index>
+
+        <composite alias="Coupons" class="mspcCoupon" local="id" foreign="action_id" cardinality="many" owner="local"/>
+        <composite alias="Conditions" class="mspcCondition" local="id" foreign="action_id" cardinality="many" owner="local"/>
+        <composite alias="Products" class="mspcResource" local="id" foreign="action_id" cardinality="many" owner="local">
+            <criteria target="foreign"><![CDATA[
+            {"type":"product"}
+            ]]></criteria>
+        </composite>
+        <composite alias="Categories" class="mspcResource" local="id" foreign="action_id" cardinality="many" owner="local">
+            <criteria target="foreign"><![CDATA[
+            {"type":"category"}
+            ]]></criteria>
+        </composite>
+    </object>
+
+
+    <object class="mspcCoupon" table="mspc_coupons" extends="xPDOSimpleObject">
+        <field key="code" dbtype="varchar" precision="100" phptype="string" null="false" default=""/>
+        <field key="description" dbtype="text" phptype="string" null="true" default=""/>
+        <field key="action_id" dbtype="int" precision="10" attributes="unsigned" phptype="integer" null="true" default="0"/>
+        <field key="referrer_id" dbtype="int" precision="10" attributes="unsigned" phptype="integer" null="true" default="0"/>
+        <field key="discount" dbtype="varchar" precision="10" phptype="string" null="true" default=""/>
+        <field key="count" dbtype="varchar" precision="10" phptype="string" null="true" default=""/>
+        <field key="condition_logic" dbtype="varchar" precision="10" phptype="string" null="false" default="and"/>
+        <field key="begins" dbtype="datetime" phptype="datetime" null="true"/>
+        <field key="ends" dbtype="datetime" phptype="datetime" null="true"/>
+        <field key="createdon" dbtype="datetime" phptype="datetime" null="true"/>
+        <field key="updatedon" dbtype="datetime" phptype="datetime" null="true"/>
+        <field key="active" dbtype="tinyint" precision="1" phptype="boolean" null="true" default="0"/>
+        <field key="freeze" dbtype="tinyint" precision="1" phptype="boolean" null="true" default="0"/>
+        <field key="oldprice" dbtype="tinyint" precision="1" phptype="boolean" null="true" default="0"/>
+        <field key="allcart" dbtype="tinyint" precision="1" phptype="boolean" null="true" default="0"/>
+
+        <index alias="action_id" name="action_id" primary="false" unique="false" type="BTREE">
+            <column key="action_id" length="" collation="A" null="false"/>
+        </index>
+        <index alias="referrer_id" name="referrer_id" primary="false" unique="false" type="BTREE">
+            <column key="referrer_id" length="" collation="A" null="false"/>
+        </index>
+        <index alias="discount" name="discount" primary="false" unique="false" type="BTREE">
+            <column key="discount" length="" collation="A" null="false"/>
+        </index>
+        <index alias="count" name="count" primary="false" unique="false" type="BTREE">
+            <column key="count" length="" collation="A" null="false"/>
+        </index>
+        <index alias="code" name="code" primary="false" unique="false" type="BTREE">
+            <column key="code" length="" collation="A" null="false"/>
+        </index>
+        <index alias="active" name="active" primary="false" unique="false" type="BTREE">
+            <column key="active" length="" collation="A" null="false"/>
+        </index>
+        <index alias="freeze" name="freeze" primary="false" unique="false" type="BTREE">
+            <column key="freeze" length="" collation="A" null="false"/>
+        </index>
+        <index alias="oldprice" name="oldprice" primary="false" unique="false" type="BTREE">
+            <column key="oldprice" length="" collation="A" null="false"/>
+        </index>
+        <index alias="allcart" name="allcart" primary="false" unique="false" type="BTREE">
+            <column key="allcart" length="" collation="A" null="false"/>
+        </index>
+        <index alias="date" name="date" primary="false" unique="false" type="BTREE">
+            <column key="begins" length="" collation="A" null="false"/>
+            <column key="ends" length="" collation="A" null="false"/>
+        </index>
+
+        <aggregate alias="Action" class="mspcAction" local="action_id" foreign="id" cardinality="one" owner="foreign"/>
+        <aggregate alias="Referrer" class="modUser" local="referrer_id" foreign="id" cardinality="one" owner="foreign"/>
+        <aggregate alias="ReferrerProfile" class="modUserProfile" local="referrer_id" foreign="internalKey" owner="foreign" cardinality="one"/>
+        <composite alias="Conditions" class="mspcCondition" local="id" foreign="coupon_id" cardinality="many" owner="local"/>
+        <composite alias="Orders" class="mspcOrder" local="id" foreign="coupon_id" cardinality="many" owner="local"/>
+        <composite alias="Products" class="mspcResource" local="id" foreign="coupon_id" cardinality="many" owner="local">
+            <criteria target="foreign"><![CDATA[
+            {"type":"product"}
+            ]]></criteria>
+        </composite>
+        <composite alias="Categories" class="mspcResource" local="id" foreign="coupon_id" cardinality="many" owner="local">
+            <criteria target="foreign"><![CDATA[
+            {"type":"category"}
+            ]]></criteria>
+        </composite>
+    </object>
+
+
+    <object class="mspcCondition" table="mspc_conditions" extends="xPDOSimpleObject">
+        <field key="action_id" dbtype="int" precision="10" attributes="unsigned" phptype="integer" null="true" default="0"/>
+        <field key="coupon_id" dbtype="int" precision="10" attributes="unsigned" phptype="integer" null="true" default="0"/>
+        <field key="type" dbtype="varchar" precision="50" phptype="string" null="false" default=""/>
+        <field key="value" dbtype="varchar" precision="100" phptype="string" null="false" default="0"/>
+
+        <index alias="action_id" name="action_id" primary="false" unique="false" type="BTREE">
+            <column key="action_id" length="" collation="A" null="false"/>
+        </index>
+        <index alias="coupon_id" name="coupon_id" primary="false" unique="false" type="BTREE">
+            <column key="coupon_id" length="" collation="A" null="false"/>
+        </index>
+        <index alias="value" name="value" primary="false" unique="false" type="BTREE">
+            <column key="value" length="" collation="A" null="false"/>
+        </index>
+
+        <aggregate alias="Action" class="mspcAction" local="action_id" foreign="id" cardinality="one" owner="foreign"/>
+        <aggregate alias="Coupon" class="mspcCoupon" local="coupon_id" foreign="id" cardinality="one" owner="foreign"/>
+    </object>
+
+
+    <object class="mspcResource" table="mspc_resources" extends="xPDOSimpleObject">
+        <field key="resource_id" dbtype="int" precision="10" attributes="unsigned" phptype="integer" null="false"/>
+        <field key="action_id" dbtype="int" precision="10" attributes="unsigned" phptype="integer" null="true" default="0"/>
+        <field key="coupon_id" dbtype="int" precision="10" attributes="unsigned" phptype="integer" null="true" default="0"/>
+        <field key="type" dbtype="varchar" precision="10" phptype="string" null="false" default="product"/>
+        <field key="discount" dbtype="varchar" precision="10" phptype="string" null="true" default="0"/>
+        <field key="power" dbtype="int" precision="10" attributes="unsigned" phptype="integer" null="true" default="0"/>
+
+        <index alias="resource_id" name="resource_id" primary="false" unique="false" type="BTREE">
+            <column key="resource_id" length="" collation="A" null="false"/>
+        </index>
+        <index alias="action_id" name="action_id" primary="false" unique="false" type="BTREE">
+            <column key="action_id" length="" collation="A" null="false"/>
+        </index>
+        <index alias="coupon_id" name="coupon_id" primary="false" unique="false" type="BTREE">
+            <column key="coupon_id" length="" collation="A" null="false"/>
+        </index>
+        <index alias="type" name="type" primary="false" unique="false" type="BTREE">
+            <column key="type" length="" collation="A" null="false"/>
+        </index>
+        <index alias="discount" name="discount" primary="false" unique="false" type="BTREE">
+            <column key="discount" length="" collation="A" null="false"/>
+        </index>
+        <index alias="power" name="power" primary="false" unique="false" type="BTREE">
+            <column key="power" length="" collation="A" null="false"/>
+        </index>
+
+        <aggregate alias="Action" class="mspcAction" local="action_id" foreign="id" cardinality="one" owner="foreign"/>
+        <aggregate alias="Coupon" class="mspcCoupon" local="coupon_id" foreign="id" cardinality="one" owner="foreign"/>
+        <aggregate alias="Product" class="msProduct" local="resource_id" foreign="id" cardinality="one" owner="foreign">
+            <criteria target="local"><![CDATA[
+            {"type":"product"}
+            ]]></criteria>
+        </aggregate>
+        <aggregate alias="Category" class="msCategory" local="resource_id" foreign="id" cardinality="one" owner="foreign">
+            <criteria target="local"><![CDATA[
+            {"type":"category"}
+            ]]></criteria>
+        </aggregate>
+    </object>
+
+
+    <object class="mspcOrder" table="mspc_orders" extends="xPDOSimpleObject">
+        <field key="order_id" dbtype="int" precision="10" attributes="unsigned" phptype="integer" null="false"/>
+        <field key="coupon_id" dbtype="int" precision="10" attributes="unsigned" phptype="integer" null="false"/>
+        <field key="code" dbtype="varchar" precision="100" phptype="string" null="false" default=""/>
+        <field key="discount_amount" dbtype="decimal" precision="12,2" phptype="float" null="true" default="0"/>
+        <field key="createdon" dbtype="datetime" phptype="datetime" null="true"/>
+
+        <index alias="order_id" name="order_id" primary="false" unique="false" type="BTREE">
+            <column key="order_id" length="" collation="A" null="false"/>
+        </index>
+        <index alias="coupon_id" name="coupon_id" primary="false" unique="false" type="BTREE">
+            <column key="coupon_id" length="" collation="A" null="false"/>
+        </index>
+        <index alias="code" name="code" primary="false" unique="false" type="BTREE">
+            <column key="code" length="" collation="A" null="false"/>
+        </index>
+        <index alias="discount_amount" name="discount_amount" primary="false" unique="false" type="BTREE">
+            <column key="discount_amount" length="" collation="A" null="false"/>
+        </index>
+
+        <aggregate alias="Order" class="msOrder" local="order_id" foreign="id" cardinality="one" owner="foreign"/>
+        <aggregate alias="Coupon" class="mspcCoupon" local="coupon_id" foreign="id" cardinality="one" owner="foreign"/>
+    </object>
+
+
+</model>
