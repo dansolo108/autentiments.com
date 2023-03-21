@@ -22,7 +22,7 @@
                 </button>
             </div>
             <div class="auten-bonuses maxma_field {if $form["bonuses"]}applied{/if}" data-step="cart">
-                {if !$_modx->hasSessionContext('web') && false}
+                {if !$_modx->hasSessionContext('web')}
                     <div class="auten-bonuses__login">
                         <a href="">Авторизуйтесь</a>, чтобы использовать накопленные баллы и участвовать в программе
                         лояльности
