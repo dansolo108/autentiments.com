@@ -13,7 +13,8 @@ class gitModx extends modX
         parent::__construct($configPath, $options, $driverOptions);
         /** @var modNamespace $ns */
         $ns = $this->getObject("modNamespace","modmaxma");
-        $this->loadClass("maxmaUser",$ns->getCorePath()."/model/modmaxma/");
+        if($ns)
+            $this->loadClass("maxmaUser",$ns->getCorePath()."/model/modmaxma/");
     }
 
     /**
