@@ -10,7 +10,7 @@
     <a class="auten-cart-item__title" href="{$url}">
         {$pagetitle}
     </a>
-    <button type="submit" value="cart/remove" class="auten-cart-item__delete">
+    <button type="submit" value="cart/remove" name="ms2_action" class="auten-cart-item__delete">
             удалить
     </button>
     {if $article}

@@ -174,30 +174,12 @@ $(document).ready(function() {
         });
     }
     
-    // изменение кол-ва в ajax-корзине
-    $(document).on('change', '#ms2_cart_modal input[name=count]', function () {
-        if (!!$(this).val()) {
-            $(this).closest('.ms2_form').submit();
-        }
-    });
-    
     $(document).on('click', '.au-cart__minus', function () {
         var $input = $(this).siblings('span').find('input[type="number"]');
         var count = parseInt($input.val()) - 1;
         count = count < 1 ? 1 : count;
         $input.val(count);
         $input.change();
-        return false;
-    });
-    
-    $(document).on('click', '.au-cart__plus', function () {
-        var $input = $(this).siblings('span').find('input[type="number"]');
-        if (parseInt($input.val()) < parseInt($input.attr('max'))) {
-            $input.val(parseInt($input.val()) + 1);
-            $input.change();
-        } else {
-            // miniShop2.Message.error(stik_basket_not_enough);
-        }
         return false;
     });
     

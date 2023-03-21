@@ -1,12 +1,14 @@
 //counter
-document.querySelectorAll(".auten-counter").forEach(item => {
-    let input = item.querySelector(".auten-counter__input");
-    item.querySelectorAll(".auten-counter__button").forEach(button => {
-        button.addEventListener("click", e => {
-            input.value = Number.parseInt(input.value) + Number.parseInt(button.dataset.count);
-            input.dispatchEvent(new Event("change",{bubbles:true}));
-        })
-    })
+document.addEventListener("click",e=>{
+    let button = e.target.closest(`.auten-counter__button`);
+    if(!button)
+        return;
+    let counterWrapper = button.closest(`.auten-counter`);
+    let input = counterWrapper.querySelector(`.auten-counter__input`);
+    if(!input)
+        return;
+    input.value = Number.parseInt(input.value) + Number.parseInt(button.dataset.count);
+    input.dispatchEvent(new Event("change",{bubbles:true}));
 })
 // input counter validator
 document.addEventListener("change",e=>{

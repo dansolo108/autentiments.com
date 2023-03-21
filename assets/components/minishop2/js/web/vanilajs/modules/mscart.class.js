@@ -39,6 +39,7 @@ export default class MsCart {
     }
 
     add(formData) {
+
         this.callbacks.add.response.success = response => this.status(response.data);
         this.minishop.send(formData, this.callbacks.add, this.minishop.Callbacks.Cart.add);
     }
@@ -53,6 +54,7 @@ export default class MsCart {
 
     change(formData) {
         this.formData = this.minishop.formData;
+
         this.callbacks.change.response.success = response => {
             if (typeof response.data.key === 'undefined') {
                 this.removePosition(this.formData.get('key'));

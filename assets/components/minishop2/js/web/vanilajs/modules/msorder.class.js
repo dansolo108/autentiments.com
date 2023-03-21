@@ -174,6 +174,9 @@ export default class MsOrder {
         };
 
         this.callbacks.submit.response.success = response => {
+            setEvent("purchase",{
+                "transaction_id":response.data.msorder
+            });
             switch (true) {
                 case Boolean(response.data.redirect) :
                     document.location.href = response.data.redirect;

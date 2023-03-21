@@ -328,13 +328,6 @@ function openModalCart() {
 //         inputCount.val(count);
 //         inputCount.change();
 //     });
-//     $('.au-cart__plus').click(function (e) {
-//         e.preventDefault();
-//         const inputCount = $(this).parent().find('input');
-//         inputCount.val(parseInt(inputCount.val()) + 1);
-//         inputCount.change();
-//         $('.au-cart__minus').prop("disabled", false);
-//     });
 // }
 
 
@@ -402,12 +395,9 @@ function closeForModal() {
 // закрытие модалок
 function closeModal() {
     $(document).on('click', '.au-close, .au-modal-overlay.active, .au-modal.active', function (e) {
-        if (!$('.au-modal__content').is(e.target) && $('.au-modal__content').has(e.target).length === 0) {
+        if (!e.target.closest('.au-modal__content')) {
             closeForModal();
             $(window).scroll();
-        }
-        if (e.target.closest('.au-modal-cart')) {
-            closeForModal();
         }
         if ($('.au-lookbook__gallery').length) {
             $('.au-lookbooks__gallery-img').attr('src', '');
@@ -977,7 +967,17 @@ if ($('.coupon-form').length) {
         return false;
     });
 }
-;
+
+document.addEventListener('miniShop2Initialize',e=>{
+    window.miniShop2.addCallback("Cart.add.response.success","events",(response)=>{
+        setEvent("add_to_cart",PageInfo);
+    })
+    window.miniShop2.addCallback("Cart.remove.before","events",(response)=>{
+        console.log(response);
+    })
+})
+
+
 let countEvents = 0;
 function setEvent(event, props = {}) {
     console.log(event, props);
@@ -1058,35 +1058,30 @@ function setEvent(event, props = {}) {
             document.querySelectorAll(".auten-cart-item").forEach(product=>{
                 products.push({
                     "pagetitle":product.querySelector(".auten-cart-item__title")?.innerText,
+                    "key":product.getAttribute("id"),
                     "quantity":product.querySelector("input[name=count]")?.value,
                     "price":product.querySelector(".ms_price")?.innerText,
-                    "pagetitle":product.querySelector(".auten-cart-item__title")?.innerText,
-                    "pagetitle":product.querySelector(".auten-cart-item__title")?.innerText,
+                    "old_price":product.querySelector(".ms_old_price")?.innerText,
                 });
             })
             gtag("event", "purchase", {
-                items: Object.keys(props.products).map((item) => {
-                    item = props.products[item];
+                items: products.map((item) => {
                     return {
                         item_name: item.pagetitle,
-                        item_category: item.category.split("/")[0],
-                        item_category2: item.category.split("/")[1],
                         price: item.price,
                         quantity: item.quantity ?? 1,
                     };
                 }),
                 currency: "RUB",
-                shipping: document.getElementById("ms2_order_delivery_cost")?.innerText,
-                value: document.getElementById("ms2_order_cost")?.innerText,
-                transaction_id: props.transaction_id,
+                shipping: document.querySelector(".ms2_order_delivery_cost")?.innerText.replace(/\D/g,""),
+                value: document.querySelector(".ms2_order_cost")?.innerText.replace(/\D/g,""),
+                transaction_id: props.transaction_id??0,
             });
             VK.Retargeting.ProductEvent(PRICE_LIST_ID, 'purchase', {
-                products: Object.keys(props.products).map((item) => {
-                    item = props.products[item];
+                products: products.map((item) => {
                     return {
-                        id: '' + item.id,
+                        id: '' + item.key,
                         price: item.price,
-                        group_id: '' + item.parent,
                         price_old: item.old_price,
                     };
                 }),
