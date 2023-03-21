@@ -22,9 +22,15 @@ if (!$pdoFetch)
 $emptyTpl = $msCalcDelivery->config["emptyTpl"];
 $tpl = $msCalcDelivery->config["tpl"];
 $order = $ms2->order;
-$active = $order->get()["delivery"];
+$orderData = $order->get();
+$active = $orderData["delivery"];
+$payment = $orderData["payment"];
 // get deliveries
-$deliveries = $modx->getCollection("msDelivery",["active"=>1]);
+$q = ["active"=>1];
+if($payment){
+    $q["payment"] = $payment;
+}
+$deliveries = $modx->getCollection("msDelivery",$q);
 $output = "";
 /** @var $delivery msDelivery */
 foreach($deliveries as &$delivery){

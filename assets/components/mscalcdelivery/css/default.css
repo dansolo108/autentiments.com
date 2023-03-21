@@ -1,7 +1,7 @@
-[data-msCalcDelivery-items] {
+[data-msCalcDelivery-wrapper] {
   position: relative;
 }
-[data-msCalcDelivery-items]:after {
+[data-msCalcDelivery-wrapper]:after {
   content: "Loading";
   display: flex;
   align-items: center;
@@ -10,19 +10,20 @@
   width: 100%;
   height: 100%;
   background-color: rgba(255, 255, 255, 0.6);
-  backdrop-filter: blur(5px);
+  backdrop-filter: blur(3px);
   opacity: 0;
   pointer-events: none;
   border-radius: 7px;
-  transition: all 0.3s ease;
+  transition: all 0.6s ease;
 }
-[data-msCalcDelivery-items].loading {
+[data-msCalcDelivery-wrapper].msCalcDelivery-loading {
   pointer-events: none;
 }
-[data-msCalcDelivery-items].loading:after {
+[data-msCalcDelivery-wrapper].msCalcDelivery-loading:after {
   opacity: 1;
   pointer-events: all;
   animation: 2s linear 0s msCalc infinite alternate;
+  transition: all 0.3s ease;
 }
 
 @keyframes msCalc {

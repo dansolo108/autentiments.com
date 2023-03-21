@@ -21,7 +21,10 @@ class msCalcDelivery
         $namespace = $modx->getObject('modNamespace',"msCalcDelivery");
         $corePath = $namespace->getCorePath();
         $assetsPath = $namespace->getAssetsPath();
-        $assetsUrl = "/".str_replace(MODX_BASE_PATH,"",str_replace("\\","/", $assetsPath));
+        $assetsUrl = str_replace(MODX_BASE_PATH,"",$assetsPath);
+        if($assetsUrl[0] !== "/"){
+            $assetsUrl = "/".$assetsUrl;
+        }
         //дефолтные значения заменяем значениями из настроек
         $this->config = $this->getOptions([
             'core_path' => $corePath,
