@@ -564,14 +564,14 @@
     </footer>
 {/block}
 {block "scripts"}
+    <script src="/assets/tpl/js/vendor/swiper-bundle.js"></script>
+    <script src="/assets/tpl/js/vendor/intl-tel-input/intlTelInput-jquery.min.js"></script>
     <script src="/assets/tpl/js/vendor/jquery.cookie.js" async></script>
     <script src="/assets/tpl/js/vendor/jquery-ui.min.js" async></script>
     <script src="/assets/tpl/js/vendor/jquery.ui.touch-punch.min.js" async></script>
     <script src="/assets/tpl/js/vendor/scrollreveal.min.js" async></script>
     <script src="/assets/tpl/js/vendor/theia-sticky-sidebar.js" async></script>
-    <script src="/assets/tpl/js/vendor/swiper-bundle.js" async></script>
     <script src="/assets/tpl/js/vendor/datepicker.js" async></script>
-    <script src="/assets/tpl/js/vendor/intl-tel-input/intlTelInput-jquery.min.js" async></script>
     <script src="/assets/tpl/js/my_scrollreveal.js" async></script>
     <script src="/assets/tpl/js/my_swiper.js" async></script>
     <script src="/assets/tpl/js/script.js" defer></script>

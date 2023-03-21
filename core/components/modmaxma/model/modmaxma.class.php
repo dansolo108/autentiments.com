@@ -22,7 +22,10 @@ class modMaxma
         $namespace = $modx->getObject('modNamespace',"modMaxma");
         $corePath = $namespace->getCorePath();
         $assetsPath = $namespace->getAssetsPath();
-        $assetsUrl = "/".str_replace(MODX_BASE_PATH,"",str_replace("\\","/", $assetsPath));
+        $assetsUrl = str_replace(MODX_BASE_PATH,"",$assetsPath);
+        if($assetsUrl[0] !== "/"){
+            $assetsUrl = "/".$assetsUrl;
+        }
         //дефолтные значения заменяем значениями из настроек
         $this->config = $this->getOptions([
             'core_path' => $corePath,
@@ -229,7 +232,6 @@ class modMaxma
             $this->modx->log(1, 'Maxma calculatePurchase error (count or price)');
             return false;
         }
-        $this->modx->log(1, print_r($params, 1));
         $response = $this->modRest->post('v2/calculate-purchase', $params);
         $data = $response->process();
 
@@ -252,7 +254,6 @@ class modMaxma
         if($bonuses  == null){
             $bonuses = $order["bonuses"]?:0;
         }
-        $this->modx->log(1,var_export($this->ms2->cart->get(),1));
         return $this->calculatePurchase($this->ms2->cart->config["cart"],$user_id,$bonuses,$promocode);
     }
 
