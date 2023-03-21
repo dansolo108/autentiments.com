@@ -1,13 +1,6 @@
 <?php
-
-require_once $_SERVER['DOCUMENT_ROOT'] . '/config.core.php';
-require_once MODX_CORE_PATH . 'model/modx/modx.class.php';
-$modx = new modX();
-$modx->initialize('web');
-$modx->getService('error','error.modError', '', '');
-$modx->setLogLevel(modX::LOG_LEVEL_ERROR);
-$modx->setLogTarget('FILE');
-
+define("MODX_API_MODE",true);
+require_once $_SERVER['DOCUMENT_ROOT'] . '/index.php';
 // Switch context if needed
 if (!empty($_REQUEST['pageId'])) {
     if ($resource = $modx->getObject('modResource', ['id' => (int)$_REQUEST['pageId']])) {
