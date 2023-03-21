@@ -6132,13 +6132,14 @@ h2.about-block__title{
   display: flex;
   flex-direction: column;
   gap: 120px;
-  max-width: 1512px;
+  max-width: 1562px;
   margin: 0 auto;
   font-family: 'Circe';
   font-style: normal;
   font-weight: 350;
   font-size: 18px;
   line-height: 130%;
+  padding:0 25px;
 }
 .showroom{
   display: grid;

@@ -130,8 +130,6 @@ $fields = array(
     'street' => 'address',
     'building' => 'extended[building]',
     'room' => 'extended[room]',
-    "promocode"=>"promocode",
-    "bonuses"=>"bonuses",
 );
 // Apply custom fields
 if (!empty($userFields)) {
