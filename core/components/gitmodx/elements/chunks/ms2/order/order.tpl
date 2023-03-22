@@ -95,9 +95,9 @@
                         <button type="submit" name="ms2_action" value="order/submit" class="auten-button">
                             Перейти к оплате
                         </button>
-                        <button type="submit" data-payment="" value="order/submit" class="auten-button outline">
+                        <!--button type="submit" data-payment="" value="order/submit" class="auten-button outline">
                             Оплата при получении
-                        </button>
+                        </button-->
                     </div>
                 </div>
             </fieldset>
@@ -187,9 +187,9 @@
             <button type="submit" name="ms2_action" value="order/submit" class="auten-button only-pc">
                 Перейти к оплате
             </button>
-            <button type="submit" name="ms2_action" value="order/submit" style="display: none" class="auten-button outline only-pc">
+            <!--button type="submit" name="ms2_action" value="order/submit" style="display: none" class="auten-button outline only-pc">
                 Оплатить при получении
-            </button>
+            </button-->
             <button type="button" class="auten-button only-mobile" data-go-step="deliveryMethods">
                 Оформить заказ (<span class="ms2_order_cost">
                 {if $order.cost == 0}
