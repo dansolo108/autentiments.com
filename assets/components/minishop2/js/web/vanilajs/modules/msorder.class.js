@@ -38,7 +38,7 @@ export default class MsOrder {
                 });
             }
             document.addEventListener("change",e=>{
-                if(!e.target.closest(`#msOrder`) || !e.target.closest(`input`) || !e.target.closest(`textarea`))
+                if(!e.target.closest(`#msOrder`) || (!e.target.closest(`input`) && !e.target.closest(`textarea`)))
                     return;
                 let input = e.target.closest(`input`) || e.target.closest(`textarea`);
                 console.log(input);
