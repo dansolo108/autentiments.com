@@ -37,15 +37,14 @@ export default class MsOrder {
                     this.clean();
                 });
             }
-
-            if (inputs) {
-                inputs.forEach(el => {
-                    el.addEventListener('change', e => {
-                        e.preventDefault();
-                        el.value && this.add(el.name, el.value);
-                    });
-                });
-            }
+            document.addEventListener("change",e=>{
+                if(!e.target.closest(`#msOrder`) || !e.target.closest(`input`) || !e.target.closest(`textarea`))
+                    return;
+                let input = e.target.closest(`input`) || e.target.closest(`textarea`);
+                console.log(input);
+                e.preventDefault();
+                input.value && this.add(input.name, input.value);
+            })
 
             // const deliveryInputChecked = this.order.querySelector(this.deliveryInput + ':checked');
             // if (deliveryInputChecked) {
