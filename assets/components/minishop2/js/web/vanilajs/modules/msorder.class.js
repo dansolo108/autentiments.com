@@ -29,7 +29,6 @@ export default class MsOrder {
     initialize() {
         if (this.order) {
             const cleanBtn = this.order.querySelector(`[name="${this.minishop.actionName}"][value="order/clean"]`);
-            const inputs = this.order.querySelectorAll('input, textarea');
 
             if (cleanBtn) {
                 cleanBtn.addEventListener('click', e => {
@@ -40,9 +39,8 @@ export default class MsOrder {
             document.addEventListener("change",e=>{
                 if(!e.target.closest(`#msOrder`) || (!e.target.closest(`input`) && !e.target.closest(`textarea`)))
                     return;
-                let input = e.target.closest(`input`) || e.target.closest(`textarea`);
-                console.log(input);
                 e.preventDefault();
+                let input = e.target.closest(`input`) || e.target.closest(`textarea`);
                 input.value && this.add(input.name, input.value);
             })
 

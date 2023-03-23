@@ -45,3 +45,30 @@ document.addEventListener("click",e=>{
     parent.classList.add(`active`);
     parent.querySelector(`input[name=promocode]`).focus();
 })
+let cityTimeOut;
+let lastChangeVal;
+document.addEventListener("input",e=>{
+    let input = e.target.closest(`input[name=city]`)
+    if (!input)
+        return;
+    if(cityTimeOut){
+        clearTimeout(cityTimeOut);
+    }
+    cityTimeOut = setTimeout(()=>{
+        input.dispatchEvent(new Event("change",{
+            bubbles:true,
+        }));
+    },500);
+})
+document.addEventListener("change",e=>{
+    let input = e.target.closest(`input[name=city]`)
+    if (!input)
+        return;
+    if(cityTimeOut){
+        clearTimeout(cityTimeOut);
+    }
+    if (input.value === lastChangeVal)
+        return;
+    lastChangeVal = input.value;
+
+})
