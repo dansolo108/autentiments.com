@@ -106,6 +106,7 @@ $_lang['ms2_order_cost'] = 'Стоимость заказа';
 $_lang['ms2_order_log'] = 'История заказа';
 $_lang['ms2_order_products'] = 'Покупки';
 $_lang['ms2_order_requires'] = 'Обязательные поля';
+$_lang['ms2_order_hidden_fields'] = 'Поля которые нужно скрыть';
 $_lang['ms2_order_requires_help'] = 'При оформлении заказа, кастомный класс может требовать заполнение этих полей.';
 $_lang['ms2_orders_create_order'] = 'Создать заказ';
 $_lang['ms2_orders_form_begin'] = 'Выбрать заказы с';

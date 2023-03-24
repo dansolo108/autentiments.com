@@ -271,8 +271,12 @@ class msOrderHandler implements msOrderInterface
         $requires = empty($requires)
             ? array()
             : array_map('trim', explode(',', $requires));
+        $hidden = $delivery->get('hidden_fields');
+        $hidden = empty($hidden)
+            ? array()
+            : array_map('trim', explode(',', $hidden));
 
-        return $this->success('', array('requires' => $requires));
+        return $this->success('', array('requires' => $requires,'hidden_fields'=>$hidden));
     }
 
 

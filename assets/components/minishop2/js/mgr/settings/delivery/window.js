@@ -72,6 +72,13 @@ Ext.extend(miniShop2.window.CreateDelivery, miniShop2.window.Default, {
                     name: 'requires',
                     anchor: '99%',
                     id: config.id + '-requires'
+                }, {
+                    xtype: 'textfield',
+                    fieldLabel: _('ms2_order_hidden_fields'),
+                    description: _('ms2_order_hidden_fields_help'),
+                    name: 'hidden_fields',
+                    anchor: '99%',
+                    id: config.id + '-hidden-fields'
                 }]
             }, {
                 columnWidth: .5,

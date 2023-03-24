@@ -18,6 +18,7 @@ $xpdo_meta_map['msDelivery'] = array(
             'class' => null,
             'properties' => null,
             'requires' => 'email,receiver',
+            'hidden_fields' => '',
             'free_delivery_amount' => 0.0,
         ),
     'fieldMeta' =>
@@ -103,6 +104,14 @@ $xpdo_meta_map['msDelivery'] = array(
                     'phptype' => 'string',
                     'null' => true,
                     'default' => 'email,receiver',
+                ),
+            'hidden_fields' =>
+                array(
+                    'dbtype' => 'varchar',
+                    'precision' => '255',
+                    'phptype' => 'string',
+                    'null' => false,
+                    'default' => '',
                 ),
             'free_delivery_amount' =>
                 array(

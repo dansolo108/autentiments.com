@@ -24,7 +24,7 @@ Ext.extend(miniShop2.grid.Delivery, miniShop2.grid.Default, {
     getFields: function () {
         return [
             'id', 'name', 'price', 'weight_price', 'distance_price', 'rank', 'payments',
-            'logo', 'active', 'class', 'description', 'requires', 'actions', 'free_delivery_amount'
+            'logo', 'active', 'class', 'description', 'requires','hidden_fields', 'actions', 'free_delivery_amount'
         ];
     },
 
@@ -126,7 +126,6 @@ Ext.extend(miniShop2.grid.Delivery, miniShop2.grid.Default, {
         if (typeof(row) != 'undefined') {
             this.menu.record = row.data;
         }
-
         var w = Ext.getCmp('minishop2-window-delivery-update');
         if (w) {
             w.close();

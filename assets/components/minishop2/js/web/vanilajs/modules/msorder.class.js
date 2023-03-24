@@ -36,8 +36,8 @@ export default class MsOrder {
                     this.clean();
                 });
             }
-            document.addEventListener("change",e=>{
-                if(!e.target.closest(`#msOrder`) || (!e.target.closest(`input`) && !e.target.closest(`textarea`)))
+            document.addEventListener("change", e => {
+                if (!e.target.closest(`#msOrder`) || (!e.target.closest(`input`) && !e.target.closest(`textarea`)))
                     return;
                 e.preventDefault();
                 let input = e.target.closest(`input`) || e.target.closest(`textarea`);
@@ -102,10 +102,10 @@ export default class MsOrder {
                 // }
                 return;
             }
-            if(response.data){
-                for(let key in response.data){
+            if (response.data) {
+                for (let key in response.data) {
                     let value = response.data[key];
-                    document.querySelectorAll(`input[name=${key}]:not(:focus)`).forEach(input=>{
+                    document.querySelectorAll(`input[name=${key}]:not(:focus)`).forEach(input => {
                         input.value = value;
                         input.classList.remove('has-error');
                         input.closest(this.inputParent).classList.remove('has-error');
@@ -132,15 +132,14 @@ export default class MsOrder {
 
     getcost() {
         this.callbacks.getcost.response.success = response => {
-            for (let key in response.data){
-                document.querySelectorAll(this.orderInfoSelector+key).forEach(item=>{
+            for (let key in response.data) {
+                document.querySelectorAll(this.orderInfoSelector + key).forEach(item => {
                     item.parentElement.style.display = "";
-                    if(Boolean(response.data[key])){
-                        item.innerText = parseInt(response.data[key])?this.minishop.formatPrice(response.data[key]):response.data[key];
-                    }
-                    else if(response.data[key] === 0){
+                    if (Boolean(response.data[key])) {
+                        item.innerText = parseInt(response.data[key]) ? this.minishop.formatPrice(response.data[key]) : response.data[key];
+                    } else if (response.data[key] === 0) {
                         item.innerText = "бесплатно"
-                    }else{
+                    } else {
                         item.parentElement.style.display = "none";
                     }
                 })
@@ -171,8 +170,8 @@ export default class MsOrder {
         };
 
         this.callbacks.submit.response.success = response => {
-            setEvent("purchase",{
-                "transaction_id":response.data.msorder
+            setEvent("purchase", {
+                "transaction_id": response.data.msorder
             });
             switch (true) {
                 case Boolean(response.data.redirect) :
@@ -180,8 +179,8 @@ export default class MsOrder {
                     break;
                 case Boolean(response.data.msorder):
                     document.location.href = document.location.origin + document.location.pathname
-                    + (document.location.search ? document.location.search + '&' : '?')
-                    + 'msorder=' + response.data.msorder;
+                        + (document.location.search ? document.location.search + '&' : '?')
+                        + 'msorder=' + response.data.msorder;
                     break;
                 default:
                     location.reload();
@@ -222,12 +221,16 @@ export default class MsOrder {
 
     getrequired(value) {
         this.callbacks.getrequired.response.success = response => {
-            const {requires} = response.data;
+            const {requires,hidden_fields} = response.data;
 
             if (this.order.elements.length) {
                 Array.from(this.order.elements).forEach(el => {
                     el.classList.remove('required');
-                    el.closest(this.inputParent)?.classList.remove('required')
+                    let input = el.closest(this.inputParent);
+                    if(input){
+                        input.classList.remove('required');
+                        input.style.display = "";
+                    }
                 });
             }
 
@@ -235,13 +238,22 @@ export default class MsOrder {
                 this.order.elements[name]?.classList.add('required');
                 this.order.elements[name]?.closest(this.inputParent)?.classList.add('required');
             }
+            for (const name of hidden_fields) {
+                let input = this.order.elements[name]?.closest(this.inputParent);
+                if(input)
+                    input.style.display = "none";
+            }
         };
 
         this.callbacks.getrequired.response.error = () => {
             if (this.order.elements.length) {
                 Array.from(this.order.elements).forEach(el => {
                     el.classList.remove('required');
-                    el.closest(this.inputParent)?.classList.remove('required');
+                    let input = el.closest(this.inputParent);
+                    if(input){
+                        input.classList.remove('required');
+                        input.style.display = "";
+                    }
                 });
             }
         };
@@ -251,7 +263,6 @@ export default class MsOrder {
         formData.append(this.minishop.actionName, 'order/getrequired');
         this.minishop.send(formData, this.callbacks.getrequired, this.minishop.Callbacks.Order.getrequired);
     }
-
     static hide(node) {
         node.classList.add('ms-hidden');
         node.checked = false;
