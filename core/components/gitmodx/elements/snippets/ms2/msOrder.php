@@ -168,8 +168,10 @@ foreach ($fields as $key => $value) {
 
 // Check for errors
 $errors = array();
+$response = $miniShop2->order->getDeliveryRequiresFields();
+$hidden_fields = $response["data"]["hidden_fields"];
 if (!empty($_POST)) {
-    $response = $miniShop2->order->getDeliveryRequiresFields();
+
     if ($requires = $response['data']['requires']) {
         foreach ($_POST as $field => $val) {
             $validated = $miniShop2->order->validate($field, $val);
@@ -185,6 +187,7 @@ $output = $pdoFetch->getChunk($tpl, array(
     'order' => $cost,
     "cart" => $status,
     'form' => $form,
+    'hidden_fields' => $hidden_fields?:[],
     'deliveries' => $deliveries,
     'payments' => $payments,
     'errors' => $errors,

@@ -1,5 +1,5 @@
 <?php
-
+include_once MODX_CORE_PATH."/model/modx/rest/modrest.class.php";
 class modMaxma
 {
     /** @var modX $modx */
@@ -52,7 +52,6 @@ class modMaxma
         $this->modx->lexicon->load('modmaxma:default');
         if ($this->pdoTools = $this->modx->getService('pdoFetch'))
             $this->pdoTools->setConfig($this->config);
-        $this->modx->getService('rest', 'rest.modRest');
         $this->modRest = new modRest($this->modx);
         $this->modRest->setOption('baseUrl', rtrim($this->config['serverAddress'], '/'));
         $this->modRest->setOption('format', 'json');
@@ -70,7 +69,6 @@ class modMaxma
         $this->ms2->initialize();
         $this->loadFrontend();
     }
-
     function getOption($key, $options = null, $default = null, $skipEmpty = false){
         return $this->modx->getOption($this->settings_prefix.$key, $options, $default, $skipEmpty);
     }

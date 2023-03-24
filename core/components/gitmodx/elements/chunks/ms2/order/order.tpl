@@ -59,8 +59,23 @@
             <fieldset class="auten-order-group" data-step="deliveryMethods" data-step-open>
                 <legend class="auten-order__title">Доставка</legend>
                 <div class="auten-order-group__inner">
-                    {$_modx->getChunk("field", ["title"=>"Страна", "name"=>"country", "value"=>$form["country"]])}
-                    {$_modx->getChunk("field", ["title"=>"Город", "name"=>"city", "value"=>$form["city"]])}
+                    {set $fields = [
+                        [
+                            "title"=>"Страна",
+                            "name"=>"country",
+                            "value"=>$form["country"]
+                        ],[
+                            "title"=>"Город",
+                            "name"=>"city",
+                            "value"=>$form["city"]
+                        ]
+                    ]}
+                    {foreach $fields as $field}
+                        {if $field["name"] in list $hidden_fields}
+                            {set $field["style"] = ($field["style"]?:"") ~ "display:none;"}
+                        {/if}
+                        {$_modx->getChunk("field", $field)}
+                    {/foreach}
                     <div class="auten-delivery-methods" data-msCalcDelivery-wrapper>
                         {"!msCalcDelivery" | snippet}
                     </div>
@@ -70,14 +85,46 @@
                 </div>
             </fieldset>
             <fieldset class="auten-order-group" data-step="deliveryMethod">
-                <legend class="auten-order__title">Доставка</legend>
                 <div class="auten-order-group__inner auten-order-group__grid">
-                    {$_modx->getChunk("field", ["title"=>"улица", "name"=>"street", "value"=>$form["street"], "style"=>"--column: 8;"])}
-                    {$_modx->getChunk("field", ["title"=>"Дом", "name"=>"building", "value"=>$form["building"], "style"=>"--column: 4;"])}
-                    {$_modx->getChunk("field", ["title"=>"Корупс", "name"=>"corpus", "value"=>$form["corpus"], "style"=>"--column: 4;"])}
-                    {$_modx->getChunk("field", ["title"=>"Подъезд", "name"=>"entrance", "value"=>$form["entrance"], 'style'=>"--column: 4;--mobile-column: 6;"])}
-                    {$_modx->getChunk("field", ["title"=>"Квартира/офис", "name"=>"room", "value"=>$form["room"], "style"=>"--column: 4;--mobile-column: 6;"])}
-                    {$_modx->getChunk("field", ["title"=>"Комментарий", "name"=>"comment", 'value'=>$form["comment"]])}
+                    {set $fields = [
+                        [
+                            "title"=>"улица",
+                            "name"=>"street",
+                            "value"=>$form["street"],
+                            "style"=>"--column: 8;"
+                        ],[
+                            "title"=>"Дом",
+                            "name"=>"building",
+                            "value"=>$form["building"],
+                            "style"=>"--column: 4;"
+                        ],[
+                            "title"=>"Корупс",
+                            "name"=>"corpus",
+                            "value"=>$form["corpus"],
+                            "style"=>"--column: 4;"
+                        ],[
+                            "title"=>"Подъезд",
+                            "name"=>"entrance",
+                            "value"=>$form["entrance"],
+                            'style'=>"--column: 4;--mobile-column: 6;"
+                        ],
+                        [
+                            "title"=>"Квартира/офис",
+                            "name"=>"room",
+                            "value"=>$form["room"],
+                            "style"=>"--column: 4;--mobile-column: 6;"
+                        ],[
+                            "title"=>"Комментарий",
+                            "name"=>"comment",
+                            'value'=>$form["comment"]
+                        ]
+                    ]}
+                    {foreach $fields as $field}
+                        {if $field["name"] in list $hidden_fields}
+                            {set $field["style"]= ($field["style"]?:"") ~ "display:none;"}
+                        {/if}
+                        {$_modx->getChunk("field", $field)}
+                    {/foreach}
                     <button type="button" class="auten-button auten-mobile__button"
                             data-go-step="recipient">
                         Продолжить
@@ -87,10 +134,35 @@
             <fieldset class="auten-order-group" data-step="recipient">
                 <legend class="auten-order__title">Получатель</legend>
                 <div class="auten-order-group__inner auten-order-group__grid">
-                    {$_modx->getChunk("field", ["title"=>("ms2_frontend_name" | lexicon), "name"=>"name", "value"=>$form["name"], "style"=>"--column: 6;"])}
-                    {$_modx->getChunk("field", ["title"=>("ms2_frontend_surname" | lexicon), "name"=>"surname", "value"=>$form["surname"], "style"=>"--column: 6;"])}
-                    {$_modx->getChunk("field", ["title"=>("ms2_frontend_email" | lexicon), "name"=>"email", "value"=>$form["email"], "style"=>"--column: 6;"])}
-                    {$_modx->getChunk("field", ["title"=>("ms2_frontend_phone" | lexicon), "name"=>"phone", "value"=>$form["phone"], "style"=>"--column: 6;"])}
+                    {set $fields = [
+                        [
+                            "title"=>("ms2_frontend_name" | lexicon),
+                            "name"=>"name",
+                            "value"=>$form["name"],
+                            "style"=>"--column: 6;"
+                        ],[
+                            "title"=>("ms2_frontend_surname" | lexicon),
+                            "name"=>"surname",
+                            "value"=>$form["surname"],
+                            "style"=>"--column: 6;"
+                        ],[
+                            "title"=>("ms2_frontend_email" | lexicon),
+                            "name"=>"email",
+                            "value"=>$form["email"],
+                            "style"=>"--column: 6;"
+                        ],[
+                            "title"=>("ms2_frontend_phone" | lexicon),
+                            "name"=>"phone",
+                            "value"=>$form["phone"],
+                            "style"=>"--column: 6;"
+                        ]
+                    ]}
+                    {foreach $fields as $field}
+                        {if $field["name"] in list $hidden_fields}
+                            {set $field["style"]= ($field["style"]?:"") ~ "display:none;"}
+                        {/if}
+                        {$_modx->getChunk("field", $field)}
+                    {/foreach}
                     <div class="auten-mobile__button">
                         <button type="submit" name="ms2_action" value="order/submit" class="auten-button">
                             Перейти к оплате
@@ -203,3 +275,40 @@
 
     </aside>
 </main>
+<div class="cdek2_container">
+    <div class="pvz_error">{'stik_cdek_choose_pvz_error' | lexicon}</div>
+    <a data-fancybox data-touch="false" data-src="#cdek2_map_modal" href="javascript:;" class="au-btn">Выбрать пункт
+        выдачи</a>
+    <span class="point-address"></span>
+    <div id="cdek2_map_modal" style="display: none;">
+        <div class="map-modal-points">
+            Пункты выдачи
+        </div>
+        <div class="cdek2_map_container">
+            <div id="cdek2_map" data-city="{$city}" data-start="{$pvz[0].coordX},{$pvz[0].coordY}"
+                 data-coords="{$coords}"></div>
+            <div class="cdek2_map-points">
+                {foreach $pvz as $point}
+                    <div class="cdek2_map-point" data-coord="{$point.coordX},{$point.coordY}"
+                         data-name="{$point.Name}, {$point.FullAddress}" data-code="{$point.Code}">
+                        <div class="cdek2_map-point__name">
+                            {$point.Name}
+                        </div>
+                        <div class="cdek2_map-point__worktime">
+                            {$point.WorkTime}
+                        </div>
+                        <div class="cdek2_map-point__adress">
+                            {$point.FullAddress}
+                        </div>
+                        <div class="cdek2_map-point__phones">
+                            {$point.Phone}
+                        </div>
+                        <div class="cdek2_map-point__email">
+                            <a href="mailto:{$point.Email}">{$point.Email}</a>
+                        </div>
+                    </div>
+                {/foreach}
+            </div>
+        </div>
+    </div>
+</div>

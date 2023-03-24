@@ -2,7 +2,7 @@ Ext.override(miniShop2.grid.Delivery, {
     getFields: function () {
         return [
             'id', 'name', 'price', 'weight_price', 'distance_price', 'rank', 'payments',
-            'logo', 'active', 'class', 'description', 'requires', 'actions', 'free_delivery_amount',
+            'logo', 'active', 'class', 'description', 'requires','hidden_fields', 'actions', 'free_delivery_amount',
             'show_on_ru', 'show_on_en', 'free_delivery_rf'
         ];
     },

@@ -67,7 +67,7 @@ $modx->regClientHTMLBlock(
         window.miniShop2.msCalcDelivery = new msCalcDelivery({$data});
     })
     </script>");
-
+$modx->regClientStartupScript('https://api-maps.yandex.ru/2.1/?lang=ru_RU');
 if(!empty($tpl)){
     if(trim($output) == "" && !empty($emptyTpl))
         return $pdoFetch->parseChunk($emptyTpl);

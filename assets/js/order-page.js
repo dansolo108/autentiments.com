@@ -45,6 +45,7 @@ document.addEventListener("click",e=>{
     parent.classList.add(`active`);
     parent.querySelector(`input[name=promocode]`).focus();
 })
+// исправляем обновление доставки при вводе
 let cityTimeOut;
 let lastChangeVal;
 document.addEventListener("input",e=>{

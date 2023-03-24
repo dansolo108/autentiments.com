@@ -7,7 +7,7 @@
  * For complete copyright and license information, see the COPYRIGHT and LICENSE
  * files found in the top-level directory of this distribution.
  */
-
+include_once MODX_CORE_PATH."/model/modx/rest/modrestclient.class.php";
 /**
  * Represents a remote transport package provider service.
  *
@@ -30,6 +30,7 @@
 class modTransportProvider extends xPDOSimpleObject {
     /** @var xPDO|modX */
     public $xpdo = null;
+    private modRestClient $rest;
 
     public function __construct(&$xpdo) {
         parent::__construct($xpdo);
@@ -325,7 +326,7 @@ class modTransportProvider extends xPDOSimpleObject {
     protected function downloadUrl($signature, $location, array $args = array()) {
         $url = false;
         /** @var modRestClient $rest */
-        $rest = $this->xpdo->getService('rest','rest.modRestClient');
+        $rest = $this->getClient();
         if ($rest) {
             $responseType = $rest->responseType;
             $rest->setResponseType('text');
@@ -413,12 +414,12 @@ class modTransportProvider extends xPDOSimpleObject {
      * @return modRestClient|bool A REST client instance, or FALSE.
      */
     public function getClient() {
-        if (empty($this->xpdo->rest)) {
-            $this->xpdo->getService('rest','rest.modRestClient');
-            $loaded = $this->xpdo->rest->getConnection();
+        if (empty($this->rest)) {
+            $this->rest = new modRestClient($this->xpdo);
+            $loaded = $this->rest->getConnection();
             if (!$loaded) return false;
         }
-        return $this->xpdo->rest;
+        return $this->rest;
     }
 
     /**
