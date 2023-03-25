@@ -75,8 +75,8 @@
 
 {block 'scripts'}
     {parent}
-    <script src="/assets/libs/dadata/script.js" async></script>
-    <script src="/assets/js/order-page.js" async></script>
+    <script src="{'/assets/libs/dadata/script.js' | version}" async></script>
+    <script src="{'/assets/js/order-page.js' | version}" async></script>
     <script>
         document.addEventListener("DOMContentLoaded", e => {
             var type = "ADDRESS";
@@ -125,7 +125,7 @@
 {/block}
 {block "styles"}
     {parent}
-    <link rel="stylesheet" href="/assets/libs/dadata/style.css">
-    <link rel="stylesheet" href="/assets/css/style.css">
-    <link rel="stylesheet" href="/assets/components/stik_cdek/css/web/cdek.css">
+    <link rel="stylesheet" href="{'/assets/libs/dadata/style.css' | version}">
+    <link rel="stylesheet" href="{'/assets/css/style.css' | version}">
+    <link rel="stylesheet" href="{'/assets/components/stik_cdek/css/web/cdek.css' | version}">
 {/block}

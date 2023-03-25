@@ -57,19 +57,19 @@
     <link rel="preload" href="/assets/tpl/fonts/Circe-Regular.woff2" as="font" crossorigin="">
     <link rel="preload" href="/assets/tpl/fonts/Circe-Light.woff2" as="font" crossorigin="">
     {block "styles"}
-        <link rel="stylesheet" href="/assets/tpl/css/jquery-ui.css">
-        <link rel="stylesheet" href="/assets/tpl/css/swiper-bundle.css">
-        <link rel="stylesheet" href="/assets/tpl/css/datepicker.css">
-        <link rel="stylesheet" href="/assets/components/minishop2/css/web/lib/jquery.jgrowl.min.css">
-        <link rel="stylesheet" href="/assets/tpl/css/intlTelInput.min.css">
-        <link rel="stylesheet" href="/assets/tpl/css/style.css">
+        <link rel="stylesheet" href="{'/assets/tpl/css/jquery-ui.css' | version}">
+        <link rel="stylesheet" href="{'/assets/tpl/css/swiper-bundle.css' | version}">
+        <link rel="stylesheet" href="{'/assets/tpl/css/datepicker.css' | version}">
+        <link rel="stylesheet" href="{'/assets/components/minishop2/css/web/lib/jquery.jgrowl.min.css' | version}">
+        <link rel="stylesheet" href="{'/assets/tpl/css/intlTelInput.min.css' | version}">
+        <link rel="stylesheet" href="{'/assets/tpl/css/style.css' | version}">
     {/block}
 
     <link rel="icon" href="/assets/tpl/favicon/favicon.ico">
     <link rel="icon" href="/assets/tpl/favicon/icon.svg" type="image/svg+xml">
     <link rel="apple-touch-icon" href="/assets/tpl/favicon/apple-touch-icon.png">
     <link rel="manifest" href="/assets/tpl/favicon/manifest.json">
-    <script src="/assets/tpl/js/vendor/jquery-3.6.0.min.js"></script>
+    <script src="{'/assets/tpl/js/vendor/jquery-3.6.0.min.js' | version}"></script>
     <!-- Global site tag (gtag.js) - Google Analytics -->
     {ignore}
         <script>
@@ -564,19 +564,19 @@
     </footer>
 {/block}
 {block "scripts"}
-    <script src="/assets/tpl/js/vendor/swiper-bundle.js"></script>
-    <script src="/assets/tpl/js/vendor/intl-tel-input/intlTelInput-jquery.min.js"></script>
-    <script src="/assets/tpl/js/vendor/jquery.cookie.js" async></script>
-    <script src="/assets/tpl/js/vendor/jquery-ui.min.js" async></script>
-    <script src="/assets/tpl/js/vendor/jquery.ui.touch-punch.min.js" async></script>
-    <script src="/assets/tpl/js/vendor/scrollreveal.min.js" async></script>
-    <script src="/assets/tpl/js/vendor/theia-sticky-sidebar.js" async></script>
-    <script src="/assets/tpl/js/vendor/datepicker.js" async></script>
-    <script src="/assets/tpl/js/my_scrollreveal.js" async></script>
-    <script src="/assets/tpl/js/my_swiper.js" async></script>
-    <script src="/assets/tpl/js/script.js" defer></script>
-    <script src="/assets/tpl/js/modx.js" defer></script>
-    <script src="/assets/js/script.js" async></script>
+    <script src="{'/assets/tpl/js/vendor/swiper-bundle.js' | version}"></script>
+    <script src="{'/assets/tpl/js/vendor/intl-tel-input/intlTelInput-jquery.min.js' | version}"></script>
+    <script src="{'/assets/tpl/js/vendor/jquery.cookie.js' | version}" async></script>
+    <script src="{'/assets/tpl/js/vendor/jquery-ui.min.js' | version}" async></script>
+    <script src="{'/assets/tpl/js/vendor/jquery.ui.touch-punch.min.js' | version}" async></script>
+    <script src="{'/assets/tpl/js/vendor/scrollreveal.min.js' | version}" async></script>
+    <script src="{'/assets/tpl/js/vendor/theia-sticky-sidebar.js' | version}" async></script>
+    <script src="{'/assets/tpl/js/vendor/datepicker.js' | version}" async></script>
+    <script src="{'/assets/tpl/js/my_scrollreveal.js' | version}" async></script>
+    <script src="{'/assets/tpl/js/my_swiper.js' | version}" async></script>
+    <script src="{'/assets/tpl/js/script.js' | version}" defer></script>
+    <script src="{'/assets/tpl/js/modx.js' | version}" defer></script>
+    <script src="{'/assets/js/script.js ' | version}" async></script>
 {/block}
 {include 'modals'}
 </body>
