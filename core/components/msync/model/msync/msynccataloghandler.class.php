@@ -108,7 +108,7 @@ class msyncCatalogHandler implements msyncCatalogInterface
 
         $this->config['start_time'] = microtime(true);
         $this->config['max_exec_time'] = min($this->config['time_limit'], @ini_get('max_execution_time'));
-        if (empty($this->config['max_exec_time'])) $this->config['max_exec_time'] = 6;
+        if (empty($this->config['max_exec_time'])) $this->config['max_exec_time'] = 60;
         $this->modx->user = $this->modx->getObject('modUser', $this->config['user_id_import']);
 
 
