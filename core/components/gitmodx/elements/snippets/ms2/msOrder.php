@@ -170,9 +170,9 @@ foreach ($fields as $key => $value) {
 $errors = array();
 $response = $miniShop2->order->getDeliveryRequiresFields();
 $hidden_fields = $response["data"]["hidden_fields"];
+$requires = $response["data"]["requires"];
 if (!empty($_POST)) {
-
-    if ($requires = $response['data']['requires']) {
+    if ($requires) {
         foreach ($_POST as $field => $val) {
             $validated = $miniShop2->order->validate($field, $val);
             if ((in_array($field, $requires) && empty($validated))) {
@@ -180,7 +180,6 @@ if (!empty($_POST)) {
             }
         }
     }
-
 }
 
 $output = $pdoFetch->getChunk($tpl, array(
@@ -188,6 +187,7 @@ $output = $pdoFetch->getChunk($tpl, array(
     "cart" => $status,
     'form' => $form,
     'hidden_fields' => $hidden_fields?:[],
+    'requires' => $requires?:[],
     'deliveries' => $deliveries,
     'payments' => $payments,
     'errors' => $errors,

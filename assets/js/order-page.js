@@ -71,5 +71,32 @@ document.addEventListener("change",e=>{
     if (input.value === lastChangeVal)
         return;
     lastChangeVal = input.value;
+})
+// выбор пвз
+document.addEventListener("radio-active",e=>{
+    let point = e.target.closest(`.auten-pickup-point`);
+    if(!point)
+        return;
+    point?.classList.add(`active`);
+    let delivery = document.querySelector(`input[name=delivery]:checked`);
+    let method = delivery.closest(`.auten-delivery-method`);
+    method?.querySelector(`.auten-delivery-method__pickup`)?.classList.add("outline");
+})
+document.addEventListener("radio-inactive",e=>{
+    e.target.closest(`.auten-pickup-point`)?.classList.remove(`active`);
+})
+document.addEventListener("change",e=>{
+    let method = e.target.closest(`.auten-delivery-method`);
+    if(!method || !e.target.closest(`input[name=delivery]`))
+        return;
+    method.querySelector(`.auten-delivery-method__pickup`)?.classList.remove("outline");
+})
 
+document.addEventListener("modal-open",e=>{
+    let pickup = e.target.querySelector(`[data-mscalcdelivery-pickup]`)
+    if(!pickup)
+        pickup = e.target.closest(`[data-mscalcdelivery-pickup]`)
+    if(!pickup)
+        return;
+    pickup.dispatchEvent(new CustomEvent("mscalcdelivery-pickup-open",{bubbles:true}))
 })

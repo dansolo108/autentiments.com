@@ -1,28 +1,28 @@
 //counter
-document.addEventListener("click",e=>{
+document.addEventListener("click", e => {
     let button = e.target.closest(`.auten-counter__button`);
-    if(!button)
+    if (!button)
         return;
     let counterWrapper = button.closest(`.auten-counter`);
     let input = counterWrapper.querySelector(`.auten-counter__input`);
-    if(!input)
+    if (!input)
         return;
     input.value = Number.parseInt(input.value) + Number.parseInt(button.dataset.count);
-    input.dispatchEvent(new Event("change",{bubbles:true}));
+    input.dispatchEvent(new Event("change", {bubbles: true}));
 })
 // input counter validator
-document.addEventListener("change",e=>{
-    if(!e.target.closest(`.ms2_form input[name=count]`))
+document.addEventListener("change", e => {
+    if (!e.target.closest(`.ms2_form input[name=count]`))
         return
     let input = e.target.closest(`.ms2_form input[name=count]`);
     let min = parseInt(input.getAttribute("min"));
     let max = parseInt(input.getAttribute("max"));
-    if(min && parseInt(input.value) < min){
+    if (min && parseInt(input.value) < min) {
         input.value = min;
         e.stopPropagation()
         e.preventDefault();
     }
-    if(max && parseInt(input.value)  > max){
+    if (max && parseInt(input.value) > max) {
         input.value = max;
         e.stopPropagation()
         e.preventDefault();
@@ -136,4 +136,26 @@ document.addEventListener("input", e => {
     if (!field)
         return
     field.classList.remove("has-error");
+})
+// модалки
+document.addEventListener("click", e => {
+    let btn = e.target.closest(`[data-open-modal]`);
+    if (!btn)
+        return;
+    let modalSelector = btn.dataset.openModal;
+    let modal = document.querySelector(`.auten-modal${modalSelector}`);
+    if (!modal.dispatchEvent(new CustomEvent("modal-open", {bubbles: true})))
+        return;
+
+    modal.classList.add(`active`);
+
+})
+
+document.addEventListener("click", e => {
+    if (!(e.target.closest(`.auten-modal`) && (e.target === e.target.closest(`.auten-modal`) || e.target.closest(`.auten-modal__close`))))
+        return;
+    let modal = e.target.closest(`.auten-modal`);
+    if (!modal.dispatchEvent(new CustomEvent("modal-close", {bubbles: true})))
+        return;
+    modal.classList.remove(`active`)
 })

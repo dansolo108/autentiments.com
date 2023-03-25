@@ -483,6 +483,7 @@ class msOrderCustom extends msOrderHandler implements msOrderInterface
                         $this->order['payment'] = $delivery->getFirstPayment();
                     };
                 }
+                $this->remove("point");
                 break;
             case 'payment':
                 if (!empty($this->order['delivery'])) {

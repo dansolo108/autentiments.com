@@ -127,4 +127,5 @@
     {parent}
     <link rel="stylesheet" href="/assets/libs/dadata/style.css">
     <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="/assets/components/stik_cdek/css/web/cdek.css">
 {/block}

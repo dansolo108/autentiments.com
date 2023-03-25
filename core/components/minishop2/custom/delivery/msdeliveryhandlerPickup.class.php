@@ -3,7 +3,7 @@ if(!class_exists('msDeliveryInterface')) {
     require_once MODX_CORE_PATH. 'components/minishop2/handlers/msdeliveryhandler.class.php';
 }
 
-class msDeliveryHandlerPickup extends msDeliveryHandler implements msDeliveryInterface {
+class msDeliveryHandlerPickup extends msDeliveryHandler {
     /**
      * @param xPDOObject $object
      * @param array $config

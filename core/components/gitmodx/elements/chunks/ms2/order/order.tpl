@@ -14,10 +14,10 @@
                     </div>
                     <input type="text" class="auten-field__input" name="promocode" value="{$form["promocode"]}">
                 </label>
-                <button type="submit" data-action="promocode" class="auten-button">
+                <button type="submit" data-action="promocode" class="auten-button auten-promo__button">
                     Применить
                 </button>
-                <button type="submit" data-action="promocode" data-value="" class="auten-button">
+                <button type="submit" data-action="promocode" data-value="" class="auten-button auten-promo__button">
                     отменить
                 </button>
             </div>
@@ -74,6 +74,9 @@
                         {if $field["name"] in list $hidden_fields}
                             {set $field["style"] = ($field["style"]?:"") ~ "display:none;"}
                         {/if}
+                        {if $field["name"] in list $requires}
+                            {set $field["classes"][] = "required"}
+                        {/if}
                         {$_modx->getChunk("field", $field)}
                     {/foreach}
                     <div class="auten-delivery-methods" data-msCalcDelivery-wrapper>
@@ -123,6 +126,9 @@
                         {if $field["name"] in list $hidden_fields}
                             {set $field["style"]= ($field["style"]?:"") ~ "display:none;"}
                         {/if}
+                        {if $field["name"] in list $requires}
+                            {set $field["classes"][] = "required"}
+                        {/if}
                         {$_modx->getChunk("field", $field)}
                     {/foreach}
                     <button type="button" class="auten-button auten-mobile__button"
@@ -160,6 +166,9 @@
                     {foreach $fields as $field}
                         {if $field["name"] in list $hidden_fields}
                             {set $field["style"]= ($field["style"]?:"") ~ "display:none;"}
+                        {/if}
+                        {if $field["name"] in list $requires}
+                            {set $field["classes"][] = "required"}
                         {/if}
                         {$_modx->getChunk("field", $field)}
                     {/foreach}
@@ -275,40 +284,3 @@
 
     </aside>
 </main>
-<div class="cdek2_container">
-    <div class="pvz_error">{'stik_cdek_choose_pvz_error' | lexicon}</div>
-    <a data-fancybox data-touch="false" data-src="#cdek2_map_modal" href="javascript:;" class="au-btn">Выбрать пункт
-        выдачи</a>
-    <span class="point-address"></span>
-    <div id="cdek2_map_modal" style="display: none;">
-        <div class="map-modal-points">
-            Пункты выдачи
-        </div>
-        <div class="cdek2_map_container">
-            <div id="cdek2_map" data-city="{$city}" data-start="{$pvz[0].coordX},{$pvz[0].coordY}"
-                 data-coords="{$coords}"></div>
-            <div class="cdek2_map-points">
-                {foreach $pvz as $point}
-                    <div class="cdek2_map-point" data-coord="{$point.coordX},{$point.coordY}"
-                         data-name="{$point.Name}, {$point.FullAddress}" data-code="{$point.Code}">
-                        <div class="cdek2_map-point__name">
-                            {$point.Name}
-                        </div>
-                        <div class="cdek2_map-point__worktime">
-                            {$point.WorkTime}
-                        </div>
-                        <div class="cdek2_map-point__adress">
-                            {$point.FullAddress}
-                        </div>
-                        <div class="cdek2_map-point__phones">
-                            {$point.Phone}
-                        </div>
-                        <div class="cdek2_map-point__email">
-                            <a href="mailto:{$point.Email}">{$point.Email}</a>
-                        </div>
-                    </div>
-                {/foreach}
-            </div>
-        </div>
-    </div>
-</div>

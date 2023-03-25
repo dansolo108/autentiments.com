@@ -9,14 +9,14 @@ use CdekSDK\Requests;
 use CdekSDK\CdekClient;
 use CdekSDK\Common\AdditionalService;
 
-class msDeliveryHandlerCdek extends msDeliveryHandler implements msDeliveryInterface {
+class msDeliveryHandlerCdek extends msDeliveryHandler {
     /** @var modX $modx */
     public $modx;
     /** @var miniShop2 $ms2 */
     public $ms2;
 
 
-    /**
+     /**
      * @param xPDOObject $object
      * @param array $config
      */

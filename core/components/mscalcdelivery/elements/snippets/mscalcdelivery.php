@@ -37,18 +37,21 @@ foreach($deliveries as &$delivery){
     $cost = $delivery->getCost($order);
     if($cost === null)
         continue;
-    $delivery = $delivery->toArray();
+    $deliveryArr = $delivery->toArray();
+    if($delivery->handler instanceof PickupPointsInterface){
+        $deliveryArr["hasPickupPoints"] = true;
+    }
     if(is_array($cost)){
-        $delivery["max"] = $cost[2];
-        $delivery["min"] = $cost[1];
+        $deliveryArr["max"] = $cost[2];
+        $deliveryArr["min"] = $cost[1];
         $cost = $cost[0];
     }
-    $delivery["cost"] = $cost;
-    if($active == $delivery["id"]){
-        $delivery["checked"] = true;
+    $deliveryArr["cost"] = $cost;
+    if($active == $deliveryArr["id"]){
+        $deliveryArr["checked"] = true;
     }
     if(!empty($tpl)){
-        $output .= $pdoFetch->parseChunk($tpl,$delivery);
+        $output .= $pdoFetch->parseChunk($tpl,$deliveryArr);
     }
 }
 // готовим js конфиг на фронт

@@ -105,7 +105,7 @@ export default class MsOrder {
             if (response.data) {
                 for (let key in response.data) {
                     let value = response.data[key];
-                    document.querySelectorAll(`input[name=${key}]:not(:focus)`).forEach(input => {
+                    document.querySelectorAll(`input[name=${key}]:not([type=radio])`).forEach(input => {
                         input.value = value;
                         input.classList.remove('has-error');
                         input.closest(this.inputParent).classList.remove('has-error');
@@ -235,8 +235,16 @@ export default class MsOrder {
             }
 
             for (const name of requires) {
-                this.order.elements[name]?.classList.add('required');
-                this.order.elements[name]?.closest(this.inputParent)?.classList.add('required');
+                if(this.order.elements[name] instanceof NodeList)
+                    this.order.elements[name].forEach(item=>{
+                        item?.classList.add('required');
+                        item?.closest(this.inputParent)?.classList.add('required');
+                    })
+                else{
+                    this.order.elements[name]?.classList.add('required');
+                    this.order.elements[name]?.closest(this.inputParent)?.classList.add('required');
+                }
+
             }
             for (const name of hidden_fields) {
                 let input = this.order.elements[name]?.closest(this.inputParent);
