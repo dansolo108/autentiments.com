@@ -37,8 +37,20 @@ class msCalcDelivery {
     get wrappers() {
         return document.querySelectorAll(this.config.selectors.delivery_wrappers);
     }
-    action(action = "", params = {}) {
-        return this.fetch(this.config.action_url, {...params, "msCalcDelivery_action": action});
+    async action(action = "", params = {}) {
+        let response = await this.fetch(this.config.action_url, {...params, "msCalcDelivery_action": action});
+        response = await response.json();
+        if(!response.success){
+            if(window.miniShop2.Message){
+                window.miniShop2.Message.error(response.message);
+
+            }else{
+                window.addEventListener("miniShop2Initialize",e=>{
+                    window.miniShop2.Message.error(response.message);
+                })
+            }
+        }
+        return response;
     }
     fetch(url, params = {}, method = "POST", headers = {'X-Requested-With': 'XMLHttpRequest'}) {
         let options = {method, headers};
@@ -57,23 +69,18 @@ class msCalcDelivery {
         }
         return fetch(url, options);
     }
-    getDeliveries(handler) {
-        this.action("getDeliveries").then(async response => {
-            let result = await response.text();
-            handler(result);
-        });
-    }
-    updateDeliveries(){
+    async updateDeliveries(){
         this.wrappers?.forEach(item => {
             item.classList.add(this.config.states.loading);
         })
-        this.getDeliveries((result)=>{
-            this.wrappers.forEach(item=>{
-                item.innerHTML = result;
-                item.classList.remove(this.config.states.loading);
-            })
-            this.updatePickups();
+        let response = await this.action("getDeliveries");
+        if(!response.success)
+            return;
+        this.wrappers.forEach(item=>{
+            item.innerHTML = response.data;
+            item.classList.remove(this.config.states.loading);
         })
+        this.updatePickups();
     }
     updatePickups(){
         document.querySelectorAll(this.config.selectors.pickup).forEach(this.initPickup.bind(this))
@@ -100,6 +107,7 @@ class msCalcDelivery {
             </label>
         `);
     }
+
     stringToHtml(string){
         let temp = document.createElement("div");
         temp.innerHTML = string;
@@ -117,58 +125,61 @@ class msCalcDelivery {
         let deliveryId = this.getDataValue(pickup);
         if(!deliveryId)
             return;
-        let response = await this.action("getPickupPoints",{id:deliveryId});
-        response = response.json();
-        if(!response.success){
-            window.miniShop2.Message.error(response.message);
+        let mapWrapper = pickup.querySelector(this.config.selectors.pickup_map);
+        let pointsWrapper = pickup.querySelector(this.config.selectors.pickup_points);
+        if(!mapWrapper || !pointsWrapper)
             return;
-        }
-        console.log(response);
-        // let mapWrapper = pickup.querySelector(this.config.selectors.pickup_map);
-        // let points = pickup.querySelectorAll(this.config.selectors.pickup_point);
-        // if(!mapWrapper || !points)
-        //     return;
-        //
-        // ymaps.ready(()=>{
-        //     let map = new ymaps.Map(mapWrapper, {
-        //         center: center,
-        //         zoom: 11,
-        //         controls: []
-        //     });
-        //     points.forEach(async point=>{
-        //         let cords = point.getAttribute(this.config.selectors.pickup_point.replaceAll(/[\[\]]/g,"")).split(",").reverse();
-        //         let placemark = new ymaps.Placemark(cords);
-        //         point.addEventListener("click",e=>{
-        //             map.setCenter(cords,16);
-        //         })
-        //         placemark.events.add('click', function(event) {
-        //             let input = point.querySelector(`input[name=point]`);
-        //             input.checked = true;
-        //             input.dispatchEvent(new Event("change",{bubbles:true}));
-        //             point.scrollIntoView();
-        //             map.setCenter(cords,16);
-        //         });
-        //         map.geoObjects.add(placemark);
-        //     })
-        //     map.events.add(["actiontickcomplete","wheel"],event=>{
-        //         setTimeout(async ()=>{
-        //             points.forEach(point=>{
-        //                 let cords = point.getAttribute(this.config.selectors.pickup_point.replaceAll(/[\[\]]/g,"")).split(",").reverse();
-        //                 if(ymaps.util.bounds.containsPoint(map.getBounds(),cords))
-        //                     point.style.display = "";
-        //                 else
-        //                     point.style.display = "none";
-        //             })
-        //         },250)
-        //     })
-        //     pickup.closest(`.auten-modal`)?.addEventListener("modal-open",e=>{
-        //         let activePoint = pickup.querySelector(this.config.selectors.pickup_point+`.active`);
-        //         if(activePoint){
-        //             let cords = activePoint.getAttribute(this.config.selectors.pickup_point.replaceAll(/[\[\]]/g,"")).split(",").reverse();
-        //             activePoint.scrollIntoView();
-        //             map.setCenter(cords,16);
-        //         }
-        //     });
-        // })
+        let response = await this.action("getPickupPoints",{delivery_id:deliveryId});
+        if(!response.success)
+            return;
+        let points = response.data.points;
+        let activePoint = response.data.active;
+        ymaps.ready(()=>{
+            let center = [points[0].location.latitude,points[0].location.longitude];
+            let map = new ymaps.Map(mapWrapper, {
+                center:center,
+                zoom: 11,
+                controls: []
+            });
+            pickup.addEventListener("mscalcdelivery-pickup-open",e=>{
+                map.container.fitToViewport();
+            });
+            points.forEach((point,index,array)=>{
+                let cords = [point.location.latitude,point.location.longitude];
+                let pointElement = pointsWrapper.appendChild(this.getPickupPoint(point));
+                let pointInput = pointElement.querySelector(`input[type=radio][name=point]`);
+                let placemark = new ymaps.Placemark(cords);
+                pointElement.addEventListener("radio-active",e=>{
+                    map.setCenter(cords,16);
+                })
+                placemark.events.add('click', function(event) {
+                    pointInput.checked = true;
+                    pointInput.dispatchEvent(new Event("change",{bubbles:true}));
+                    pointElement.scrollIntoView();
+                    map.setCenter(cords,16);
+                });
+                map.geoObjects.add(placemark);
+                if(activePoint === point.code){
+                    pointInput.checked = true;
+                    pointInput.dispatchEvent(new Event("change",{bubbles:true}));
+                    pointElement.scrollIntoView();
+                    map.setCenter(cords,16);
+                }
+                if(array.length - 1 === index)
+                    map.container.fitToViewport();
+            })
+            map.events.add(["actiontickcomplete","wheel"],event=>{
+                setTimeout(async ()=>{
+                    points.forEach(point=>{
+                        let cords = [point.location.latitude,point.location.longitude];
+                        let pointElement = pointsWrapper.querySelector(`input[name=point][value="${point.code}"]`).closest(`.input-parent`)
+                        if(ymaps.util.bounds.containsPoint(map.getBounds(),cords))
+                            pointElement.style.display = "";
+                        else
+                            pointElement.style.display = "none";
+                    })
+                },250)
+            })
+        })
     }
 }
