@@ -105,7 +105,7 @@ export default class MsOrder {
             if (response.data) {
                 for (let key in response.data) {
                     let value = response.data[key];
-                    document.querySelectorAll(`input[name=${key}]:not([type=radio])`).forEach(input => {
+                    document.querySelectorAll(`input[name=${key}]:not([type=radio],:focus)`).forEach(input => {
                         input.value = value;
                         input.classList.remove('has-error');
                         input.closest(this.inputParent).classList.remove('has-error');
