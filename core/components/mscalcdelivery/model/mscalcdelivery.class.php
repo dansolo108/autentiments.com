@@ -6,7 +6,7 @@ class msCalcDelivery
     public $modx;
     /** @var pdoFetch $pdoTools */
     public $pdoTools;
-    public string $version = "1.0.0";
+    public string $version = "1.0.1";
 
     public array $config = [];
     public string $settings_prefix = "mscalcdelivery_";
