@@ -576,7 +576,7 @@
     <script src="{'/assets/tpl/js/my_swiper.js' | version}" async></script>
     <script src="{'/assets/tpl/js/script.js' | version}" defer></script>
     <script src="{'/assets/tpl/js/modx.js' | version}" defer></script>
-    <script src="{'/assets/js/script.js ' | version}" async></script>
+    <script src="{'/assets/js/script.js' | version}" async></script>
 {/block}
 {include 'modals'}
 </body>
