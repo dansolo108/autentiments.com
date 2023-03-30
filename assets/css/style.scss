@@ -79,11 +79,12 @@ body {
     gap: 50px;
     position: relative;
     transition: gap .3s ease;
-
+    padding-top: 60px;
     @media (max-width: 1023px) {
       margin-bottom: 0;
       flex-direction: column;
       gap:0px;
+      padding-top: 0;
     }
   }
 
