@@ -176,7 +176,6 @@ class msProductFileUploadProcessor extends modObjectProcessor
     public function handleFile()
     {
         $tf = tempnam(MODX_BASE_PATH, 'ms_');
-        $this->modx->log(1, var_export(ini_get("upload_tmp_dir"), 1));
         if (!empty($_FILES['file']) && is_uploaded_file($_FILES['file']['tmp_name'])) {
             $name = $_FILES['file']['name'];
             move_uploaded_file($_FILES['file']['tmp_name'], $tf);
