@@ -154,7 +154,7 @@ class msProductFileUploadProcessor extends modObjectProcessor
                 $this->modx->log(
                     modX::LOG_LEVEL_ERROR,
                     '[miniShop2] Could not generate thumbnails for image with id = ' . $uploaded_file->get('id') .
-                        '. ' . $generate
+                    '. ' . $generate
                 );
 
                 return $this->failure($this->modx->lexicon('ms2_err_gallery_thumb'));
@@ -176,7 +176,8 @@ class msProductFileUploadProcessor extends modObjectProcessor
     public function handleFile()
     {
         $tf = tempnam(MODX_BASE_PATH, 'ms_');
-
+        $this->modx->log(1, var_export(!empty($_FILES['file']), 1));
+        $this->modx->log(1, var_export(is_uploaded_file($_FILES['file']['tmp_name']), 1));
         if (!empty($_FILES['file']) && is_uploaded_file($_FILES['file']['tmp_name'])) {
             $name = $_FILES['file']['name'];
             move_uploaded_file($_FILES['file']['tmp_name'], $tf);
@@ -198,9 +199,9 @@ class msProductFileUploadProcessor extends modObjectProcessor
         }
 
         clearstatcache(true, $tf);
-        $this->modx->log(1,var_export(file_exists($tf),1));
-        $this->modx->log(1,var_export(!empty($name),1));
-        $this->modx->log(1,var_export(filesize($tf),1));
+        $this->modx->log(1, var_export(file_exists($tf), 1));
+        $this->modx->log(1, var_export($name, 1));
+        $this->modx->log(1, var_export(filesize($tf), 1));
         if (file_exists($tf) && !empty($name) && $size = filesize($tf)) {
             $hash = ($o = $this->modx->newObject($this->classKey)) ? $o->generateHash($tf) : '';
             $data = array(
