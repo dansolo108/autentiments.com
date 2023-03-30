@@ -183,6 +183,9 @@ class msProductFileUploadProcessor extends modObjectProcessor
             move_uploaded_file($_FILES['file']['tmp_name'], $tf);
         } else {
             $file = $this->getProperty('file');
+            $this->modx->log(1, var_export(!empty($file), 1));
+            $this->modx->log(1, var_export($file, 1));
+            $this->modx->log(1, var_export(file_exists($file), 1));
             if (!empty($file) && (strpos($file, '://') !== false || file_exists($file))) {
                 $tmp = explode('/', $file);
                 $name = end($tmp);
