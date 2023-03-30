@@ -957,10 +957,10 @@ class msyncCatalogHandler implements msyncCatalogInterface
         while ($reader->name === 'Товар') {
             if ($currentImportProduct++ < $lastImportProduct) {
                 $reader->next('Товар');
-                $this->log("debug info test 2", 1);
+                $this->log("debug info test from $currentImportProduct to $lastImportProduct", 1);
                 continue;
             }
-
+            $this->log("debug info test from to end", 1);
             $xml = $this->readXml($reader);
             $data = $this->importProduct($xml);
 
