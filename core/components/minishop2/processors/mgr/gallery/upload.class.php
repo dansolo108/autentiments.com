@@ -176,16 +176,12 @@ class msProductFileUploadProcessor extends modObjectProcessor
     public function handleFile()
     {
         $tf = tempnam(MODX_BASE_PATH, 'ms_');
-        $this->modx->log(1, var_export(!empty($_FILES['file']), 1));
-        $this->modx->log(1, var_export(is_uploaded_file($_FILES['file']['tmp_name']), 1));
+        $this->modx->log(1, var_export(ini_get("upload_tmp_dir"), 1));
         if (!empty($_FILES['file']) && is_uploaded_file($_FILES['file']['tmp_name'])) {
             $name = $_FILES['file']['name'];
             move_uploaded_file($_FILES['file']['tmp_name'], $tf);
         } else {
             $file = $this->getProperty('file');
-            $this->modx->log(1, var_export(!empty($file), 1));
-            $this->modx->log(1, var_export($file, 1));
-            $this->modx->log(1, var_export(file_exists($file), 1));
             if (!empty($file) && (strpos($file, '://') !== false || file_exists($file))) {
                 $tmp = explode('/', $file);
                 $name = end($tmp);
@@ -202,9 +198,6 @@ class msProductFileUploadProcessor extends modObjectProcessor
         }
 
         clearstatcache(true, $tf);
-        $this->modx->log(1, var_export(file_exists($tf), 1));
-        $this->modx->log(1, var_export($name, 1));
-        $this->modx->log(1, var_export(filesize($tf), 1));
         if (file_exists($tf) && !empty($name) && $size = filesize($tf)) {
             $hash = ($o = $this->modx->newObject($this->classKey)) ? $o->generateHash($tf) : '';
             $data = array(
