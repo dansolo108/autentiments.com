@@ -1102,7 +1102,7 @@ class msyncCatalogHandler implements msyncCatalogInterface
         $this->log("debug info product 5.2", 1);
         $prod['status'] = $this->stringXml($xml->Статус);
         $this->log("debug info product 5.3", 1);
-        $this->log(var_export($prod,1), 1);
+        $this->log(var_export($xml,1), 1);
         $this->log(var_export($xml->attributes(),1), 1);
         if (empty($prod['status']) && isset($xml->attributes()->Статус)) {
             $this->log("debug info product 5.4", 1);
