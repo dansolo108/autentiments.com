@@ -224,9 +224,7 @@ class msyncCatalogHandler implements msyncCatalogInterface
         $filename = $this->config['temp_dir'] . $filename;
 
         mkdir(dirname($filename), 0777, true);
-        $f = fopen($filename, 'ab');
-        fwrite($f, $file);
-        fclose($f);
+        file_put_contents($filename,$file);
 
         $this->log("Файл {$filename} успешно загружен.", 1);
         $_SESSION['importFileCount']++;
