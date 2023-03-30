@@ -963,6 +963,7 @@ class msyncCatalogHandler implements msyncCatalogInterface
             $this->log("debug info test from to end", 1);
             $xml = $this->readXml($reader);
             $this->log(var_export($reader->readOuterXML(),1), 1);
+            $this->log(var_export($xml,1), 1);
             $data = $this->importProduct($xml);
 
             $this->log("Вызвано событие mSyncOnBeforeImportProduct", 1);
@@ -1036,11 +1037,9 @@ class msyncCatalogHandler implements msyncCatalogInterface
     protected function importProduct($xml)
     {
         $prod = array();
-        $this->log("debug info product start", 1);
 
         $prod['name'] = $this->stringXml($xml->Наименование);
         $prod['description'] = $this->stringXml($xml->Описание);
-        $this->log("debug info product 1", 1);
         //standart properties
         $prod['article'] = $this->stringXml($xml->Артикул);
         $prod['manufacturer'] = trim($this->stringXml($xml->Изготовитель));
@@ -1048,7 +1047,6 @@ class msyncCatalogHandler implements msyncCatalogInterface
             ? trim($this->stringXml($xml->Изготовитель->Наименование))
             : $prod['manufacturer'];
         $prod['bar_code'] = $this->stringXml($xml->Штрихкод);
-        $this->log("debug info product 2", 1);
 
         //additional properties
         $prod['properties'] = array();
@@ -1075,7 +1073,6 @@ class msyncCatalogHandler implements msyncCatalogInterface
                 $this->AddProperty($xml_property, $prod['properties']);
             }
         }
-        $this->log("debug info product 3", 1);
 
         $array = (array)$xml;
         if (!isset($array["Картинка"])) {
@@ -1084,7 +1081,6 @@ class msyncCatalogHandler implements msyncCatalogInterface
         if (!isset($array["ХарактеристикиТовара"])) {
             $array["ХарактеристикиТовара"] = array();
         }
-        $this->log("debug info product 4", 1);
 
         $prod['characteristics'] = array(
             'properties' => $prod['properties'],
@@ -1094,21 +1090,13 @@ class msyncCatalogHandler implements msyncCatalogInterface
         $prod['images'] = $this->jsonXml($array["Картинка"]);
         $prod['features'] = $this->jsonXml($array["ХарактеристикиТовара"]);
 
-        $this->log("debug info product 5", 1);
 
         $prod['uuid'] = $this->stringXml($xml->Ид);
-        $this->log("debug info product 5.1", 1);
         $prod['parent_uuid'] = $this->config['no_categories'] ? 0 : $this->stringXml($xml->Группы->Ид);
-        $this->log("debug info product 5.2", 1);
         $prod['status'] = $this->stringXml($xml->Статус);
-        $this->log("debug info product 5.3", 1);
-        $this->log(var_export($xml,1), 1);
-        $this->log(var_export($xml->attributes(),1), 1);
         if (empty($prod['status']) && isset($xml->attributes()->Статус)) {
-            $this->log("debug info product 5.4", 1);
             $prod['status'] = $this->stringXml($xml->attributes()->Статус);
         }
-        $this->log("debug info product end", 1);
 
         return $prod;
     }
