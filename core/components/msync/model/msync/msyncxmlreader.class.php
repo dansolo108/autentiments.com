@@ -39,11 +39,8 @@ class mSyncXmlReader
      */
     public function readXml($reader)
     {
-        $outerXml = $reader->readOuterXML();
         $this->msync->log(var_export($reader->readOuterXML(),1), 1);
-        $this->msync->log(var_export($outerXml,1), 1);
-        $this->msync->log(var_export($outerXml ? new SimpleXMLElement($outerXml) : null,1), 1);
-        return $outerXml ? new SimpleXMLElement($outerXml) : null;
+        return new SimpleXMLElement($reader->readOuterXML());
     }
 
     /**
