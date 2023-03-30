@@ -198,6 +198,9 @@ class msProductFileUploadProcessor extends modObjectProcessor
         }
 
         clearstatcache(true, $tf);
+        $this->modx->log(1,var_export(file_exists($tf),1));
+        $this->modx->log(1,var_export(!empty($name),1));
+        $this->modx->log(1,var_export(filesize($tf),1));
         if (file_exists($tf) && !empty($name) && $size = filesize($tf)) {
             $hash = ($o = $this->modx->newObject($this->classKey)) ? $o->generateHash($tf) : '';
             $data = array(
