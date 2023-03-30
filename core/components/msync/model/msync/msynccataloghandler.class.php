@@ -962,6 +962,7 @@ class msyncCatalogHandler implements msyncCatalogInterface
             }
             $this->log("debug info test from to end", 1);
             $xml = $this->readXml($reader);
+            $this->log(var_export($reader->readOuterXML(),1), 1);
             $data = $this->importProduct($xml);
 
             $this->log("Вызвано событие mSyncOnBeforeImportProduct", 1);
