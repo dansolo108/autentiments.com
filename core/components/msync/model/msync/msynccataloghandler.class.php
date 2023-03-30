@@ -946,8 +946,9 @@ class msyncCatalogHandler implements msyncCatalogInterface
             $this->modx->exec("TRUNCATE TABLE {$this->modx->getTableName('mSyncProductTemp')}");
             $this->log("Очищена временная таблица товаров в БД", 1);
         }
-
+        $this->log("debug info test 1", 1);
         $reader = $this->getXmlReader($filename, 'Товар');
+        $this->log("debug info test 2", 1);
 
         // Номер текущего товара
         $currentImportProduct = 0;
@@ -956,6 +957,7 @@ class msyncCatalogHandler implements msyncCatalogInterface
         while ($reader->name === 'Товар') {
             if ($currentImportProduct++ < $lastImportProduct) {
                 $reader->next('Товар');
+                $this->log("debug info test 2", 1);
                 continue;
             }
 

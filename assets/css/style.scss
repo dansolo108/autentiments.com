@@ -893,9 +893,9 @@ body {
     }
     &__pickup{
       grid-area: pickup;
-      height: 100%;
       width: fit-content;
       justify-self: end;
+      align-self: center;
       opacity: 0;
       pointer-events: none;
       transition: all .3s ease;
