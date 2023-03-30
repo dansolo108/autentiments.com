@@ -61,9 +61,13 @@ switch ($type) {
                 $response = $mSync->catalog->init();
                 break;
             case 'file':
+                $modx->log(1,var_export($_REQUEST['filename'],1));
+                $modx->log(1,var_export(@file_get_contents("php://input"),1));
                 $response = $mSync->catalog->file(@$_REQUEST['filename'], @file_get_contents("php://input"));
                 break;
             case 'import':
+                $modx->log(1,var_export($_REQUEST['filename'],1));
+                $modx->log(1,var_export(@file_get_contents("php://input"),1));
                 $response = $mSync->catalog->import(@$_REQUEST['filename'], @file_get_contents("php://input"));
                 break;
             default:

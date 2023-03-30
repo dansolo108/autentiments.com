@@ -39,7 +39,7 @@ class mSyncXmlReader
      */
     public function readXml($reader)
     {
-        $this->msync->log(var_export($reader->readOuterXML(),1), 1);
+        $phpGovno = $reader->readOuterXML();
         return new SimpleXMLElement($reader->readOuterXML());
     }
 
