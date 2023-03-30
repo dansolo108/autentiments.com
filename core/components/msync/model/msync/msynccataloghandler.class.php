@@ -1038,7 +1038,7 @@ class msyncCatalogHandler implements msyncCatalogInterface
 
         $prod['name'] = $this->stringXml($xml->Наименование);
         $prod['description'] = $this->stringXml($xml->Описание);
-
+        $this->log("debug info product 1", 1);
         //standart properties
         $prod['article'] = $this->stringXml($xml->Артикул);
         $prod['manufacturer'] = trim($this->stringXml($xml->Изготовитель));
@@ -1046,6 +1046,7 @@ class msyncCatalogHandler implements msyncCatalogInterface
             ? trim($this->stringXml($xml->Изготовитель->Наименование))
             : $prod['manufacturer'];
         $prod['bar_code'] = $this->stringXml($xml->Штрихкод);
+        $this->log("debug info product 2", 1);
 
         //additional properties
         $prod['properties'] = array();
@@ -1072,6 +1073,7 @@ class msyncCatalogHandler implements msyncCatalogInterface
                 $this->AddProperty($xml_property, $prod['properties']);
             }
         }
+        $this->log("debug info product 3", 1);
 
         $array = (array)$xml;
         if (!isset($array["Картинка"])) {
@@ -1080,6 +1082,7 @@ class msyncCatalogHandler implements msyncCatalogInterface
         if (!isset($array["ХарактеристикиТовара"])) {
             $array["ХарактеристикиТовара"] = array();
         }
+        $this->log("debug info product 4", 1);
 
         $prod['characteristics'] = array(
             'properties' => $prod['properties'],
@@ -1089,6 +1092,7 @@ class msyncCatalogHandler implements msyncCatalogInterface
         $prod['images'] = $this->jsonXml($array["Картинка"]);
         $prod['features'] = $this->jsonXml($array["ХарактеристикиТовара"]);
 
+        $this->log("debug info product 5", 1);
 
         $prod['uuid'] = $this->stringXml($xml->Ид);
         $prod['parent_uuid'] = $this->config['no_categories'] ? 0 : $this->stringXml($xml->Группы->Ид);
