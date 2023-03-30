@@ -1035,6 +1035,7 @@ class msyncCatalogHandler implements msyncCatalogInterface
     protected function importProduct($xml)
     {
         $prod = array();
+        $this->log("debug info product start", 1);
 
         $prod['name'] = $this->stringXml($xml->Наименование);
         $prod['description'] = $this->stringXml($xml->Описание);
@@ -1100,6 +1101,7 @@ class msyncCatalogHandler implements msyncCatalogInterface
         if (empty($prod['status']) && isset($xml->attributes()->Статус)) {
             $prod['status'] = $this->stringXml($xml->attributes()->Статус);
         }
+        $this->log("debug info product end", 1);
 
         return $prod;
     }
