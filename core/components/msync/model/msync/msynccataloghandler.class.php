@@ -1096,9 +1096,13 @@ class msyncCatalogHandler implements msyncCatalogInterface
         $this->log("debug info product 5", 1);
 
         $prod['uuid'] = $this->stringXml($xml->Ид);
+        $this->log("debug info product 5.1", 1);
         $prod['parent_uuid'] = $this->config['no_categories'] ? 0 : $this->stringXml($xml->Группы->Ид);
+        $this->log("debug info product 5.2", 1);
         $prod['status'] = $this->stringXml($xml->Статус);
+        $this->log("debug info product 5.3", 1);
         if (empty($prod['status']) && isset($xml->attributes()->Статус)) {
+            $this->log("debug info product 5.5", 1);
             $prod['status'] = $this->stringXml($xml->attributes()->Статус);
         }
         $this->log("debug info product end", 1);
