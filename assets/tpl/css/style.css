@@ -4715,17 +4715,22 @@ form.ajax_form span.error {
 
 .au-filter__slider-range {
   position: absolute;
-  top: 0;
+  /* top: 0;
   left: 0;
-  right: 0;
+  right: 0; */
+  top: 18px;
+  left: 14px;
+  right: 14px;
 }
 .au-filter__slider-range.ui-widget.ui-widget-content {
   border: none;
 }
 
 .au-filter__slider {
-  width: calc(100% - 10px);
-  height: 3px;
+  /* width: calc(100% - 10px); */
+  width: calc(100% - 28px);
+  /* height: 3px; */
+  height: 1px;
   margin: 0 5px;
   background: #cccccc;
   border-radius: 5px;
@@ -4738,9 +4743,11 @@ form.ajax_form span.error {
 
 .au-filter__handle.ui-state-default {
   display: block;
-  width: 14px;
+  /* width: 14px;
   height: 14px;
-  border-radius: 50%;
+  border-radius: 50%; */
+  width: 6px;
+  height: 11px;
   background: #1a1714;
   border: 1px solid #ffffff;
 }
