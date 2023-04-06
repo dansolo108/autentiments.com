@@ -4701,7 +4701,7 @@ form.ajax_form span.error {
 }
 
 .au-filter__range-box {
-  min-width: 200px;
+  min-width: 200px !important;
   height: 63px;
   padding: 14px;
   position: relative;
