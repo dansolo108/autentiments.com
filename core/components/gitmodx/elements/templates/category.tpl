@@ -36,4 +36,11 @@
             {/ignore}
         });
     </script>
+
+{'
+<script>
+    console.log("test")
+</script>
+' | jsToBottom : true}
+
 {/block}
