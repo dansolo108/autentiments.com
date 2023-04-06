@@ -4783,8 +4783,13 @@ label.au-filter__cost:last-child input {
   bottom: -8px;
   left: -14px;
   z-index: 1;
-  opacity: 0;
   transform: translateY(100%);
+  transition: opacity .3s ease-in-out;
+}
+
+.au-filter__col:not(.actived) .au-filter__title + * {
+  opacity: 0;
+  z-index: -1;
   pointer-events: none;
 }
 

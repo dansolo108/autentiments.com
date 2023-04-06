@@ -39,7 +39,13 @@
 
 {'
 <script>
-    console.log("test")
+    const filters = document.getElementById("mse2_filters")
+    filters.addEventListener("click", (e) => {
+        const target = e.target
+        if (!target.matches(".au-filter__title")) return
+        let parent = target.parentNode
+        parent.classList.toggle("actived")
+    }, false)
 </script>
 ' | jsToBottom : true}
 
