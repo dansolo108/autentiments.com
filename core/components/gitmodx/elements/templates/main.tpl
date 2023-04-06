@@ -22,10 +22,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
     <meta name="format-detection" content="telephone=no">
-    <title>{$_modx->resource.longtitle ? $_modx->resource.longtitle: $_modx->resource.pagetitle}</title>
-    <meta name="description"
-          content="{$_modx->resource.og_description ? $_modx->resource.og_description: $_modx->resource.description}"
-    " />
+    <title>{$_modx->resource.longtitle ?: $_modx->resource.pagetitle}</title>
+    <meta name="description" content="{$_modx->resource.og_description ?: $_modx->resource.description}"/>
     <base href="{$_modx->config.site_url}">
     {'!PolylangCanonical' | snippet : [
     'tpl' => '@INLINE <link  rel="alternate" hreflang="{if $lang == "en"}en-us{else}{$lang}{/if}" href="{$url}"/>'
@@ -57,19 +55,19 @@
     <link rel="preload" href="/assets/tpl/fonts/Circe-Regular.woff2" as="font" crossorigin="">
     <link rel="preload" href="/assets/tpl/fonts/Circe-Light.woff2" as="font" crossorigin="">
     {block "styles"}
-        <link rel="stylesheet" href="{'/assets/tpl/css/jquery-ui.css' | version}">
-        <link rel="stylesheet" href="{'/assets/tpl/css/swiper-bundle.css' | version}">
-        <link rel="stylesheet" href="{'/assets/tpl/css/datepicker.css' | version}">
-        <link rel="stylesheet" href="{'/assets/components/minishop2/css/web/lib/jquery.jgrowl.min.css' | version}">
-        <link rel="stylesheet" href="{'/assets/tpl/css/intlTelInput.min.css' | version}">
-        <link rel="stylesheet" href="{'/assets/tpl/css/style.css' | version}">
+        <link rel="stylesheet" href="/assets/tpl/css/jquery-ui.css">
+        <link rel="stylesheet" href="/assets/tpl/css/swiper-bundle.css">
+        <link rel="stylesheet" href="/assets/tpl/css/datepicker.css">
+        <link rel="stylesheet" href="/assets/components/minishop2/css/web/lib/jquery.jgrowl.min.css">
+        <link rel="stylesheet" href="/assets/tpl/css/intlTelInput.min.css">
+        <link rel="stylesheet" href="/assets/tpl/css/style.css">
     {/block}
 
     <link rel="icon" href="/assets/tpl/favicon/favicon.ico">
     <link rel="icon" href="/assets/tpl/favicon/icon.svg" type="image/svg+xml">
     <link rel="apple-touch-icon" href="/assets/tpl/favicon/apple-touch-icon.png">
     <link rel="manifest" href="/assets/tpl/favicon/manifest.json">
-    <script src="{'/assets/tpl/js/vendor/jquery-3.6.0.min.js' | version}"></script>
+    <script src="/assets/tpl/js/vendor/jquery-3.6.0.min.js"></script>
     <!-- Global site tag (gtag.js) - Google Analytics -->
     {ignore}
         <script>
@@ -171,10 +169,8 @@
 </script>
 <!-- END WHATSAPP INTEGRATION WITH ROISTAT -->
 <script>
-
     //(function(a,m,o,c,r,m) { a[m]= { id:"186111",hash:"d0802b42752e87dd4c003ffa54348e41f2eb084a414f31afceaa978207b8488d",locale:"ru",inline:true,setMeta:function(p){ this.params=(this.params||[]).concat([p])}};a[o]=a[o]||function(){ (a[o].q=a[o].q||[]).push(arguments)};var d=a.document,s=d.createElement('script');s.async=true;s.id=m+'_script';s.src='https://gso.amocrm.ru/js/button.js?1657957902';d.head&&d.head.appendChild(s)}(window,0,'amoSocialButton',0,0,'amo_social_button'));
 </script>
-
 <!--ROISTAT CODE END -->
 <script>
     (function (a, m, o, c, r, m) {
@@ -323,9 +319,9 @@
                     {/if}
                     <a class="au-header__btn au-header__btn_favorite msfavorites msfavorites-total-all visible"
                        href="{14|url}" aria-label="Избранное">
-                        <svg width="20" height="19" viewBox="0 0 20 19" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M9.6631 0.0736485C9.54545 0.110836 9.39572 0.201153 9.32086 0.270218C9.24599 0.339285 8.60963 1.55059 7.8877 3.00627C6.88235 5.02511 6.55615 5.63608 6.45989 5.67858C6.39572 5.70514 5.14439 5.8964 3.68984 6.10359C2.23529 6.31079 0.935829 6.50205 0.802139 6.53393C0.358289 6.63487 0.00534759 7.04395 0 7.45303C0 7.89398 0.026738 7.92586 2.25668 10.0988C3.90374 11.7085 4.38503 12.2026 4.38503 12.3035C4.38503 12.3726 4.16578 13.6955 3.8984 15.2362C3.35294 18.4026 3.35829 18.3122 3.74332 18.6948C3.97861 18.9285 4.30481 19.0401 4.59358 18.987C4.70053 18.9657 5.94652 18.3441 7.36898 17.6003C8.7861 16.8566 9.97326 16.2509 10.0053 16.2509C10.0321 16.2509 11.2193 16.8566 12.6364 17.6003C14.0535 18.3441 15.2995 18.9657 15.4064 18.987C15.6952 19.0401 16.0214 18.9285 16.2567 18.6948C16.6417 18.3122 16.6471 18.4026 16.1016 15.2415C15.8342 13.7008 15.615 12.3779 15.615 12.3089C15.615 12.2026 16.0535 11.7457 17.7112 10.136C19.8663 8.03743 20 7.88336 20 7.4849C20 7.1077 19.6952 6.68799 19.3369 6.56049C19.246 6.52861 15.6578 5.99734 14.0909 5.78483C13.8556 5.75295 13.6043 5.69983 13.5401 5.67326C13.4385 5.63608 13.123 5.03574 12.1123 3.00627C10.738 0.238342 10.6952 0.163963 10.2781 0.0470848C10.0214 -0.0219822 9.91444 -0.0166683 9.6631 0.0736485ZM10.123 0.801491C10.1711 0.83868 10.7807 2.00748 11.4706 3.3941C12.1604 4.78073 12.7861 5.99734 12.861 6.08766C12.9358 6.18329 13.0695 6.30017 13.1497 6.34267C13.2353 6.38517 14.1444 6.53924 15.1658 6.68799C16.1925 6.83675 17.4973 7.0227 18.0642 7.1077C19.1872 7.26708 19.3155 7.32021 19.2193 7.55928C19.1925 7.62835 18.2299 8.59527 17.0749 9.71094C15.6952 11.0497 14.9626 11.7935 14.9251 11.9051C14.893 11.9954 14.8663 12.1654 14.8663 12.2876C14.8663 12.4098 15.0802 13.7486 15.3422 15.2681C15.6631 17.1009 15.8021 18.0572 15.7754 18.1157C15.6898 18.2644 15.5562 18.2804 15.3262 18.1582C15.2032 18.0997 14.0267 17.4835 12.7005 16.7928C10.4064 15.5921 10.2781 15.5337 10 15.5337C9.72193 15.5337 9.59358 15.5921 7.40642 16.7344C4.31016 18.3547 4.46524 18.2751 4.36364 18.2379C4.31551 18.2219 4.25134 18.1635 4.2246 18.1157C4.19251 18.0519 4.33155 17.1275 4.65775 15.2627C4.91979 13.7486 5.13369 12.4098 5.13369 12.2876C5.13369 12.1654 5.10695 11.9954 5.07487 11.9051C5.03743 11.7935 4.31551 11.0551 2.92513 9.71094C1.77005 8.59527 0.807487 7.62835 0.780749 7.55928C0.679144 7.3149 0.802139 7.2724 2.14973 7.07582C2.83422 6.9802 4.13904 6.78894 5.04813 6.65612C5.95187 6.52861 6.76471 6.38517 6.85027 6.34267C6.93048 6.29485 7.06417 6.18329 7.13904 6.08766C7.2139 5.99734 7.83957 4.78604 8.52406 3.40473C9.2139 2.02342 9.80749 0.859932 9.83957 0.81743C9.91979 0.7218 10.0053 0.716488 10.123 0.801491Z" fill="black"/>
-                        </svg>
+                       <svg width="20" height="19" viewBox="0 0 20 19" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M9.6631 0.0736485C9.54545 0.110836 9.39572 0.201153 9.32086 0.270218C9.24599 0.339285 8.60963 1.55059 7.8877 3.00627C6.88235 5.02511 6.55615 5.63608 6.45989 5.67858C6.39572 5.70514 5.14439 5.8964 3.68984 6.10359C2.23529 6.31079 0.935829 6.50205 0.802139 6.53393C0.358289 6.63487 0.00534759 7.04395 0 7.45303C0 7.89398 0.026738 7.92586 2.25668 10.0988C3.90374 11.7085 4.38503 12.2026 4.38503 12.3035C4.38503 12.3726 4.16578 13.6955 3.8984 15.2362C3.35294 18.4026 3.35829 18.3122 3.74332 18.6948C3.97861 18.9285 4.30481 19.0401 4.59358 18.987C4.70053 18.9657 5.94652 18.3441 7.36898 17.6003C8.7861 16.8566 9.97326 16.2509 10.0053 16.2509C10.0321 16.2509 11.2193 16.8566 12.6364 17.6003C14.0535 18.3441 15.2995 18.9657 15.4064 18.987C15.6952 19.0401 16.0214 18.9285 16.2567 18.6948C16.6417 18.3122 16.6471 18.4026 16.1016 15.2415C15.8342 13.7008 15.615 12.3779 15.615 12.3089C15.615 12.2026 16.0535 11.7457 17.7112 10.136C19.8663 8.03743 20 7.88336 20 7.4849C20 7.1077 19.6952 6.68799 19.3369 6.56049C19.246 6.52861 15.6578 5.99734 14.0909 5.78483C13.8556 5.75295 13.6043 5.69983 13.5401 5.67326C13.4385 5.63608 13.123 5.03574 12.1123 3.00627C10.738 0.238342 10.6952 0.163963 10.2781 0.0470848C10.0214 -0.0219822 9.91444 -0.0166683 9.6631 0.0736485ZM10.123 0.801491C10.1711 0.83868 10.7807 2.00748 11.4706 3.3941C12.1604 4.78073 12.7861 5.99734 12.861 6.08766C12.9358 6.18329 13.0695 6.30017 13.1497 6.34267C13.2353 6.38517 14.1444 6.53924 15.1658 6.68799C16.1925 6.83675 17.4973 7.0227 18.0642 7.1077C19.1872 7.26708 19.3155 7.32021 19.2193 7.55928C19.1925 7.62835 18.2299 8.59527 17.0749 9.71094C15.6952 11.0497 14.9626 11.7935 14.9251 11.9051C14.893 11.9954 14.8663 12.1654 14.8663 12.2876C14.8663 12.4098 15.0802 13.7486 15.3422 15.2681C15.6631 17.1009 15.8021 18.0572 15.7754 18.1157C15.6898 18.2644 15.5562 18.2804 15.3262 18.1582C15.2032 18.0997 14.0267 17.4835 12.7005 16.7928C10.4064 15.5921 10.2781 15.5337 10 15.5337C9.72193 15.5337 9.59358 15.5921 7.40642 16.7344C4.31016 18.3547 4.46524 18.2751 4.36364 18.2379C4.31551 18.2219 4.25134 18.1635 4.2246 18.1157C4.19251 18.0519 4.33155 17.1275 4.65775 15.2627C4.91979 13.7486 5.13369 12.4098 5.13369 12.2876C5.13369 12.1654 5.10695 11.9954 5.07487 11.9051C5.03743 11.7935 4.31551 11.0551 2.92513 9.71094C1.77005 8.59527 0.807487 7.62835 0.780749 7.55928C0.679144 7.3149 0.802139 7.2724 2.14973 7.07582C2.83422 6.9802 4.13904 6.78894 5.04813 6.65612C5.95187 6.52861 6.76471 6.38517 6.85027 6.34267C6.93048 6.29485 7.06417 6.18329 7.13904 6.08766C7.2139 5.99734 7.83957 4.78604 8.52406 3.40473C9.2139 2.02342 9.80749 0.859932 9.83957 0.81743C9.91979 0.7218 10.0053 0.716488 10.123 0.801491Z" fill="#000"></path>
+                    </svg>
                         <span class="au-header__number  au-header__favorite-number msfavorites-total badge-count"
                               data-data-list="default" data-data-type="resource" data-value=""></span>
                     </a>
@@ -562,19 +558,19 @@
     </footer>
 {/block}
 {block "scripts"}
-    <script src="{'/assets/tpl/js/vendor/swiper-bundle.js' | version}"></script>
-    <script src="{'/assets/tpl/js/vendor/intl-tel-input/intlTelInput-jquery.min.js' | version}"></script>
-    <script src="{'/assets/tpl/js/vendor/jquery.cookie.js' | version}" async></script>
-    <script src="{'/assets/tpl/js/vendor/jquery-ui.min.js' | version}" async></script>
-    <script src="{'/assets/tpl/js/vendor/jquery.ui.touch-punch.min.js' | version}" async></script>
-    <script src="{'/assets/tpl/js/vendor/scrollreveal.min.js' | version}" async></script>
-    <script src="{'/assets/tpl/js/vendor/theia-sticky-sidebar.js' | version}" async></script>
-    <script src="{'/assets/tpl/js/vendor/datepicker.js' | version}" async></script>
-    <script src="{'/assets/tpl/js/my_scrollreveal.js' | version}" async></script>
-    <script src="{'/assets/tpl/js/my_swiper.js' | version}" async></script>
-    <script src="{'/assets/tpl/js/script.js' | version}" defer></script>
-    <script src="{'/assets/tpl/js/modx.js' | version}" defer></script>
-    <script src="{'/assets/js/script.js' | version}" async></script>
+    <script src="/assets/tpl/js/vendor/swiper-bundle.js"></script>
+    <script src="/assets/tpl/js/vendor/intl-tel-input/intlTelInput-jquery.min.js"></script>
+    <script src="/assets/tpl/js/vendor/jquery.cookie.js" async></script>
+    <script src="/assets/tpl/js/vendor/jquery-ui.min.js" async></script>
+    <script src="/assets/tpl/js/vendor/jquery.ui.touch-punch.min.js" async></script>
+    <script src="/assets/tpl/js/vendor/scrollreveal.min.js" async></script>
+    <script src="/assets/tpl/js/vendor/theia-sticky-sidebar.js" async></script>
+    <script src="/assets/tpl/js/vendor/datepicker.js" async></script>
+    <script src="/assets/tpl/js/my_scrollreveal.js" async></script>
+    <script src="/assets/tpl/js/my_swiper.js" async></script>
+    <script src="/assets/tpl/js/script.js" defer></script>
+    <script src="/assets/tpl/js/modx.js" defer></script>
+    <script src="/assets/js/script.js" async></script>
 {/block}
 {include 'modals'}
 </body>
