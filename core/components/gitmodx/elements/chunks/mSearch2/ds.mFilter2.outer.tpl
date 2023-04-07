@@ -10,8 +10,8 @@
             <h1 class="au-h1  au-category__title">{$_modx->resource.pagetitle}</h1>
             <div class="au-filters__content">
                 <a href="#au-filters">Фильтры</a>
-                <form action="{$_modx->resource.id | url}" method="post" id="mse2_filters" class="au-filters__form">
                     <nav id="au-filters">
+                        <form action="{$_modx->resource.id | url}" method="post" id="mse2_filters" class="au-filters__form"></form>
                         <ul class="au-filter__row">
                         {$filters}
                         <li class="au-filter__col  au-filter__col_sort">
@@ -34,8 +34,8 @@
                         </ul>
                         <button type="button">Показать товары</button>
                         <button type="reset" class="au-filters__reset" form="mse2_filters">{'stik_catalog_reset_button' | lexicon}</button>
+                    </form>
                     </nav>
-                </form>
             </div>
         </div>
         <div class="au-category__row">
