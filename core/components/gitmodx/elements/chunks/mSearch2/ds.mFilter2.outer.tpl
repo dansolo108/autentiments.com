@@ -32,8 +32,9 @@
                             </ul>
                         </li>
                         </ul>
+                        <button type="button">Показать товары</button>
+                        <button type="reset" class="au-filters__reset">{'stik_catalog_reset_button' | lexicon}</button>
                     </nav>
-                    <button type="reset" class="au-filters__reset">{'stik_catalog_reset_button' | lexicon}</button>
                 </form>
             </div>
         </div>
