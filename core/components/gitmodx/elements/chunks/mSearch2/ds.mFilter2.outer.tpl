@@ -16,11 +16,11 @@
                             {$filters}
                             <li class="au-filter__col  au-filter__col_sort">
                                 <span class="au-filter__title">Сортировка</span>
-                                <ul class="au-filter__sorts" id="mse2_sort">
+                                <div class="au-filter__sorts" id="mse2_sort">
                                     <a href="#" data-sort="msoption|new" data-dir="desc" data-default="desc" class="au-filter__label  au-filter__sort sort static-dir{if $sort == 'msoption|new:desc'} active{/if}">{'stik_catalog_sort_new' | lexicon}</a>
                                     <a href="#" data-sort="ms|price" data-dir="asc" data-default="asc" class="au-filter__label  au-filter__sort sort static-dir{if $sort == 'ms|price:asc'} active{/if}">{'stik_catalog_sort_cheap' | lexicon}</a>
                                     <a href="#" data-sort="ms|price" data-dir="desc" data-default="desc" class="au-filter__label  au-filter__sort sort static-dir{if $sort == 'ms|price:desc'} active{/if}">{'stik_catalog_sort_expensive' | lexicon}</a>
-                                </ul>
+                                </div>
                             </li>
                         </ul>
                         <button type="button">Показать товары</button>
