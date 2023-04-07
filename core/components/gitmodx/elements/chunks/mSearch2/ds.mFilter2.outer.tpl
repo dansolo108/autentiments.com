@@ -22,7 +22,7 @@
                                     <a href="javascript:void(0);" data-sort="price" data-dir="desc" data-default="desc" class="au-filter__label au-filter__sort sort static-dir{if $sort == 'price:desc'} active{/if}">{'stik_catalog_sort_expensive' | lexicon}</a> -->
                                     <button type="button" data-sort="price"
                                         data-dir="{if !$mse2_sort ?}desc{/if}"
-                                        data-default="desc" class="sort">price
+                                        data-default="desc" class="au-filter__label au-filter__sort sort static-dir">price
                                     </button>
                                 </div>
                             </li>
