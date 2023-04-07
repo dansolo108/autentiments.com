@@ -11,7 +11,7 @@
             <div class="au-filters__content">
                 <a href="#au-filters">Фильтры</a>
                     <nav id="au-filters">
-                        <form action="{$_modx->resource.id | url}" method="post" id="mse2_filters" class="au-filters__form"></form>
+                        <form action="{$_modx->resource.id | url}" method="post" id="mse2_filters" class="au-filters__form">
                         <ul class="au-filter__row">
                         {$filters}
                         <li class="au-filter__col  au-filter__col_sort">
