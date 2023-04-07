@@ -16,10 +16,10 @@
                             {$filters}
                             <li class="au-filter__col  au-filter__col_sort">
                                 <span class="au-filter__title">Сортировка</span>
-                                <div>
-                                    <select class="sorting_cat"  id="mse2_sort">
-                                    <option class="sort" data-sort="price" value="asc">Цена (по возрастанию)</option>
-                                    <option class="sort" data-sort="price" value="desc">Цена (по убыванию)</option>        
+                                <div id="mse2_sort">
+                                    <select class="sorting_cat">
+                                        <option class="sort" data-sort="price" value="asc">Цена (по возрастанию)</option>
+                                        <option class="sort" data-sort="price" value="desc">Цена (по убыванию)</option>
                                   </select>
                                 </div>
                             </li>
