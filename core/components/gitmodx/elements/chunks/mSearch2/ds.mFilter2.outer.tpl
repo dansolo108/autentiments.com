@@ -17,18 +17,9 @@
                         <li class="au-filter__col  au-filter__col_sort">
                             <span class="au-filter__title">Сортировка</span>
                             <ul class="au-filter__sorts" id="mse2_sort">
-                                <li>
-                                    <button type="button" data-sort="msoption|new" data-dir="desc" data-default="desc"
-                                        class="au-filter__label  au-filter__sort sort static-dir">Сначала новинки</button>
-                                </li>
-                                <li>
-                                    <button type="button" data-sort="ms|price" data-dir="asc" data-default="asc"
-                                        class="au-filter__label  au-filter__sort sort static-dir">Сначала подешевле</button>
-                                </li>
-                                <li>
-                                    <button type="button" data-sort="ms|price" data-dir="desc" data-default="desc"
-                                        class="au-filter__label  au-filter__sort sort static-dir">Сначала подороже</button>
-                                </li>
+                                <li><a href="#" data-sort="msoption|new" data-dir="desc" data-default="desc" class="au-filter__label  au-filter__sort sort static-dir{if $sort == 'msoption|new:desc'} active{/if}">{'stik_catalog_sort_new' | lexicon}</a></li>
+                                <li><a href="#" data-sort="ms|price" data-dir="asc" data-default="asc" class="au-filter__label  au-filter__sort sort static-dir{if $sort == 'ms|price:asc'} active{/if}">{'stik_catalog_sort_cheap' | lexicon}</a></li>
+                                <li><a href="#" data-sort="ms|price" data-dir="desc" data-default="desc" class="au-filter__label  au-filter__sort sort static-dir{if $sort == 'ms|price:desc'} active{/if}">{'stik_catalog_sort_expensive' | lexicon}</a></li>
                             </ul>
                         </li>
                         </ul>
