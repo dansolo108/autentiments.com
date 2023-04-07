@@ -6,7 +6,7 @@
         'element' => 'getProducts',
         'limit' => 9,
         'tpl' => 'product.row',
-        'tplOuter' => 'ds.mFilter2.outer',
+        'tplOuter' => 'stik.mFilter2.outer',
         'suggestions' => false,
         'ajaxMode' => 'scroll',
         'filters' => '
