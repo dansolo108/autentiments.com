@@ -1,4 +1,4 @@
-{var $key = $filter}
+{var $key = $table ~ $delimeter ~ $filter}
 <li class="au-filter__item">
     <span>
         <input class="au-filter__checkbox" type="checkbox" name="{$filter_key}" id="mse2_{$key}_{$idx}" value="{$value}" {$checked} {$disabled} form="mse2_filters"/>

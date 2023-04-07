@@ -1,4 +1,4 @@
-{var $key = $filter}
+{var $key = $table ~ $delimeter ~ $filter}
 {switch $key}
     {case 'size'}
         {set $class = 'sizes'}

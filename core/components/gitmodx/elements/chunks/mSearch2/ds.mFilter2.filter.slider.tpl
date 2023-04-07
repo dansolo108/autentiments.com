@@ -1,4 +1,4 @@
-<li id="mse2_{$filter}" class="au-filter__col  au-filter__col_costs">
+<li id="mse2_{$table ~ $delimeter ~ $filter}" class="au-filter__col  au-filter__col_costs">
     <span class="au-filter__title">{'mse2_filter_ms_price' | lexicon}</span>
     <ul>
         <li>
