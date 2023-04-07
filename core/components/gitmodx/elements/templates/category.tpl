@@ -53,12 +53,25 @@
     //     }
     // }, false)
 
-    const filters = new MmenuLight(
-        document.querySelector( "#au-filters" ),
-        "(max-width: 540px)"
+    
+
+    document.addEventListener(
+        "DOMContentLoaded", () => {
+            const filters = new MmenuLight(
+                document.querySelector( "#au-filters" ),
+                "(max-width: 540px)"
+            )
+            const filtersNav = filters.navigation()
+            const drawer = filters.offcanvas()
+
+            document.querySelector( 'a[href="#au-filters"]' )
+                .addEventListener( 'click', ( e ) => {
+                    e.preventDefault()
+                    drawer.open()
+                });
+        }
     )
-    const filtersNav = filters.navigation()
-    const drawer = filters.offcanvas()
+
 </script>
 ' | jsToBottom : true}
 
