@@ -13,15 +13,15 @@
                     <nav id="au-filters">
                         <form action="{$_modx->resource.id | url}" method="post" id="mse2_filters" class="au-filters__form">
                         <ul class="au-filter__row">
-                        {$filters}
-                        <li class="au-filter__col  au-filter__col_sort">
-                            <span class="au-filter__title">Сортировка</span>
-                            <ul class="au-filter__sorts" id="mse2_sort">
-                                <a href="javascript:void(0);" data-sort="msoption|new" data-dir="desc" data-default="desc" class="au-filter__label  au-filter__sort sort static-dir{if $sort == 'msoption|new:desc'} active{/if}">{'stik_catalog_sort_new' | lexicon}</a>
-                                <a href="javascript:void(0);" data-sort="ms|price" data-dir="asc" data-default="asc" class="au-filter__label  au-filter__sort sort static-dir{if $sort == 'ms|price:asc'} active{/if}">{'stik_catalog_sort_cheap' | lexicon}</a>
-                                <a href="javascript:void(0);" data-sort="ms|price" data-dir="desc" data-default="desc" class="au-filter__label  au-filter__sort sort static-dir{if $sort == 'ms|price:desc'} active{/if}">{'stik_catalog_sort_expensive' | lexicon}</a>
-                            </ul>
-                        </li>
+                            {$filters}
+                            <li class="au-filter__col  au-filter__col_sort">
+                                <span class="au-filter__title">Сортировка</span>
+                                <ul class="au-filter__sorts" id="mse2_sort">
+                                    <a href="javascript:void(0);" data-sort="msoption|new" data-dir="desc" data-default="desc" class="au-filter__label  au-filter__sort sort static-dir{if $sort == 'msoption|new:desc'} active{/if}">{'stik_catalog_sort_new' | lexicon}</a>
+                                    <a href="javascript:void(0);" data-sort="ms|price" data-dir="asc" data-default="asc" class="au-filter__label  au-filter__sort sort static-dir{if $sort == 'ms|price:asc'} active{/if}">{'stik_catalog_sort_cheap' | lexicon}</a>
+                                    <a href="javascript:void(0);" data-sort="ms|price" data-dir="desc" data-default="desc" class="au-filter__label  au-filter__sort sort static-dir{if $sort == 'ms|price:desc'} active{/if}">{'stik_catalog_sort_expensive' | lexicon}</a>
+                                </ul>
+                            </li>
                         </ul>
                         <button type="button">Показать товары</button>
                         <button type="reset" class="au-filters__reset" form="mse2_filters">{'stik_catalog_reset_button' | lexicon}</button>
