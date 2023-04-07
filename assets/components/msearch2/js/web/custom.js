@@ -19,7 +19,7 @@ var mSearch2 = {
         pagination_link: '.mse2_pagination a',
 
         sort: '#mse2_sort',
-        sort_link: '#mse2_sort li a',
+        sort_link: '#mse2_sort a',
 
         tpl: '#mse2_tpl',
         tpl_link: '#mse2_tpl a',
