@@ -64,11 +64,11 @@
             const filtersNav = filters.navigation()
             const drawer = filters.offcanvas()
 
-            document.querySelector( 'a[href="#au-filters"]' )
-                .addEventListener( 'click', ( e ) => {
+            document.querySelector(`a[href="#au-filters"]`)
+                .addEventListener("click", (e) => {
                     e.preventDefault()
                     drawer.open()
-                });
+                })
         }
     )
 
