@@ -15,6 +15,13 @@
             msoption|material:default,
             ms|price:price,
         ',
+        'aliases' => '
+            msoption|size==size,
+            msoption|color==color,
+            msoption|material==material,
+            ms|price==price,
+            msoption|new==new
+        ',
         'tplFilter.outer.ms|price' => 'ds.mFilter2.filter.slider',
         'tplFilter.row.ms|price' => 'ds.mFilter2.filter.number',
         'tplFilter.outer.default' => 'ds.mFilter2.filter.outer',
