@@ -13,13 +13,13 @@ var mSearch2 = {
 
         filters: '#mse2_filters',
         filter_title: '.filter_title',
-        filter_wrapper: 'fieldset',
+        filter_wrapper: '.au-filter__col',
 
         pagination: '.mse2_pagination',
         pagination_link: '.mse2_pagination a',
 
         sort: '#mse2_sort',
-        sort_link: '#mse2_sort a',
+        sort_link: '#mse2_sort li a',
 
         tpl: '#mse2_tpl',
         tpl_link: '#mse2_tpl a',
