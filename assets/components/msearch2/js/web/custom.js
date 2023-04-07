@@ -253,17 +253,14 @@ var mSearch2 = {
                 var tmp = sorts[i].split(mse2Config['method_delimeter']);
                 if (tmp[0] && tmp[1]) {
                     // стандартная сортировка
-                    // $(this.options.sort_link + '[data-sort="' + tmp[0] + '"]:not(.static-dir)').data('dir', tmp[1]).attr('data-dir', tmp[1]).addClass(this.options.active_class);
+                    $(this.options.sort_link + '[data-sort="' + tmp[0] + '"]:not(.static-dir)').data('dir', tmp[1]).attr('data-dir', tmp[1]).addClass(this.options.active_class);
                     // сортировка в одну сторону
-                    // $(this.options.sort_link + '[data-sort="' + tmp[0] + '"][data-dir="' + tmp[1] + '"].static-dir').addClass(this.options.active_class);
-
-                    $(this.options.sort_link + '[data-sort="' + tmp[0] + '"]').data('dir', tmp[1]).attr('data-dir', tmp[1]).addClass(this.options.active_class);
+                    $(this.options.sort_link + '[data-sort="' + tmp[0] + '"][data-dir="' + tmp[1] + '"].static-dir').addClass(this.options.active_class);
                 }
             }
         }
 
-        $(document).on('click', this.options.sort_link, function (e) {
-            e.preventDefault();
+        $(document).on('click', this.options.sort_link, function () {
             if ($(this).hasClass(mSearch2.options.active_class) && $(this).data('dir') == '') {
                 return false;
             }
@@ -1048,7 +1045,7 @@ var mSearch2 = {
     },
 
     setEmptyFieldsets: function () {
-        this.filters.find('fieldset').each(function () {
+        this.filters.find('.au-filter__col').each(function () {
             var all_children_disabled = $(this).find('label:not(.' + mSearch2.options.disabled_class + ')').length == 0;
             if (all_children_disabled) {
                 $(this).addClass(mSearch2.options.disabled_class_fieldsets);
