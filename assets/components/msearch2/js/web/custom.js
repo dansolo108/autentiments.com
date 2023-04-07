@@ -13,7 +13,7 @@ var mSearch2 = {
 
         filters: '#mse2_filters',
         filter_title: '.filter_title',
-        filter_wrapper: 'fieldset',
+        filter_wrapper: '.au-filter__col',
 
         pagination: '.mse2_pagination',
         pagination_link: '.mse2_pagination a',
@@ -334,7 +334,7 @@ var mSearch2 = {
         }
         $(mSearch2.options.slider).each(function () {
             var $this = $(this);
-            var fieldset = $(this).parents('.au-filter__range-box');
+            var fieldset = $(this).parents('.au-filter__col');
             var imin = fieldset.find('input:first');
             var imax = fieldset.find('input:last');
             var vmin = Number(imin.attr('value'));
