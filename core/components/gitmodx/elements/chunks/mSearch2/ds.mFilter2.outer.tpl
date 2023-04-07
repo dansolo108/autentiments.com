@@ -20,10 +20,10 @@
                                     <!-- <a href="javascript:void(0);" data-sort="new" data-dir="desc" data-default="desc" class="au-filter__label au-filter__sort sort static-dir{if $sort == 'new:desc'} active{/if}">{'stik_catalog_sort_new' | lexicon}</a>
                                     <a href="javascript:void(0);" data-sort="price" data-dir="asc" data-default="asc" class="au-filter__label au-filter__sort sort static-dir{if $sort == 'price:asc'} active{/if}">{'stik_catalog_sort_cheap' | lexicon}</a>
                                     <a href="javascript:void(0);" data-sort="price" data-dir="desc" data-default="desc" class="au-filter__label au-filter__sort sort static-dir{if $sort == 'price:desc'} active{/if}">{'stik_catalog_sort_expensive' | lexicon}</a> -->
-                                    <a href="#" data-sort="price"
+                                    <span data-sort="price"
                                         data-dir="{if !$mse2_sort ?}desc{/if}"
-                                        data-default="desc" class="sort">price<span></span>
-                                    </a>
+                                        data-default="desc" class="sort">price
+                                    </span>
                                 </div>
                             </li>
                         </ul>
