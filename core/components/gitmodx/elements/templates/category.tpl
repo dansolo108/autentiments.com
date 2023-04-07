@@ -15,14 +15,6 @@
             msoption|material:default,
             ms|price:price,
         ',
-        'aliases' => '
-            msoption|size==size,
-            msoption|color==color,
-            msoption|material==material,
-            ms|price==price,
-            msoption|new==new,
-            ms|hexcolor==hexcolor
-        ',
         'tplFilter.outer.price' => 'ds.mFilter2.filter.slider',
         'tplFilter.row.price' => 'ds.mFilter2.filter.number',
         'tplFilter.outer.default' => 'ds.mFilter2.filter.outer',
@@ -61,15 +53,15 @@
     //     }
     // }, false)
 
-    $(document).ready(function() {
-        $(document).on("change", "#mse2_sort", function() {
-            var selected = $(this).find("option:selected");
-            var sort = selected.data("sort");
-            sort += mse2Config.method_delimeter + selected.val();
-            mse2Config.sort =  sort;
-            mSearch2.submit();
-        });
-    });
+    // $(document).ready(function() {
+    //     $(document).on("change", "#mse2_sort", function() {
+    //         var selected = $(this).find("option:selected");
+    //         var sort = selected.data("sort");
+    //         sort += mse2Config.method_delimeter + selected.val();
+    //         mse2Config.sort =  sort;
+    //         mSearch2.submit();
+    //     });
+    // });
 
     document.addEventListener(
         "DOMContentLoaded", () => {
