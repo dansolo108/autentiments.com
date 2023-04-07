@@ -18,16 +18,16 @@
                             <span class="au-filter__title">Сортировка</span>
                             <ul class="au-filter__sorts" id="mse2_sort">
                                 <li>
-                                    <a href="#" data-sort="msoption|new" data-dir="desc" data-default="desc"
-                                        class="au-filter__label  au-filter__sort sort static-dir">Сначала новинки</a>
+                                    <button type="button" data-sort="msoption|new" data-dir="desc" data-default="desc"
+                                        class="au-filter__label  au-filter__sort sort static-dir">Сначала новинки</button>
                                 </li>
                                 <li>
-                                    <a href="#" data-sort="ms|price" data-dir="asc" data-default="asc"
-                                        class="au-filter__label  au-filter__sort sort static-dir">Сначала подешевле</a>
+                                    <button type="button" data-sort="ms|price" data-dir="asc" data-default="asc"
+                                        class="au-filter__label  au-filter__sort sort static-dir">Сначала подешевле</button>
                                 </li>
                                 <li>
-                                    <a href="#" data-sort="ms|price" data-dir="desc" data-default="desc"
-                                        class="au-filter__label  au-filter__sort sort static-dir">Сначала подороже</a>
+                                    <button type="button" data-sort="ms|price" data-dir="desc" data-default="desc"
+                                        class="au-filter__label  au-filter__sort sort static-dir">Сначала подороже</button>
                                 </li>
                             </ul>
                         </li>
