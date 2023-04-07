@@ -334,7 +334,7 @@ var mSearch2 = {
         }
         $(mSearch2.options.slider).each(function () {
             var $this = $(this);
-            var fieldset = $(this).parents('fieldset');
+            var fieldset = $(this).parents('.au-filter__range-box');
             var imin = fieldset.find('input:first');
             var imax = fieldset.find('input:last');
             var vmin = Number(imin.attr('value'));
