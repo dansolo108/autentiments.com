@@ -23,8 +23,8 @@
             msoption|new==new,
             ms|hexcolor==hexcolor
         ',
-        'tplFilter.outer.ms|price' => 'ds.mFilter2.filter.slider',
-        'tplFilter.row.ms|price' => 'ds.mFilter2.filter.number',
+        'tplFilter.outer.price' => 'ds.mFilter2.filter.slider',
+        'tplFilter.row.price' => 'ds.mFilter2.filter.number',
         'tplFilter.outer.default' => 'ds.mFilter2.filter.outer',
         'tplFilter.row.default' => 'ds.mFilter2.filter.checkbox',
         'showLog'=>0,
