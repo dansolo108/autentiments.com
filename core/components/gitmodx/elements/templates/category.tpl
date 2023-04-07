@@ -61,7 +61,15 @@
     //     }
     // }, false)
 
-    
+    $(document).ready(function() {
+        $(document).on("change", "#mse2_sort", function() {
+            var selected = $(this).find("option:selected");
+            var sort = selected.data("sort");
+            sort += mse2Config.method_delimeter + selected.val();
+            mse2Config.sort =  sort;
+            mSearch2.submit();
+        });
+    });
 
     document.addEventListener(
         "DOMContentLoaded", () => {
