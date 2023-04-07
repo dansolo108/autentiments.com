@@ -9,6 +9,7 @@
         <div class="au-category__head">
             <h1 class="au-h1  au-category__title">{$_modx->resource.pagetitle}</h1>
             <div class="au-filters__content">
+                <a href="#au-filters">Фильтры</a>
                 <form action="{$_modx->resource.id | url}" method="post" id="mse2_filters" class="au-filters__form">
                     <nav id="au-filters">
                         <ul class="au-filter__row">

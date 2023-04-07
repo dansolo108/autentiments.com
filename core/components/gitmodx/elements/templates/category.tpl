@@ -55,7 +55,7 @@
 
     const filters = new MmenuLight(
         document.querySelector( "#au-filters" ),
-        "(max-width: 390px)"
+        "(max-width: 540px)"
     )
     const filtersNav = filters.navigation()
     const drawer = filters.offcanvas()
