@@ -1,10 +1,10 @@
-{var $key = $table ~ $delimeter ~ $filter}
+{var $key = $filter}
 {switch $key}
-    {case 'msoption|size'}
+    {case 'size'}
         {set $class = 'sizes'}
-    {case 'ms|hexcolor'}
+    {case 'hexcolor'}
         {set $class = 'colors'}
-    {case 'msoption|material'}
+    {case 'material'}
         {set $class = 'materials'}
 {/switch}
 <li id="mse2_{$key}" class="au-filter__col  au-filter__col_{$class}">

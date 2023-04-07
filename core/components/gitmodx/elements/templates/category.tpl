@@ -20,7 +20,8 @@
             msoption|color==color,
             msoption|material==material,
             ms|price==price,
-            msoption|new==new
+            msoption|new==new,
+            ms|hexcolor==hexcolor
         ',
         'tplFilter.outer.ms|price' => 'ds.mFilter2.filter.slider',
         'tplFilter.row.ms|price' => 'ds.mFilter2.filter.number',
