@@ -252,6 +252,11 @@ var mSearch2 = {
             for (var i = 0; i < sorts.length; i++) {
                 var tmp = sorts[i].split(mse2Config['method_delimeter']);
                 if (tmp[0] && tmp[1]) {
+                    // стандартная сортировка
+                    // $(this.options.sort_link + '[data-sort="' + tmp[0] + '"]:not(.static-dir)').data('dir', tmp[1]).attr('data-dir', tmp[1]).addClass(this.options.active_class);
+                    // сортировка в одну сторону
+                    // $(this.options.sort_link + '[data-sort="' + tmp[0] + '"][data-dir="' + tmp[1] + '"].static-dir').addClass(this.options.active_class);
+
                     $(this.options.sort_link + '[data-sort="' + tmp[0] + '"]').data('dir', tmp[1]).attr('data-dir', tmp[1]).addClass(this.options.active_class);
                 }
             }
