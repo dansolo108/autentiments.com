@@ -37,16 +37,28 @@
         });
     </script>
 
+{$_modx->regClientHTMLBlock('
+<link rel="stylesheet" href="/assets/css/mmenu-light.css">')}
+
+{'<script src="/assets/js/mmenu-light.js"></script>' | jsToBottom}
+
 {'
 <script>
-    const filters = document.getElementById("mse2_filters")
-    filters.addEventListener("click", (e) => {
-        const target = e.target
-        if (target.matches(".au-filter__title")) {
-            let parent = target.parentNode
-            parent.classList.toggle("actived")
-        }
-    }, false)
+    // const filters = document.getElementById("mse2_filters")
+    // filters.addEventListener("click", (e) => {
+    //     const target = e.target
+    //     if (target.matches(".au-filter__title")) {
+    //         let parent = target.parentNode
+    //         parent.classList.toggle("actived")
+    //     }
+    // }, false)
+
+    const filters = new MmenuLight(
+        document.querySelector( "#au-filters" ),
+        "(max-width: 390px)"
+    )
+    const filtersNav = filters.navigation()
+    const drawer = filters.offcanvas()
 </script>
 ' | jsToBottom : true}
 

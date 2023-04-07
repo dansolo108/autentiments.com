@@ -10,17 +10,28 @@
             <h1 class="au-h1  au-category__title">{$_modx->resource.pagetitle}</h1>
             <div class="au-filters__content">
                 <form action="{$_modx->resource.id | url}" method="post" id="mse2_filters" class="au-filters__form">
-                    <div class="au-filter__row">
+                    <nav id="au-filters">
+                        <ul class="au-filter__row">
                         {$filters}
-                        <div class="au-filter__col  au-filter__col_sort">
-                            <span class="au-filter__title">{'stik_catalog_sort_title' | lexicon}</span>
-                            <div class="au-filter__sorts" id="mse2_sort">
-                                <a href="#" data-sort="msoption|new" data-dir="desc" data-default="desc" class="au-filter__label  au-filter__sort sort static-dir{if $sort == 'msoption|new:desc'} active{/if}">{'stik_catalog_sort_new' | lexicon}</a>
-                                <a href="#" data-sort="ms|price" data-dir="asc" data-default="asc" class="au-filter__label  au-filter__sort sort static-dir{if $sort == 'ms|price:asc'} active{/if}">{'stik_catalog_sort_cheap' | lexicon}</a>
-                                <a href="#" data-sort="ms|price" data-dir="desc" data-default="desc" class="au-filter__label  au-filter__sort sort static-dir{if $sort == 'ms|price:desc'} active{/if}">{'stik_catalog_sort_expensive' | lexicon}</a>
-                            </div>
-                        </div>
-                    </div>
+                        <li class="au-filter__col  au-filter__col_sort">
+                            <span class="au-filter__title">Сортировка</span>
+                            <ul class="au-filter__sorts" id="mse2_sort">
+                                <li>
+                                    <a href="#" data-sort="msoption|new" data-dir="desc" data-default="desc"
+                                        class="au-filter__label  au-filter__sort sort static-dir">Сначала новинки</a>
+                                </li>
+                                <li>
+                                    <a href="#" data-sort="ms|price" data-dir="asc" data-default="asc"
+                                        class="au-filter__label  au-filter__sort sort static-dir">Сначала подешевле</a>
+                                </li>
+                                <li>
+                                    <a href="#" data-sort="ms|price" data-dir="desc" data-default="desc"
+                                        class="au-filter__label  au-filter__sort sort static-dir">Сначала подороже</a>
+                                </li>
+                            </ul>
+                        </li>
+                        </ul>
+                    </nav>
                     <button type="reset" class="au-filters__reset">{'stik_catalog_reset_button' | lexicon}</button>
                 </form>
             </div>
