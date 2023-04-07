@@ -15,10 +15,10 @@
             msoption|material:default,
             ms|price:price,
         ',
-        'tplFilter.outer.ms|price' => 'ds.mFilter2.filter.slider',
-        'tplFilter.row.ms|price' => 'ds.mFilter2.filter.number',
-        'tplFilter.outer.default' => 'ds.mFilter2.filter.outer',
-        'tplFilter.row.default' => 'ds.mFilter2.filter.checkbox',
+        'tplFilter.outer.ms|price' => 'stik.mFilter2.filter.slider',
+        'tplFilter.row.ms|price' => 'stik.mFilter2.filter.number',
+        'tplFilter.outer.default' => 'stik.mFilter2.filter.outer',
+        'tplFilter.row.default' => 'stik.mFilter2.filter.checkbox',
         'showLog'=>0,
     ]}
 {*    {if $_modx->resource.id != 709}*}
