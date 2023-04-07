@@ -4782,22 +4782,24 @@ label.au-filter__cost:last-child input {
   flex-direction: column;
 }
 
-.au-filter__title + * {
-  min-width: 120px;
-  padding: 14px;
-  background: #fff;
-  position: absolute;
-  bottom: -8px;
-  left: -14px;
-  z-index: 1;
-  transform: translateY(100%);
-  transition: opacity .3s ease-in-out;
-}
-
-.au-filter__col:not(.actived) .au-filter__title + * {
-  opacity: 0;
-  z-index: -1;
-  pointer-events: none;
+@media screen and (min-width: 541px) {
+  .au-filter__title + * {
+    min-width: 120px;
+    padding: 14px;
+    background: #fff;
+    position: absolute;
+    bottom: -8px;
+    left: -14px;
+    z-index: 1;
+    transform: translateY(100%);
+    transition: opacity .3s ease-in-out;
+  }
+  
+  .au-filter__col:not(.actived) .au-filter__title + * {
+    opacity: 0;
+    z-index: -1;
+    pointer-events: none;
+  }
 }
 
 .au-filter__sort {
