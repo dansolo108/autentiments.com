@@ -262,7 +262,8 @@ var mSearch2 = {
             }
         }
 
-        $(document).on('click', this.options.sort_link, function () {
+        $(document).on('click', this.options.sort_link, function (e) {
+            e.preventDefault();
             if ($(this).hasClass(mSearch2.options.active_class) && $(this).data('dir') == '') {
                 return false;
             }
