@@ -4802,11 +4802,9 @@ label.au-filter__cost:last-child input {
   }
 }
 
-.mm {
-  background: #fff;
+#au-filters.mm-spn.mm-spn--light {
   color: #000;
-  --mm-spn-item-height: 54px;
-  --mm-ocd-max-width: 100%;
+  background: #fff;
 }
 
 .au-filter__sort {
