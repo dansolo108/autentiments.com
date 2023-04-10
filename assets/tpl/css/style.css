@@ -4790,7 +4790,7 @@ label.au-filter__cost:last-child input {
     position: absolute;
     bottom: -8px;
     left: -14px;
-    z-index: 1;
+    z-index: 11;
     transform: translateY(100%);
     transition: opacity .3s ease-in-out;
   }
@@ -4800,6 +4800,13 @@ label.au-filter__cost:last-child input {
     z-index: -1;
     pointer-events: none;
   }
+}
+
+.mm {
+  background: #fff;
+  color: #000;
+  --mm-spn-item-height: 54px;
+  --mm-ocd-max-width: 100%;
 }
 
 .au-filter__sort {
