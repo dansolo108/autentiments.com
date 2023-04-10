@@ -4802,6 +4802,10 @@ label.au-filter__cost:last-child input {
   }
 }
 
+#au-filters.mm-spn.mm-spn--navbar ul:before {
+  display: none !important;
+}
+
 #au-filters.mm-spn.mm-spn--light {
   color: #000;
   background: #fff;
@@ -4813,6 +4817,17 @@ label.au-filter__cost:last-child input {
 
 #au-filters.mm-spn.mm-spn--navbar:after {
   opacity: 1;
+}
+
+#au-filters.mm-spn li:after {
+  margin-left: var(--mm-spn-item-indent);
+  margin-right: var(--mm-spn-item-indent);
+  opacity: .6;
+}
+
+:root {
+  --mm-spn-item-height: 54px;
+  --mm-spn-line-height: 1;
 }
 
 .au-filter__sort {
