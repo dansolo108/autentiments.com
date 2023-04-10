@@ -44,6 +44,8 @@
 
 {'
 <script>
+    {ignore}
+
     const filters = document.getElementById("mse2_filters");
 
     filterDeskFunc(e) {
@@ -82,7 +84,7 @@
                 })
         }
     )
-
+    {/ignore}
 </script>
 ' | jsToBottom : true}
 
