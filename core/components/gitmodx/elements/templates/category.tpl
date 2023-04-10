@@ -3,6 +3,7 @@
 {block 'main'}
     {set $options = [
         'parents' => $_modx->resource.id,
+        'element' => 'getProducts',
         'limit' => 9,
         'tpl' => 'product.row',
         'tplOuter' => 'stik.mFilter2.outer',
