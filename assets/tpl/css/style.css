@@ -4803,9 +4803,9 @@ label.au-filter__cost:last-child input {
 }
 
 :root {
-  --mm-ocd-width: 100%;
-  --mm-ocd-max-width: 100%;
-  --mm-spn-panel-offset: 100%;
+  --mm-ocd-width: 100% !important;
+  --mm-ocd-max-width: 100% !important;
+  --mm-spn-panel-offset: 100% !important;
 }
 
 
