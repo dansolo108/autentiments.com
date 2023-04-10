@@ -4609,11 +4609,6 @@ form.ajax_form span.error {
   /* height: 100%;  */
 }
 
-.au-filters__form {
-  display: flex;
-  flex-wrap: wrap;
-}
-
 /* .au-filter__row {
   width: 100%;
   display: grid;
@@ -4783,6 +4778,11 @@ label.au-filter__cost:last-child input {
 }
 
 @media screen and (min-width: 541px) {
+  .au-filters__form {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  
   .au-filter__title + * {
     min-width: 120px;
     padding: 14px;
