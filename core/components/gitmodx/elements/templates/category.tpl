@@ -73,6 +73,8 @@
                 "(max-width: 540px)"
             )
             const filtersNav = filters.navigation()
+            filtersNav.title = "Фильтры и сортировка"
+
             const drawer = filters.offcanvas()
 
             document.querySelector(`a[href="#au-filters"]`)
