@@ -4802,25 +4802,24 @@ label.au-filter__cost:last-child input {
   }
 }
 
-#au-filters.mm-spn.mm-spn--navbar ul:before {
+/* #au-filters.mm-spn.mm-spn--navbar ul:before {
   display: none !important;
-}
+} */
 
 #au-filters.mm-spn.mm-spn--light {
   color: #000;
   background: #fff;
 }
 
-#au-filters.mm-spn.mm-spn--navbar[data-mm-spn-title="Фильтры и сортировка"]:before {
+/* #au-filters.mm-spn.mm-spn--navbar[data-mm-spn-title="Фильтры и сортировка"]:before {
   opacity: 0;
-}
+} */
 
 #au-filters.mm-spn.mm-spn--navbar:after {
   opacity: 1;
 }
 
 #au-filters.mm-spn li:after {
-  margin-left: var(--mm-spn-item-indent);
   margin-right: var(--mm-spn-item-indent);
   opacity: .6;
 }
