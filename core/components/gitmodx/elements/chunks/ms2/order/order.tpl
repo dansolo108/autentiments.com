@@ -201,7 +201,7 @@
                     {$order | print_r}
                 </b>
                 <span class="ms2_total_cost">
-                    {'!msMultiCurrencyPrice' | snippet : ['price' => $order.cart_cost + $order.discount_cost + $order.promocode_discount + $order.bonuses_discount]}
+                    {'!msMultiCurrencyPrice' | snippet : ['price' => $order.cart_cost + $order.discount_cost]}
                     {$_modx->getPlaceholder('msmc.symbol_right')}
                 </span>
             </div>
