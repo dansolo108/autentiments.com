@@ -2,6 +2,7 @@
 
 {block 'main'}
     {set $options = [
+        'parents' => $_modx->resource.id,
         'limit' => 9,
         'tpl' => 'product.row',
         'tplOuter' => 'stik.mFilter2.outer',
@@ -17,7 +18,7 @@
         'tplFilter.row.ms|price' => 'stik.mFilter2.filter.number',
         'tplFilter.outer.default' => 'stik.mFilter2.filter.outer',
         'tplFilter.row.default' => 'stik.mFilter2.filter.checkbox',
-        'showLog' => 0,
+        'showLog'=>0,
     ]}
 {*    {if $_modx->resource.id != 709}*}
 {*        {set $options['sortby'] = 'RAND()'}*}
