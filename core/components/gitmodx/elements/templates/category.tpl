@@ -63,10 +63,10 @@
         }
     }, true);
 
+    filtersNav.addEventListener("click", filterDeskFunc, false)
+
     document.addEventListener(
         "DOMContentLoaded", () => {
-
-            filtersNav.addEventListener("click", filterDeskFunc, false)
 
             const filters = new MmenuLight(
                 document.querySelector( "#au-filters" ),
