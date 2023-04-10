@@ -44,27 +44,30 @@
 
 {'
 <script>
-    // const filters = document.getElementById("mse2_filters")
-    // filters.addEventListener("click", (e) => {
-    //     const target = e.target
-    //     if (target.matches(".au-filter__title")) {
-    //         let parent = target.parentNode
-    //         parent.classList.toggle("actived")
-    //     }
-    // }, false)
+    const filters = document.getElementById("mse2_filters");
 
-    // $(document).ready(function() {
-    //     $(document).on("change", "#mse2_sort", function() {
-    //         var selected = $(this).find("option:selected");
-    //         var sort = selected.data("sort");
-    //         sort += mse2Config.method_delimeter + selected.val();
-    //         mse2Config.sort =  sort;
-    //         mSearch2.submit();
-    //     });
-    // });
+    filterDeskFunc(e) {
+        const target = e.target
+        if (target.matches(".au-filter__title")) {
+            let parent = target.parentNode
+            parent.classList.toggle("actived")
+        }
+    }
+
+    window.addEventListener("resize", function(e) {
+        let w = window.innerWidth;
+        if (w >= 540) {
+            filters.addEventListener("click", filterDeskFunc(e), false)
+        } else {
+            filters.removeEventListener("click", filterDeskFunc(e), false)
+        }
+    }, true);
 
     document.addEventListener(
         "DOMContentLoaded", () => {
+
+            filters.addEventListener("click", filterDeskFunc(e), false)
+
             const filters = new MmenuLight(
                 document.querySelector( "#au-filters" ),
                 "(max-width: 540px)"
