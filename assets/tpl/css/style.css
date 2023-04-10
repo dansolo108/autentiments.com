@@ -4807,6 +4807,14 @@ label.au-filter__cost:last-child input {
   background: #fff;
 }
 
+#au-filters.mm-spn.mm-spn--navbar[data-mm-spn-title="Фильтры и сортировка"]:before {
+  opacity: 0;
+}
+
+#au-filters.mm-spn.mm-spn--navbar:after {
+  opacity: 1;
+}
+
 .au-filter__sort {
   padding-left: 23px;
 }
