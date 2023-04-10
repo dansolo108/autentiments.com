@@ -44,7 +44,7 @@
 
 {'
 <script>
-    const filters = document.getElementById("mse2_filters");
+    const filtersNav = document.getElementById("mse2_filters");
 
     function filterDeskFunc(e) {
         const target = e.target
@@ -57,16 +57,16 @@
     window.addEventListener("resize", (e) => {
         let w = window.innerWidth;
         if (w >= 540) {
-            filters.addEventListener("click", filterDeskFunc, false)
+            filtersNav.addEventListener("click", filterDeskFunc, false)
         } else {
-            filters.removeEventListener("click", filterDeskFunc, false)
+            filtersNav.removeEventListener("click", filterDeskFunc, false)
         }
     }, true);
 
     document.addEventListener(
         "DOMContentLoaded", () => {
 
-            filters.addEventListener("click", filterDeskFunc, false)
+            filtersNav.addEventListener("click", filterDeskFunc, false)
 
             const filters = new MmenuLight(
                 document.querySelector( "#au-filters" ),
