@@ -48,7 +48,7 @@
 
     const filters = document.getElementById("mse2_filters");
 
-    filterDeskFunc(e) {
+    function filterDeskFunc(e) {
         const target = e.target
         if (target.matches(".au-filter__title")) {
             let parent = target.parentNode
@@ -56,19 +56,19 @@
         }
     }
 
-    window.addEventListener("resize", function(e) {
+    window.addEventListener("resize", (e) => {
         let w = window.innerWidth;
         if (w >= 540) {
-            filters.addEventListener("click", filterDeskFunc(e), false)
+            filters.addEventListener("click", filterDeskFunc, false)
         } else {
-            filters.removeEventListener("click", filterDeskFunc(e), false)
+            filters.removeEventListener("click", filterDeskFunc, false)
         }
     }, true);
 
     document.addEventListener(
         "DOMContentLoaded", () => {
 
-            filters.addEventListener("click", filterDeskFunc(e), false)
+            filters.addEventListener("click", filterDeskFunc, false)
 
             const filters = new MmenuLight(
                 document.querySelector( "#au-filters" ),
