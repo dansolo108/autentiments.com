@@ -4802,7 +4802,7 @@ label.au-filter__cost:last-child input {
   }
 }
 
-#au-filters.mm-spn.mm-spn--navbar ul:before {
+/* #au-filters.mm-spn.mm-spn--navbar ul:before {
   display: none !important;
 }
 
@@ -4828,7 +4828,7 @@ label.au-filter__cost:last-child input {
 :root {
   --mm-spn-item-height: 54px;
   --mm-spn-line-height: 1;
-}
+} */
 
 .au-filter__sort {
   padding-left: 23px;
