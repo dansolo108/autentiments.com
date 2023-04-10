@@ -4782,7 +4782,7 @@ label.au-filter__cost:last-child input {
   flex-direction: column;
 }
 
-/* @media screen and (min-width: 541px) {
+@media screen and (min-width: 541px) {
   .au-filter__title + * {
     min-width: 120px;
     padding: 14px;
@@ -4800,7 +4800,7 @@ label.au-filter__cost:last-child input {
     z-index: -1;
     pointer-events: none;
   }
-} */
+}
 
 .au-filter__sort {
   padding-left: 23px;
