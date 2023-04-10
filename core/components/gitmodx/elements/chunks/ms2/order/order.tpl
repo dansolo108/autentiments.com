@@ -197,14 +197,8 @@
             </div>
             <div class="auten-order-aside__field">
                 Всего
-                <b>
-                    {$order | print_r}
-                </b>
-                <b>
-                    {$cart | print_r}
-                </b>
                 <span class="ms2_total_cost">
-                    {'!msMultiCurrencyPrice' | snippet : ['price' => $order.cart_cost]}
+                    {'!msMultiCurrencyPrice' | snippet : ['price' => $cart.total_cost + $cart.total_discount]}
                     {$_modx->getPlaceholder('msmc.symbol_right')}
                 </span>
             </div>
