@@ -4802,6 +4802,7 @@ label.au-filter__cost:last-child input {
   }
 }
 
+/*
 #au-filters.mm-spn.mm-spn--navbar ul:before {
   display: none !important;
 }
@@ -4811,7 +4812,6 @@ label.au-filter__cost:last-child input {
   background: #fff;
 }
 
-/*
 #au-filters.mm-spn.mm-spn--navbar[data-mm-spn-title="Фильтры и сортировка"]:before {
   opacity: 0;
 }
