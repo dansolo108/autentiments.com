@@ -4785,6 +4785,10 @@ label.au-filter__cost:last-child input {
   right: 20px;
 }
 
+.filters-button svg {
+  vertical-align: middle;
+}
+
 @media screen and (max-width: 540px) {
   .au-category__head {
     padding-bottom: 20px;
