@@ -4813,9 +4813,9 @@ label.au-filter__cost:last-child input {
   .au-filter__checkbox:checked + .au-filter__label::before {
     width: calc(100% - 40px);
   }
-  /* #au-filters {
-    padding-bottom: 145px;
-  } */
+  .au-filter__checkbox:checked + .au-filter__label::after {
+    content: url("data:image/svg+xml,%3Csvg width='12' height='8' viewBox='0 0 12 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M4 7.71709L11.01 0.707107L10.3029 0L4.00519 6.29769L0.707072 2.99989L0 3.70703L3.29808 7.00479L3.29289 7.00998L4 7.71709Z' fill='%23000'/%3E%3C/svg%3E%0A");
+  }
 }
 
 @media screen and (min-width: 541px) {
