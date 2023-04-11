@@ -192,8 +192,8 @@ export default class MsOrder {
             setTimeout(() => {
                 const elements = document.querySelectorAll('[value="order/submit"]');
                 elements.forEach(el => {
-                    el.disabled = true;
-                    el.style.opacity = ".3";
+                    el.disabled = false;
+                    el.style.opacity = "";
                 });
             }, 3 * this.minishop.timeout);
 
