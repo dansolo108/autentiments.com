@@ -4698,15 +4698,16 @@ form.ajax_form span.error {
 
 .au-filter__range-box {
   min-width: 200px !important;
-  height: 63px;
-  padding: 14px;
+  /* height: 63px; */
+  /* padding: 14px; */
   position: relative;
   /* height: 40px; */
   /* margin-top: 16px; */
   /* margin-bottom: 6px; */
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
+  /* justify-content: flex-end; */
+  justify-content: flex-start;
 }
 
 .au-filter__slider-range {
@@ -4816,6 +4817,7 @@ label.au-filter__cost:last-child input {
     min-width: 120px;
     padding: 14px;
     background: #fff;
+    box-shadow: 0 8px 24px rgb(129 135 189 / 15%);
     position: absolute;
     bottom: -8px;
     left: -14px;
