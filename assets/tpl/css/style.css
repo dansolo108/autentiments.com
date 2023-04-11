@@ -4781,6 +4781,13 @@ label.au-filter__cost:last-child input {
   .au-filter__label {
     padding: 20px;
   }
+  .au-filter__label::before {
+    bottom: 20px;
+    left: 20px;
+  }
+  .au-filter__checkbox:checked + .au-filter__label::before {
+    width: calc(100% - 40px);
+  }
 }
 
 @media screen and (min-width: 541px) {
@@ -4814,6 +4821,9 @@ label.au-filter__cost:last-child input {
   --mm-spn-panel-offset: 100% !important;
 }
 
+.mm-ocd {
+  top: 118px;
+}
 
 #au-filters.mm-spn.mm-spn--navbar ul:before {
   display: none !important;
@@ -4839,7 +4849,7 @@ label.au-filter__cost:last-child input {
 
 #au-filters.mm-spn li:before {
   top: 50%;
-  right: 20px;
+  right: 26px;
   width: 9px;
   height: 9px;
   border-top: 1px solid;
