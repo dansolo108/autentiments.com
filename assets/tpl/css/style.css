@@ -4848,7 +4848,8 @@ label.au-filter__cost:last-child input {
   }
 
   .filters-button,
-  .au-filters__form > button {
+  .au-filters__show,
+  .au-filters__reset {
     display: none;
   }
 }
