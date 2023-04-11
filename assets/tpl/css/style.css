@@ -4874,7 +4874,7 @@ label.au-filter__cost:last-child input {
 }
 
 .mm-spn ul {
-  bottom: 145px;
+  bottom: 145px !important;
 }
 
 #au-filters.mm-spn.mm-spn--navbar[data-mm-spn-title="Фильтры и сортировка"]:before {
