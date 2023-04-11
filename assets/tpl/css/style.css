@@ -4860,9 +4860,9 @@ label.au-filter__cost:last-child input {
   top: 108px !important;
 }
 
-.mm-ocd__content {
+/* .mm-ocd__content {
   padding-bottom: 145px !important;
-}
+} */
 
 #au-filters.mm-spn.mm-spn--navbar ul:before {
   display: none !important;
@@ -4871,6 +4871,7 @@ label.au-filter__cost:last-child input {
 #au-filters.mm-spn.mm-spn--light {
   color: #000;
   background: #fff;
+  height: calc(100% - 145px);
 }
 
 #au-filters.mm-spn.mm-spn--navbar[data-mm-spn-title="Фильтры и сортировка"]:before {
