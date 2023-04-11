@@ -41,7 +41,9 @@
                                 <a href="#" data-sort="ms|price" data-dir="desc" data-default="desc" class="au-filter__label  au-filter__sort sort static-dir{if $sort == 'ms|price:desc'} active{/if}">{'stik_catalog_sort_expensive' | lexicon}</a>
                             </div>
                         </div>
-                        <button type="button">Показать товары</button>
+                        {if $total > 0}
+                        <button type="button">Показать товары ({$total})</button>
+                        {/if}
                         <button type="reset" class="au-filters__reset" form="mse2_filters">{'stik_catalog_reset_button' | lexicon}</button>
                     </form>
                     </nav>
