@@ -4784,6 +4784,7 @@ label.au-filter__cost:last-child input {
   .au-filter__label::before {
     bottom: 20px;
     left: 20px;
+    transform: none !important;
   }
   .au-filter__checkbox:checked + .au-filter__label::before {
     width: calc(100% - 40px);
