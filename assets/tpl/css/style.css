@@ -4767,8 +4767,9 @@ form.ajax_form span.error {
   width: 50%;
   font-weight: 300;
   font-size: 14px;
-  line-height: 20px;
-  color: #1a1714;
+  /* line-height: 20px; */
+  /* color: #1a1714; */
+  color: #000;
   border: none;
   outline: none;
 }
