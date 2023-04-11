@@ -101,6 +101,9 @@ class msOrderCustom extends msOrderHandler implements msOrderInterface
 
         // Adding products
         $cart = $this->ms2->cart->get();
+        if(!count($cart)){
+            return $this->error('ms2_order_err_empty');
+        }
         $products = array();
         foreach ($cart as $v) {
             if ($tmp = $this->modx->getObject('msProduct', array('id' => $v['product_id']))) {
