@@ -4715,9 +4715,7 @@ form.ajax_form span.error {
   /* top: 0;
   left: 0;
   right: 0; */
-  /* top: 18px; */
-  left: 14px;
-  right: 14px;
+  left: 6px;
 }
 .au-filter__slider-range.ui-widget.ui-widget-content {
   border: none;
@@ -4726,18 +4724,20 @@ form.ajax_form span.error {
 .au-filter__slider {
   /* width: calc(100% - 10px); */
   /* width: calc(100% - 28px); */
-  width: calc(100% - 5px);
+  width: calc(100% - 6px);
   /* height: 3px; */
   height: 1px;
   /* margin: 0 5px; */
-  background: #cccccc;
-  border-radius: 5px;
+  background: #ccc;
+  margin-top: 5px;
+  /* border-radius: 5px; */
 }
 
 .au-filter__range {
   /* height: 3px; */
-  height: 1px;
-  background: #1a1714;
+  /* background: #1a1714; */
+  height: 1px !important;
+  background: #000;
 }
 
 .au-filter__handle.ui-state-default {
@@ -4749,6 +4749,7 @@ form.ajax_form span.error {
   height: 11px !important;
   background: #000 !important;
   border: 1px solid #000 !important;
+  top: -5px !important;
 }
 
 .ui-slider-horizontal .ui-slider-handle {
