@@ -9,7 +9,25 @@
         <div class="au-category__head">
             <h1 class="au-h1  au-category__title">{$_modx->resource.pagetitle}</h1>
             <div class="au-filters__content">
-                <a href="#au-filters">Фильтры</a>
+                <a href="#au-filters">
+                    <svg width="20" height="13" viewBox="0 0 20 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <g clip-path="url(#clip0_91_315)">
+                          <path
+                            d="M5.5 13C6.88071 13 8 11.8807 8 10.5C8 9.11929 6.88071 8 5.5 8C4.11929 8 3 9.11929 3 10.5C3 11.8807 4.11929 13 5.5 13Z"
+                            fill="black" />
+                          <path
+                            d="M13.5 5C14.8807 5 16 3.88071 16 2.5C16 1.11929 14.8807 0 13.5 0C12.1193 0 11 1.11929 11 2.5C11 3.88071 12.1193 5 13.5 5Z"
+                            fill="black" />
+                          <path d="M0 10.5H20" stroke="black" />
+                          <path d="M0 2.5H20" stroke="black" />
+                        </g>
+                        <defs>
+                          <clipPath id="clip0_91_315">
+                            <rect width="20" height="13" fill="#fff" />
+                          </clipPath>
+                        </defs>
+                    </svg>
+                </a>
                     <nav id="au-filters">
                         <form action="{$_modx->resource.id | url}" method="post" id="mse2_filters" class="au-filters__form">
                         <ul class="au-filter__row">
