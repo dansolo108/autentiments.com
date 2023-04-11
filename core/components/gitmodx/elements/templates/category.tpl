@@ -77,7 +77,7 @@
             })
 
             const drawer = filters.offcanvas({
-                top: 118
+                top: "118px"
             })
 
             document.querySelector(`a[href="#au-filters"]`)
