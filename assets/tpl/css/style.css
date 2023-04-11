@@ -4814,6 +4814,11 @@ label.au-filter__cost:last-child input {
     z-index: -1;
     pointer-events: none;
   }
+
+  .au-filters__content > a,
+  .au-filters__form > button {
+    display: none;
+  }
 }
 
 :root {
