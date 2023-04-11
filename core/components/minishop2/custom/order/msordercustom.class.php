@@ -42,7 +42,6 @@ class msOrderCustom extends msOrderHandler implements msOrderInterface
                 $errors[] = $v;
             }
         }
-        $this->modx->log(1,var_export(1,1));
         if (!empty($errors)) {
             return $this->error('ms2_order_err_requires', $errors);
         }
@@ -51,9 +50,11 @@ class msOrderCustom extends msOrderHandler implements msOrderInterface
         if (empty($user_id) || !is_int($user_id)) {
             return $this->error(is_string($user_id) ? $user_id : 'ms2_err_user_nf');
         }
-        $this->modx->log(1,var_export(2,1));
 
         $cart_status = $this->ms2->cart->status();
+        if (empty($cart_status['total_count'])) {
+            return $this->error('ms2_order_err_empty');
+        }
         $delivery_cost = $this->getCost(false, true);
         $cart_cost = $this->getCost(true, true) - $delivery_cost;
         $createdon = date('Y-m-d H:i:s');
@@ -73,7 +74,6 @@ class msOrderCustom extends msOrderHandler implements msOrderInterface
                 $utms[$key] = $_COOKIE[$key];
             }
         }
-        $this->modx->log(1,var_export(3,1));
 
         $order->fromArray(array(
             'user_id' => $user_id,
@@ -97,13 +97,9 @@ class msOrderCustom extends msOrderHandler implements msOrderInterface
             'createdon' => $createdon,
         )));
         $order->addOne($address);
-        $this->modx->log(1,var_export(4,1));
 
         // Adding products
         $cart = $this->ms2->cart->get();
-        if(!count($cart)){
-            return $this->error('ms2_order_err_empty');
-        }
         $products = array();
         foreach ($cart as $v) {
             if ($tmp = $this->modx->getObject('msProduct', array('id' => $v['product_id']))) {
@@ -133,7 +129,6 @@ class msOrderCustom extends msOrderHandler implements msOrderInterface
         if (!$response['success']) {
             return $this->error($response['message']);
         }
-        $this->modx->log(1,var_export(5,1));
 
         if ($order->save()) {
             $response = $this->ms2->invokeEvent('msOnCreateOrder', array(
