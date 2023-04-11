@@ -4715,7 +4715,7 @@ form.ajax_form span.error {
   /* top: 0;
   left: 0;
   right: 0; */
-  top: 18px;
+  /* top: 18px; */
   left: 14px;
   right: 14px;
 }
@@ -4725,16 +4725,18 @@ form.ajax_form span.error {
 
 .au-filter__slider {
   /* width: calc(100% - 10px); */
-  width: calc(100% - 28px);
+  /* width: calc(100% - 28px); */
+  width: calc(100% - 5px);
   /* height: 3px; */
   height: 1px;
-  margin: 0 5px;
+  /* margin: 0 5px; */
   background: #cccccc;
   border-radius: 5px;
 }
 
 .au-filter__range {
-  height: 3px;
+  /* height: 3px; */
+  height: 1px;
   background: #1a1714;
 }
 
