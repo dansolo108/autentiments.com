@@ -163,9 +163,10 @@ export default class MsOrder {
         this.minishop.Message.close();
 
         this.callbacks.submit.before = () => {
-            const elements = this.order.querySelectorAll('button, a');
+            const elements = document.querySelectorAll('[value="order/submit"]');
             elements.forEach(el => {
-                el.disabled = false
+                el.disabled = true;
+                el.style.opacity = ".3";
             });
         };
 
@@ -189,9 +190,10 @@ export default class MsOrder {
 
         this.callbacks.submit.response.error = response => {
             setTimeout(() => {
-                const elements = this.order.querySelectorAll('button, a');
+                const elements = document.querySelectorAll('[value="order/submit"]');
                 elements.forEach(el => {
-                    el.disabled = false
+                    el.disabled = true;
+                    el.style.opacity = ".3";
                 });
             }, 3 * this.minishop.timeout);
 
