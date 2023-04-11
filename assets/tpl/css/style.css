@@ -4902,7 +4902,6 @@ label.au-filter__cost:last-child input {
 #au-filters.mm-spn.mm-spn--navbar:before,
 #au-filters.mm-spn li:before {
   border-top: 1px solid;
-  top: 50%;
   width: 9px;
   height: 9px;
   opacity: 1;
@@ -4914,6 +4913,7 @@ label.au-filter__cost:last-child input {
 
 #au-filters.mm-spn li:before {
   border-right: 1px solid;
+  top: 50%;
   right: 26px;
 }
 
