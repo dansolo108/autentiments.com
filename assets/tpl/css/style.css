@@ -4861,7 +4861,7 @@ label.au-filter__cost:last-child input {
 }
 
 .mm-spn--parent {
-  bottom: 145px;
+  bottom: 145px !important;
 }
 
 #au-filters.mm-spn.mm-spn--navbar ul:before {
@@ -4945,6 +4945,7 @@ label.au-filter__cost:last-child input {
   position: absolute;
   bottom: 60px;
   left: 20px;
+  z-index: 1;
 }
 
 .au-filters__show span,
@@ -4971,6 +4972,7 @@ label.au-filter__cost:last-child input {
   position: absolute;
   left: 20px;
   bottom: 20px;
+  z-index: 1;
 }
 
 @media (min-width: 768px) {
