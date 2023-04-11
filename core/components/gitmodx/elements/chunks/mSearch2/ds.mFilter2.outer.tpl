@@ -9,7 +9,7 @@
         <div class="au-category__head">
             <h1 class="au-h1  au-category__title">{$_modx->resource.pagetitle}</h1>
             <div class="au-filters__content">
-                <a href="#au-filters">
+                <a href="#au-filters" class="filters-button">
                     <svg width="20" height="13" viewBox="0 0 20 13" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <g clip-path="url(#clip0_91_315)">
                           <path

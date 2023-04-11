@@ -2007,6 +2007,7 @@ form.ajax_form span.error {
   flex-direction: column;
   align-items: center;
   padding-top: 16px;
+  position: relative;
 }
 
 .au-category__head .au-category__title {
@@ -4777,7 +4778,17 @@ label.au-filter__cost:last-child input {
   flex-direction: column;
 }
 
+.filters-button {
+  position: absolute;
+  z-index: 1;
+  top: 16px;
+  right: 20px;
+}
+
 @media screen and (max-width: 540px) {
+  .au-category__head {
+    padding-bottom: 20px;
+  }
   .au-filter__label {
     padding: 20px;
   }
@@ -4815,7 +4826,7 @@ label.au-filter__cost:last-child input {
     pointer-events: none;
   }
 
-  .au-filters__content > a,
+  .filters-button,
   .au-filters__form > button {
     display: none;
   }
