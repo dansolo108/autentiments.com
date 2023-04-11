@@ -4777,6 +4777,12 @@ label.au-filter__cost:last-child input {
   flex-direction: column;
 }
 
+@media screen and (max-width: 540px) {
+  .au-filter__label {
+    padding: 20px;
+  }
+}
+
 @media screen and (min-width: 541px) {
   .au-filters__form {
     display: flex;
@@ -4829,6 +4835,16 @@ label.au-filter__cost:last-child input {
 #au-filters.mm-spn li:after {
   margin-right: var(--mm-spn-item-indent);
   opacity: .6;
+}
+
+#au-filters.mm-spn li:before {
+  top: 50%;
+  right: 20px;
+  width: 9px;
+  height: 9px;
+  border-top: 1px solid;
+  border-right: 1px solid;
+  opacity: 1;
 }
 
 .au-filter__sort {

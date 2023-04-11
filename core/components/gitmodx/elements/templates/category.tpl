@@ -76,7 +76,9 @@
                 title: "Фильтры и сортировка"
             })
 
-            const drawer = filters.offcanvas()
+            const drawer = filters.offcanvas({
+                top: 118
+            })
 
             document.querySelector(`a[href="#au-filters"]`)
                 .addEventListener("click", (e) => {
