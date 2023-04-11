@@ -4662,6 +4662,7 @@ form.ajax_form span.error {
   /* text-transform: uppercase; */
   /* color: #1A1714;  */
   color: #000;
+  padding: 20px;
   cursor: pointer;
 }
 
@@ -4729,7 +4730,7 @@ form.ajax_form span.error {
   height: 1px;
   /* margin: 0 5px; */
   background: #ccc;
-  margin-top: 5px;
+  margin-block: 5px;
   /* border-radius: 5px; */
 }
 
@@ -4748,6 +4749,8 @@ form.ajax_form span.error {
   width: 6px !important;
   height: 11px !important;
   background: #000 !important;
+  padding: 0;
+  margin-left: -.5em;
   border: 1px solid #000 !important;
   top: -5px !important;
 }
@@ -4798,8 +4801,9 @@ label.au-filter__cost:last-child input {
   .au-category__head {
     padding-bottom: 20px;
   }
+  .au-filter__title,
   .au-filter__label {
-    padding: 20px;
+    padding: 20px !important;
   }
   .au-filter__label::before {
     bottom: 20px;
@@ -4879,6 +4883,10 @@ label.au-filter__cost:last-child input {
   opacity: .6;
 }
 
+.mm-spn .au-filter__col_costs li:after {
+  opacity: 0;
+}
+
 #au-filters.mm-spn li:before {
   top: 50%;
   right: 26px;
@@ -4889,7 +4897,8 @@ label.au-filter__cost:last-child input {
   opacity: 1;
 }
 
-#au-filters.mm-spn li.au-filter__item:before {
+#au-filters.mm-spn li.au-filter__item:before,
+#au-filters.mm-spn li.au-filter__col li:before {
   display: none !important;
 }
 
