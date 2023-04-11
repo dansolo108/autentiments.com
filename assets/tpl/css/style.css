@@ -4860,8 +4860,8 @@ label.au-filter__cost:last-child input {
   top: 108px !important;
 }
 
-.mm-spn--parent {
-  bottom: 145px !important;
+.mm-ocd__content {
+  padding-bottom: 145px !important;
 }
 
 #au-filters.mm-spn.mm-spn--navbar ul:before {
