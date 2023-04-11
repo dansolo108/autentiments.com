@@ -4965,6 +4965,9 @@ label.au-filter__cost:last-child input {
   /* text-transform: uppercase; */
   color: #000;
   /* color: #1a1714; */
+  position: absolute;
+  left: 20px;
+  bottom: 20px;
 }
 
 @media (min-width: 768px) {
