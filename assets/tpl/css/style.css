@@ -4933,6 +4933,22 @@ label.au-filter__cost:last-child input {
   background: #1a1714;
 }
 
+.au-filters__show {
+  width: calc(100% - 40px);
+  height: 48px;
+  color: #fff;
+  font-size: 14px;
+  background: #1A2026;
+  position: absolute;
+  bottom: 60px;
+  left: 20px;
+}
+
+.au-filters__show span {
+  display: inline !important;
+  padding: 0;
+}
+
 .au-filters__reset {
   width: auto;
   margin: 0 auto;

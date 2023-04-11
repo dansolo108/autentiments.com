@@ -34,7 +34,7 @@
                             {$filters}
                         </ul>
                         {if $total > 0}
-                        <button type="button">Показать товары (<span id="mse2_total">{$total ?: 0}</span>)</button>
+                        <button type="button" class="au-filters__show">Показать товары (<span id="mse2_total">{$total ?: 0}</span>)</button>
                         {/if}
                         <button type="reset" class="au-filters__reset" form="mse2_filters">{'stik_catalog_reset_button' | lexicon}</button>
                     </form>
