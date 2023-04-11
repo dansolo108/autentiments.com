@@ -4899,14 +4899,18 @@ label.au-filter__cost:last-child input {
   opacity: 0 !important;
 }
 
+.mm-spn.mm-spn--navbar:before,
 #au-filters.mm-spn li:before {
   top: 50%;
-  right: 26px;
   width: 9px;
   height: 9px;
   border-top: 1px solid;
   border-right: 1px solid;
   opacity: 1;
+}
+
+#au-filters.mm-spn li:before {
+  right: 26px;
 }
 
 #au-filters.mm-spn li.au-filter__item:before,
