@@ -4871,7 +4871,10 @@ label.au-filter__cost:last-child input {
 #au-filters.mm-spn.mm-spn--light {
   color: #000;
   background: #fff;
-  height: calc(100% - 145px);
+}
+
+.mm-spn ul {
+  bottom: 145px;
 }
 
 #au-filters.mm-spn.mm-spn--navbar[data-mm-spn-title="Фильтры и сортировка"]:before {
