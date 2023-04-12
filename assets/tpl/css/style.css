@@ -4750,7 +4750,7 @@ form.ajax_form span.error {
   height: 11px !important;
   background: #000 !important;
   padding: 0;
-  margin-left: -.5em !important;
+  margin-left: -0.5em !important;
   border: 1px solid #000 !important;
   top: -5px !important;
 }
@@ -4831,7 +4831,7 @@ label.au-filter__cost:last-child input {
   .au-filters__form {
     display: flex;
   }
-  
+
   .au-filter__title + * {
     min-width: 120px;
     padding: 14px;
@@ -4842,25 +4842,29 @@ label.au-filter__cost:last-child input {
     left: -14px;
     z-index: 11;
     transform: translateY(100%);
-    transition: opacity .3s ease-in-out;
+    transition: opacity 0.3s ease-in-out;
   }
 
   .au-filters__reset {
+    color: #999696;
+    width: auto;
     margin-left: 60px;
+    position: relative;
+    left: 0;
   }
-  
+
   .au-filter__col:not(.actived) .au-filter__title + * {
     opacity: 0;
     z-index: -1;
     pointer-events: none;
   }
-  
+
   .au-filter__list::-webkit-scrollbar {
     width: 3px;
   }
 
   .au-filter__list::-webkit-scrollbar-track {
-    background: #EDEDED;
+    background: #ededed;
     border-radius: 0;
   }
 
@@ -4905,7 +4909,7 @@ label.au-filter__cost:last-child input {
   bottom: 145px !important;
 }
 
-#au-filters.mm-spn.mm-spn--navbar[data-mm-spn-title="Фильтры и сортировка"]:before {
+#au-filters.mm-spn.mm-spn--navbar[data-mm-spn-title='Фильтры и сортировка']:before {
   opacity: 0;
 }
 
@@ -4917,7 +4921,7 @@ label.au-filter__cost:last-child input {
 
 #au-filters.mm-spn li:after {
   margin-right: var(--mm-spn-item-indent);
-  opacity: .6;
+  opacity: 0.6;
 }
 
 .mm-spn .au-filter__col_costs li:after {
@@ -5002,7 +5006,7 @@ label.au-filter__cost:last-child input {
 .au-filters__show {
   height: 48px;
   color: #fff;
-  background: #1A2026;
+  background: #1a2026;
   bottom: 60px;
 }
 
