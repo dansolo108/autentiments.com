@@ -637,6 +637,7 @@ var mSearch2 = {
         for (var i in params) {
             if (params.hasOwnProperty(i) && this.options.reset_skip.indexOf(i) === -1) {
                 this.btn_reset.removeClass('hidden');
+                this.btn_reset.innerHTML += ` (${params.length})`;
                 break;
             }
         }
