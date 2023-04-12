@@ -48,10 +48,10 @@
 
     const filtersClickListener = event => {
         const target = event.target
-        if (!target.matches(".au-filter__title")) return
-        target.nextElementSibling.classList.toggle("actived")
-        hideOnClickOutside(target.nextElementSibling)
-        console.log(target.nextElementSibling)
+        if (target.matches(".au-filter__title")) {
+            target.nextElementSibling.classList.toggle("actived")
+            hideOnClickOutside(target.nextElementSibling)
+        }
     }
 
     function hideOnClickOutside(element) {
