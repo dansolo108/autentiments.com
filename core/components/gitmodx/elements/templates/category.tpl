@@ -46,24 +46,40 @@
 <script>
     const filtersNav = document.getElementById("mse2_filters");
 
-    function filterDeskFunc(e) {
-        const target = e.target
-        if (target.matches(".au-filter__title")) {
-            let parent = target.parentNode
-            parent.classList.toggle("actived")
-        }
+    const filtersClickListener = event => {
+        const target = event.target
+        if (!target.matches(".au-filter__col")) return
+        target.classList.toggle("actived")
+        hideOnClickOutside(target)
     }
+
+    function hideOnClickOutside(element) {
+        const outsideClickListener = event => {
+            if (event.target.closest(".au-filter__col > ul") === null) {
+            element.classList.remove("actived")
+            removeClickListener();
+            }
+        }
+
+        const removeClickListener = () => {
+            document.removeEventListener('click', outsideClickListener);
+        }
+
+        document.addEventListener('click', outsideClickListener);
+    }
+
+    filtersNav.addEventListener("click", filtersClickListener, false)
 
     window.addEventListener("resize", (e) => {
         let w = window.innerWidth;
         if (w >= 540) {
-            filtersNav.addEventListener("click", filterDeskFunc, false)
+            filtersNav.addEventListener("click", filtersClickListener, false)
         } else {
-            filtersNav.removeEventListener("click", filterDeskFunc, false)
+            filtersNav.removeEventListener("click", filtersClickListener, false)
         }
     }, true);
 
-    filtersNav.addEventListener("click", filterDeskFunc, false)
+    
 
     document.addEventListener(
         "DOMContentLoaded", () => {
@@ -89,7 +105,7 @@
                     e.preventDefault()
                     drawer.close()
                 })
-                
+
             document.querySelector(".au-filters__close")
                 .addEventListener("click", (e) => {
                     e.preventDefault()
