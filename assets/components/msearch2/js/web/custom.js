@@ -14,6 +14,7 @@ var mSearch2 = {
         filters: '#mse2_filters',
         filter_title: '.filter_title',
         filter_wrapper: '.au-filter__col',
+        filters_counter: '#f_counter',
 
         pagination: '.mse2_pagination',
         pagination_link: '.mse2_pagination a',
@@ -633,20 +634,18 @@ var mSearch2 = {
             this.loading = true;
         }
 
+        let counter = 0
+
         this.btn_reset.addClass('hidden');
         for (var i in params) {
             if (params.hasOwnProperty(i) && this.options.reset_skip.indexOf(i) === -1) {
+                counter += params[i].split(mse2Config['values_delimeter']).length
                 this.btn_reset.removeClass('hidden');
-                let counter = 0
-                for (let option of Object.keys(params)) {
-                    optionsCount = params[option].split(mse2Config['values_delimeter']).length
-                    counter += optionsCount
-                }
-                let span = document.getElementById('f_counter')
-                if (span) {span.innerHTML = counter}
                 break;
             }
         }
+
+        this.options.filters_counter.innerHTML = counter
 
         if (!params || !Object.keys(params).length) {
             params = this.getFilters();
