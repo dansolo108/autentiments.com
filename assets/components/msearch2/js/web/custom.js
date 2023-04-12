@@ -637,8 +637,15 @@ var mSearch2 = {
         for (var i in params) {
             if (params.hasOwnProperty(i) && this.options.reset_skip.indexOf(i) === -1) {
                 this.btn_reset.removeClass('hidden');
-                console.log(Object.keys(params).length)
+                let counter = 0
+
+                //console.log(Object.keys(params).length)
                 console.log(params)
+                for (let option of Object.keys(params)) {
+                    optionsCount = params[option].split.length
+                    counter += optionsCount
+                }
+                console.log(counter)
                 // this.btn_reset.innerHTML += ` (${params.length})`;
                 break;
             }
