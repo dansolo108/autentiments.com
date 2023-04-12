@@ -51,6 +51,7 @@
         if (!target.matches(".au-filter__title")) return
         target.nextElementSibling.classList.toggle("actived")
         hideOnClickOutside(target.nextElementSibling)
+        console.log(target.nextElementSibling)
     }
 
     function hideOnClickOutside(element) {
