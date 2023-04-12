@@ -4794,7 +4794,8 @@ label.au-filter__cost:last-child input {
   right: 20px;
 }
 
-.filters-button svg {
+.filters-button svg,
+.au-filters__close svg {
   vertical-align: middle;
 }
 
@@ -4957,6 +4958,7 @@ label.au-filter__cost:last-child input {
 .au-filters__close,
 .au-filters__show,
 .au-filters__reset {
+  padding: 0;
   position: absolute;
   z-index: 1;
 }
@@ -4970,7 +4972,7 @@ label.au-filter__cost:last-child input {
 }
 
 .au-filters__close {
-  top: 23px;
+  top: 19px;
   right: 20px;
 }
 
@@ -4989,8 +4991,6 @@ label.au-filter__cost:last-child input {
 
 .au-filters__reset {
   color: #000;
-  font-family: 'Circe';
-  padding: 0;
   margin: 0 auto;
   bottom: 20px;
   /* width: auto; */
