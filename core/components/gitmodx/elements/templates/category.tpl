@@ -44,43 +44,43 @@
 
 {'
 <script>
-    const filtersNav = document.getElementById("mse2_filters")
+    // const filtersNav = document.getElementById("mse2_filters")
 
-    const filtersClickListener = event => {
-        const target = event.target
-        if (target.matches(".au-filter__title")) {
-            target.nextElementSibling.classList.toggle("actived")
-            hideOnClickOutside(target.nextElementSibling)
-        }
-    }
+    // const filtersClickListener = event => {
+    //     const target = event.target
+    //     if (target.matches(".au-filter__title")) {
+    //         target.nextElementSibling.classList.toggle("actived")
+    //         hideOnClickOutside(target.nextElementSibling)
+    //     }
+    // }
 
-    function hideOnClickOutside(element) {
-        const outsideClickListener = event => {
-            if (!element.contains(event.target) && isVisible(element)) {
-            element.classList.remove("actived")
-            removeClickListener()
-            }
-        }
+    // function hideOnClickOutside(element) {
+    //     const outsideClickListener = event => {
+    //         if (!element.contains(event.target) && isVisible(element)) {
+    //         element.classList.remove("actived")
+    //         removeClickListener()
+    //         }
+    //     }
 
-        const removeClickListener = () => {
-            document.removeEventListener("click", outsideClickListener)
-        }
+    //     const removeClickListener = () => {
+    //         document.removeEventListener("click", outsideClickListener)
+    //     }
 
-        document.addEventListener("click", outsideClickListener)
-    }
+    //     document.addEventListener("click", outsideClickListener)
+    // }
 
-    const isVisible = elem => !!elem && !!( elem.offsetWidth || elem.offsetHeight || elem.getClientRects().length )
+    // const isVisible = elem => !!elem && !!( elem.offsetWidth || elem.offsetHeight || elem.getClientRects().length )
 
-    filtersNav.addEventListener("click", filtersClickListener, false)
+    // filtersNav.addEventListener("click", filtersClickListener, false)
 
-    window.addEventListener("resize", (e) => {
-        let w = window.innerWidth;
-        if (w >= 540) {
-            filtersNav.addEventListener("click", filtersClickListener, false)
-        } else {
-            filtersNav.removeEventListener("click", filtersClickListener, false)
-        }
-    }, true);
+    // window.addEventListener("resize", (e) => {
+    //     let w = window.innerWidth;
+    //     if (w >= 540) {
+    //         filtersNav.addEventListener("click", filtersClickListener, false)
+    //     } else {
+    //         filtersNav.removeEventListener("click", filtersClickListener, false)
+    //     }
+    // }, true);
 
     
 
