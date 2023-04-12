@@ -4807,6 +4807,9 @@ label.au-filter__cost:last-child input {
   .au-filter__label {
     padding: 20px !important;
   }
+  .au-filters__reset {
+    bottom: 20px;
+  }
   .au-filter__label::before {
     bottom: 20px;
     left: 20px;
@@ -4827,7 +4830,6 @@ label.au-filter__cost:last-child input {
 @media screen and (min-width: 541px) {
   .au-filters__form {
     display: flex;
-    flex-wrap: wrap;
   }
   
   .au-filter__title + * {
@@ -4841,6 +4843,10 @@ label.au-filter__cost:last-child input {
     z-index: 11;
     transform: translateY(100%);
     transition: opacity .3s ease-in-out;
+  }
+
+  .au-filters__reset {
+    margin-left: 60px;
   }
   
   .au-filter__col:not(.actived) .au-filter__title + * {
@@ -4866,8 +4872,7 @@ label.au-filter__cost:last-child input {
 
   .filters-button,
   .au-filters__close,
-  .au-filters__show,
-  .au-filters__reset {
+  .au-filters__show {
     display: none !important;
   }
 }
@@ -5009,8 +5014,6 @@ label.au-filter__cost:last-child input {
 
 .au-filters__reset {
   color: #000;
-  margin: 0 auto;
-  bottom: 20px;
   /* width: auto; */
   /* padding: 14px 20px 30px; */
   /* font-size: 12px; */
@@ -5028,8 +5031,8 @@ label.au-filter__cost:last-child input {
     padding-top: 10px;
   }
   .au-filters__reset {
-    margin-left: 0;
-    padding: 30px 0;
+    /* margin-left: 0;
+    padding: 30px 0; */
   }
 }
 
@@ -5085,10 +5088,10 @@ label.au-filter__cost:last-child input {
     width: 100%;
   }
   .au-filters__reset {
-    position: absolute;
+    /* position: absolute;
     right: 80px;
     top: 23px;
-    padding: 0;
+    padding: 0; */
   }
 }
 
@@ -5109,7 +5112,7 @@ label.au-filter__cost:last-child input {
     /* padding-right: 20%;  */
   }
   .au-filters__reset {
-    right: 160px;
+    /* right: 160px; */
   }
 }
 

@@ -4,7 +4,7 @@
         <div class="au-cart__cart">
             <h3 class="au-h1  au-cart__title">
                 {'stik_basket_modal_title' | lexicon}
-                <span class="au-cart__count ms2_total_count">{$total.count}</span>
+                <span class="au-cart__count ms2_total_count">({$total.count})</span>
             </h3>
             {if $products?}
                 <ul class="au-cart__cards">
