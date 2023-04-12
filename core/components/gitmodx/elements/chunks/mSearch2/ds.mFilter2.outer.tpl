@@ -40,7 +40,7 @@
                             </svg>
                         </button>
                         <button type="button" class="au-filters__show">Показать товары (<span id="mse2_total">{$total ?: 0}</span>)</button>
-                        <button type="reset" class="au-filters__reset" form="mse2_filters">{'stik_catalog_reset_button' | lexicon}</button>
+                        <button type="reset" class="au-filters__reset hidden" form="mse2_filters">{'stik_catalog_reset_button' | lexicon} (<span id="f_counter"></span>)</button>
                     </form>
                     </nav>
             </div>

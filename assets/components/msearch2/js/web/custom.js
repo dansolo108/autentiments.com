@@ -638,15 +638,12 @@ var mSearch2 = {
             if (params.hasOwnProperty(i) && this.options.reset_skip.indexOf(i) === -1) {
                 this.btn_reset.removeClass('hidden');
                 let counter = 0
-
-                //console.log(Object.keys(params).length)
-                console.log(params)
                 for (let option of Object.keys(params)) {
-                    optionsCount = params[option].split(',').length
+                    optionsCount = params[option].split(mse2Config['values_delimeter']).length
                     counter += optionsCount
                 }
-                console.log(counter)
-                // this.btn_reset.innerHTML += ` (${params.length})`;
+                span = this.btn_reset.getElementById('f_counter')
+                span.innerHTML = counter;
                 break;
             }
         }
