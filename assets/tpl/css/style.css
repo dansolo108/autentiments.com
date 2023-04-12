@@ -4889,6 +4889,8 @@ label.au-filter__cost:last-child input {
 }
 
 #au-filters.mm-spn.mm-spn--navbar:after {
+  height: 56px;
+  line-height: 56px;
   opacity: 1;
 }
 
