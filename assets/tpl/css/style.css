@@ -4993,7 +4993,7 @@ label.au-filter__cost:last-child input {
     left: -14px;
     z-index: 11;
     transform: translateY(100%);
-    transition: opacity 0.3s ease-in-out;
+    transition: opacity .3s ease-in-out;
   }
 
   .au-filters__reset {
@@ -5005,7 +5005,7 @@ label.au-filter__cost:last-child input {
     left: 0;
   }
 
-  .au-filter__col > ul.actived {
+  .au-filter__col > ul:not(.actived) {
     opacity: 0;
     z-index: -1;
     pointer-events: none;
