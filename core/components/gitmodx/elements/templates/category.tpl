@@ -83,6 +83,18 @@
                     e.preventDefault()
                     drawer.open()
                 })
+
+            document.querySelector(".au-filters__show")
+                .addEventListener("click", (e) => {
+                    e.preventDefault()
+                    drawer.close()
+                })
+                
+            document.querySelector(".au-filters__close")
+                .addEventListener("click", (e) => {
+                    e.preventDefault()
+                    drawer.close()
+                })
         }
     )
 </script>

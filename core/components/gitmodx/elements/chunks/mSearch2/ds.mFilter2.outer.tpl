@@ -33,9 +33,13 @@
                         <ul class="au-filter__row">
                             {$filters}
                         </ul>
-                        {if $total > 0}
+                        <button type="button" class="au-filters__close">
+                            <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <line x1="0.648505" y1="10.9579" x2="11.3165" y2="0.413017" stroke="#000"/>
+                                <line x1="11.2548" y1="11.0195" x2="0.709892" y2="0.351478" stroke="#000"/>
+                            </svg>
+                        </button>
                         <button type="button" class="au-filters__show">Показать товары (<span id="mse2_total">{$total ?: 0}</span>)</button>
-                        {/if}
                         <button type="reset" class="au-filters__reset" form="mse2_filters">{'stik_catalog_reset_button' | lexicon}</button>
                     </form>
                     </nav>
