@@ -14,7 +14,6 @@ var mSearch2 = {
         filters: '#mse2_filters',
         filter_title: '.filter_title',
         filter_wrapper: '.au-filter__col',
-        filters_counter: '#f_counter',
 
         pagination: '.mse2_pagination',
         pagination_link: '.mse2_pagination a',
@@ -641,15 +640,6 @@ var mSearch2 = {
                 break;
             }
         }
-
-        let counter = 0
-
-        for (let option of Object.keys(params)) {
-            optionsCount = params[option].split(mse2Config['values_delimeter']).length
-            counter += optionsCount 
-        }
-
-        this.options['filters_counter'].innerHTML = counter
 
         if (!params || !Object.keys(params).length) {
             params = this.getFilters();
