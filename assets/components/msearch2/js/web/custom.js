@@ -642,7 +642,7 @@ var mSearch2 = {
                     optionsCount = params[option].split(mse2Config['values_delimeter']).length
                     counter += optionsCount
                 }
-                span = document.getElementById('f_counter')
+                let span = document.getElementById('f_counter')
                 if (span) {span.innerHTML = counter}
                 break;
             }
