@@ -4799,88 +4799,6 @@ label.au-filter__cost:last-child input {
   vertical-align: middle;
 }
 
-@media screen and (max-width: 540px) {
-  .au-category__head {
-    padding-bottom: 20px;
-  }
-  .au-filter__title,
-  .au-filter__label {
-    padding: 20px !important;
-  }
-  .au-filters__reset {
-    bottom: 20px;
-  }
-  .au-filter__label::before {
-    bottom: 20px;
-    left: 20px;
-    transform: none !important;
-  }
-  .au-filter__checkbox:checked + .au-filter__label::before {
-    width: calc(100% - 40px);
-  }
-  .au-filter__checkbox:checked + .au-filter__label::after {
-    content: url("data:image/svg+xml,%3Csvg width='12' height='8' viewBox='0 0 12 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M4 7.71709L11.01 0.707107L10.3029 0L4.00519 6.29769L0.707072 2.99989L0 3.70703L3.29808 7.00479L3.29289 7.00998L4 7.71709Z' fill='%23000'/%3E%3C/svg%3E%0A");
-    width: 12px;
-    height: 8px;
-    position: absolute;
-    left: calc(100vw - 30px);
-  }
-}
-
-@media screen and (min-width: 541px) {
-  .au-filters__form {
-    display: flex;
-  }
-
-  .au-filter__title + * {
-    min-width: 120px;
-    padding: 14px;
-    background: #fff;
-    box-shadow: 0 8px 24px rgb(129 135 189 / 15%);
-    position: absolute;
-    bottom: -8px;
-    left: -14px;
-    z-index: 11;
-    transform: translateY(100%);
-    transition: opacity 0.3s ease-in-out;
-  }
-
-  .au-filters__reset {
-    color: #999696;
-    width: auto;
-    margin-left: 60px;
-    position: relative;
-    left: 0;
-  }
-
-  .au-filter__col:not(.actived) .au-filter__title + * {
-    opacity: 0;
-    z-index: -1;
-    pointer-events: none;
-  }
-
-  .au-filter__list::-webkit-scrollbar {
-    width: 3px;
-  }
-
-  .au-filter__list::-webkit-scrollbar-track {
-    background: #ededed;
-    border-radius: 0;
-  }
-
-  .au-filter__list::-webkit-scrollbar-thumb {
-    background-color: #999696;
-    border-radius: 0;
-    border: 0;
-  }
-
-  .filters-button,
-  .au-filters__close,
-  .au-filters__show {
-    display: none !important;
-  }
-}
-
 :root {
   --mm-ocd-width: 100% !important;
   --mm-ocd-max-width: 100% !important;
@@ -5025,6 +4943,88 @@ label.au-filter__cost:last-child input {
   /* letter-spacing: 0.06em; */
   /* text-transform: uppercase; */
   /* color: #1a1714; */
+}
+
+@media screen and (max-width: 540px) {
+  .au-category__head {
+    padding-bottom: 20px;
+  }
+  .au-filter__title,
+  .au-filter__label {
+    padding: 20px !important;
+  }
+  .au-filters__reset {
+    bottom: 20px;
+  }
+  .au-filter__label::before {
+    bottom: 20px;
+    left: 20px;
+    transform: none !important;
+  }
+  .au-filter__checkbox:checked + .au-filter__label::before {
+    width: calc(100% - 40px);
+  }
+  .au-filter__checkbox:checked + .au-filter__label::after {
+    content: url("data:image/svg+xml,%3Csvg width='12' height='8' viewBox='0 0 12 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M4 7.71709L11.01 0.707107L10.3029 0L4.00519 6.29769L0.707072 2.99989L0 3.70703L3.29808 7.00479L3.29289 7.00998L4 7.71709Z' fill='%23000'/%3E%3C/svg%3E%0A");
+    width: 12px;
+    height: 8px;
+    position: absolute;
+    left: calc(100vw - 30px);
+  }
+}
+
+@media screen and (min-width: 541px) {
+  .au-filters__form {
+    display: flex;
+  }
+
+  .au-filter__title + * {
+    min-width: 120px;
+    padding: 14px;
+    background: #fff;
+    box-shadow: 0 8px 24px rgb(129 135 189 / 15%);
+    position: absolute;
+    bottom: -8px;
+    left: -14px;
+    z-index: 11;
+    transform: translateY(100%);
+    transition: opacity 0.3s ease-in-out;
+  }
+
+  .au-filters__reset {
+    color: #999696;
+    width: auto;
+    margin-left: 60px;
+    position: relative;
+    left: 0;
+  }
+
+  .au-filter__col:not(.actived) .au-filter__title + * {
+    opacity: 0;
+    z-index: -1;
+    pointer-events: none;
+  }
+
+  .au-filter__list::-webkit-scrollbar {
+    width: 3px;
+  }
+
+  .au-filter__list::-webkit-scrollbar-track {
+    background: #ededed;
+    border-radius: 0;
+  }
+
+  .au-filter__list::-webkit-scrollbar-thumb {
+    background-color: #999696;
+    border-radius: 0;
+    border: 0;
+  }
+
+  .filters-button,
+  .au-filters__close,
+  .au-filters__show {
+    display: none !important;
+  }
 }
 
 @media (min-width: 768px) {
