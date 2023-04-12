@@ -62,10 +62,10 @@
         }
 
         const removeClickListener = () => {
-            document.removeEventListener('click', outsideClickListener);
+            document.removeEventListener("click", outsideClickListener);
         }
 
-        document.addEventListener('click', outsideClickListener);
+        document.addEventListener("click", outsideClickListener);
     }
 
     filtersNav.addEventListener("click", filtersClickListener, false)
