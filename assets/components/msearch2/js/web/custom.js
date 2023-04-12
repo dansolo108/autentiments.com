@@ -639,13 +639,14 @@ var mSearch2 = {
         this.btn_reset.addClass('hidden');
         for (var i in params) {
             if (params.hasOwnProperty(i) && this.options.reset_skip.indexOf(i) === -1) {
+                console.log(params[i])
                 counter += params[i].split(mse2Config['values_delimeter']).length
                 this.btn_reset.removeClass('hidden');
                 break;
             }
         }
 
-        this.options.filters_counter.innerHTML = counter
+        this.options['filters_counter'].innerHTML = counter
 
         if (!params || !Object.keys(params).length) {
             params = this.getFilters();
