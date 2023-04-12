@@ -642,7 +642,7 @@ var mSearch2 = {
                 //console.log(Object.keys(params).length)
                 console.log(params)
                 for (let option of Object.keys(params)) {
-                    optionsCount = params[option].split.length
+                    optionsCount = params[option].split(',').length
                     counter += optionsCount
                 }
                 console.log(counter)
