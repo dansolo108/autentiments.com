@@ -44,29 +44,31 @@
 
 {'
 <script>
-    const filtersNav = document.getElementById("mse2_filters");
+    const filtersNav = document.getElementById("mse2_filters")
 
     const filtersClickListener = event => {
         const target = event.target
-        if (!target.matches(".au-filter__col")) return
-        target.classList.toggle("actived")
-        hideOnClickOutside(target)
+        if (!target.matches(".au-filter__title")) return
+        target.nextElementSibling.classList.toggle("actived")
+        hideOnClickOutside(target.nextElementSibling)
     }
 
     function hideOnClickOutside(element) {
         const outsideClickListener = event => {
-            if (event.target.closest(".au-filter__col > ul") === null) {
+            if (!element.contains(event.target) && isVisible(element)) {
             element.classList.remove("actived")
-            removeClickListener();
+            removeClickListener()
             }
         }
 
         const removeClickListener = () => {
-            document.removeEventListener("click", outsideClickListener);
+            document.removeEventListener("click", outsideClickListener)
         }
 
-        document.addEventListener("click", outsideClickListener);
+        document.addEventListener("click", outsideClickListener)
     }
+
+    const isVisible = elem => !!elem && !!( elem.offsetWidth || elem.offsetHeight || elem.getClientRects().length )
 
     filtersNav.addEventListener("click", filtersClickListener, false)
 

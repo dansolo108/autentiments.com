@@ -4983,7 +4983,7 @@ label.au-filter__cost:last-child input {
     width: auto;
   }
 
-  .au-filter__title + * {
+  .au-filter__col > ul {
     min-width: 120px;
     padding: 14px;
     background: #fff;
@@ -5005,7 +5005,7 @@ label.au-filter__cost:last-child input {
     left: 0;
   }
 
-  .au-filter__col:not(.actived) .au-filter__title + * {
+  .au-filter__col > ul.actived {
     opacity: 0;
     z-index: -1;
     pointer-events: none;
