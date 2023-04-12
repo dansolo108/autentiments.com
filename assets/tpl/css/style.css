@@ -4848,8 +4848,24 @@ label.au-filter__cost:last-child input {
     z-index: -1;
     pointer-events: none;
   }
+  
+  .au-filter__list::-webkit-scrollbar {
+    width: 3px;
+  }
+
+  .au-filter__list::-webkit-scrollbar-track {
+    background: #EDEDED;
+    border-radius: 0;
+  }
+
+  .au-filter__list::-webkit-scrollbar-thumb {
+    background-color: #999696;
+    border-radius: 0;
+    border: 0;
+  }
 
   .filters-button,
+  .au-filters__close,
   .au-filters__show,
   .au-filters__reset {
     display: none !important;
@@ -5060,11 +5076,11 @@ label.au-filter__cost:last-child input {
     max-height: 184px;
     overflow-y: auto;
   }
-  .au-filter__list::-webkit-scrollbar {
+  /* .au-filter__list::-webkit-scrollbar {
     position: absolute;
     max-width: 0px;
     max-height: 0;
-  }
+  } */
   .au-filter__item .au-filter__label:hover::before {
     width: 100%;
   }
