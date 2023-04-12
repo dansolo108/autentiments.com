@@ -638,6 +638,7 @@ var mSearch2 = {
             if (params.hasOwnProperty(i) && this.options.reset_skip.indexOf(i) === -1) {
                 this.btn_reset.removeClass('hidden');
                 console.log(Object.keys(params).length)
+                console.log(params)
                 // this.btn_reset.innerHTML += ` (${params.length})`;
                 break;
             }
