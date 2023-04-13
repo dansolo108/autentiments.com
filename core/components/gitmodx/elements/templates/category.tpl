@@ -59,6 +59,10 @@
         }
     }
 
+    if (window.innerWidth > 540) {
+        filters.addEventListener("click", deskFilters, false)
+    }
+
     window.addEventListener("resize", function(event) {
         if (window.innerWidth > 540) {
             filters.addEventListener("click", deskFilters, false)
@@ -70,10 +74,6 @@
 
     document.addEventListener(
         "DOMContentLoaded", () => {
-
-            if (window.innerWidth > 540) {
-                filters.addEventListener("click", deskFilters, false)
-            }
 
             const filters = new MmenuLight(
                 document.querySelector("#au-filters"),
