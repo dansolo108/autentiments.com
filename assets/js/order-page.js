@@ -73,9 +73,7 @@ document.addEventListener("change", e => {
     lastChangeVal = input.value;
 })
 
-let btn = document.createElement("div");
-btn.classList.add("auten-modal__close","auten-modal__button");
-btn.textContent = "Выбрать этот пункт";
+let modalBtn = document.querySelector(".auten-modal__close.auten-modal__button")
 
 // выбор пвз
 document.addEventListener("radio-active", e => {
@@ -83,7 +81,7 @@ document.addEventListener("radio-active", e => {
     if(!point)
         return;
     point?.classList.add(`active`);
-    point.parentNode.append(btn);
+    modalBtn.style.display = "block";
     let delivery = document.querySelector(`input[name=delivery]:checked`);
     let method = delivery.closest(`.auten-delivery-method`);
     // method?.querySelector(`.auten-delivery-method__pickup`)?.classList.add("outline");
@@ -91,6 +89,7 @@ document.addEventListener("radio-active", e => {
 })
 document.addEventListener("radio-inactive", e => {
     e.target.closest(`.auten-pickup-point`)?.classList.remove(`active`);
+    modalBtn.style.display = "none";
 })
 document.addEventListener("change", e => {
     let method = e.target.closest(`.auten-delivery-method`);
