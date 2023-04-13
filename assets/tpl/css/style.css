@@ -4984,6 +4984,7 @@ label.au-filter__cost:last-child input {
   }
 
   .au-filter__col > ul {
+    display: none;
     min-width: 120px;
     padding: 14px;
     background: #fff;
