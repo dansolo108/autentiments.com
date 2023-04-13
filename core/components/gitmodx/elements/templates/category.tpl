@@ -51,7 +51,7 @@
         let trigger = e.target,
         displayed = trigger.querySelector(`[style*="display: block"]`)
 
-        if (trigger.contains(displayed)) {
+        if (trigger.closest(".au-filter__row").contains(displayed)) {
             displayed.style.display = "none"
         }
 
