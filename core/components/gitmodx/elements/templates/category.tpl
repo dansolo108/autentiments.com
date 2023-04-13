@@ -75,7 +75,7 @@
         "DOMContentLoaded", () => {
 
             const filters = new MmenuLight(
-                auFilters,
+                document.querySelector("#au-filters"),
                 "(max-width: 540px)"
             )
             const filtersNav = filters.navigation({
