@@ -87,10 +87,9 @@ document.addEventListener("radio-active",e=>{
     // method?.querySelector(`.auten-delivery-method__pickup`)?.classList.add("outline");
     method.querySelector(`.auten-delivery-method__pickup`).textContent = "Изменить пункт";
 })
-document.addEventListener("radio-inactive",e=> {
-    let target = e.target.closest(`.auten-pickup-point`)
-    target?.classList.remove(`active`);
-    target.nextElementSibling?.remove();
+document.addEventListener("radio-inactive",e => {
+    e.target.closest(`.auten-pickup-point`)?.classList.remove(`active`);
+    e.target.closest(`.auten-pickup-point`)?.nextElementSibling?.remove();
 })
 document.addEventListener("change",e=>{
     let method = e.target.closest(`.auten-delivery-method`);
