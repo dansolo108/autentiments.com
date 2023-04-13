@@ -52,7 +52,7 @@
         displayed = trigger.querySelector(`[style*="display: block"]`)
 
         if (trigger.contains(displayed) && !trigger.matches(".au-filter__title")) {
-            displayed.style.display = none
+            displayed.style.display = "none"
         }
 
         if (trigger.matches(".au-filter__title")) {
