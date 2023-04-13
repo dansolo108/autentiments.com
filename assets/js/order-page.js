@@ -89,7 +89,7 @@ document.addEventListener("radio-active",e=>{
 })
 document.addEventListener("radio-inactive",e=> {
     let target = e.target.closest(`.auten-pickup-point`),
-    btn = target.nextElementSibling;
+    btn = target.parentNode.querySelector(".auten-modal__button");
     target?.classList.remove(`active`);
     target.parentNode.removeChild(btn);
 })
