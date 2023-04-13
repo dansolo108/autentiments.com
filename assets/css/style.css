@@ -1020,6 +1020,7 @@ body {
   grid-area: items;
   height: 100%;
   width: 100%;
+  padding-bottom: 68px;
   overflow: auto;
   overflow-x: hidden;
   display: flex;
