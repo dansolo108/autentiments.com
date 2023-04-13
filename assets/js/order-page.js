@@ -73,7 +73,7 @@ document.addEventListener("change", e => {
     lastChangeVal = input.value;
 })
 
-let modalBtn = document.querySelector(".auten-modal__close.auten-modal__button")
+let modalBtn = document.querySelector(".auten-modal__button")
 
 // выбор пвз
 document.addEventListener("radio-active", e => {
