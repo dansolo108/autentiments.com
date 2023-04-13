@@ -49,7 +49,7 @@
     filters.addEventListener("click", e => {
 
         let trigger = e.target,
-        shown = trigger.querySelector(".shown")
+        shown = filters.querySelector(".shown")
 
         if (trigger.closest("#mse2_filters").contains(shown)) {
             shown.classList.remove("shown")
