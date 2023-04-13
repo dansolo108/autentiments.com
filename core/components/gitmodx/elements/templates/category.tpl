@@ -46,7 +46,7 @@
 
     const filters = document.getElementById("mse2_filters"),
     deskFilters = event => {
-        let trigger = e.target,
+        let trigger = event.target,
         shown = filters.querySelector(".shown")
 
         if (trigger.closest("#mse2_filters").contains(shown) && !trigger.matches(".shown, .shown *") && trigger !== shown.previousElementSibling) {
