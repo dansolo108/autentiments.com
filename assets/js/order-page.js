@@ -83,7 +83,7 @@ document.addEventListener("radio-active", e => {
     let delivery = document.querySelector(`input[name=delivery]:checked`);
     let method = delivery.closest(`.auten-delivery-method`);
     // method?.querySelector(`.auten-delivery-method__pickup`)?.classList.add("outline");
-    method.querySelector(`.auten-delivery-method__pickup`).textContent = "Изменить пункт";
+    method?.querySelector(`.auten-delivery-method__pickup`)?.textContent = "Изменить пункт";
 })
 document.addEventListener("radio-inactive", e => {
     e.target.closest(`.auten-pickup-point`)?.classList.remove(`active`);
@@ -94,7 +94,7 @@ document.addEventListener("change", e => {
     if(!method || !e.target.closest(`input[name=delivery]`))
         return;
     // method.querySelector(`.auten-delivery-method__pickup`)?.classList.remove("outline");
-    method.querySelector(`.auten-delivery-method__pickup`).textContent = "Выбрать пункт";
+    method.querySelector(`.auten-delivery-method__pickup`)?.textContent = "Выбрать пункт";
 })
 
 document.addEventListener("modal-open", e => {
