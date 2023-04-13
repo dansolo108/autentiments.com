@@ -1014,6 +1014,7 @@ body {
   grid-template: "map   items" auto/1fr 30%;
   height: 100%;
   gap: 20px;
+  position: relative;
 }
 .auten-pickup-points__items {
   grid-area: items;
@@ -1125,6 +1126,27 @@ body {
 }
 .auten-modal__close:after {
   transform: rotate(-45deg);
+}
+
+.auten-modal__button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30% !important;
+  height: 48px !important;
+  color: #fff;
+  font-weight: 350;
+  text-align: center;
+  background-color: #1a2026;
+  left: auto !important;
+  top: auto !important;
+  bottom: 20px;
+  right: 20px;
+}
+
+.auten-modal__button:before,
+.auten-modal__button:after {
+  display: none !important;
 }
 
 @media (max-width: 1023px) {
