@@ -73,15 +73,13 @@ document.addEventListener("change", e => {
     lastChangeVal = input.value;
 })
 
-let modalBtn = document.querySelector(".auten-modal__button")
-
 // выбор пвз
 document.addEventListener("radio-active", e => {
     let point = e.target.closest(`.auten-pickup-point`);
     if(!point)
         return;
     point?.classList.add(`active`);
-    modalBtn.style.display = "block";
+    document.querySelector(".auten-modal__button").style.display = "block";
     let delivery = document.querySelector(`input[name=delivery]:checked`);
     let method = delivery.closest(`.auten-delivery-method`);
     // method?.querySelector(`.auten-delivery-method__pickup`)?.classList.add("outline");
@@ -89,7 +87,7 @@ document.addEventListener("radio-active", e => {
 })
 document.addEventListener("radio-inactive", e => {
     e.target.closest(`.auten-pickup-point`)?.classList.remove(`active`);
-    modalBtn.style.display = "none";
+    document.querySelector(".auten-modal__button").style.display = "none";
 })
 document.addEventListener("change", e => {
     let method = e.target.closest(`.auten-delivery-method`);
