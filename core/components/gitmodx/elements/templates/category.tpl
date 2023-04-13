@@ -59,7 +59,7 @@
         }
     }
 
-    window.addEventListener('resize', function(event) {
+    window.addEventListener("resize", function(event) {
         if (window.innerWidth > 540) {
             filters.addEventListener("click", deskFilters, false)
         } else {
