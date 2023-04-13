@@ -4984,7 +4984,6 @@ label.au-filter__cost:last-child input {
   }
 
   .au-filter__col > ul {
-    display: none;
     min-width: 120px;
     padding: 14px;
     background: #fff;
@@ -4994,7 +4993,6 @@ label.au-filter__cost:last-child input {
     left: -14px;
     z-index: 11;
     transform: translateY(100%);
-    transition: opacity .3s ease-in-out;
   }
 
   .au-filters__reset {
@@ -5006,11 +5004,9 @@ label.au-filter__cost:last-child input {
     left: 0;
   }
 
-  /* .au-filter__col > ul:not(.mm-spn--open) {
-    opacity: 0;
-    z-index: -1;
-    pointer-events: none;
-  } */
+  .au-filter__col > ul:not(.shown) {
+    display: none;
+  }
 
   .au-filter__list::-webkit-scrollbar {
     width: 3px;

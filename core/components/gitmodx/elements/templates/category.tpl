@@ -49,16 +49,15 @@
     filters.addEventListener("click", e => {
 
         let trigger = e.target,
-        displayed = trigger.querySelector(`[style*="display: block"]`)
+        shown = trigger.querySelector(".shown")
 
-        if (trigger.closest(".au-filter__row").contains(displayed)) {
-            displayed.style.display = "none"
+        if (trigger.contains(shown) && trigger.matches(".shown")) {
+            shown.classList.remove("shown")
         }
 
         if (trigger.matches(".au-filter__title")) {
             let target = trigger.nextElementSibling
-            target.style.display = 
-            (target.style.display == "none") ? "block" : "none"
+            target.classList.toggle("shown")
         }
 
     }, false)
