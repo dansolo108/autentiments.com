@@ -52,7 +52,7 @@
             let target = trigger.nextElementSibling
             target.style.display = 
             (target.style.display == "none") ? "block" : "none"
-            onClickClose(target)
+            // onClickClose(target)
         }
     }, false)
 
