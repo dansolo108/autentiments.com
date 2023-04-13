@@ -19,7 +19,7 @@
     {/if}
     {if $hasPickupPoints}
         <button class="auten-button auten-delivery-method__pickup" data-open-modal="#delivery-modal-{$id}" type="button">
-            Выбрать <br> ПВЗ
+            Выбрать пункт
         </button>
     {/if}
 </label>
