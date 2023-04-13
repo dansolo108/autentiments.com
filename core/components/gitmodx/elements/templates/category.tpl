@@ -44,10 +44,8 @@
 {'
 <script>
 
-    const filters = document.getElementById("mse2_filters")
-
-    filters.addEventListener("click", e => {
-
+    const filters = document.getElementById("mse2_filters"),
+    deskFilters = event => {
         let trigger = e.target,
         shown = filters.querySelector(".shown")
 
@@ -59,11 +57,23 @@
             let target = trigger.nextElementSibling
             target.classList.toggle("shown")
         }
+    }
 
-    }, false)
+    window.addEventListener('resize', function(event) {
+        if (window.innerWidth > 540) {
+            filters.addEventListener("click", deskFilters, false)
+        } else {
+            filters.removeEventListener("click", deskFilters, false)
+        }
+    }, true);
+
 
     document.addEventListener(
         "DOMContentLoaded", () => {
+
+            if (window.innerWidth > 540) {
+                filters.addEventListener("click", deskFilters, false)
+            }
 
             const filters = new MmenuLight(
                 document.querySelector("#au-filters"),
