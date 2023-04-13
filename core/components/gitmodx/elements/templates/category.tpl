@@ -51,7 +51,7 @@
         let trigger = e.target,
         shown = trigger.querySelector(".shown")
 
-        if (trigger.contains(shown) && trigger.matches(".shown")) {
+        if (trigger.contains(shown) && !trigger.matches(".shown")) {
             shown.classList.remove("shown")
         }
 
