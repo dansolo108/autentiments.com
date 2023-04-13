@@ -43,14 +43,18 @@
 
 {'
 <script>
-    const filtersNav = document.getElementById("mse2_filters")
 
-    filtersNav.addEventListener("click", event => {
-        if (!event.target.matches(".au-filter__title")) return
-        let elem = event.target.nextElementSibling
-        elem.style.display = "block"
-        onClickClose(elem)
-    }, false)
+    const toggleDisplay = (target, trigger) => {
+        if(!target || !trigger) return 
+        let defaultDisplay =
+            window.getComputedStyle(target).getPropertyValue('display')
+        trigger.addEventListener('click', e => {
+            target.style.display = 
+            (target.style.display == 'none') ?
+            defaultDisplay:
+            'none'
+        })
+    }
 
     function onClickClose(elem) {
         function outsideClickListener(event) {
@@ -69,7 +73,13 @@
     document.addEventListener(
         "DOMContentLoaded", () => {
 
-            document.querySelectorAll(".au-filter__title + ul").forEach(el => el.style.display = none)
+            const triggers = document.querySelectorAll(".au-filter__title")
+
+            triggers.forEach(trigger => {
+                let target = trigger.nextElementSibling
+                toggleDisplay(target, trigger)
+                onClickClose(target)
+            })
 
             const filters = new MmenuLight(
                 document.querySelector("#au-filters"),
