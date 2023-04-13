@@ -12,7 +12,6 @@
         'filters' => '
             msoption|size:size,
             msoption|color:default,
-            msoption|material:default,
             ms|price:price,
         ',
         'tplFilter.outer.ms|price' => 'ds.mFilter2.filter.slider',
@@ -44,51 +43,39 @@
 
 {'
 <script>
-    // const filtersNav = document.getElementById("mse2_filters")
+    const filtersNav = document.getElementById("mse2_filters")
 
-    // const filtersClickListener = event => {
-    //     const target = event.target
-    //     if (target.matches(".au-filter__title")) {
-    //         target.nextElementSibling.classList.toggle("actived")
-    //         hideOnClickOutside(target.nextElementSibling)
-    //     }
-    // }
+    filtersNav.addEventListener("click", event => {
+        if (!event.target.matches(".au-filter__title")) return
+        let elem = event.target.nextElementSibling
+        onClickOpen(elem)
+    }, false)
 
-    // function hideOnClickOutside(element) {
-    //     const outsideClickListener = event => {
-    //         if (!element.contains(event.target) && isVisible(element)) {
-    //         element.classList.remove("actived")
-    //         removeClickListener()
-    //         }
-    //     }
+    function onClickOpen(elem) {
+        if (!isVisible(elem)) {
+            elem.style.display = "block"
+            onClickClose(elem)
+        }
+    }
 
-    //     const removeClickListener = () => {
-    //         document.removeEventListener("click", outsideClickListener)
-    //     }
-
-    //     document.addEventListener("click", outsideClickListener)
-    // }
-
-    // const isVisible = elem => !!elem && !!( elem.offsetWidth || elem.offsetHeight || elem.getClientRects().length )
-
-    // filtersNav.addEventListener("click", filtersClickListener, false)
-
-    // window.addEventListener("resize", (e) => {
-    //     let w = window.innerWidth;
-    //     if (w >= 540) {
-    //         filtersNav.addEventListener("click", filtersClickListener, false)
-    //     } else {
-    //         filtersNav.removeEventListener("click", filtersClickListener, false)
-    //     }
-    // }, true);
-
-    
+    function onClickClose(elem) {
+        function outsideClickListener(event) {
+            if (!elem.contains(event.target) && isVisible(elem)) {
+                elem.style.display = "none"
+                document.removeEventListener("click", outsideClickListener)
+            }
+        }
+        document.addEventListener("click", outsideClickListener)
+    }
+    function isVisible(elem) {
+        return !!elem && !!( elem.offsetWidth || elem.offsetHeight || elem.getClientRects().length );
+    }
 
     document.addEventListener(
         "DOMContentLoaded", () => {
 
             const filters = new MmenuLight(
-                document.querySelector( "#au-filters" ),
+                auFilters,
                 "(max-width: 540px)"
             )
             const filtersNav = filters.navigation({
