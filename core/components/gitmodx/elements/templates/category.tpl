@@ -49,15 +49,16 @@
     filters.addEventListener("click", e => {
 
         let trigger = e.target,
-        shown = filters.querySelector(".shown")
+        shown = filters.querySelector(".shown"),
+        shownTitle = shown.previousElementSibling
 
-        if (trigger.closest("#mse2_filters").contains(shown) && !trigger.matches(".shown") && !trigger.matches(".au-filter__item") && !trigger.matches(".au-filter__label")) {
+        if (trigger.closest("#mse2_filters").contains(shown) && !trigger.matches(".shown") && !trigger.matches(".au-filter__item") && !trigger.matches(".au-filter__label") && trigger !== shownTitle) {
             shown.classList.remove("shown")
         }
 
         if (trigger.matches(".au-filter__title")) {
             let target = trigger.nextElementSibling
-            target.classList.add("shown")
+            target.classList.toggle("shown")
         }
 
     }, false)
