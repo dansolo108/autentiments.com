@@ -48,6 +48,7 @@
     filtersNav.addEventListener("click", event => {
         if (!event.target.matches(".au-filter__title")) return
         let elem = event.target.nextElementSibling
+        console.log(elem)
         onClickOpen(elem)
     }, false)
 
