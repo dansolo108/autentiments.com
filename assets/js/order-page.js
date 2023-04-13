@@ -8,7 +8,7 @@ document.addEventListener("click", e => {
 })
 
 // кнопка назад
-document.addEventListener("click", e=> {
+document.addEventListener("click",  e =>  {
     let backButton = e.target.closest(".auten-back");
     if (!backButton)
         return;
@@ -16,7 +16,7 @@ document.addEventListener("click", e=> {
     window.history.back();
 })
 // назад-вперед браузера
-window.addEventListener("popstate", e=> {
+window.addEventListener("popstate",  e =>  {
     let id = location.hash?.replace("#","");
     if(!id)
         id = "cart"
@@ -37,7 +37,7 @@ window.addEventListener("DOMContentLoaded", e => {
     }
     window.dispatchEvent(new PopStateEvent("popstate"));
 })
-document.addEventListener("click",e=>{
+document.addEventListener("click", e => {
     let button = e.target.closest(`.auten-promo-mobile__pre`);
     if(!button)
         return;
@@ -48,7 +48,7 @@ document.addEventListener("click",e=>{
 // исправляем обновление доставки при вводе
 let cityTimeOut;
 let lastChangeVal;
-document.addEventListener("input",e=>{
+document.addEventListener("input", e => {
     let input = e.target.closest(`input[name=city]`)
     if (!input)
         return;
@@ -61,7 +61,7 @@ document.addEventListener("input",e=>{
         }));
     },500);
 })
-document.addEventListener("change",e=>{
+document.addEventListener("change", e => {
     let input = e.target.closest(`input[name=city]`)
     if (!input)
         return;
@@ -72,28 +72,27 @@ document.addEventListener("change",e=>{
         return;
     lastChangeVal = input.value;
 })
+
+let btn = document.createElement("div");
+btn.classList.add("auten-modal__close","auten-modal__button");
+btn.textContent = "Выбрать этот пункт";
+
 // выбор пвз
-document.addEventListener("radio-active",e=>{
+document.addEventListener("radio-active", e => {
     let point = e.target.closest(`.auten-pickup-point`);
     if(!point)
         return;
     point?.classList.add(`active`);
-    let btn = document.createElement("div");
-    btn.classList.add("auten-modal__close","auten-modal__button");
-    btn.textContent = "Выбрать этот пункт";
-    point.insertAdjacentElement('afterend', btn);
+    point.parentNode.append(btn);
     let delivery = document.querySelector(`input[name=delivery]:checked`);
     let method = delivery.closest(`.auten-delivery-method`);
     // method?.querySelector(`.auten-delivery-method__pickup`)?.classList.add("outline");
     method.querySelector(`.auten-delivery-method__pickup`).textContent = "Изменить пункт";
 })
-document.addEventListener("radio-inactive",e=> {
-    let target = e.target.closest(`.auten-pickup-point`),
-    btn = target.parentNode.querySelector(".auten-modal__button");
-    target?.classList.remove(`active`);
-    target.parentNode.removeChild(btn);
+document.addEventListener("radio-inactive", e => {
+    e.target.closest(`.auten-pickup-point`)?.classList.remove(`active`);
 })
-document.addEventListener("change",e => {
+document.addEventListener("change", e => {
     let method = e.target.closest(`.auten-delivery-method`);
     if(!method || !e.target.closest(`input[name=delivery]`))
         return;
@@ -101,7 +100,7 @@ document.addEventListener("change",e => {
     method.querySelector(`.auten-delivery-method__pickup`).textContent = "Выбрать пункт";
 })
 
-document.addEventListener("modal-open",e=>{
+document.addEventListener("modal-open", e => {
     let pickup = e.target.querySelector(`[data-mscalcdelivery-pickup]`)
     if(!pickup)
         pickup = e.target.closest(`[data-mscalcdelivery-pickup]`)
