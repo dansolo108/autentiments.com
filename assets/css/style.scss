@@ -1148,8 +1148,8 @@ body {
       background-color: #1a2026;
       left: auto !important;
       top: auto !important;
-      bottom: 20px;
-      right: 20px;
+      bottom: 0;
+      right: 0;
       &:before,&:after{
         display: none !important;
       }
