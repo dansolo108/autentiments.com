@@ -51,7 +51,7 @@
         let trigger = e.target,
         shown = trigger.querySelector(".shown")
 
-        if (trigger.closest("#mse2_filters").contains(shown) && !trigger.matches(".shown")) {
+        if (trigger.closest("#mse2_filters").contains(shown)) {
             shown.classList.remove("shown")
         }
 
