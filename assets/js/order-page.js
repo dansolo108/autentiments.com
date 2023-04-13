@@ -88,10 +88,9 @@ document.addEventListener("radio-active",e=>{
     method.querySelector(`.auten-delivery-method__pickup`).textContent = "Изменить пункт";
 })
 document.addEventListener("radio-inactive",e=> {
-    let pickupPoint = e.target.closest(`.auten-pickup-point`),
-    btn = pickupPoint.querySelector(".auten-modal__button");
-    btn?.remove();
-    pickupPoint?.classList.remove(`active`);
+    let target = e.target.closest(`.auten-pickup-point`)
+    target?.classList.remove(`active`);
+    target.nextElementSibling?.remove();
 })
 document.addEventListener("change",e=>{
     let method = e.target.closest(`.auten-delivery-method`);
