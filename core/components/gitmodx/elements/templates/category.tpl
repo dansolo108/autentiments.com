@@ -51,6 +51,8 @@
         let trigger = e.target,
         shown = filters.querySelector(".shown")
 
+        console.log(trigger)
+
         if (trigger.closest("#mse2_filters").contains(shown) && !trigger.matches(".shown") && !trigger.matches(".au-filter__label")) {
             shown.classList.remove("shown")
         }
