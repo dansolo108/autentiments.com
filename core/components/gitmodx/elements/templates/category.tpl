@@ -44,30 +44,42 @@
 {'
 <script>
 
-    const toggleDisplay = (target, trigger) => {
-        if(!target || !trigger) return 
-        let defaultDisplay =
-            window.getComputedStyle(target).getPropertyValue("display")
-        trigger.addEventListener("click", e => {
+    const filters = document.getElementById("mse2_filters")
+
+    filters.addEventListener("click", e => {
+        let trigger = e.target
+        if (trigger.matches(".au-filter__title")) {
+            let target = trigger.nextElementSibling
             target.style.display = 
-            (target.style.display == "none") ?
-            defaultDisplay:
-            "none"
-        })
+            (target.style.display == "none") ? "block" : "none"
+            onClickClose(target)
+        }
+    }, false)
+
+    // const toggleDisplay = (target, trigger) => {
+    //     if(!target || !trigger) return 
+    //     let defaultDisplay =
+    //         window.getComputedStyle(target).getPropertyValue("display")
+    //     trigger.addEventListener("click", e => {
+    //         target.style.display = 
+    //         (target.style.display == "none") ?
+    //         defaultDisplay:
+    //         "none"
+    //     })
+    // }
+
+    function isVisible(elem) {
+        return !!elem && !!(elem.offsetWidth || elem.offsetHeight || elem.getClientRects().length)
     }
 
     function onClickClose(elem) {
         function outsideClickListener(event) {
             if (!elem.contains(event.target) && isVisible(elem)) {
-                console.log(event.target)
                 elem.style.display = "none"
                 document.removeEventListener("click", outsideClickListener)
             }
         }
         document.addEventListener("click", outsideClickListener)
-    }
-    function isVisible(elem) {
-        return !!elem && !!( elem.offsetWidth || elem.offsetHeight || elem.getClientRects().length );
     }
 
     document.addEventListener(
