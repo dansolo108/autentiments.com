@@ -51,7 +51,7 @@
         let trigger = e.target,
         shown = filters.querySelector(".shown")
 
-        if (trigger.closest("#mse2_filters").contains(shown) && !trigger.matches(".shown, .au-filter__item, .au-filter__label")) {
+        if (trigger.closest("#mse2_filters").contains(shown) && !trigger.matches(".shown") && !trigger.matches(".au-filter__item") && !trigger.matches(".au-filter__label")) {
             shown.classList.remove("shown")
         }
 
@@ -62,42 +62,8 @@
 
     }, false)
 
-    // const toggleDisplay = (target, trigger) => {
-    //     if(!target || !trigger) return 
-    //     let defaultDisplay =
-    //         window.getComputedStyle(target).getPropertyValue("display")
-    //     trigger.addEventListener("click", e => {
-    //         target.style.display = 
-    //         (target.style.display == "none") ?
-    //         defaultDisplay:
-    //         "none"
-    //     })
-    // }
-
-    // function isVisible(elem) {
-    //     return !!elem && !!(elem.offsetWidth || elem.offsetHeight || elem.getClientRects().length)
-    // }
-
-    // function onClickClose(elem) {
-    //     function outsideClickListener(event) {
-    //         if (!elem.contains(event.target) && isVisible(elem)) {
-    //             elem.style.display = "none"
-    //             document.removeEventListener("click", outsideClickListener)
-    //         }
-    //     }
-    //     document.addEventListener("click", outsideClickListener)
-    // }
-
     document.addEventListener(
         "DOMContentLoaded", () => {
-
-            // const triggers = document.querySelectorAll(".au-filter__title")
-
-            // triggers.forEach(trigger => {
-            //     let target = trigger.nextElementSibling
-            //     toggleDisplay(target, trigger)
-            //     onClickClose(target)
-            // })
 
             const filters = new MmenuLight(
                 document.querySelector("#au-filters"),
