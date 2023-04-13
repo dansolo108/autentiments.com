@@ -80,8 +80,8 @@ document.addEventListener("radio-active",e=>{
     point?.classList.add(`active`);
     let btn = document.createElement("div");
     btn.classList.add("auten-modal__close","auten-modal__button");
-    btn.innerText = "Выбрать этот пункт";
-    btn.insertAdjacentElement('afterend', point);
+    btn.textContent = "Выбрать этот пункт";
+    point.insertAdjacentElement('afterend', btn);
     let delivery = document.querySelector(`input[name=delivery]:checked`);
     let method = delivery.closest(`.auten-delivery-method`);
     // method?.querySelector(`.auten-delivery-method__pickup`)?.classList.add("outline");
