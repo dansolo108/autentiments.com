@@ -55,6 +55,7 @@
     function onClickClose(elem) {
         function outsideClickListener(event) {
             if (!elem.contains(event.target) && isVisible(elem)) {
+                console.log(event.target)
                 elem.style.display = "none"
                 document.removeEventListener("click", outsideClickListener)
             }
@@ -67,6 +68,8 @@
 
     document.addEventListener(
         "DOMContentLoaded", () => {
+
+            document.querySelectorAll(".au-filter__title + ul").forEach(el => el.style.display = none)
 
             const filters = new MmenuLight(
                 document.querySelector("#au-filters"),
