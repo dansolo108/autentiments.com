@@ -1017,6 +1017,7 @@ body {
           / 1fr    30%;
     height: 100%;
     gap: 20px;
+    position: relative;
     &__items{
       grid-area: items;
       height: 100%;
@@ -1139,15 +1140,16 @@ body {
       display: flex;
       align-items: center;
       justify-content: center;
-      width: 100% !important;
-      height: 48px;
+      width: 30% !important;
+      height: 48px !important;
       color: #fff;
       font-weight: 350;
       text-align: center;
       background-color: #1a2026;
-      left: 0 !important;
+      left: auto !important;
       top: auto !important;
-      bottom: 0;
+      bottom: 20px;
+      right: 20px;
       &:before,&:after{
         display: none !important;
       }
