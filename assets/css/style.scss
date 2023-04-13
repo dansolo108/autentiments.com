@@ -1135,6 +1135,23 @@ body {
         transform: rotate(-45deg);
       }
     }
+    &__button{
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100% !important;
+      height: 48px;
+      color: #fff;
+      font-weight: 350;
+      text-align: center;
+      background-color: #1a2026;
+      left: 0 !important;
+      top: auto !important;
+      bottom: 0;
+      &:before,&:after{
+        display: none !important;
+      }
+    }
   }
 }
 

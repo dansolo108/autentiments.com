@@ -79,7 +79,7 @@ document.addEventListener("radio-active", e => {
     if(!point)
         return;
     point?.classList.add(`active`);
-    document.querySelector(".auten-modal__button").style.display = "block";
+    document.querySelector(".auten-modal__button").style.display = "flex";
     let delivery = document.querySelector(`input[name=delivery]:checked`);
     let method = delivery.closest(`.auten-delivery-method`);
     // method?.querySelector(`.auten-delivery-method__pickup`)?.classList.add("outline");
