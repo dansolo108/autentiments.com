@@ -47,13 +47,20 @@
     const filters = document.getElementById("mse2_filters")
 
     filters.addEventListener("click", e => {
-        let trigger = e.target
+
+        let trigger = e.target,
+        displayed = trigger.querySelector(`[style*="display: block"]`)
+
+        if (trigger.contains(displayed) && !trigger.matches(".au-filter__title")) {
+            displayed.style.display = none
+        }
+
         if (trigger.matches(".au-filter__title")) {
             let target = trigger.nextElementSibling
             target.style.display = 
             (target.style.display == "none") ? "block" : "none"
-            // onClickClose(target)
         }
+
     }, false)
 
     // const toggleDisplay = (target, trigger) => {
@@ -68,30 +75,30 @@
     //     })
     // }
 
-    function isVisible(elem) {
-        return !!elem && !!(elem.offsetWidth || elem.offsetHeight || elem.getClientRects().length)
-    }
+    // function isVisible(elem) {
+    //     return !!elem && !!(elem.offsetWidth || elem.offsetHeight || elem.getClientRects().length)
+    // }
 
-    function onClickClose(elem) {
-        function outsideClickListener(event) {
-            if (!elem.contains(event.target) && isVisible(elem)) {
-                elem.style.display = "none"
-                document.removeEventListener("click", outsideClickListener)
-            }
-        }
-        document.addEventListener("click", outsideClickListener)
-    }
+    // function onClickClose(elem) {
+    //     function outsideClickListener(event) {
+    //         if (!elem.contains(event.target) && isVisible(elem)) {
+    //             elem.style.display = "none"
+    //             document.removeEventListener("click", outsideClickListener)
+    //         }
+    //     }
+    //     document.addEventListener("click", outsideClickListener)
+    // }
 
     document.addEventListener(
         "DOMContentLoaded", () => {
 
-            const triggers = document.querySelectorAll(".au-filter__title")
+            // const triggers = document.querySelectorAll(".au-filter__title")
 
-            triggers.forEach(trigger => {
-                let target = trigger.nextElementSibling
-                toggleDisplay(target, trigger)
-                onClickClose(target)
-            })
+            // triggers.forEach(trigger => {
+            //     let target = trigger.nextElementSibling
+            //     toggleDisplay(target, trigger)
+            //     onClickClose(target)
+            // })
 
             const filters = new MmenuLight(
                 document.querySelector("#au-filters"),
