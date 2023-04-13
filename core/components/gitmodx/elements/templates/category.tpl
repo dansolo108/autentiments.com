@@ -51,7 +51,7 @@
         let trigger = e.target,
         shown = filters.querySelector(".shown")
 
-        if (trigger.closest("#mse2_filters").contains(shown) && !trigger.matches(".shown") && !trigger.matches(".au-filter__item") && !trigger.matches(".au-filter__label") && trigger !== shown.previousElementSibling) {
+        if (trigger.closest("#mse2_filters").contains(shown) && !trigger.matches(".shown, .shown *") && trigger !== shown.previousElementSibling) {
             shown.classList.remove("shown")
         }
 
