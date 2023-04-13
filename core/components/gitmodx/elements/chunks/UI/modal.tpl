@@ -28,7 +28,6 @@
                         </a>
                     </label>
                 {/foreach}
-                <div class="auten-modal__close auten-modal__button" style="display: none;">Выбрать этот пункт</div>
             </div>
         </div>
     </div>

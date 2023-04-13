@@ -35,6 +35,7 @@
                     <div class="auten-pickup-points__map" data-msCalcDelivery-Pickup-Map></div>
                     <div class="auten-pickup-points__items" data-msCalcDelivery-Pickup-Points>
                     </div>
+                    <div class="auten-modal__close auten-modal__button" style="display: none;">Выбрать этот пункт</div>
                 </div>
             </div>
         </div>
