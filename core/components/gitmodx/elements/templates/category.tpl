@@ -51,13 +51,13 @@
         let trigger = e.target,
         shown = filters.querySelector(".shown")
 
-        if (trigger.closest("#mse2_filters").contains(shown) && !trigger.matches(".shown") && !trigger.matches(".au-filter__item") && !trigger.matches(".au-filter__label") && trigger !== shown.previousSibling) {
+        if (trigger.closest("#mse2_filters").contains(shown) && !trigger.matches(".shown") && !trigger.matches(".au-filter__item") && !trigger.matches(".au-filter__label")) {
             shown.classList.remove("shown")
         }
 
         if (trigger.matches(".au-filter__title")) {
             let target = trigger.nextElementSibling
-            target.classList.toggle("shown")
+            target.classList.add("shown")
         }
 
     }, false)
