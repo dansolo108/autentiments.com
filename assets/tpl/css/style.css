@@ -5005,11 +5005,11 @@ label.au-filter__cost:last-child input {
     left: 0;
   }
 
-  .au-filter__col > ul:not(.mm-spn--open) {
+  /* .au-filter__col > ul:not(.mm-spn--open) {
     opacity: 0;
     z-index: -1;
     pointer-events: none;
-  }
+  } */
 
   .au-filter__list::-webkit-scrollbar {
     width: 3px;
