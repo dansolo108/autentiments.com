@@ -32,24 +32,7 @@
         {set $hex = 'msoGetColor' | snippet : ['input' => $color]}
         {set $colorId = 'msoGetColor' | snippet : ['input' => $color, 'return_id' => true]}
         <div class="auten-cart-item__color" title="{('stik_color_'~$colorId) | lexicon}" style="background-color: {$hex};"></div>
-        {set $sizes = '!getProductDetails' | snippet : [
-            'details'=>['size'],
-            'id'=>$product_id,
-        ]}
-        <div class="auten-select">
-            {if count($sizes) > 1}
-            <div class="auten-select__items">
-                {foreach $sizes as $sz}
-                    <label class="auten-select-item"><input type="radio" name="size" value="{$sz.value}">{$sz.value}</label>
-                {/foreach}
-            </div>
-            {/if}
-            <div class="auten-select__active">{$size}</div>
-        </div>
-        <div class="ms2_form auten-counter auten-cart-item__amount" >
-            <button type="submit" name="ms2_action" value="cart/change" class="auten-counter__button" data-count="-1">–</button>
-            <input class="auten-counter__input" name="count" min="1" value="{$count}" {if isset($remains)}max="{$remains}"{else}max="999"{/if}>
-            <button type="submit" name="ms2_action" value="cart/change" class="auten-counter__button" data-count="1">+</button>
-        </div>
+        <div class="auten-cart-item__size">{$size}</div>
+        <div class="auten-cart-item__amount">{$count}</div>
     </div>
 </form>
