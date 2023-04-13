@@ -33,6 +33,6 @@
         {set $colorId = 'msoGetColor' | snippet : ['input' => $color, 'return_id' => true]}
         <div class="auten-cart-item__color" title="{('stik_color_'~$colorId) | lexicon}" style="background-color: {$hex};"></div>
         <div class="auten-cart-item__size">{$size}</div>
-        <div class="auten-cart-item__amount">{$count}</div>
+        <div class="auten-cart-item__amount">{$count} шт.</div>
     </div>
 </form>

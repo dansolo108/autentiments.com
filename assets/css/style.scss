@@ -383,11 +383,12 @@ body {
     &__amount {
       display: flex;
       flex-direction: row;
-      padding: 7px 12px;
-      border: 1px #414042 solid;
+      // padding: 7px 12px;
+      padding-block: 7px;
+      // border: 1px #414042 solid;
       gap: 17px;
       margin-left: auto;
-      width: 82px;
+      // width: 82px;
     }
   }
 
