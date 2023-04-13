@@ -78,18 +78,27 @@ document.addEventListener("radio-active",e=>{
     if(!point)
         return;
     point?.classList.add(`active`);
+    let btn = document.createElement("div");
+    btn.classList.add("auten-modal__close","auten-modal__button");
+    btn.innerText = "Выбрать этот пункт";
+    btn.insertAdjacentElement('afterend', point);
     let delivery = document.querySelector(`input[name=delivery]:checked`);
     let method = delivery.closest(`.auten-delivery-method`);
-    method?.querySelector(`.auten-delivery-method__pickup`)?.classList.add("outline");
+    // method?.querySelector(`.auten-delivery-method__pickup`)?.classList.add("outline");
+    method?.querySelector(`.auten-delivery-method__pickup`)?.innerText = "Изменить пункт";
 })
-document.addEventListener("radio-inactive",e=>{
-    e.target.closest(`.auten-pickup-point`)?.classList.remove(`active`);
+document.addEventListener("radio-inactive",e=> {
+    let pickupPoint = e.target.closest(`.auten-pickup-point`),
+    btn = pickupPoint.querySelector(".auten-modal__button");
+    btn?.remove();
+    pickupPoint?.classList.remove(`active`);
 })
 document.addEventListener("change",e=>{
     let method = e.target.closest(`.auten-delivery-method`);
     if(!method || !e.target.closest(`input[name=delivery]`))
         return;
-    method.querySelector(`.auten-delivery-method__pickup`)?.classList.remove("outline");
+    // method.querySelector(`.auten-delivery-method__pickup`)?.classList.remove("outline");
+    method.querySelector(`.auten-delivery-method__pickup`)?.innerText = "Выбрать пункт";
 })
 
 document.addEventListener("modal-open",e=>{
