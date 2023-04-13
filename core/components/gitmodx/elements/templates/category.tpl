@@ -47,12 +47,12 @@
     const toggleDisplay = (target, trigger) => {
         if(!target || !trigger) return 
         let defaultDisplay =
-            window.getComputedStyle(target).getPropertyValue('display')
-        trigger.addEventListener('click', e => {
+            window.getComputedStyle(target).getPropertyValue("display")
+        trigger.addEventListener("click", e => {
             target.style.display = 
-            (target.style.display == 'none') ?
+            (target.style.display == "none") ?
             defaultDisplay:
-            'none'
+            "none"
         })
     }
 
