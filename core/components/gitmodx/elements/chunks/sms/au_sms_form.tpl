@@ -12,8 +12,7 @@
         </div>
     </div>
     <div class="custom-form__group">
-        <input type="checkbox" id="join_loyalty" name="join_loyalty" value="1" checked="true">
-        <label for="join_loyalty">Участвовать в программе лояльности</label>
+        <label for="join_loyalty"><input type="checkbox" id="join_loyalty" name="join_loyalty" value="1" checked="true"> Участвовать в программе лояльности</label>
     </div>
     <div class="js_sms_buttons_group">
         <button type="button" class="au-btn  au-login__submit  au-login__submit-register js_sms_code_send" disabled>{'sms_web_btn_code_send' | lexicon}</button>
