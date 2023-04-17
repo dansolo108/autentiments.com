@@ -66,11 +66,7 @@ class stikSms {
 
         $getLoyalty = $_POST['join_loyalty'];
         if ($getLoyalty) {
-            $extended = $profile->get('extended');
-            // Добавляем новое значение
-            $extended['join_loyalty'] = 1;
-            // И сохраняем обратно в профиль
-            $profile->set('extended', $extended);
+            $profile->set('join_loyalty', 1);
         }
         
         if (is_object($user)) {
