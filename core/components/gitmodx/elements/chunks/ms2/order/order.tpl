@@ -91,7 +91,7 @@
                 <div class="auten-order-group__inner auten-order-group__grid">
                     {set $fields = [
                         [
-                            "title"=>"улица",
+                            "title"=>"Улица",
                             "name"=>"street",
                             "value"=>$form["street"],
                             "style"=>"--column: 8;"
@@ -202,6 +202,7 @@
                     {$_modx->getPlaceholder('msmc.symbol_right')}
                 </span>
             </div>
+            {if $order.discount_cost != 0}
             <div class="auten-order-aside__field">
                 {'stik_order_info_discount' | lexicon}
                 <span class="ms2_total_discount">
@@ -209,6 +210,7 @@
                     {$_modx->getPlaceholder('msmc.symbol_right')}
                 </span>
             </div>
+            {/if}
             <div class="auten-order-aside__field">
                 {'stik_order_info_delivery_cost' | lexicon}
                 <span class="ms2_order_delivery_cost">

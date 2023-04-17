@@ -9,7 +9,7 @@
         </div>
     {/if}
     <div class="auten-delivery-method__date">
-        {if $min && $max}{$min}-{$max} дней,{/if}{if $cost == 0}бесплатно{else}
+        {if $min && $max}{$min}-{$max} дней,{/if}{if $cost == 0} бесплатно{else}
             <span>{$cost}</span> {$_modx->getPlaceholder('msmc.symbol_right')}{/if}
     </div>
     {if $description}
