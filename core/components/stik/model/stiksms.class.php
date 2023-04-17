@@ -53,7 +53,7 @@ class stikSms {
         $profile = $this->modx->newObject('modUserProfile');
         $profile->set('email', '');
         $profile->set('mobilephone', $phone);
-        //$profile->set('internalKey', $user->get('id'));
+        $profile->set('internalKey', $user->get('id'));
         // сохраняем id пользователя перешедшего по специальной ссылке в AMO
         $amoUserid = $_SESSION['amo_userid'];
         if ($amoUserid) {
@@ -71,7 +71,6 @@ class stikSms {
             $extended['join_loyalty'] = 1;
             // И сохраняем обратно в профиль
             $profile->set('extended', $extended);
-            $profile->save();
         }
         
         if (is_object($user)) {
