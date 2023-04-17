@@ -451,6 +451,7 @@
 
 {block 'footer'}
     <footer class="au-footer  page-container">
+        {if $_modx->resource.template != 6}
         <section class="au-subscribe">
             <script type="text/javascript"
                     src="https://cp.unisender.com/v5/template-editor-new/js/lib/moment/moment-with-langs.min.js"></script>
@@ -494,6 +495,7 @@
                 </div>
             </form>
         </section>
+        {/if}
         {*'!AjaxForm' | snippet : [
             'snippet' => 'newsletterSubscribe',
             'form' => 'newsletterSubscribe.form',
