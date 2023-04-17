@@ -49,7 +49,7 @@ class stikSms {
         $user = $this->modx->newObject('modUser');
         $user->set('username', $phone);
         $user->set('password', $user->generatePassword());
-        //$user->save();
+        $user->save();
         $profile = $this->modx->newObject('modUserProfile');
         $profile->set('email', '');
         $profile->set('mobilephone', $phone);
