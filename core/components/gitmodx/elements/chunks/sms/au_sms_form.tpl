@@ -11,6 +11,14 @@
             {'stik_profile_sms_code_time' | lexicon} <span class="count-seconds"><span>60</span> {'stik_profile_sms_code_sec' | lexicon}</span>
         </div>
     </div>
+    <div class="custom-form__group">
+        <input
+            type="checkbox"
+            id="join_loyalty"
+            name="join_loyalty"
+            value="1" checked />
+        <label for="join_loyalty">Участвовать в программе лояльности</label>
+    </div>
     <div class="js_sms_buttons_group">
         <button type="button" class="au-btn  au-login__submit  au-login__submit-register js_sms_code_send" disabled>{'sms_web_btn_code_send' | lexicon}</button>
         <span class="custom-code-link-box" style="display:none;">

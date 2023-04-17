@@ -55,42 +55,6 @@
     },8000);
 </script-->
 {/if}
-<div class="au-modal au-modal-sale modal " style="max-width:510px">
-    <div class="au-info-size__wrapper">
-        <button class="au-close au-modal-size__close" onclick="localStorage.discountClose = true;" aria-label="Закрыть"></button>
-        <div class="au-modal__content  au-info-size__content">
-            <h3 class="au-info-discount__title">Дарим скидку 10% на первую покупку</h3>
-            <h2 class="au-info-discount__sub-title">новым участникам программы лояльности</h2>
-            <div style="margin-bottom:60px; display:flex;flex-direction:column;padding:0 20px;">
-                {'!smsLoad' | snippet : ['js' => '/assets/components/sms/js/web/custom.js?v=0.1']}
-                {$_modx->lexicon->load('sms:default')}
-                <form method="post" class="smsLoginForm">
-                    <div class="custom-form__group js_sms_phone" style="flex-direction:column">
-                        <label for="sms_phone" class="au-info-discount__info-text">авторизируйтесь чтобы получить скидку</label>
-                        <input type="tel" id="sms_phone" class="custom-form__input sms_phone_input" name="phone" data-val="" placeholder="{'sms_web_phone' | lexicon}">
-                        <span class="int-tel-error error_field"></span>
-                    </div>
-                    <div class="custom-form__group sms_code js_sms_code" style="display:none;">
-                        <input type="text" class="custom-form__input sms_code_input" name="code" maxlength="{$_modx->config.sms_code_length}" data-val="" placeholder="{'sms_web_code' | lexicon}">
-                        <span class="error error-code" style="display:none;">{'stik_profile_sms_code_error' | lexicon}</span>
-                        <div class="input-tel-text count-seconds-wrapper" style="display:none;">
-                            {'stik_profile_sms_code_time' | lexicon} <span class="count-seconds"><span>60</span> {'stik_profile_sms_code_sec' | lexicon}</span>
-                        </div>
-                    </div>
-                    <div class="js_sms_buttons_group">
-                        <button type="button" class="au-btn  au-login__submit  au-login__submit-register js_sms_code_send" disabled>{'sms_web_btn_code_send' | lexicon}</button>
-                        <span class="custom-code-link-box" style="display:none;">
-                            <a class="au-btn  au-login__submit  au-login__submit-register js_sms_resend_code" href="#">{'stik_profile_sms_code_resend' | lexicon}</a>
-                        </span>
-                        <button type="button" class="btn btn-primary sms_code_btn js_sms_code_check">{'sms_web_btn_code_check' | lexicon}</button>
-                    </div>
-                </form>
-                <button style="color:#999;margin-top:20px" onClick="closeForModal();localStorage.discountClose = 1;">Продолжить без скидки</button>
-            </div>
-            
-        </div>
-    </div>
-</div>
 {*'!AjaxForm' | snippet : [
     'snippet' => 'newsletterSubscribe',
     'form' => 'welcomeSubscribe.form',

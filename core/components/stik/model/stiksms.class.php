@@ -49,27 +49,39 @@ class stikSms {
         $user = $this->modx->newObject('modUser');
         $user->set('username', $phone);
         $user->set('password', $user->generatePassword());
-        $user->save();
+        //$user->save();
         $profile = $this->modx->newObject('modUserProfile');
         $profile->set('email', '');
         $profile->set('mobilephone', $phone);
-        $profile->set('internalKey', $user->get('id'));
+        //$profile->set('internalKey', $user->get('id'));
         // сохраняем id пользователя перешедшего по специальной ссылке в AMO
         $amoUserid = $_SESSION['amo_userid'];
         if ($amoUserid) {
             $profile->set('amo_userid', $amoUserid);
             $contact = $this->modx->newObject('amoCRMUser', ['user' => $profile->get('internalKey'), 'user_id' => $amoUserid]);
             $contact->save();
-        }
-        else{
+        } else {
             $profile->set('amo_userid', null);
+        }
+
+        $getLoyalty = $_POST['join_loyalty'];
+        if ($getLoyalty) {
+            $extended = $profile->get('extended');
+            // Добавляем новое значение
+            $extended['join_loyalty'] = 1;
+            // И сохраняем обратно в профиль
+            $profile->set('extended', $extended);
+            $profile->save();
         }
         
         if (is_object($user)) {
             $group = $this->modx->getObject('modUserGroup', ['name' => 'Users']);
             $user->joinGroup($group->get('id'));
         }
+
+        $user->addOne($profile);
         $profile->save();
+
         return $user;
     }
     
