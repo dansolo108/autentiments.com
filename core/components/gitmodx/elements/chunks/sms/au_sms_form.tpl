@@ -12,11 +12,7 @@
         </div>
     </div>
     <div class="custom-form__group">
-        <input
-            type="checkbox"
-            id="join_loyalty"
-            name="join_loyalty"
-            value="1" checked />
+        <input type="checkbox" id="join_loyalty" name="join_loyalty" value="1" checked="true">
         <label for="join_loyalty">Участвовать в программе лояльности</label>
     </div>
     <div class="js_sms_buttons_group">
