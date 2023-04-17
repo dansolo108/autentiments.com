@@ -891,14 +891,14 @@ body {
   color: #8CBA51;
   font-weight: 350;
   font-size: 14px;
-  line-height: 18.2px;
+  line-height: 1;
 }
 .auten-delivery-method__info {
   grid-area: info;
-  margin-top: 10px;
+  margin-top: 16px;
   font-weight: 350;
-  font-size: 12px;
-  line-height: 14.4px;
+  font-size: 14px;
+  line-height: 1;
 }
 .auten-delivery-method__pickup {
   grid-area: pickup;

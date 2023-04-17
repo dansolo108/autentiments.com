@@ -82,12 +82,14 @@ document.addEventListener("radio-active", e => {
     document.querySelector(".auten-modal__button").style.display = "flex";
     let delivery = document.querySelector(`input[name=delivery]:checked`);
     let method = delivery.closest(`.auten-delivery-method`);
+    let addr = point.querySelector(`.auten-pickup-point__name`).textContent;
     // method?.querySelector(`.auten-delivery-method__pickup`)?.classList.add("outline");
     method.querySelector(`.auten-delivery-method__pickup`).textContent = "Изменить пункт";
+    method.querySelector(`auten-delivery-method__info`).textContent = addr;
 })
 document.addEventListener("radio-inactive", e => {
     e.target.closest(`.auten-pickup-point`)?.classList.remove(`active`);
-    document.querySelector(".auten-modal__button").style.display = "none";
+    // document.querySelector(".auten-modal__button").style.display = "none";
 })
 document.addEventListener("change", e => {
     let method = e.target.closest(`.auten-delivery-method`);
