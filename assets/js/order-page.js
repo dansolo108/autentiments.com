@@ -85,7 +85,7 @@ document.addEventListener("radio-active", e => {
     let addr = point.querySelector(`.auten-pickup-point__name`).textContent;
     // method?.querySelector(`.auten-delivery-method__pickup`)?.classList.add("outline");
     method.querySelector(`.auten-delivery-method__pickup`).textContent = "Изменить пункт";
-    method.querySelector(`auten-delivery-method__info`).textContent = addr;
+    method.querySelector(`.auten-delivery-method__info`).textContent = addr;
 })
 document.addEventListener("radio-inactive", e => {
     e.target.closest(`.auten-pickup-point`)?.classList.remove(`active`);
