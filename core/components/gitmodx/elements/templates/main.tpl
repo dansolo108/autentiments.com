@@ -269,43 +269,6 @@
             {*<div class="top-banner-item">ДОСТАВКА С ПРИМЕРКОЙ НАШИМ КУРЬЕРОМ ПО МОСКВЕ. ВЫЕЗД СТИЛИСТА</div>*}
         </div>
     </div>
-    {'
-    <script>
-        const els = document.querySelectorAll(".top-banner-item");
-        const numOfEls = els.length;
-        const activeClass = "active";
-
-        const repeat = (numOfIterations, timeBetweenItereation, stuffToRepeat) => {
-        let iterationCounter = 0;
-        const repeater = () => {
-            setTimeout( () => {
-            stuffToRepeat(els[iterationCounter], activeClass);
-            iterationCounter++;
-            if (numOfIterations === iterationCounter) {
-                iterationCounter = 0;
-            };
-            if (iterationCounter >= numOfIterations) {
-                return;
-            };
-            repeater(); 
-            }, 1000 * timeBetweenItereation);
-        };
-        repeater();
-        };
-
-        const addClassToEl = (el, className) => {
-        let elWithClassToRemove = document.getElementsByClassName(className);
-
-        [...elWithClassToRemove].forEach(curentEl => {
-            curentEl.classList.remove(className);
-        });
-
-        el.classList.add(className);
-        }
-
-        repeat(numOfEls, 3, addClassToEl)
-    </script>
-    ' | jsToBottom}
 {/block}
 
 <div class="au-header__wrapper">
