@@ -321,7 +321,7 @@ textarea {
   position: absolute;
   top: -100%;
   transition: top 0.3s ease;
-  text-transform: uppercase;
+  /* text-transform: uppercase; */
 }
 .top-banner-item.active {
   display: flex;

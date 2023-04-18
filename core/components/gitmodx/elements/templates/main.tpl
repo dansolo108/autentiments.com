@@ -264,10 +264,48 @@
             {*if !$_modx->isAuthenticated('web')*}
             {* <div class="top-banner-item active" onClick="openModalАdditionally($('.au-modal-overlay'));$('.au-modal-sale').addClass('active');">ДАРИМ СКИДКУ 10% НА ПЕРВУЮ ПОКУПКУ | ПОДРОБНЕЕ</div>*}
             {*/if*}
-            <div class="top-banner-item active">Бесплатная доставка по России при заказе от 20 000₽</div>
+            <div class="top-banner-item active"><span>Бесплатная доставка</span> по России</div>
+            <div class="top-banner-item">Скидка 10% на первый заказ</div>
             {*<div class="top-banner-item">ДОСТАВКА С ПРИМЕРКОЙ НАШИМ КУРЬЕРОМ ПО МОСКВЕ. ВЫЕЗД СТИЛИСТА</div>*}
         </div>
     </div>
+    {'
+    <script>
+        const els = document.querySelectorAll('.top-banner-item');
+        const numOfEls = els.length;
+        const activeClass = 'active';
+
+        const repeat = (numOfIterations, timeBetweenItereation, stuffToRepeat) => {
+        let iterationCounter = 0;
+        const repeater = () => {
+            setTimeout( () => {
+            stuffToRepeat(els[iterationCounter], activeClass);
+            iterationCounter++;
+            if (numOfIterations === iterationCounter) {
+                iterationCounter = 0;
+            };
+            if (iterationCounter >= numOfIterations) {
+                return;
+            };
+            repeater(); 
+            }, 1000 * timeBetweenItereation);
+        };
+        repeater();
+        };
+
+        const addClassToEl = (el, className) => {
+        let elWithClassToRemove = document.getElementsByClassName(className);
+
+        [...elWithClassToRemove].forEach(curentEl => {
+            curentEl.classList.remove(className);
+        });
+
+        el.classList.add(className);
+        }
+
+        repeat(numOfEls, 3, addClassToEl)
+    </script>
+    ' | jsToBottom}
 {/block}
 
 <div class="au-header__wrapper">
