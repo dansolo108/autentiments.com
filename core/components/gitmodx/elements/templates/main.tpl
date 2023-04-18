@@ -271,9 +271,9 @@
     </div>
     {'
     <script>
-        const els = document.querySelectorAll('.top-banner-item');
+        const els = document.querySelectorAll(".top-banner-item");
         const numOfEls = els.length;
-        const activeClass = 'active';
+        const activeClass = "active";
 
         const repeat = (numOfIterations, timeBetweenItereation, stuffToRepeat) => {
         let iterationCounter = 0;
