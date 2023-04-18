@@ -318,6 +318,7 @@ textarea {
   display: none;
   align-items: center;
   justify-content: center;
+  gap: 5px;
   position: absolute;
   top: -100%;
   transition: top 0.3s ease;
