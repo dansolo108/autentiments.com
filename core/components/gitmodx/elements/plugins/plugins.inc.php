@@ -58,7 +58,10 @@ return array(
     'msOnValidateOrderValue' => [
         'ms2validate'
     ],
-    "OnWebPageInit"=>[
-        "authMgrOnWeb",
+    "OnWebPageInit" => [
+        "authMgrOnWeb"
+    ],
+    "msOnGetStatusCart" => [
+        "realTotalCost"
     ]
 );

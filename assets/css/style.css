@@ -336,6 +336,7 @@ body {
   grid-area: delete;
   color: #939598;
   font-size: 14px;
+  font-weight: 350;
   align-self: center;
   justify-self: end;
   white-space: nowrap;
@@ -418,11 +419,12 @@ body {
 .auten-cart-item__amount {
   display: flex;
   flex-direction: row;
-  padding: 7px 12px;
-  border: 1px #414042 solid;
+  /* padding: 7px 12px; */
+  padding-block: 7px;
+  /* border: 1px #414042 solid; */
   gap: 17px;
   margin-left: auto;
-  width: 82px;
+  /* width: 82px; */
 }
 .auten-field {
   display: flex;
@@ -438,7 +440,7 @@ body {
   margin-top: 10px;
 }
 .auten-field.required .auten-field__title:after {
-  content: "*";
+  /* content: "*"; */
 }
 .auten-field__title {
   color: #bcbec0;
@@ -756,8 +758,10 @@ body {
 .auten-order-group {
   display: flex;
   flex-direction: column;
-  font-size: 20px;
-  line-height: 24px;
+  font-size: 16px;
+  line-height: 1.3;
+  /* font-size: 20px; */
+  /* line-height: 24px; */
 }
 .auten-order-group:first-child {
   margin-top: 50px;
@@ -887,14 +891,14 @@ body {
   color: #8CBA51;
   font-weight: 350;
   font-size: 14px;
-  line-height: 18.2px;
+  line-height: 1;
 }
 .auten-delivery-method__info {
   grid-area: info;
-  margin-top: 10px;
+  margin-top: 16px;
   font-weight: 350;
-  font-size: 12px;
-  line-height: 14.4px;
+  font-size: 14px;
+  line-height: 1;
 }
 .auten-delivery-method__pickup {
   grid-area: pickup;
@@ -1010,11 +1014,13 @@ body {
   grid-template: "map   items" auto/1fr 30%;
   height: 100%;
   gap: 20px;
+  position: relative;
 }
 .auten-pickup-points__items {
   grid-area: items;
   height: 100%;
   width: 100%;
+  padding-bottom: 68px;
   overflow: auto;
   overflow-x: hidden;
   display: flex;
@@ -1121,6 +1127,27 @@ body {
 }
 .auten-modal__close:after {
   transform: rotate(-45deg);
+}
+
+.auten-modal__button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30% !important;
+  height: 48px !important;
+  color: #fff;
+  font-weight: 350;
+  text-align: center;
+  background-color: #1a2026;
+  left: auto !important;
+  top: auto !important;
+  bottom: 0;
+  right: 0;
+}
+
+.auten-modal__button:before,
+.auten-modal__button:after {
+  display: none !important;
 }
 
 @media (max-width: 1023px) {

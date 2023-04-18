@@ -60,16 +60,23 @@ class stikSms {
             $profile->set('amo_userid', $amoUserid);
             $contact = $this->modx->newObject('amoCRMUser', ['user' => $profile->get('internalKey'), 'user_id' => $amoUserid]);
             $contact->save();
-        }
-        else{
+        } else {
             $profile->set('amo_userid', null);
+        }
+
+        $getLoyalty = $_POST['join_loyalty'];
+        if ($getLoyalty) {
+            $profile->set('join_loyalty', 1);
         }
         
         if (is_object($user)) {
             $group = $this->modx->getObject('modUserGroup', ['name' => 'Users']);
             $user->joinGroup($group->get('id'));
         }
+
+        $user->addOne($profile);
         $profile->save();
+
         return $user;
     }
     

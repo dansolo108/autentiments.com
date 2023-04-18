@@ -13,7 +13,7 @@ var mSearch2 = {
 
         filters: '#mse2_filters',
         filter_title: '.filter_title',
-        filter_wrapper: 'fieldset',
+        filter_wrapper: '.au-filter__col',
 
         pagination: '.mse2_pagination',
         pagination_link: '.mse2_pagination a',
@@ -260,7 +260,8 @@ var mSearch2 = {
             }
         }
 
-        $(document).on('click', this.options.sort_link, function () {
+        $(document).on('click', this.options.sort_link, function (e) {
+            e.preventDefault();
             if ($(this).hasClass(mSearch2.options.active_class) && $(this).data('dir') == '') {
                 return false;
             }
@@ -334,7 +335,7 @@ var mSearch2 = {
         }
         $(mSearch2.options.slider).each(function () {
             var $this = $(this);
-            var fieldset = $(this).parents('fieldset');
+            var fieldset = $(this).parents('.au-filter__range-box');
             var imin = fieldset.find('input:first');
             var imax = fieldset.find('input:last');
             var vmin = Number(imin.attr('value'));
@@ -1045,7 +1046,7 @@ var mSearch2 = {
     },
 
     setEmptyFieldsets: function () {
-        this.filters.find('fieldset').each(function () {
+        this.filters.find('.au-filter__col').each(function () {
             var all_children_disabled = $(this).find('label:not(.' + mSearch2.options.disabled_class + ')').length == 0;
             if (all_children_disabled) {
                 $(this).addClass(mSearch2.options.disabled_class_fieldsets);
